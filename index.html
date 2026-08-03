@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stoat Labo | Web創作支援サイト</title>
+  <style>
+    /* ---------------------------------- CSS RESET & VARIABLES ---------------------------------- */
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #EFE6E1;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 4px 12px rgba(224, 109, 83, 0.06);
+      --shadow-lg: 0 12px 28px rgba(224, 109, 83, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background-color: var(--bg-main);
+      background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: var(--text-main);
+      line-height: 1.8;
+      padding-bottom: 60px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    /* ---------------------------------- HERO AREA ---------------------------------- */
+    .hero {
+      background: var(--grad-hero);
+      border-bottom: 2px dashed #E2D5CE;
+      padding: 65px 20px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+      z-index: 0;
+    }
+
+    .hero::before {
+      width: 160px;
+      height: 160px;
+      top: -40px;
+      left: 5%;
+    }
+
+    .hero::after {
+      width: 110px;
+      height: 110px;
+      bottom: 10px;
+      right: 6%;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      font-size: 3.8rem;
+      letter-spacing: 0.06em;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      line-height: 1.15;
+      display: inline-block;
+      filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---------------------------------- LAYOUT & NAV ---------------------------------- */
+    nav {
+      background: var(--grad-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #FFF;
+      display: block;
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      position: relative;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      padding-left: 14px;
+    }
+
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 80%;
+      background: var(--grad-primary);
+      border-radius: 4px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ---------------------------------- NEWS / HISTORY ---------------------------------- */
+    .news-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .news-scroll-box {
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .news-scroll-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .news-scroll-box::-webkit-scrollbar-track {
+      background: #FAF5F2;
+      border-radius: 10px;
+    }
+
+    .news-scroll-box::-webkit-scrollbar-thumb {
+      background: #E2D5CE;
+      border-radius: 10px;
+    }
+
+    .news-scroll-box::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    .news-list {
+      list-style: none;
+    }
+
+    .news-item {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.88rem;
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+    }
+
+    .news-date {
+      font-family: monospace, sans-serif;
+      font-weight: bold;
+      color: var(--primary);
+      background: #FFEFEA;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .news-text {
+      color: var(--text-main);
+    }
+
+    /* ---------------------------------- RULES ---------------------------------- */
+    .rule-list {
+      list-style: none;
+    }
+
+    .rule-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 14px;
+    }
+
+    .rule-list li::before {
+      content: "🐾";
+      position: absolute;
+      left: 0;
+      font-size: 0.9rem;
+    }
+
+    .rule-list li.rule-ng::before {
+      content: "❌";
+      font-size: 0.85rem;
+    }
+
+    .alert-box {
+      background-color: #FFF6F3;
+      border: 1px dashed var(--primary);
+      padding: 18px;
+      margin-top: 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #5A443E;
+    }
+
+    .alert-box code {
+      background-color: #F4ECE7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: var(--primary-hover);
+      font-weight: bold;
+    }
+
+    /* ---------------------------------- HOW TO USE STEPS ---------------------------------- */
+    .step-item {
+      margin-bottom: 22px;
+      background: #FAF5F2;
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    .step-item h3 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .step-number {
+      display: inline-block;
+      background: var(--grad-primary);
+      color: #FFF;
+      font-weight: bold;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 26px;
+      font-size: 0.85rem;
+      margin-right: 8px;
+    }
+
+    /* ---------------------------------- COLUMN ---------------------------------- */
+    .column-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .column-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAF5F2;
+      padding: 20px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .column-card:hover {
+      background-color: #FFF5F1;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+    }
+
+    .column-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .column-card-title {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--text-main);
+      transition: color 0.2s;
+    }
+
+    .column-card:hover .column-card-title {
+      color: var(--primary);
+    }
+
+    .column-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .column-arrow {
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-left: 16px;
+    }
+
+    /* ---------------------------------- CATEGORY TABS ---------------------------------- */
+    .category-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #FAF5F2;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background-color: #FFEFEA;
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: var(--grad-primary);
+      color: #FFF;
+      border-color: transparent;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ---------------------------------- TEMPLATE CARDS & ANIMATION ---------------------------------- */
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .template-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #FFF;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+      opacity: 0;
+    }
+
+    .template-card:hover {
+      transform: translateY(-8px) !important;
+      box-shadow: var(--shadow-lg);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .template-card.fade-in {
+      animation: fadeInUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .template-card.is-hidden {
+      display: none !important;
+    }
+
+    .template-img {
+      width: 100%;
+      height: 160px;
+      background-color: #FDF3EF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .template-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .template-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .template-title {
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .tag-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      background-color: #F4ECE7;
+      color: #705B54;
+    }
+
+    .tag-accent {
+      background-color: #FFEFEA;
+      color: var(--primary);
+    }
+
+    .template-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .template-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      width: 50%;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .btn-demo {
+      background-color: #F7EFEA;
+      color: #66524A;
+    }
+
+    .btn-code {
+      background: var(--grad-primary);
+      color: #FFF;
+      box-shadow: 0 4px 10px rgba(224, 109, 83, 0.2);
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+      text-decoration: none;
+    }
+
+    /* ---------------------------------- PROFILE & CONTACT ---------------------------------- */
+    .contact-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #FAF5F2;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-decoration: none !important;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-item-link:hover {
+      background-color: #FFF5F1;
+      border-color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .contact-icon,
+    .profile-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-icon {
+      background: #FFF;
+    }
+
+    .contact-icon-svg {
+      color: var(--text-main);
+      transition: color 0.2s;
+    }
+
+    .contact-item-link:hover .contact-icon-svg {
+      color: var(--primary);
+    }
+
+    .profile-img {
+      overflow: hidden;
+      border: 2px solid #FFF;
+      background-color: #E8DDD7;
+    }
+
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: bold;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-name,
+    .contact-value {
+      font-weight: bold;
+      font-size: 0.92rem;
+      color: var(--primary);
+      word-break: break-all;
+      transition: color 0.2s;
+    }
+
+    .contact-item-link:hover .contact-name,
+    .contact-item-link:hover .contact-value {
+      color: var(--primary-hover);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 45px 15px 35px;
+      }
+      .header-title {
+        font-size: 2.8rem;
+      }
+      .header-subtitle {
+        font-size: 0.9rem;
+      }
+      nav ul {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px;
+      }
+      nav a {
+        padding: 10px 14px;
+        font-size: 0.88rem;
+      }
+      .container {
+        margin-top: 24px;
+        padding: 0 12px;
+      }
+      .section {
+        padding: 22px 18px;
+        margin-bottom: 20px;
+      }
+      .column-card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- メインビジュアル -->
+  <header class="hero">
+    <div class="hero-container">
+      <h1 class="header-title">Stoat Labo</h1>
+      <p class="header-subtitle">Web創作支援サイト</p>
+    </div>
+  </header>
+
+  <!-- ナビゲーション（「はじめに」を削除） -->
+  <nav>
+    <ul>
+      <li><a href="#rules">利用規約</a></li>
+      <li><a href="#how-to">使い方</a></li>
+      <li><a href="#templates">テンプレート</a></li>
+      <li><a href="#tools">創作支援ツール</a></li>
+      <li><a href="#column">コラム</a></li>
+      <li><a href="#access">連絡先</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <!-- 1. 更新履歴 -->
+    <div class="news-section">
+      <h2 class="section-title">更新履歴</h2>
+      <div class="news-scroll-box">
+        <ul class="news-list">
+          <li class="news-item">
+            <span class="news-date">2026.08.02</span>
+            <span class="news-text">現在プレオープン中につき観覧非推奨です</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. このサイトについて -->
+    <section id="about" class="section">
+      <h2 class="section-title">このサイトについて</h2>
+      <p style="margin-top: 10px;">
+        当サイトは、小説、イラストなどの創作活動をされている方向けのWebサイト用テンプレートを配布しています。
+      </p>
+      <p style="margin-top: 10px;">
+        ※当サイトのテンプレートを利用したことで発生したいかなるトラブルや損害についても、管理人は一切の責任を負いかねます。自己責任でのご利用をお願いいたします。
+      </p>
+      <p style="margin-top: 10px;">
+        ※当サイトで配布しているテンプレートはAI（Gemini）を活用して制作・調整を行っています。
+      </p>
+    </section>
+
+    <!-- 3. 利用規約 -->
+    <section id="rules" class="section">
+      <h2 class="section-title">利用規約</h2>
+      <ul class="rule-list">
+        <li><strong>創作ジャンル不問：</strong> 一次創作、二次創作を問わず、どんなジャンルのサイトでもご利用いただけます。</li>
+        <li><strong>R-18コンテンツでの利用可：</strong> 成人向け（R-18）コンテンツを取り扱うサイトでのご利用も可能です。</li>
+        <li><strong>クレジット表記の削除可：</strong> テンプレート内のクレジット表記は削除していただいて構いません（残していただけるととても喜びます！）</li>
+        <li><strong>カスタマイズ自由：</strong> HTML/CSSの改変、デザインの変更はご自由にどうぞ。</li>
+        <li class="rule-ng"><strong>自作発言・二次配布の禁止：</strong> テンプレート自体の自作発言、および再配布（改変後の再配布を含む）は固く禁止いたします。</li>
+      </ul>
+      <div class="alert-box">
+        <strong>⚠️ サーバー規約に関するご注意</strong><br>
+        当サイトではR-18サイトでのテンプレート使用を許可しておりますが、ご利用のレンタルサーバーやホスティングサービスによってはR-18コンテンツの掲載が禁止されている場合があります。必ずご自身が利用するサーバーの利用規約をご確認のうえご利用ください。
+      </div>
+    </section>
+
+    <!-- 4. 使い方 -->
+    <section id="how-to" class="section">
+      <h2 class="section-title">テンプレートの使い方</h2>
+      <div class="step-item">
+        <h3><span class="step-number">1</span>コードを取得</h3>
+        <p>「テンプレート」一覧からお好みのデザインを選び、「HTML取得」ボタンを押すとコードがクリップボードにコピーされます。</p>
+      </div>
+      <div class="step-item">
+        <h3><span class="step-number">2</span>ファイルを編集する</h3>
+        <p>メモ帳などのテキストエディタにコピーしたコードを貼り付けて保存します。作品やプロフィール文章をご自由に書き換えてください。</p>
+      </div>
+      <div class="step-item">
+        <h3><span class="step-number">3</span>サーバーへアップロード</h3>
+        <p>準備したサーバーにファイルをアップロードすればサイトの公開は完了です！</p>
+      </div>
+
+      <!-- コードコピー時の注意書きボックス -->
+      <div class="alert-box" style="margin-top: 24px;">
+        <strong>⚠️ コードコピー時のお願い</strong><br>
+        当サイトがお借りしているサーバーの仕様により、取得・コピーしたコードの末尾（<code>...&lt;/body&gt;&lt;/html&gt;</code> の前）に<strong>不要なシステムコードが自動的に挿入されている場合があります。</strong><br>
+        テンプレートをご自身のサイトで使用される際は、テンプレート内のコードに記述されている<strong>「ここから <code>&lt;/body&gt;&lt;/html&gt;</code> の間に挿入されているコードを削除してご利用ください」</strong>の注釈に従ってコードを削除してから保存・使用していただきますようお願いいたします。
+      </div>
+    </section>
+
+    <!-- 5. テンプレート一覧 -->
+    <section id="templates" class="section">
+      <h2 class="section-title">テンプレート</h2>
+
+      <!-- カテゴリ切り替えタブボタン -->
+      <div class="category-tabs">
+        <button class="tab-btn active" onclick="filterTemplates('all', this)">すべて</button>
+        <button class="tab-btn" onclick="filterTemplates('novel', this)">小説向け</button>
+        <button class="tab-btn" onclick="filterTemplates('illust', this)">イラスト向け</button>
+        <button class="tab-btn" onclick="filterTemplates('sub', this)">子ページ</button>
+        <button class="tab-btn" onclick="filterTemplates('page', this)">単ページ</button>
+      </div>
+
+      <div class="template-grid">
+        <!-- カード -->
+        <div class="template-card" data-category="novel">
+          <div class="template-img">
+            <img src="images/sample01.JPG" alt="Simple Novel プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Simple Novel</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">小説向け</span>
+              <span class="tag">シンプル</span>
+              <span class="tag">ダークモード</span>
+              <span class="tag">縦書き・横書き対応</span>
+            </div>
+            <p class="template-desc">小説サイト向けのシンプルなデザインのテンプレート。スマホやPCのダークモード設定に自動で合わせて配色が変化します。</p>
+            <div class="template-links">
+              <a href="demo01.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="demo01.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="novel">
+          <div class="template-img">
+            <img src="images/sample02.JPG" alt="Simple Novel B プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Simple Novel B</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">小説向け</span>
+              <span class="tag">ダークモード</span>
+              <span class="tag">縦書き・横書き対応</span>
+            </div>
+            <p class="template-desc">「Simple Novel」に背景をつけられるようにしたテンプレートです。背景が文字の視認性を損ねないように文字をテーブルで囲むなど、背景部分以外のデザインにも変更が加えられています。</p>
+            <div class="template-links">
+              <a href="demo02.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="demo02.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="illust">
+          <div class="template-img">
+            <img src="images/sample03.JPG" alt="Gallery & Portfolio プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Gallery & Portfolio</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">イラスト向け</span>
+              <span class="tag">モーダル表示</span>
+              <span class="tag">カテゴリ分け可</span>
+            </div>
+            <p class="template-desc">イラストサイト向けのモダンなテンプレート。イラストをカテゴリ分けして展示できます。画像のサムネイルは画面幅に応じて1～3列に並び変わり、サムネイルをクリックすると画像がふわっと浮かび上がります。</p>
+            <div class="template-links">
+              <a href="demo03.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="demo03.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Interactive Canvas プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Interactive Canvas</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">単ページ</span>
+              <span class="tag">ポップ</span>
+            </div>
+            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ポスターやノートの1ページにステッカーを貼り付けたような遊び心のあるデザインです。マウスを乗せるとアイコンがピコピコと動きます。</p>
+            <div class="template-links">
+              <a href="link01.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="link01.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Social Orbit プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Social Orbit</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">単ページ</span>
+              <span class="tag">サイバー</span>
+            </div>
+            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。宇宙をイメージした背景に、ネオン発光演出を取り入れたアイコンを配置してサイバー感のあるデザインにしました。</p>
+            <div class="template-links">
+              <a href="link02.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="link02.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Editorial Magazinerack プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Editorial Magazinerack</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">単ページ</span>
+              <span class="tag">シック</span>
+            </div>
+            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。モノトーンとベージュを基調とし、上品なフォントを使用したシックで落ち着いたデザインです。</p>
+            <div class="template-links">
+              <a href="link03.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="link03.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Pastel Bubble プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Pastel Bubble</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">単ページ</span>
+              <span class="tag">パステルカラー</span>
+            </div>
+            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ふわふわと浮かぶしゃぼん玉をイメージした可愛らしいデザインです。</p>
+            <div class="template-links">
+              <a href="link04.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="link04.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Stadium Field プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Stadium Field</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">単ページ</span>
+              <span class="tag">要・背景画像</span>
+            </div>
+            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。野球のボールをイメージしたアイコンが特徴です。背景にグラウンドやスタジアムっぽい画像を使用する前提のデザインになっています。</p>
+            <div class="template-links">
+              <a href="link05.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="link05.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Tate Novel プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Tate Novel</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">小説向け</span>
+              <span class="tag tag-accent">子ページ</span>
+              <span class="tag">ダークモード</span>
+              <span class="tag">縦書き</span>
+            </div>
+            <p class="template-desc">小説用の子ページです。文章が縦に表示されます。背景色は紙をイメージしたクリーム色。</p>
+            <div class="template-links">
+              <a href="novel01.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="novel01.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- カード -->
+        <div class="template-card" data-category="page">
+          <div class="template-img">
+            <img src="images/sample04.JPG" alt="Yoko Novel プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">Yoko Novel</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">小説向け</span>
+              <span class="tag tag-accent">子ページ</span>
+              <span class="tag">ダークモード</span>
+            </div>
+            <p class="template-desc">小説用の子ページです。文章が横に表示されます。背景色は紙をイメージしたクリーム色。</p>
+            <div class="template-links">
+              <a href="novel02.html" target="_blank" class="btn btn-demo">Demo</a>
+              <button type="button" data-file="novel02.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. 創作支援ツール（アイキャッチ画像付きカードに変更） -->
+    <section id="tools" class="section">
+      <h2 class="section-title">創作支援ツール</h2>
+      <div class="template-grid">
+        <div class="template-card fade-in" style="opacity: 1;">
+          <div class="template-img">
+            <!-- おしながきジェネレーターのプレビュー画像（画像パスを適宜書き換えてください） -->
+            <img src="images/osinagaki-preview.JPG" alt="おしながきジェネレーター プレビュー画像">
+          </div>
+          <div class="template-body">
+            <h3 class="template-title">おしながきジェネレーター</h3>
+            <div class="tag-list">
+              <span class="tag tag-accent">WEBツール</span>
+              <span class="tag">画像出力</span>
+              <span class="tag">同人イベント向け</span>
+            </div>
+            <p class="template-desc">同人誌やお品書きをWeb上で直感的に編集し、そのまま画像ファイルとして出力・保存できる便利なツールです。</p>
+            <div class="template-links">
+              <a href="osinagaki.html" class="btn btn-code btn-full">ツールを使ってみる</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. コラム -->
+    <section id="column" class="section">
+      <h2 class="section-title">コラム</h2>
+      <div class="column-list">
+        <a href="column01.html" class="column-card">
+          <div class="column-info">
+            <div class="column-card-title">超！初心者向けHTML編集講座</div>
+            <div class="column-desc">テンプレートを取得した後のテキスト編集方法や、基本的なタグの書き方をわかりやすく解説しています。</div>
+          </div>
+          <div class="column-arrow">→</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 8. 連絡先 -->
+    <section id="access" class="section">
+      <h2 class="section-title">連絡先</h2>
+      <p>テンプレートの使用報告（任意）やご連絡はWaveboxまでお願いします。</p>
+
+      <div class="contact-list">
+        <!-- プロフィール -->
+        <a href="about.html" class="contact-item-link">
+          <div class="profile-img">
+            <img src="images/icon.png" alt="okojo のプロフィール画像">
+          </div>
+          <div class="contact-detail">
+            <span class="contact-label">管理人</span>
+            <span class="contact-name">okojo</span>
+          </div>
+        </a>
+
+        <!-- G×H -->
+        <a href="https://caspardt.web.fc2.com/" target="_blank" rel="noopener" class="contact-item-link">
+          <span class="contact-icon contact-icon-svg">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </span>
+          <div class="contact-detail">
+            <span class="contact-label">同人ゲーム公開用の個人サイトです</span>
+            <span class="contact-value">G×H</span>
+          </div>
+        </a>
+
+        <!-- ねずみの足跡 -->
+        <a href="https://caspardt.web.fc2.com/nezumi.html" target="_blank" rel="noopener" class="contact-item-link">
+          <span class="contact-icon contact-icon-svg">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </span>
+          <div class="contact-detail">
+            <span class="contact-label">二次創作を掲載している個人サイトです</span>
+            <span class="contact-value">ねずみの足跡</span>
+          </div>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/stoatpolice2" target="_blank" rel="noopener" class="contact-item-link">
+          <span class="contact-icon contact-icon-svg">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </span>
+          <div class="contact-detail">
+            <span class="contact-label">現在、公開リポジトリはありません</span>
+            <span class="contact-value">GitHub</span>
+          </div>
+        </a>
+
+        <!-- Wavebox -->
+        <a href="https://wavebox.me/wave/cvyocgirkkyo68d2/" class="contact-item-link">
+          <span class="contact-icon contact-icon-svg">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </span>
+          <div class="contact-detail">
+            <span class="contact-label">メールフォームの代わりです</span>
+            <span class="contact-value">Wavebox</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+  </footer>
+
+  <!-- JS スクリプト -->
+  <script>
+    // カテゴリ切り替え & Stagger アニメーション関数
+    function filterTemplates(category, btnElement) {
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      let visibleIndex = 0;
+      const cards = document.querySelectorAll('#templates .template-card');
+
+      cards.forEach(card => {
+        const cardCategories = card.getAttribute('data-category') || '';
+        const categoryArray = cardCategories.split(' ');
+
+        card.classList.remove('fade-in');
+        card.style.animationDelay = '0s';
+
+        if (category === 'all' || categoryArray.includes(category)) {
+          card.classList.remove('is-hidden');
+          const delay = visibleIndex * 0.06;
+          card.style.animationDelay = `${delay}s`;
+
+          requestAnimationFrame(() => {
+            card.classList.add('fade-in');
+          });
+
+          visibleIndex++;
+        } else {
+          card.classList.add('is-hidden');
+        }
+      });
+    }
+
+    // 指定したファイルを取得してクリップボードにコピーする関数
+    async function copyHtmlFromFile(buttonElement) {
+      const filePath = buttonElement.getAttribute('data-file');
+      if (!filePath) return;
+
+      const originalText = buttonElement.textContent;
+
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+          throw new Error(`ファイルの読み込みに失敗しました (${response.status})`);
+        }
+        const textData = await response.text();
+        await navigator.clipboard.writeText(textData);
+
+        // 成功時の演出
+        buttonElement.textContent = 'コピー完了！';
+        buttonElement.style.backgroundColor = '#66524A';
+
+        setTimeout(() => {
+          buttonElement.textContent = originalText;
+          buttonElement.style.backgroundColor = '';
+        }, 2000);
+
+      } catch (error) {
+        console.error('Copy Error:', error);
+        alert('コードの取得・コピーに失敗しました。\nファイルが存在するか確認してください。');
+      }
+    }
+
+    // 初回読み込み時
+    document.addEventListener('DOMContentLoaded', () => {
+      const defaultTab = document.querySelector('.tab-btn.active');
+      if (defaultTab) {
+        filterTemplates('all', defaultTab);
+      }
+    });
+  </script>
+</body>
+</html>
