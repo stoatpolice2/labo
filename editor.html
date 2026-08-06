@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>やわらか小説エディタ</title>
+<!-- Google Material Symbols (アイコン) の読み込み -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+<style>
+  :root {
+    /* デフォルト（クリーム） */
+    --desk-bg: #eaddcf;
+    --paper-bg: #fdfbf7;
+    --text-color: #333333;
+    --ui-btn: #ffffff;
+    --ui-btn-hover: #f0f0f0;
+    --ui-btn-text: #555555;
+    --shadow-color: rgba(140, 130, 115, 0.2);
+    --drawer-bg: rgba(253, 251, 247, 0.95);
+  }
+
+  body.theme-white {
+    --desk-bg: #e5e5e5;
+    --paper-bg: #ffffff;
+    --text-color: #222222;
+    --ui-btn: #ffffff;
+    --ui-btn-hover: #f0f0f0;
+    --ui-btn-text: #333333;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --drawer-bg: rgba(255, 255, 255, 0.95);
+  }
+
+  body.theme-navy {
+    --desk-bg: #121a24;
+    --paper-bg: #1e2936;
+    --text-color: #e0e6ed;
+    --ui-btn: #2a394c;
+    --ui-btn-hover: #35485f;
+    --ui-btn-text: #e0e6ed;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --drawer-bg: rgba(30, 41, 54, 0.95);
+  }
+
+  body.theme-green {
+    --desk-bg: #142417;
+    --paper-bg: #1f3624;
+    --text-color: #e8f0e8;
+    --ui-btn: #2a4a31;
+    --ui-btn-hover: #365e3e;
+    --ui-btn-text: #e8f0e8;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --drawer-bg: rgba(31, 54, 36, 0.95);
+  }
+
+  body {
+    background-color: var(--desk-bg);
+    color: var(--text-color);
+    /* UI全体は視認性の良いゴシック体に統一 */
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow: hidden; /* デスク全体はスクロールさせない */
+  }
+
+  /* --- 紙（執筆エリア） --- */
+  #editor-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 常に中央配置 */
+    padding: 40px 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  #editor {
+    /* 執筆エリアのみ、初期値を明朝体に設定 */
+    font-family: 'Yu Mincho', 'MS Mincho', serif;
+    width: 100%;
+    max-width: 800px; /* 横書き時は縦長〜正方形に近い形 */
+    height: 100%;
+    background-color: var(--paper-bg);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border-radius: 4px;
+    padding: 60px 80px;
+    font-size: 16px;
+    line-height: 1.9;
+    overflow-y: auto;
+    overflow-x: hidden;
+    outline: none;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    transition: background-color 0.4s, padding 0.3s, max-width 0.4s, height 0.4s;
+  }
+
+  /* 縦書きモード（横長の原稿用紙をイメージ） */
+  body.vertical-mode #editor {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    overflow-y: hidden;
+    overflow-x: auto;
+    line-height: 2.0;
+    letter-spacing: 0.05em;
+    padding: 60px 80px;
+    
+    /* 縦書き時は横長の紙にする */
+    max-width: 1000px; /* 幅を広げる */
+    height: 85%;       /* 高さを抑えて横長比率に */
+    max-height: 650px;
+  }
+
+  /* スクロールバーの装飾 */
+  #editor::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  #editor::-webkit-scrollbar-track { background: transparent; }
+  #editor::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.3);
+    border-radius: 10px;
+  }
+
+  /* --- フローティング・アクション・ボタン (FAB) --- */
+  #menuToggleBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--ui-btn);
+    color: var(--ui-btn-text);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    z-index: 900;
+  }
+  #menuToggleBtn:hover {
+    transform: scale(1.05);
+  }
+  #menuToggleBtn:active {
+    transform: scale(0.95);
+  }
+  #menuToggleBtn .material-symbols-outlined {
+    font-size: 28px;
+  }
+
+  /* --- ドロワーメニュー --- */
+  .toolbar {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 280px;
+    height: 100%;
+    background-color: var(--drawer-bg);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+    overflow-y: auto;
+    backdrop-filter: blur(10px); /* すりガラス効果 */
+  }
+
+  body.menu-open .toolbar {
+    left: 0;
+  }
+
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease;
+  }
+
+  body.menu-open #overlay {
+    display: block;
+  }
+
+  .menu-header {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  button.menu-btn, select {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--ui-btn);
+    color: var(--ui-btn-text);
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    /* 確実にUIのフォントを継承 */
+    font-family: inherit; 
+  }
+
+  button.menu-btn:hover { background-color: var(--ui-btn-hover); }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .size-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--ui-btn);
+    border-radius: 8px;
+    padding: 5px;
+  }
+  .size-controls button {
+    background: transparent;
+    border: none;
+    color: var(--ui-btn-text);
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .size-controls button:hover {
+    background-color: var(--ui-btn-hover);
+  }
+
+  hr.divider {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid rgba(150, 150, 150, 0.2);
+    margin: 10px 0;
+  }
+
+  /* --- ステータス表示 --- */
+  .statusbar {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    font-size: 13px;
+    color: var(--text-color);
+    opacity: 0.6;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    pointer-events: none;
+  }
+
+  .error-msg {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+
+  .error-mark {
+    text-decoration: underline wavy #e74c3c;
+    text-decoration-thickness: 1px;
+    background-color: rgba(231, 76, 60, 0.1);
+  }
+
+  /* スマホ向け調整 */
+  @media screen and (max-width: 768px) {
+    #editor-container {
+      padding: 15px 10px;
+    }
+    #editor {
+      padding: 30px 20px;
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    body.vertical-mode #editor {
+      padding: 40px 30px;
+      height: 100%;
+      max-height: none;
+    }
+    #menuToggleBtn {
+      bottom: 20px;
+      right: 20px;
+    }
+    .statusbar {
+      bottom: 20px;
+      left: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="overlay"></div>
+
+<!-- ドロワーメニュー -->
+<div class="toolbar" id="drawerMenu">
+  <div class="menu-header">
+    <span class="material-symbols-outlined">tune</span>
+    設定・操作
+  </div>
+  
+  <select id="fontSelect">
+    <option value="'Yu Mincho', 'MS Mincho', serif">明朝体 (標準)</option>
+    <option value="'Yu Gothic', 'Meiryo', sans-serif">ゴシック体</option>
+    <option value="'Hiragino Maru Gothic ProN', 'Yu Rounded Gothic', sans-serif">丸ゴシック</option>
+  </select>
+  
+  <select id="themeSelect">
+    <option value="">クリーム (デフォルト)</option>
+    <option value="theme-white">ホワイト</option>
+    <option value="theme-navy">ネイビー</option>
+    <option value="theme-green">ダークグリーン</option>
+  </select>
+
+  <div class="size-controls">
+    <button id="sizeDownBtn" title="文字を小さく">
+      <span class="material-symbols-outlined">remove</span>
+    </button>
+    <span style="font-size: 0.9em; opacity: 0.8; font-weight: bold;">文字サイズ</span>
+    <button id="sizeUpBtn" title="文字を大きく">
+      <span class="material-symbols-outlined">add</span>
+    </button>
+  </div>
+
+  <button id="toggleVerticalBtn" class="menu-btn">
+    <span class="material-symbols-outlined" id="verticalIcon">vertical_distribute</span>
+    <span id="verticalText">縦書きに変更</span>
+  </button>
+
+  <hr class="divider">
+
+  <button id="proofreadBtn" class="menu-btn">
+    <span class="material-symbols-outlined">spellcheck</span>
+    原稿を校正する
+  </button>
+  
+  <button id="saveFileBtn" class="menu-btn">
+    <span class="material-symbols-outlined">download</span>
+    テキスト保存
+  </button>
+  
+  <button id="clearBtn" class="menu-btn" style="color: #e74c3c;">
+    <span class="material-symbols-outlined">delete</span>
+    すべて消去
+  </button>
+</div>
+
+<!-- 執筆エリア -->
+<div id="editor-container">
+  <div id="editor" contenteditable="true" spellcheck="false"></div>
+</div>
+
+<!-- メニュー開閉ボタン (FAB) -->
+<button id="menuToggleBtn" title="メニュー">
+  <span class="material-symbols-outlined">edit_note</span>
+</button>
+
+<!-- ステータスバー -->
+<div class="statusbar">
+  <div id="alertMessage" class="error-msg"></div>
+  <div><span id="wordCount">0</span> 文字</div>
+</div>
+
+<script>
+  const editor = document.getElementById('editor');
+  const wordCount = document.getElementById('wordCount');
+  const alertMessage = document.getElementById('alertMessage');
+  const body = document.body;
+  
+  // メニュー開閉制御
+  const menuToggleBtn = document.getElementById('menuToggleBtn');
+  const overlay = document.getElementById('overlay');
+  
+  const toggleMenu = () => body.classList.toggle('menu-open');
+  const closeMenu = () => body.classList.remove('menu-open');
+
+  menuToggleBtn.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // ローカルストレージからの読み込み
+  const savedText = localStorage.getItem('novelData');
+  if (savedText) editor.innerHTML = savedText;
+
+  editor.addEventListener('input', () => {
+    const text = editor.innerText.replace(/\n/g, '');
+    wordCount.textContent = text.length;
+    localStorage.setItem('novelData', editor.innerHTML);
+    alertMessage.textContent = '';
+  });
+  editor.dispatchEvent(new Event('input'));
+
+  document.getElementById('fontSelect').addEventListener('change', (e) => editor.style.fontFamily = e.target.value);
+  document.getElementById('themeSelect').addEventListener('change', (e) => {
+    body.className = body.className.replace(/theme-\w+/g, '').trim();
+    if (e.target.value) body.classList.add(e.target.value);
+    
+    // 縦書きクラスが消えないように維持
+    if (verticalIcon.textContent === 'horizontal_distribute') {
+      body.classList.add('vertical-mode');
+    }
+  });
+  
+  let currentFontSize = 16;
+  document.getElementById('sizeUpBtn').addEventListener('click', () => {
+    if(currentFontSize < 40) currentFontSize += 2;
+    editor.style.fontSize = currentFontSize + 'px';
+  });
+  document.getElementById('sizeDownBtn').addEventListener('click', () => {
+    if(currentFontSize > 12) currentFontSize -= 2;
+    editor.style.fontSize = currentFontSize + 'px';
+  });
+
+  const toggleVerticalBtn = document.getElementById('toggleVerticalBtn');
+  const verticalIcon = document.getElementById('verticalIcon');
+  const verticalText = document.getElementById('verticalText');
+  
+  toggleVerticalBtn.addEventListener('click', () => {
+    body.classList.toggle('vertical-mode');
+    if (body.classList.contains('vertical-mode')) {
+      verticalIcon.textContent = 'horizontal_distribute';
+      verticalText.textContent = '横書きに変更';
+    } else {
+      verticalIcon.textContent = 'vertical_distribute';
+      verticalText.textContent = '縦書きに変更';
+    }
+    closeMenu();
+  });
+
+  document.getElementById('saveFileBtn').addEventListener('click', () => {
+    const text = editor.innerText.trim();
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    const dateStr = `${y}${m}${d}`;
+    let fileName = `${dateStr}_novel_draft.txt`;
+
+    if (text) {
+      let firstLine = text.split('\n')[0].trim().substring(0, 15);
+      firstLine = firstLine.replace(/[\\/:*?"<>|]/g, '');
+      if (firstLine) fileName = `${dateStr}_${firstLine}.txt`;
+    }
+
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(url);
+    closeMenu();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if(confirm('本当にすべて削除しますか？（元に戻せません）')){
+      editor.innerHTML = '';
+      editor.dispatchEvent(new Event('input'));
+      closeMenu();
+    }
+  });
+
+  document.getElementById('proofreadBtn').addEventListener('click', () => {
+    const rawText = editor.innerText;
+    const lines = rawText.split('\n');
+    let openBrackets = 0;
+
+    const processedLines = lines.map(line => {
+      if (line.trim() === '') return '<div><br></div>';
+      let l = line;
+      l = l.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+      if (/^[^ 「『（〈《【]/.test(l)) {
+        l = `<span class="error-mark" title="行頭は全角スペースかカッコで始めます">${l.charAt(0)}</span>${l.slice(1)}`;
+      }
+      l = l.replace(/([！？])(?! |[」』）】！？]|$)/g, '<span class="error-mark" title="！や？の後は全角スペースを空けます">$1</span>');
+      l = l.replace(/(?<![…])(…)(?![…])/g, '<span class="error-mark" title="三点リーダーは2つ（……）セットが基本です">$1</span>');
+      l = l.replace(/(?<![—])(—)(?![…])/g, '<span class="error-mark" title="ダッシュは2つ（――）セットが基本です">$1</span>');
+
+      const openCount = (l.match(/「/g) || []).length;
+      const closeCount = (l.match(/」/g) || []).length;
+      openBrackets += (openCount - closeCount);
+
+      return `<div>${l}</div>`;
+    });
+
+    editor.innerHTML = processedLines.join('');
+    
+    if (openBrackets !== 0) {
+      alertMessage.textContent = '※「」の数が合っていません。閉じ忘れの可能性があります。';
+    } else {
+      alertMessage.textContent = '';
+    }
+    
+    closeMenu();
+  });
+</script>
+</body>
+</html>
