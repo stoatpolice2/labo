@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stadium Field | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <!-- Google Fonts: スポーティーな英語フォント & 読みやすい日本語丸ゴシック -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --------------------------------------------------
+       1. 全体・背景（グラウンド画像 ＋ 暗めのオーバーレイ）
+    -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Zen Maru Gothic', sans-serif;
+  
+      /* 背景の設定（一括指定の記述順序を修正） */
+      background: 
+      linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.45) 50%, rgba(15, 23, 42, 0.75) 100%),
+      url('../images/picture06.jpg') center / cover no-repeat fixed;
+  
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 50px 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* --------------------------------------------------
+       2. メインコンテナ
+    -------------------------------------------------- */
+    .stadium-container {
+      max-width: 720px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      margin-top: auto;
+      margin-bottom: auto;
+      z-index: 1;
+    }
+
+    /* --------------------------------------------------
+       3. スコアボード ＆ プロフィール
+    -------------------------------------------------- */
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    /* スコアボード風ネームプレート（すりガラス効果） */
+    .scoreboard-header {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 3px solid #facc15; /* 電光掲示板ゴールド */
+      border-radius: 12px;
+      padding: 6px 32px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(250, 204, 21, 0.2);
+      text-align: center;
+    }
+
+    .scoreboard-header .name {
+      font-family: 'Teko', sans-serif;
+      font-size: 3rem;
+      color: #facc15;
+      letter-spacing: 3px;
+      line-height: 1;
+      text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+      text-transform: uppercase;
+    }
+
+    /* 野球ボール風プロフィールフレーム */
+    .ball-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      padding: 5px;
+      background: #ffffff;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      border: 3px dashed #ef4444; /* 赤ステッチ */
+      position: relative;
+    }
+
+    .ball-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* --------------------------------------------------
+       4. グラスモーフィズム自己紹介カード
+    -------------------------------------------------- */
+    .field-bio {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #0f172a;
+      padding: 22px 28px;
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      max-width: 520px;
+      width: 92%;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    /* --------------------------------------------------
+       5. ボールモチーフのリンクボタン
+    -------------------------------------------------- */
+    .ball-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .ball-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: #0f172a;
+      
+      /* ほんのり背景が透ける白ベース */
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      
+      border-radius: 50px;
+      border: 2px solid #ffffff;
+      
+      /* 上下の赤ステッチ */
+      border-top: 2.5px dashed #ef4444;
+      border-bottom: 2.5px dashed #ef4444;
+      
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* ホバー時の効果（カキーン！と跳ね上がる） */
+    .ball-link:hover {
+      transform: translateY(-6px) scale(1.05);
+      background: #facc15; /* 鮮やかなイエローに変化 */
+      color: #0f172a;
+      border-color: #facc15;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 15px rgba(250, 204, 21, 0.5);
+    }
+
+    .ball-link:active {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* レスポンシブ調整 */
+    @media (max-width: 480px) {
+      .scoreboard-header .name {
+        font-size: 2.2rem;
+      }
+      .ball-avatar {
+        width: 100px;
+        height: 100px;
+      }
+      .ball-link {
+        padding: 12px 20px;
+        font-size: 0.88rem;
+      }
+      .field-bio {
+        font-size: 0.88rem;
+        padding: 18px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stadium-container">
+    
+    <!-- スコアボード ＆ プロフィール -->
+    <div class="profile-section">
+      <div class="scoreboard-header">
+        <div class="name">YOUR NAME</div>
+      </div>
+      
+      <div class="ball-avatar">
+        <img src="../images/icon.png" alt="プロフィール画像">
+      </div>
+    </div>
+
+    <!-- 自己紹介カード -->
+    <div class="field-bio">
+      <p>
+        ⚾️ここに自己紹介などを入力してください。<br><br>※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+    </div>
+
+    <!-- 野球ボール風リンクボタン（8つ） -->
+    <div class="ball-grid">
+      <a href="#" class="ball-link">🌐 Web Site</a>
+      <a href="#" class="ball-link">𝕏 (Twitter)</a>
+      <a href="#" class="ball-link">📷 Instagram</a>
+      <a href="#" class="ball-link">🎨 pixiv</a>
+      <a href="#" class="ball-link">🦋 BlueSky</a>
+      <a href="#" class="ball-link">🚀 Misskey</a>
+      <a href="#" class="ball-link">🐘 Mastodon</a>
+      <a href="#" class="ball-link">✉️ Mail Form</a>
+    </div>
+
+  </div>
+  <br><br>
+  
+  <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+</body>
+</html>

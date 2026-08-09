@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料で高機能なコードエディタ「Brackets」 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 36px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section:hover {
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 20px 0 10px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+        margin-bottom: 15px;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 10px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .rule-list li.rule-ng::before {
+        content: "⚠️";
+        font-size: 0.85rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    /* ----------------------------------
+        IMAGE STYLES & GRID
+    ---------------------------------- */
+    .image-container {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .image-frame {
+        width: 100%;
+        height: 180px; /* サムネイルの高さを統一 */
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 枠に合わせてトリミング表示 */
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .image-frame img:hover {
+        opacity: 0.85;
+        transform: scale(1.03);
+    }
+
+    .image-caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 6px;
+    }
+
+    .img-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 16px 0;
+    }
+
+    /* ----------------------------------
+        MODAL (LIGHTBOX) STYLES
+    ---------------------------------- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        color: #fff;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--accent);
+    }
+
+    /* ----------------------------------
+        TABLE STYLES
+    ---------------------------------- */
+    .table-wrapper {
+        overflow-x: auto;
+        margin: 20px 0;
+    }
+
+    table.compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.92rem;
+    }
+
+    table.compare-table th {
+        background: #FAF5F2;
+        color: var(--primary);
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    table.compare-table td {
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        background: #FFF;
+    }
+
+    /* ----------------------------------
+        BLOCKQUOTE
+    ---------------------------------- */
+    blockquote {
+        background: #FAF5F2;
+        border-left: 4px solid var(--primary);
+        padding: 16px 20px;
+        border-radius: 0 12px 12px 0;
+        margin: 16px 0;
+        font-size: 0.93rem;
+    }
+
+    blockquote strong {
+        color: var(--primary);
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.6rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+        .img-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">無料で高機能な<br>コードエディタ「Brackets」</h1>
+            <p class="header-subtitle">Webページやゲーム制作に！管理人が愛用するエディタをご紹介</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Stoat Labo TOP</a></li>
+            <li><a href="#intro">はじめに</a></li>
+            <li><a href="#install">インストール・設定</a></li>
+            <li><a href="#features">超便利機能7選</a></li>
+            <li><a href="#summary">まとめ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- はじめに -->
+        <section id="intro" class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>皆さんは、Webページやゲームの制作をする際にどんなエディタを使っていますか？<br>
+            この記事では、管理人が愛用している無料で高機能なコードエディタ<strong>「Brackets（ブラケッツ）」</strong>の魅力と便利な機能をご紹介します！</p>
+            
+            <h3 class="sub-title">コードエディタとは？</h3>
+            <p>エディタと一口に言っても、小説などの文章執筆に特化したものなど様々な種類があります。その中でも「コードエディタ」は、<strong>プログラムのコードを書くための機能に特化したエディタ</strong>のことです。<br>
+            管理人は主にWebページの作成や、ゲーム制作（シナリオやスクリプトの記述）に活用しています。</p>
+
+            <h3 class="sub-title">Bracketsってどんなソフト？</h3>
+            <p>Bracketsは、元々クリエイター向けソフトでおなじみの<strong>Adobe（アドビ）社が開発した、完全無料のコードエディタ</strong>です。</p>
+
+            <div class="alert-box">
+                <strong>💡 補足情報</strong><br>
+                2021年にAdobeの公式サポートは終了しましたが、現在はオープンソースとして有志のコミュニティによって引き継がれ、今でも世界中のクリエイターに愛用されています。「窓の杜」などのダウンロードサイトや公式サイトから入手して、すぐに使い始めることができます！
+            </div>
+        </section>
+
+        <!-- インストールと初期設定 -->
+        <section id="install" class="section">
+            <h2 class="section-title">簡単！Bracketsのインストールと初期設定</h2>
+            <p>Bracketsの導入は非常にシンプルです。</p>
+            
+            <h3 class="sub-title">インストール手順</h3>
+            <ol style="margin-left: 24px; margin-bottom: 15px; padding-left: 10px;">
+                <li>「窓の杜」や公式サイトなどの配布サイトからインストーラーをダウンロードします。</li>
+                <li>ダウンロードしたWindows用インストーラーファイル（<code>.msi</code>など）をダブルクリックして起動します。</li>
+                <li>インストール画面は英語ですが、基本的には設定を変更せず<strong>「Next（次へ）」</strong>をクリックしていき、最後に<strong>「Install（インストール）」</strong>を押すだけでOKです！</li>
+                <li>完了画面が出たら「Finish」を押して画面を閉じます。</li>
+            </ol>
+
+            <h3 class="sub-title">日本語化は不要！</h3>
+            <p>海外製のエディタはインストール後に有志の「日本語化パッチ」を入れるなどの複雑な作業が必要になることが多いです。<br>
+            しかし、<strong>Bracketsはインストールした直後から完全に日本語化されています。</strong><br>
+            メニュー画面も設定項目も最初から日本語なので、英語が苦手な方でも一切の初期設定なしで、すぐに使い始めることができます。これもBracketsの大きな魅力の一つですね。</p>
+        </section>
+
+        <!-- 機能7選 -->
+        <section id="features" class="section">
+            <h2 class="section-title">ここがすごい！Bracketsの超便利機能7選</h2>
+            <p>管理人が実際に使ってみて「これは便利！」と感じた機能をピックアップしてご紹介します。</p>
+
+            <!-- 1. ライブプレビュー -->
+            <h3 class="sub-title">1. リアルタイムで画面を確認できる「ライブプレビュー」</h3>
+            <p>Brackets最大の目玉機能がこの「ライブプレビュー」です！HTMLやCSSを編集する際、画面右上のイナズママークを押すとブラウザが立ち上がり、<strong>ファイルを保存することなく、入力したコードがリアルタイムで画面に反映</strong>されます。<br>
+            わざわざ「保存してブラウザを再読み込みする」という作業が一切不要になるため、Web制作のテンポと快適さが劇的に向上します。</p>
+
+            <div class="alert-box" style="margin-top: 12px; margin-bottom: 20px;">
+                <strong>💡 Chrome以外でも使える！エラー対処と設定方法</strong><br>
+                Bracketsのライブプレビューは標準でGoogle Chromeを利用しますが、<strong>Microsoft EdgeなどChrome以外のブラウザでプレビューを行いたい場合</strong>は以下の設定を行うことで解決できます！<br>
+                <ol style="margin-top: 8px; margin-bottom: 8px; padding-left: 20px;">
+                    <li>Bracketsの上部メニュー「デバッグ」＞「環境設定ファイルを開く」をクリック。</li>
+                    <li>開いた <code>brackets.json</code> に <code>"livedev.multibrowser": true</code> を追記して保存。</li>
+                    <li>Bracketsを再起動する。</li>
+                </ol>
+                この設定（マルチブラウザーライブプレビュー）を有効にすると、特定のデバッグポートに依存しなくなるためお好みのブラウザで快適にプレビューを行えるようになります。また、起動時に「リモートデバッグを有効にしてChromeを再起動する必要があります」というエラーメッセージが表示される場合もこの方法で解決します。
+            </div>
+
+            <!-- 2. クイック編集 -->
+            <h3 class="sub-title">2. 爆速でコードを編集できる「クイック編集」</h3>
+            <p>Bracketsの代名詞とも言える画期的な機能が「クイック編集」です。HTMLタグ上でショートカットキー（Windows: <code>Ctrl</code> + <code>E</code> / Mac: <code>Cmd</code> + <code>E</code>）を押すと、<strong>別ファイルのCSSを開くことなく、その場にインライン（小窓）で関連するスタイルが表示されて直接編集できます。</strong><br>
+            ファイルを行き来するストレスや探す手間が完全にゼロになる、作業の効率化に欠かせない機能です。</p>
+
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 クイック編集の例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column05.jpg" alt="Bracketsのクイック編集のスクリーンショット" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <p style="margin-bottom: 20px;">例えば、カラーコードの上にカーソルを置いてショートカットキーを押すと、グラフィカルなカラーピッカーが立ち上がります。視覚的に色を調整・変更できるほか、カラーコードの形式（HEX、RGB、HSL）の切り替えもワンクリックで簡単に行えます。</p>
+
+            <!-- 3. 色分け -->
+            <h3 class="sub-title">3. 文字の色分け（シンタックスハイライト）で視認性抜群！</h3>
+            <p>コードの役割や種類ごとに自動でカラーリングしてくれるため、コードの構造が一目で把握できます。</p>
+
+            <!-- 4. タグ閉じミス検知 -->
+            <h3 class="sub-title">4. 〈〉の閉じ忘れや、余計なタグが一目でわかる！</h3>
+            <p>初心者が特につまずきやすいのが、タグの閉じ忘れ（<code>&lt;/&gt;</code>の書き忘れ）などのケアレスミスです。<br>
+            Bracketsでは、そういった文法エラーや孤立したタグがあると、対象の箇所を<strong>赤色でハイライト表示</strong>して教えてくれます。エラー原因を探す無駄な時間を減らし、ミスにすぐ気づける安心設計です。</p>
+
+            <!-- 5. 画像・カラープレビュー -->
+            <h3 class="sub-title">5. 画像やカラーコードをその場でプレビュー！</h3>
+            <p>コード内に書かれた画像ファイル名やカラーコード（例：<code>#FF0000</code>など）の上にマウスカーソルを合わせると、<strong>その場で小さなプレビュー画像や実際の色がポップアップ表示</strong>されます。<br>
+            「指定した画像が合っているか」「想定通りの色か」をいちいち確認する手間が省けます。</p>
+          
+          <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 画像のプレビューの例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column06.jpg" alt="Bracketsの画像のプレビューのスクリーンショット" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <!-- 6. 予測変換 -->
+            <h3 class="sub-title">6. 予測変換機能で執筆を高速化＆タイプミス予防！</h3>
+            <p>コードの最初の数文字を打つだけで、Bracketsが入力候補を自動でリストアップ（コードヒント）してくれます。（※<code>Ctrl</code> + <code>Space</code>キーで手動表示も可能）<br>
+            複雑で長いプロパティ名もすべて手打ちする必要がなくなり、タイピング速度の向上だけでなく「スペルミスによって動かないトラブル」を未然に防ぎます。</p>
+
+            <!-- 7. ファイル切り替え -->
+            <h3 class="sub-title">7. 複数ファイルをシームレスに切り替え＆一括置換！</h3>
+            <p>画面左側にプロジェクトのフォルダ構造がツリー表示され、クリックひとつで開きたいファイルを瞬時に切り替えられます。<br>
+            さらに、複数のファイルを横断して一気に「文字の検索・置換」ができるため、キャラクター名やCSSのクラス名を一斉変更したい時にも大活躍します。</p>
+
+        </section>
+
+        <!-- まとめ -->
+        <section id="summary" class="section">
+            <h2 class="section-title">まとめ</h2>
+            <p>Bracketsは、直感的に使える優れた操作性と、Web制作に特化した便利機能がギュッと詰まった無料コードエディタです。</p>
+            <p style="margin-top: 15px;">「メモ帳」や標準のテキストエディタでコードを書いている方は、ぜひ一度Bracketsの快適さを体験してみてください。制作のスピード感と楽しさが劇的に変わりますよ！</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- モーダル表示用エリア -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // ESCキーでもモーダルを閉じられるように設定
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

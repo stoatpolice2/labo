@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number #27 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <style>
+    /* ==========================================
+       RESET & VARIABLES
+       ========================================== */
+    :root {
+      --primary-color: #040c1a;  /* 深い藍色 */
+      --secondary-color: #ffffff;
+      --accent-color: #d4af37;   /* ゴールド */
+      --accent-light: #f3e5ab;
+      --text-color: #2c3038;
+      --text-light: #7a828e;
+      --bg-light: #f4f6f9;
+      --font-gothic: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      --font-serif: "Times New Roman", Times, "YuMincho", "Hiragino Mincho ProN", serif;
+      --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-gothic);
+      /* リンク集は高級感のあるダーク背景で統一 */
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      line-height: 1.8;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* 背景の透かし文字 */
+    .bg-watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80vw;
+      font-weight: 900;
+      font-style: italic;
+      font-family: var(--font-serif);
+      color: rgba(255, 255, 255, 0.02);
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+    @media (min-width: 600px) {
+      .bg-watermark { font-size: 50vw; }
+    }
+
+    /* 鏡面リフレクション */
+    .reflection-text {
+      background: linear-gradient(
+        120deg,
+        rgba(212, 175, 55, 0.6) 0%,
+        rgba(255, 255, 255, 0.95) 45%,
+        rgba(212, 175, 55, 1) 55%,
+        rgba(243, 229, 171, 0.7) 100%
+      );
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shineReflection 4s linear infinite;
+    }
+
+    @keyframes shineReflection {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* グロッシーカード */
+    .glossy-shine-box {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glossy-shine-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(30deg);
+      transition: var(--transition-smooth);
+      pointer-events: none;
+    }
+
+    .glossy-shine-box:hover::after {
+      left: 130%;
+      transition: all 0.9s ease-in-out;
+    }
+
+    /* ==========================================
+       LINK PORTAL LAYOUT
+       ========================================== */
+    .portal-container {
+      max-width: 540px;
+      width: 100%;
+      padding: 50px 20px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* 1. プロフィールエリア */
+    .profile-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar-box {
+      width: 110px;
+      height: 110px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    
+    .avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .profile-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .profile-name .number {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.8rem;
+      margin-left: 6px;
+    }
+
+    .profile-bio {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* 2. リンクボタンリスト */
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* カードデザイン */
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--secondary-color);
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .link-card:hover {
+      border-color: rgba(212, 175, 55, 0.8);
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .link-left {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    /* ナンバリング */
+    .link-num {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .link-label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .link-arrow {
+      color: var(--accent-color);
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      opacity: 0.5;
+      transition: var(--transition-smooth);
+      transform: translateX(-5px);
+    }
+
+    .link-card:hover .link-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* 3. フッター */
+    .portal-footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .sponsor-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- 背景の透かし番号 -->
+  <div class="bg-watermark">27</div>
+
+  <div class="portal-container">
+    
+    <!-- プロフィールヘッダー -->
+    <header class="profile-header">
+      <div class="avatar-box glossy-shine-box">
+        <img src="../images/icon.png" alt="プロフィール画像">
+      </div>
+      
+      <h1 class="profile-name">
+        Name<span class="number reflection-text">#27</span>
+      </h1>
+      <p class="profile-bio">ここに自己紹介などを入力してください</p>
+        <p class="profile-bio">※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+    </header>
+
+    <!-- リンク集 -->
+    <main class="link-list">
+      
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">01</span>
+          <span class="link-label">Web Site</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">02</span>
+          <span class="link-label">X (Twitter)</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">03</span>
+          <span class="link-label">Instagram</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">04</span>
+          <span class="link-label">pixiv</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">05</span>
+          <span class="link-label">BlueSky</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">06</span>
+          <span class="link-label">Misskey</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">07</span>
+          <span class="link-label">Mastodon</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-card glossy-shine-box">
+        <div class="link-left">
+          <span class="link-num">08</span>
+          <span class="link-label">Mail Form</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="portal-footer">
+      <div class="sponsor-logo reflection-text">FREE COMMENT</div><br>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

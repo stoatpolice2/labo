@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Novel | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <style>
+    /* -------------------------------------- デザイン変数） -------------------------------------- */
+    :root {
+      /* ★背景画像のパス（親ページと合わせて変更してください） */
+      --bg-image: url('../images/picture02.jpg'); 
+
+      /* ★背景画像の上に重ねる半透明の白（フィルター） */
+      --bg-overlay: rgba(252, 252, 252, 0.2); 
+
+      --bg-color: #fcfcfc;
+      --text-color: #2b2b2b;
+      --accent-color: #5a738e;
+      --border-color: #e5e5e5;
+      --card-bg: #ffffff;
+      
+      /* デフォルトフォント */
+      --font-family-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      --font-family-serif: "Hiragino Mincho ProN", "Yu Mincho", "Shippori Mincho", "MS PMincho", serif;
+      --current-font: var(--font-family-serif); /* 本文はデフォルト明朝体 */
+
+      /* 読書用設定デフォルト */
+      --novel-font-size: 1.05rem;
+      --novel-line-height: 2.1;
+    }
+
+    /* ダークモード自動対応 */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-overlay: rgba(26, 26, 26, 0.2); 
+
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --accent-color: #8ab4f8;
+        --border-color: #333333;
+        --card-bg: #242424;
+      }
+    }
+
+    /* -------------------------------------- 基本スタイル & リセット -------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-color: var(--bg-color);
+
+      color: var(--text-color);
+      font-family: var(--font-family-sans);
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    a:hover {
+      opacity: 0.7;
+    }
+
+    /* -------------------------------------- レイアウト -------------------------------------- */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* パンくずリスト */
+    .breadcrumb {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 1.2rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--accent-color);
+    }
+
+    .breadcrumb span {
+      opacity: 0.5;
+    }
+
+    /* ヘッダー（作品情報・エピソードタイトル） */
+    header {
+      text-align: center;
+      padding: 2rem 1.5rem 1.8rem;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+    }
+
+    .series-title {
+      font-size: 0.95rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.08em;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .chapter-meta {
+      font-size: 0.82rem;
+      opacity: 0.65;
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    /* 読者調整ツールバー（文字サイズ・フォント・縦書き切り替え） */
+    .reader-controls {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .control-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover, .control-btn.active {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      border-color: var(--accent-color);
+    }
+
+    /* 本文カードエリア */
+    main {
+      margin-bottom: 2rem;
+    }
+
+    .novel-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+      min-height: 500px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    /* 本文テキストスタイル */
+    .novel-body {
+      font-family: var(--current-font);
+      font-size: var(--novel-font-size);
+      line-height: var(--novel-line-height);
+      letter-spacing: 0.08em;
+      word-break: break-all;
+    }
+
+    .novel-body p {
+      margin-bottom: 1.2em;
+      text-indent: 1em; /* 段落冒頭の一字下げ */
+    }
+
+    /* 会話文（かぎかっこ始まり）は字下げしない */
+    .novel-body p.dialogue,
+    .novel-body p:has(^「),
+    .novel-body p:has(^『) {
+      text-indent: 0;
+    }
+
+    /* ルビの装飾 */
+    ruby rt {
+      font-size: 0.65em;
+      opacity: 0.85;
+    }
+
+    /* 区切り線・章仕切り */
+    .novel-break {
+      text-align: center;
+      margin: 2em 0;
+      letter-spacing: 0.5em;
+      opacity: 0.5;
+    }
+
+    /* 縦書きモード指定用クラス */
+    .novel-body.vertical-mode {
+      writing-mode: vertical-rl;
+      -webkit-writing-mode: vertical-rl;
+      text-orientation: mixed;
+      height: 580px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 1rem;
+      width: 100%;
+    }
+
+    .novel-body.vertical-mode p {
+      margin-bottom: 0;
+      margin-left: 1.5em;
+    }
+
+    /* 前後ページナビゲーション */
+    .chapter-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .nav-btn {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-color);
+      flex: 1;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    /* モバイル最適化 */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem 0.8rem;
+      }
+
+      .novel-card {
+        padding: 2rem 1.2rem;
+      }
+
+      .chapter-nav {
+        flex-direction: column;
+      }
+
+      .nav-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- パンくずリスト -->
+    <nav class="breadcrumb">
+      <a href="#">Top</a>
+      <span>&gt;</span>
+      <a href="#">星降る夜の図書室</a>
+      <span>&gt;</span>
+      <span>第一話</span>
+    </nav>
+
+    <!-- ヘッダー（タイトルエリア） -->
+    <header>
+      <div class="series-title"><a href="#">星降る夜の図書室</a></div>
+      <h1>第一話 「深夜0時の開架」</h1>
+      <div class="chapter-meta">
+        <span>投稿日: 2026.06.15</span>
+        <span>文字数: 約3,500字</span>
+      </div>
+    </header>
+
+    <!-- 読書調整ツールバー -->
+    <div class="reader-controls">
+      <div class="control-group">
+        <span>フォント:</span>
+        <button class="control-btn active" id="btn-serif" onclick="setFont('serif')">明朝</button>
+        <button class="control-btn" id="btn-sans" onclick="setFont('sans')">ゴシック</button>
+      </div>
+
+      <div class="control-group">
+        <span>サイズ:</span>
+        <button class="control-btn" onclick="changeFontSize(-1)">A-</button>
+        <button class="control-btn" onclick="changeFontSize(1)">A+</button>
+      </div>
+
+      <div class="control-group">
+        <button class="control-btn" id="btn-vertical" onclick="toggleVertical()">縦書き切替</button>
+      </div>
+    </div>
+
+    <!-- 小説本文エリア -->
+    <main>
+      <article class="novel-card">
+        <div class="novel-body" id="novelBody">
+          
+          <p>
+            時計の針がちょうど十二時を指したとき、街角の小さな路地にさしかかっていた。普段なら誰も通りかからないはずの袋小路に、ほのかな温かい光が漏れている。
+          </p>
+
+          <p>
+            吸い寄せられるように足を進めると、そこには古びた木製のドアがあった。真鍮のプレートには、繊細な文字で『星空図書室』と刻まれている。
+          </p>
+
+          <p style="text-indent: 0;">
+            「こんなところに、本屋なんてあっただろうか……」
+          </p>
+
+          <p>
+            そっとドアを押すと、小さなベルが清らかな音を鳴らした。中に足を踏み入れた瞬間、古い紙と珈琲の香りが心地よく鼻腔をくすぐる。天井まで届く大きな本棚には、見たこともない装丁の本がずらりと並んでいた。
+          </p>
+
+          <div class="novel-break">◆ ◆ ◆</div>
+
+          <p>
+            奥のカウンターから現れたのは、淡い紺色のエプロンをつけた小柄な少女だった。彼女は静かに<ruby>微笑<rt>ほほえ</rt></ruby>むと、ゆっくりと頭を下げた。
+          </p>
+
+          <p style="text-indent: 0;">
+            「いらっしゃいませ。今夜のお客様は、あなた様ひとりのようです」
+          </p>
+
+          <p>
+            彼女の声は、夜の静寂に溶け込むほど透き通っていた。僕は戸惑いながらも、棚から一冊の青い背表紙の本を手に取った。
+          </p>
+
+          <p>
+            表紙を開くと、文字のかわりに満天の星々がゆっくりと動きはじめた――。
+          </p>
+
+        </div>
+      </article>
+
+      <!-- 前後話ナビゲーション -->
+      <nav class="chapter-nav">
+      <!-- 「前の話」のボタンを表示する場合は「disabled」を削除してください -->
+        <a href="#" class="nav-btn disabled">← 前の話</a>
+        <a href="#" class="nav-btn">目次へ戻る</a>
+        <a href="#" class="nav-btn">次の話 →</a>
+      </nav>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank">Stoat Labo</a></p>
+    </footer>
+
+  </div>
+
+  <!-- スクリプト：読書環境の切り替え機能 -->
+  <script>
+    const novelBody = document.getElementById('novelBody');
+    let currentFontSize = 1.05;
+
+    // フォント切り替え (明朝 / ゴシック)
+    function setFont(type) {
+      if (type === 'serif') {
+        document.documentElement.style.setProperty('--current-font', 'var(--font-family-serif)');
+        document.getElementById('btn-serif').classList.add('active');
+        document.getElementById('btn-sans').classList.remove('active');
+      } else {
+        document.documentElement.style.setProperty('--current-font', 'var(--font-family-sans)');
+        document.getElementById('btn-sans').classList.add('active');
+        document.getElementById('btn-serif').classList.remove('active');
+      }
+    }
+
+    // 文字サイズ変更
+    function changeFontSize(delta) {
+      currentFontSize += delta * 0.1;
+      if (currentFontSize < 0.85) currentFontSize = 0.85;
+      if (currentFontSize > 1.45) currentFontSize = 1.45;
+      document.documentElement.style.setProperty('--novel-font-size', currentFontSize + 'rem');
+    }
+
+    // 縦書き / 横書き切り替え
+    function toggleVertical() {
+      novelBody.classList.toggle('vertical-mode');
+      const btn = document.getElementById('btn-vertical');
+      btn.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

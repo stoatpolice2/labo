@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milky Novel | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        /* 全体の設定 */
+        body {
+            background-color: #fffafc;
+            color: #7a6b7b;
+            font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic Pro", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        /* ヘッダー */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #ffd1dc, #e2f0cb, #b5ead7);
+            border-bottom: 4px dashed #ffffff;
+        }
+        header h1 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(180, 150, 160, 0.4);
+            letter-spacing: 2px;
+        }
+
+        /* ナビゲーション */
+        nav {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 12px;
+            box-shadow: 0 4px 10px rgba(240, 220, 230, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        nav a {
+            text-decoration: none;
+            color: #8c788a;
+            background-color: #fce4ec;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ffb7b2;
+            color: #ffffff;
+        }
+
+        /* メインコンテンツ */
+        main {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* 名前変換フォーム */
+        .name-form-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(245, 230, 235, 0.5);
+            border: 2px solid #f9f0f5;
+        }
+        .name-form-title {
+            color: #b5838d;
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px dotted #ffb7b2;
+            padding-bottom: 5px;
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+        .form-group label {
+            width: 80px;
+            font-weight: bold;
+            color: #8c788a;
+        }
+        .form-group input[type="text"] {
+            padding: 6px 12px;
+            border: 2px solid #ffccd5;
+            border-radius: 15px;
+            outline: none;
+            color: #7a6b7b;
+            font-family: inherit;
+            background-color: #fffafc;
+            transition: border-color 0.2s;
+        }
+        .form-group input[type="text"]:focus {
+            border-color: #ffb7b2;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn {
+            background-color: #ffb7b2;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 18px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn:hover {
+            background-color: #b5838d;
+            transform: translateY(-1px);
+        }
+        .btn-reset {
+            background-color: #e0d0db;
+        }
+        .btn-reset:hover {
+            background-color: #baa8b5;
+        }
+
+        /* 小説本文枠 */
+        .novel-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 8px 20px rgba(245, 230, 235, 0.5);
+            border: 2px solid #f9f0f5;
+        }
+        .novel-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px dotted #ffccd5;
+            padding-bottom: 20px;
+        }
+        .novel-title {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(180, 150, 160, 0.4);
+            letter-spacing: 2px;
+        }
+        .novel-meta {
+            font-size: 0.85rem;
+            color: #a291a0;
+        }
+
+        /* 本文の装飾 */
+        .novel-body {
+            font-size: 0.95rem;
+            line-height: 2.2;
+            color: #6c5b6b;
+            letter-spacing: 0.5px;
+        }
+        .novel-body p {
+            margin-bottom: 1.8em;
+        }
+        .name-converted {
+            color: #b5838d;
+            font-weight: bold;
+        }
+
+        /* ページ下部ナビ */
+        .novel-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 0 10px;
+        }
+        .novel-footer-nav a {
+            color: #8c788a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .novel-footer-nav a:hover {
+            color: #ffb7b2;
+            text-decoration: underline;
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #a291a0;
+            font-size: 0.8rem;
+            background-color: #fff1f5;
+            border-top: 2px dashed #ffccd5;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Milky Sugar</h1>
+    </header>
+
+    <nav>
+        <a href="#">TOPへ戻る</a>
+        <a href="#">Novel一覧</a>
+    </nav>
+
+    <main>
+        <!-- 名前変換設定フォーム -->
+        <div class="name-form-card">
+            <h2 class="name-form-title">Name Setting</h2>
+            <div class="form-group">
+                <label for="input-first">名前（名）:</label>
+                <input type="text" id="input-first" value="アリス" placeholder="名">
+            </div>
+            <div class="form-group">
+                <label for="input-last">苗字（姓）:</label>
+                <input type="text" id="input-last" value="白雪" placeholder="姓">
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="applyNames()">変換する</button>
+                <button class="btn btn-reset" onclick="resetNames()">初期値に戻す</button>
+            </div>
+        </div>
+
+        <!-- 小説本文エリア -->
+        <article class="novel-card">
+            <header class="novel-header">
+                <h2 class="novel-title">甘いミルクティーの魔法</h2>
+                <div class="novel-meta">執筆: 管理人 / 更新日: 2026.08.01</div>
+            </header>
+
+            <div class="novel-body" id="novel-content">
+                <p>
+                    「ねえ、<span class="name-converted" data-type="first">アリス</span>。今日の紅茶は少し甘めに淹れておいたよ」
+                </p>
+                <p>
+                    湯気の立つカップを差し出しながら、彼は柔らかく微笑んだ。<br>
+                    <span class="name-converted" data-type="last">白雪</span> <span class="name-converted" data-type="first">アリス</span> は受け取ったカップから漂う甘い香りに、ふっと心を解きほぐされる。
+                </p>
+                <p>
+                    ほんのり温かいカップを両手で包み込みながら、一口口に含む。<br>
+                    「……美味しい」
+                </p>
+                <p>
+                    「よかった。君が嬉しそうな顔をしてくれるのが、一番の魔法なんだ」
+                </p>
+                <p>
+                    そう言って私の頭を優しく撫でる彼の手のひらは、ミルクティーよりもずっと温かかった。
+                </p>
+            </div>
+        </article>
+
+        <!-- 前後のナビゲーション -->
+        <div class="novel-footer-nav">
+            <a href="#">← 小説一覧へ</a>
+            <a href="#">次の話へ →</a>
+        </div>
+    </main>
+
+    <footer>
+        <small>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></small>
+    </footer>
+
+    <!-- 名前変換用JavaScript -->
+    <script>
+        // デフォルトの名前
+        const defaultNames = {
+            first: 'アリス',
+            last: '白雪'
+        };
+
+        // ページ読み込み時の処理（保存されている名前があれば読み込む）
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedFirst = localStorage.getItem('dream_first') || defaultNames.first;
+            const savedLast = localStorage.getItem('dream_last') || defaultNames.last;
+
+            document.getElementById('input-first').value = savedFirst;
+            document.getElementById('input-last').value = savedLast;
+
+            updateStory(savedFirst, savedLast);
+        });
+
+        // 「変換する」ボタンが押された時の処理
+        function applyNames() {
+            const first = document.getElementById('input-first').value.trim() || defaultNames.first;
+            const last = document.getElementById('input-last').value.trim() || defaultNames.last;
+
+            // ブラウザに名前を記憶させる (ページを移動しても維持されます)
+            localStorage.setItem('dream_first', first);
+            localStorage.setItem('dream_last', last);
+
+            updateStory(first, last);
+        }
+
+        // 「初期値に戻す」ボタンが押された時の処理
+        function resetNames() {
+            document.getElementById('input-first').value = defaultNames.first;
+            document.getElementById('input-last').value = defaultNames.last;
+
+            localStorage.removeItem('dream_first');
+            localStorage.removeItem('dream_last');
+
+            updateStory(defaultNames.first, defaultNames.last);
+        }
+
+        // 本文中の名前を一括置換する関数
+        function updateStory(first, last) {
+            const nameElements = document.querySelectorAll('.name-converted');
+            nameElements.forEach(el => {
+                const type = el.getAttribute('data-type');
+                if (type === 'first') {
+                    el.textContent = first;
+                } else if (type === 'last') {
+                    el.textContent = last;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

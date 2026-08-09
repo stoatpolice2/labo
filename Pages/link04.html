@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastel Bubble | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --------------------------------------------------
+       1. 全体・パステル背景設定
+    -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      /* ふわっとしたパステルグラデーション */
+      background: linear-gradient(135deg, #ffe6fa 0%, #e0f7fa 50%, #fff3e0 100%);
+      color: #5a5266;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    /* --------------------------------------------------
+       2. メインコンテナ
+    -------------------------------------------------- */
+    .bubble-container {
+      max-width: 760px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    /* --------------------------------------------------
+       3. プロフィールカード（雲・キャンディ風）
+    -------------------------------------------------- */
+    .profile-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 30px;
+      padding: 30px 24px;
+      width: 90%;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(180, 160, 200, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-frame {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, #ffb7b2, #ffdac1, #e2f0cb, #b5ead7, #c7ceea);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+    }
+
+    .name-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.8rem;
+      color: #6c5ce7;
+      letter-spacing: 1px;
+    }
+
+    .bio-text {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: #726a80;
+    }
+
+    /* --------------------------------------------------
+       4. シャボン玉（バブル）グリッド ＆ アニメーション
+    -------------------------------------------------- */
+    .bubble-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px 24px;
+      width: 100%;
+      padding: 20px 0;
+    }
+
+    /* シャボン玉基本スタイル */
+    .bubble-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 26px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #4a4255;
+      border-radius: 50px; /* カプセル〜球体形状 */
+      
+      /* シャボン玉特有の立体感と光彩 */
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, var(--bubble-bg) 60%, rgba(255, 255, 255, 0.4) 100%);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 
+        inset -5px -5px 12px rgba(0, 0, 0, 0.03),
+        inset 5px 5px 12px rgba(255, 255, 255, 0.9),
+        0 8px 20px var(--bubble-shadow);
+      
+      backdrop-filter: blur(4px);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+      cursor: pointer;
+
+      /* フワフワ浮かぶアニメーション適用 */
+      animation: float 4s ease-in-out infinite alternate;
+    }
+
+    /* 上下にふわふわ揺れるCSSアニメーション */
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-12px) rotate(2deg);
+      }
+    }
+
+    /* 奇数・偶数で揺れのタイミングと移動距離を変えて自然に見せる */
+    .bubble-link:nth-child(even) {
+      animation-duration: 4.5s;
+      animation-delay: -1.5s;
+    }
+    .bubble-link:nth-child(3n) {
+      animation-duration: 3.8s;
+      animation-delay: -0.8s;
+    }
+
+    /* ホバー時のぷにっと膨らむ効果 */
+    .bubble-link:hover {
+      animation-play-state: paused; /* ホバー時は揺れを停止 */
+      transform: scale(1.12) translateY(-4px) !important;
+      box-shadow: 
+        inset -2px -2px 8px rgba(0, 0, 0, 0.02),
+        inset 4px 4px 10px rgba(255, 255, 255, 1),
+        0 14px 28px var(--bubble-shadow);
+    }
+
+    /* パステルカラーバリエーション */
+    .bbl-site    { --bubble-bg: #fff9db; --bubble-shadow: rgba(255, 230, 120, 0.4); } /* レモン */
+    .bbl-x       { --bubble-bg: #f1f3f5; --bubble-shadow: rgba(180, 190, 200, 0.4); } /* ソーダホワイト */
+    .bbl-insta   { --bubble-bg: #ffe3e3; --bubble-shadow: rgba(255, 160, 160, 0.4); } /* ストロベリー */
+    .bbl-pixiv   { --bubble-bg: #e7f5ff; --bubble-shadow: rgba(140, 200, 255, 0.4); } /* ベビーブルー */
+    .bbl-bsky    { --bubble-bg: #d0ebff; --bubble-shadow: rgba(100, 180, 255, 0.4); } /* クラウドブルー */
+    .bbl-misskey { --bubble-bg: #f3d9fa; --bubble-shadow: rgba(220, 150, 240, 0.4); } /* コットンキャンディ */
+    .bbl-masto   { --bubble-bg: #e5dbff; --bubble-shadow: rgba(180, 150, 255, 0.4); } /* ラベンダー */
+    .bbl-mail    { --bubble-bg: #ffe8cc; --bubble-shadow: rgba(255, 180, 120, 0.4); } /* ピーチ */
+
+    /* レスポンシブ調整 */
+    @media (max-width: 480px) {
+      .bubble-grid {
+        gap: 14px 12px;
+      }
+      .bubble-link {
+        padding: 12px 20px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubble-container">
+    
+    <!-- プロフィールカード -->
+    <div class="profile-card">
+      <div class="avatar-frame">
+        <img src="../images/icon.png" alt="プロフィール画像">
+      </div>
+      <div class="name-title">your name</div>
+      <p class="bio-text">
+        ここに自己紹介などを入力してください。<br><br>※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+    </div>
+
+    <!-- シャボン玉リンク集（8つ） -->
+    <div class="bubble-grid">
+      <a href="#" class="bubble-link bbl-site">🌐 Web Site</a>
+      <a href="#" class="bubble-link bbl-x">𝕏 (Twitter)</a>
+      <a href="#" class="bubble-link bbl-insta">📷 Instagram</a>
+      <a href="#" class="bubble-link bbl-pixiv">🎨 pixiv</a>
+      <a href="#" class="bubble-link bbl-bsky">🦋 BlueSky</a>
+      <a href="#" class="bubble-link bbl-misskey">🚀 Misskey</a>
+      <a href="#" class="bubble-link bbl-masto">🐘 Mastodon</a>
+      <a href="#" class="bubble-link bbl-mail">✉️ Mail Form</a>
+    </div>
+
+  </div>
+  <br>
+  
+  <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+</body>
+</html>

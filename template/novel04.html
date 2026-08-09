@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Novel | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        /* --- 基本設定 & カラー変数 --- */
+        :root {
+            --bg-color: #0b1325;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-sub: #94a3b8;
+            --accent-color: #d4af37; /* 月明かりのゴールド */
+            --accent-glow: rgba(212, 175, 55, 0.3);
+            --font-family: 'Georgia', 'Yu Mincho', '游明朝', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 2.1;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- 背景の雪キャンバス --- */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* --- レイアウト --- */
+        header.site-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(11, 19, 37, 0.85), transparent);
+            backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+
+        header.site-header h1 {
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            font-weight: normal;
+        }
+
+        header.site-header h1 a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        header.site-header h1 a:hover {
+            color: var(--accent-color);
+        }
+
+        .back-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        main {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 9rem 1.5rem 6rem;
+        }
+
+        /* --- 小説本文エリア --- */
+        article {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 4rem 3rem;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .novel-header {
+            position: relative;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 3.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .novel-subtitle {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            letter-spacing: 0.2em;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .novel-title {
+            font-size: 1.8rem;
+            font-weight: normal;
+            letter-spacing: 0.15em;
+            color: #fff;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .novel-body {
+            font-size: 1.05rem;
+            letter-spacing: 0.08em;
+            text-align: justify;
+        }
+
+        .novel-body p {
+            margin-bottom: 2rem;
+            text-indent: 1em;
+        }
+
+        /* セクション区切り飾り */
+        .scene-break {
+            text-align: center;
+            color: var(--accent-color);
+            margin: 3rem 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.5em;
+            opacity: 0.7;
+        }
+
+        /* --- 前後ナビゲーション --- */
+        .novel-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.9rem;
+        }
+
+        .novel-nav a {
+            color: var(--text-sub);
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: 0.1em;
+        }
+
+        .novel-nav a:hover {
+            color: #fff;
+        }
+
+        .novel-nav .disabled {
+            color: rgba(148, 163, 184, 0.3);
+            pointer-events: none;
+        }
+
+        /* --- フッター --- */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            border-top: 1px solid var(--card-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        footer a {
+            color: var(--text-sub);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        /* スマホ向け調整 */
+        @media (max-width: 600px) {
+            main {
+                padding: 7rem 1rem 4rem;
+            }
+            article {
+                padding: 2.5rem 1.5rem;
+            }
+            .novel-header {
+                margin-bottom: 2.5rem;
+                padding-bottom: 1.5rem;
+            }
+            .novel-title {
+                font-size: 1.4rem;
+            }
+            .novel-body {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 雪が降る背景キャンバス -->
+    <canvas id="snow-canvas"></canvas>
+
+    <!-- ヘッダー -->
+    <header class="site-header">
+        <h1><a href="index.html">Silent Night</a></h1>
+        <a href="#" class="back-link">← 目次へ戻る</a>
+    </header>
+
+    <main>
+        <article>
+            <!-- 小説見出し -->
+            <div class="novel-header">
+                <p class="novel-subtitle">Chapter 01</p>
+                <h1 class="novel-title">第一章：白銀の足跡</h1>
+            </div>
+
+            <!-- 小説本文 -->
+            <div class="novel-body">
+                <p>
+                    時計の針が午前2時を指した頃、窓の外はすっかり静まり返っていた。カーテンを少し開けると、街灯のあかりに照らされた雪が、ひとつ、またひとつと落ちてくる。それはまるで誰の耳にも届かない小さなささやきのようだった。
+                </p>
+                <p>
+                    温かい紅茶のカップを両手で包み込みながら、私はただぼんやりと窓の外の闇を見つめていた。昼間の喧騒が嘘だったかのように、世界からはすべての音が削ぎ落とされている。積もりゆく雪は、過去の記憶も街の痕跡も、すべてを等しくやさしく覆い隠していく。
+                </p>
+
+                <div class="scene-break">◇ ◇ ◇</div>
+
+                <p>
+                    重いコートを羽織り、そっとドアを開ける。冷気が一瞬で肌を刺したが、不思議と不快ではなかった。むしろ、濁っていた頭の中がすみずみまで澄み渡っていくような感覚だった。
+                </p>
+                <p>
+                    誰も踏み入れていない新雪の上に、一歩を踏み出す。キュッ、という小さな音が、静寂な夜の空気に小さく響いた。振り返ると、そこにはまっさらな白の世界に、たったひとつだけの自分の足跡が残されていた。
+                </p>
+            </div>
+
+            <!-- 前後の話へのナビゲーション -->
+            <nav class="novel-nav">
+            <!-- 「前の話」のボタンを表示する場合は「disabled」を削除してください -->
+                <span class="disabled">← 前の章へ</span>
+                <a href="#">目次</a>
+                <a href="#">第二章へ →</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank">Stoat Labo</a></p>
+    </footer>
+
+    <!-- スクリプト -->
+    <script>
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const numFlakes = 80;
+        const flakes = [];
+
+        for (let i = 0; i < numFlakes; i++) {
+            flakes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2 + 0.5,
+                density: Math.random() * 0.5 + 0.5,
+                opacity: Math.random() * 0.7 + 0.3
+            });
+        }
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < numFlakes; i++) {
+                const f = flakes[i];
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${f.opacity})`;
+                ctx.fill();
+
+                f.y += Math.pow(f.density, 2) + 0.3;
+                f.x += Math.sin(f.y / 30) * 0.3;
+
+                if (f.y > height) {
+                    f.y = -10;
+                    f.x = Math.random() * width;
+                }
+            }
+            requestAnimationFrame(drawSnow);
+        }
+        drawSnow();
+    </script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Magazinerack | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイトです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <!-- Google Fonts: Cormorant Garamond & Noto Serif JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@300;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --------------------------------------------------
+       1. 全体・シックなカラー設定
+    -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Noto Serif JP', serif;
+      background-color: #f4f1ea;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 60px 20px;
+      overflow-x: hidden;
+    }
+
+    /* --------------------------------------------------
+       2. エディトリアル・マガジンラック（全体の枠組み）
+    -------------------------------------------------- */
+    .magazine-container {
+      max-width: 860px;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #e0dad0;
+      padding: 50px 40px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+      display: grid;
+      grid-template-columns: 260px 1fr; /* 左：プロフィール写真 / 右：メインコンテンツ */
+      gap: 40px;
+      align-items: start;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    /* --------------------------------------------------
+       3. 左側：雑誌のグラフィック（プロフィール写真 ＆ タイトル）
+    -------------------------------------------------- */
+    .cover-art {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 40px;
+    }
+
+    /* 雑誌の発行号・見出し風テキスト */
+    .issue-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #8c857b;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 6px;
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      background: #e8e3d9;
+      position: relative;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%); /* ほんのりモノトーン寄りに */
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+
+    .photo-frame:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.03);
+    }
+
+    .cover-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-top: 4px;
+    }
+
+    /* --------------------------------------------------
+       4. 右側：自己紹介 ＆ 目次風SNSリンク集
+    -------------------------------------------------- */
+    .content-column {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* エディトリアル自己紹介文 */
+    .editorial-bio {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: #4a453f;
+      font-weight: 300;
+      border-left: 2px solid #1a1a1a;
+      padding-left: 18px;
+    }
+
+    /* リンクの目次（インデックス）グループ */
+    .index-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    /* 個別リンクアイテム */
+    .index-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid #e8e3d9;
+      text-decoration: none;
+      color: #1a1a1a;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    /* 番号＋名前 */
+    .item-left {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .item-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: #a39c93;
+      font-style: italic;
+    }
+
+    .item-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* 矢印アイコン */
+    .item-arrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      opacity: 0.3;
+      transform: translateX(-8px);
+      transition: all 0.3s ease;
+    }
+
+    /* ホバー時の洗練されたアニメーション */
+    .index-item:hover {
+      padding-left: 8px;
+      background: rgba(244, 241, 234, 0.4);
+    }
+
+    .index-item:hover .item-label {
+      color: #000000;
+    }
+
+    .index-item:hover .item-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* --------------------------------------------------
+       5. レスポンシブ対応（スマホでは1列に）
+    -------------------------------------------------- */
+    @media (max-width: 720px) {
+      .magazine-container {
+        grid-template-columns: 1fr;
+        padding: 30px 20px;
+        gap: 30px;
+      }
+
+      .cover-art {
+        position: static;
+        align-items: center;
+        text-align: center;
+      }
+
+      .photo-frame {
+        width: 180px;
+        height: 220px;
+      }
+
+      .cover-title {
+        font-size: 1.8rem;
+      }
+
+      .editorial-bio {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="magazine-container">
+    
+    <!-- 左：表紙（カバーグラフィック）エリア -->
+    <aside class="cover-art">
+      <div class="issue-tag">Profile</div>
+      <div class="photo-frame">
+        <img src="../images/icon.png" alt="プロフィール画像">
+      </div>
+      <h1 class="cover-title">your name</h1>
+    </aside>
+
+    <!-- 右：テキスト ＆ 目次風SNSリンク集 -->
+    <main class="content-column">
+      
+      <!-- 自己紹介文 -->
+      <section class="editorial-bio">
+        <p>
+          ここに自己紹介などを入力してください。<br><br>※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+        </p>
+      </section>
+
+      <!-- 8つの目次風リンク -->
+      <nav class="index-list">
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">01</span>
+            <span class="item-label">Website</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">02</span>
+            <span class="item-label">X (Twitter)</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">03</span>
+            <span class="item-label">Instagram</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">04</span>
+            <span class="item-label">pixiv</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">05</span>
+            <span class="item-label">Bluesky</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">06</span>
+            <span class="item-label">Misskey</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">07</span>
+            <span class="item-label">Mastodon</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+
+        <a href="#" class="index-item">
+          <div class="item-left">
+            <span class="item-num">08</span>
+            <span class="item-label">Mail form</span>
+          </div>
+          <span class="item-arrow">→</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+  <br>
+
+  <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+</body>
+</html>
