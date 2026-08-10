@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進くんと学ぶ！Web制作（JS版）</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+    <!-- ゲーム画面全体コンテナ -->
+    <div id="game-container">
+        <!-- 背景画像 -->
+        <div id="bg-layer"></div>
+
+        <!-- 猪狩進の立ち絵 -->
+        <img id="susumu-img" src="images/susumu_normal.png" alt="猪狩進">
+
+        <!-- 名前入力画面（初期状態） -->
+        <div id="name-input-box" class="overlay-box">
+            <p>お名前（または監督名）を教えてね！</p>
+            <input type="text" id="player-name-input" placeholder="監督" maxlength="10">
+            <button id="start-btn">決定</button>
+        </div>
+
+        <!-- 選択肢枠（クイズ時などに表示） -->
+        <div id="choice-box" class="overlay-box hidden"></div>
+
+        <!-- メッセージボックス -->
+        <div id="message-box" class="hidden">
+            <div id="speaker-name">猪狩進</div>
+            <div id="message-text"></div>
+            <div id="next-arrow">▼</div>
+        </div>
+    </div>
+
+    <!-- シナリオデータを読み込む -->
+    <script src="scenarioData.js"></script>
+
+    <!-- ゲームのメイン処理を読み込む -->
+    <script src="game.js"></script>
+</body>
+</html>
