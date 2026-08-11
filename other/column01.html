@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>超！初心者向けHTML編集講座 | Stoat Labo</title>
-    
+
   <!-- ファビコンの設定 -->
   <link rel="icon" href="../images/icon.png" type="image/x-icon">
 
@@ -16,28 +16,28 @@
   <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
   <meta property="og:site_name" content="Stoat Labo">
   <meta property="og:locale" content="ja_JP">
-    
+
 <style>
     /* ----------------------------------
-       CSS RESET & VARIABLES
+        CSS RESET & VARIABLES
     ---------------------------------- */
-   :root {
-     --primary: #E06D53;
-     --primary-hover: #C8563C;
-     --accent: #E8963E;
-     --bg-main: #FAF7F5;
-     --bg-card: #FFFFFF;
-     --text-main: #332C2B;
-     --text-muted: #7A6E6B;
-     --border: #E6DAD3;
-     --radius: 16px;
-     --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
-     --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
-     --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
-     --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
-   }
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
 
-   /* ----------------------------------
+    /* ----------------------------------
     LAYOUT & NAV
     ---------------------------------- */
     .section,
@@ -86,7 +86,7 @@ a:hover {
 }
 
 /* ----------------------------------
-   HERO AREA
+    HERO AREA
 ---------------------------------- */
 .hero {
     background: var(--grad-hero);
@@ -148,7 +148,7 @@ a:hover {
 }
 
 /* ----------------------------------
-   LAYOUT & NAV
+    LAYOUT & NAV
 ---------------------------------- */
 nav {
     background: var(--grad-primary);
@@ -230,7 +230,7 @@ nav a:hover {
 }
 
 /* ----------------------------------
-   ARTICLE SPECIFIC STYLES
+    ARTICLE SPECIFIC STYLES
 ---------------------------------- */
 h3.sub-title {
     font-size: 1.1rem;
@@ -248,7 +248,7 @@ h3.sub-title {
 .rule-list li {
     position: relative;
     padding-left: 28px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .rule-list li::before {
@@ -391,27 +391,42 @@ footer {
         <!-- 1. 準備編 -->
         <section id="editor" class="section">
             <h2 class="section-title">1. 準備編：そもそも何を使って編集するの？</h2>
-            <p>HTMLファイルは、パソコンに入っている「メモ帳」でも編集できます。でも、少し見やすくなる「テキストエディタ」というソフトを使うと作業がとっても楽になります。</p>
+            <p>HTMLファイルは、パソコンに入っている「メモ帳」でも編集できます。でも、文字に色がついて見やすくなったり、入力の手助けをしてくれる「テキストエディタ」という専用ソフトを使うと作業が格段に楽になりますよ。</p>
             
             <h3 class="sub-title">おすすめのテキストエディタ</h3>
             <ul class="rule-list">
-                <li><strong>MaryTextEditor：</strong> 軽くてシンプルです。「メモ帳」に近い感覚で使えるので初心者の方におすすめです。</li>
-                <li><strong>Brackets / VS Code：</strong> コードに色がついて見やすくなったり、入力の手助けをしてくれる便利なソフトです。</li>
+                <li>
+                    <strong>MaryTextEditor（メアリーテキストエディタ）</strong><br>
+                    動作が非常に軽く、見た目もシンプルです。「メモ帳」に近い感覚で直感的に操作できるため、難しい機能に惑わされたくない初心者の方におすすめです。インストール不要のポータブル版もありますよ！
+                </li>
+                <li>
+                    <strong>サクラエディタ</strong><br>
+                    昔から日本のWeb制作で愛用されている定番の無料ソフトです。画面が見やすく日本語のサポートも充実しているため、安心して使いたい方に向いています。
+                </li>
+                <li>
+                    <strong>Phoenix Code（フェニックスコード）</strong><br>
+                    Bracketsという有名ソフトの後継で、画面のプレビュー確認やコード補完が得意なWeb制作向けエディタです。後述するWebブラウザ版も用意されているため、手軽に高度な編集を行いたい方にぴったりです。
+                </li>
+                <li>
+                    <strong>VS Code（Visual Studio Code）</strong><br>
+                    プロのエンジニアも標準で使用している世界で最も人気のある超高機能エディタです。将来的に本格的なWeb制作やデザインを勉強したい方は、最初からこれに慣れておくのも選択肢です。
+                </li>
             </ul>
 
             <h3 class="sub-title">ソフトのダウンロードが面倒なときは</h3>
-            <p>FC2ホームページなどの管理画面にあるWebエディタを使うと、ソフトを入れずにブラウザ上で編集ができます。初心者の方にはプレビューを見ながら感覚的に編集ができる「TinyMCEエディタ」がおすすめですよ。</p>
-            
-            <div class="alert-box">
-                <strong>💡 少しだけ注釈</strong><br>
-                ブラウザ上のエディタは手軽で良いのですが、「2つのファイルを並行作業で編集する」などの操作が難しいです。慣れてきたらパソコンソフトで編集するのが便利かもしれません🐾
-            </div>
+            <p>FC2ホームページなどの管理画面にあるWebエディタを使うと、ソフトを入れずにブラウザ上で編集ができます。初心者の方にはプレビューを見ながら感覚的に編集ができる「TinyMCEエディタ」がおすすめですよ。「Phoenix Code」もダウンロード不要のWeb版があり、これの「デザインモード」機能でも感覚的な編集が可能です🐾</p>
         </section>
 
         <!-- 2. 基本編集編 -->
         <section id="basic" class="section">
             <h2 class="section-title">2. 実践編：実際にテンプレートを書き換えてみよう</h2>
-            <p>当サイトで配っているテンプレート『Gallery & Portfolio』を例にして、書き換える場所を順番に見ていきますね！</p><br>
+            <p>当サイトで配っているテンプレート『Gallery & Portfolio』を例にして、書き換える場所を順番に見ていきますね！</p>
+            
+            <div class="alert-box" style="margin-bottom: 24px;">
+                <strong>💡 作業を始める前の重要テクニック！</strong><br>
+                編集ミスで表示がおかしくなったときにすぐ元に戻せるよう、作業を始める前にHTMLファイルをコピーして「index_backup.html」などの名前で**バックアップ保存**しておきましょう🐾<br>
+                編集した結果は、HTMLファイルをダブルクリックしてブラウザで開くことで確認できます。
+            </div>
 
             <div class="step-item">
                 <h3><span class="step-number">1</span>ページのタイトルを変える</h3>
@@ -496,11 +511,9 @@ footer {
             </ul>
 
             <div class="alert-box">
-                <strong>💡 相対パスが難しいときは「絶対パス」を使ってもOK！</strong><br>
-                フォルダの階層関係を考えるのが面倒なときは、画像の置いてあるネット上の完全な住所（URL）をそのまま指定する<strong>「絶対パス」</strong>を使うと、どこからでも確実に画像を表示させることができます。<br>
-                <pre><code><span class="comment">&lt;!-- 絶対パスの書き方例 --&gt;</span>
-&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"https://example.com/images/my-photo.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"私の写真"</span>&gt;</code></pre>
-                ※ご自身のサーバーや、画像保管用のブログ等に画像をアップロードした際のURLを <code>src=""</code> の中に入れてみてくださいね。
+                <strong>💡 補足：絶対パスについて</strong><br>
+              相対パスの指定が難しいと感じる場合は、完全なURL（例: <code>"https://example.com/images/photo.jpg"</code>）を指定する<strong>「絶対パス」</strong>という書き方でもOKです。<br>
+              ただし、自分のパソコン内で制作中（未公開）の場合はサーバーにアップロードするまでPC上で画像が反映されないため<strong>「相対パス（例:<code>"images/photo.jpg"</code>）」</strong>で管理するのが確実です！
             </div>
         </section>
 
