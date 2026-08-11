@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進くんと学ぶ！Webサイト制作入門 | トップページ</title>
+    <!-- 共通・機能別CSSの読み込み -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="utility.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <span class="subtitle">パワフル野球部と学ぶ体験型Web学習</span>
+            <h1>進くんと学ぶ！Webサイト制作入門</h1>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 講座についての紹介ヒーローエリア -->
+        <section class="portal-hero">
+            <h2>野球の練習みたいに、Web制作を基礎から楽しく学ぼう！</h2>
+            <p>
+                この講座は、猪狩進くんと一緒に会話形式のゲーム（会話パート）でイメージを掴み、<br>
+                実践的なWebノート（解説パート）で手書きHTML/CSSの基礎を身につける体験型学習システムです。
+            </p>
+        </section>
+
+        <!-- メインビジュアル（クリア前：ゲームSS / クリア後：青空スチル） -->
+        <div class="preview-box">
+            <span id="clear-badge" class="clear-badge">👑 COMPLETE!</span>
+            <img id="portal-preview-img" class="preview-img" src="images/game_ss.jpg" alt="ゲーム画面プレビュー">
+        </div>
+
+        <!-- 🏷️ プレイヤー名（お名前変換）設定フォーム -->
+        <section class="player-setup-box">
+            <h3>✏️ プレイヤーのお名前設定</h3>
+            <p class="setup-desc">進くんがゲーム内であなたを呼ぶ名前を設定できます。</p>
+            <div class="name-input-group">
+                <label for="portal-name-input" class="sr-only">プレイヤーのお名前</label>
+                <input type="text" id="portal-name-input" placeholder="マネージャー" maxlength="10">
+                <button class="name-save-btn" id="portal-save-btn">保存する</button>
+            </div>
+        </section>
+
+        <!-- 👑 クリア特典（全章クリア者のみ自動表示） -->
+        <div id="cleared-reward-box" class="reward-card">
+            <div>
+                <div class="reward-title">👑 全5章完走おめでとうございます！</div>
+                <div class="reward-desc">
+                    進くんとの学習をすべて修了しました！ゲーム右上にある「👕 衣装切替」ボタンから、いつでもブレザー姿の進くんと一緒に復習できます。
+                </div>
+            </div>
+            <a href="index.html?ch=cleared" class="btn-game reward-btn">
+                🏆 エピローグを見る
+            </a>
+        </div>
+
+        <!-- メインゲーム開始ボタン -->
+        <div class="start-game-box">
+            <a href="index.html" class="next-game-btn start-btn">
+                🎮 ゲームを第1章からスタートする！
+            </a>
+        </div>
+
+        <!-- 講座の学習目次一覧 -->
+        <section class="content-section">
+            <h2>📚 カリキュラム目次</h2>
+            <p>気になる章を選択して、ゲームパートまたは解説テキストから直接学習を始めることもできます。</p>
+
+            <div class="chapter-list">
+
+                <!-- 第1章 -->
+                <div class="chapter-card">
+                    <div class="chapter-info">
+                        <span class="chapter-number">第1章</span>
+                        <div class="chapter-title">まずは道具を揃えよう！〜HTMLの基本骨格〜</div>
+                        <div class="chapter-desc">HTMLの役割と、文書の基礎となるタグ（DOCTYPE宣言やpタグ）の考え方を学びます。</div>
+                    </div>
+                    <div class="chapter-links">
+                        <a href="index.html?ch=1" class="btn-game">🎮 ゲームで遊ぶ</a>
+                        <a href="chapter01.html" class="btn-web">📖 解説を読む</a>
+                    </div>
+                </div>
+
+                <!-- 第2章 -->
+                <div class="chapter-card">
+                    <div class="chapter-info">
+                        <span class="chapter-number">第2章</span>
+                        <div class="chapter-title">文章に背番号をつけよう！〜見出し・段落・改行〜</div>
+                        <div class="chapter-desc">見出しタグ（h1〜h6）の正しい順番や、文章の段落（p）と改行（br）の使い分けをマスターします。</div>
+                    </div>
+                    <div class="chapter-links">
+                        <a href="index.html?ch=2" class="btn-game">🎮 ゲームで遊ぶ</a>
+                        <a href="chapter02.html" class="btn-web">📖 解説を読む</a>
+                    </div>
+                </div>
+
+                <!-- 第3章 -->
+                <div class="chapter-card">
+                    <div class="chapter-info">
+                        <span class="chapter-number">第3章</span>
+                        <div class="chapter-title">試合のハイライト（画像）を飾ろう！〜imgタグと相対パス〜</div>
+                        <div class="chapter-desc">画像を表示するimgタグの使い方と、ファイルの場所を示す「相対パス」の概念を理解します。</div>
+                    </div>
+                    <div class="chapter-links">
+                        <a href="index.html?ch=3" class="btn-game">🎮 ゲームで遊ぶ</a>
+                        <a href="chapter03.html" class="btn-web">📖 解説を読む</a>
+                    </div>
+                </div>
+
+                <!-- 第4章 -->
+                <div class="chapter-card">
+                    <div class="chapter-info">
+                        <span class="chapter-number">第4章</span>
+                        <div class="chapter-title">他のグラウンドへ遠征だ！〜aタグと別タブ表示〜</div>
+                        <div class="chapter-desc">ページ同士をつなぐリンク（aタグ）や、外部サイトを安全に開くtarget="_blank"を学びます。</div>
+                    </div>
+                    <div class="chapter-links">
+                        <a href="index.html?ch=4" class="btn-game">🎮 ゲームで遊ぶ</a>
+                        <a href="chapter04.html" class="btn-web">📖 解説を読む</a>
+                    </div>
+                </div>
+
+                <!-- 第5章 -->
+                <div class="chapter-card">
+                    <div class="chapter-info">
+                        <span class="chapter-number">第5章</span>
+                        <div class="chapter-title">CSSでユニフォームを着せよう！〜CSSの基礎〜</div>
+                        <div class="chapter-desc">見た目を飾るCSSの書き方（セレクタ・プロパティ・値）や、色・サイズ・配置の変え方を学びます。</div>
+                    </div>
+                    <div class="chapter-links">
+                        <a href="index.html?ch=5" class="btn-game">🎮 ゲームで遊ぶ</a>
+                        <a href="chapter05.html" class="btn-web">📖 解説を読む</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- この講座の進め方案内 -->
+        <section class="content-section">
+            <h2>💡 この講座の学習スタイル</h2>
+            <div class="memo-box">
+                <div class="memo-title">おすすめの学習ステップ</div>
+                <ol class="step-list">
+                    <li><strong>ステップ1：</strong> ゲームパートで進くんとの会話・クイズを楽しみながら大まかな概念を把握！</li>
+                    <li><strong>ステップ2：</strong> 会話の最後に出るボタンから解説Webページへ移動！</li>
+                    <li><strong>ステップ3：</strong> 実際のコード例を見ながら手書きHTML/CSSの書き方をチェック！</li>
+                    <li><strong>ステップ4：</strong> 解説ページの末尾から次の章のゲームへ！</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- AI技術活用に関するクレジット表示 -->
+        <div class="ai-credit-box">
+            <strong>🤖 制作・技術に関するお知らせ</strong><br>
+            当学習コンテンツのプログラム構築および一部グラフィック・素材制作には、補助ツールとして生成AI技術を活用しております。より分かりやすく快適な学習体験をお届けできるよう、手作業での調整や工夫を重ねて制作しています。
+        </div>
+
+        <!-- データの初期化（リセット）ボタンエリア -->
+        <div class="reset-area">
+            <button id="reset-data-btn" class="reset-btn">🗑️ 学習データをリセット（初期化）する</button>
+        </div>
+
+    </main>
+
+    <!-- ポータル連動スクリプト -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameInput = document.getElementById('portal-name-input');
+            const saveBtn = document.getElementById('portal-save-btn');
+            const rewardBox = document.getElementById('cleared-reward-box');
+            const previewImg = document.getElementById('portal-preview-img');
+            const clearBadge = document.getElementById('clear-badge');
+            const resetBtn = document.getElementById('reset-data-btn');
+
+            // 1. 保存済みのお名前があれば初期表示
+            const savedName = localStorage.getItem('player_name');
+            if (savedName) {
+                nameInput.value = savedName;
+            }
+
+            // 2. 名前の保存処理
+            saveBtn.addEventListener('click', () => {
+                const val = nameInput.value.trim();
+                if (val !== "") {
+                    localStorage.setItem('player_name', val);
+                    alert(`名前を「${val}」に設定しました！ゲームに反映されます。`);
+                } else {
+                    localStorage.removeItem('player_name');
+                    alert('名前をデフォルト（マネージャー）に戻しました。');
+                }
+            });
+
+            // 3. クリア判定による画像差し替え＆特典バッジ表示
+            const isCleared = localStorage.getItem('game_cleared');
+            if (isCleared) {
+                rewardBox.classList.add('is-active');
+                clearBadge.style.display = 'block';
+                previewImg.src = 'images/clear.jpg';
+            }
+
+            // 4. データリセット機能
+            resetBtn.addEventListener('click', () => {
+                const confirmReset = confirm("【注意】名前の設定、クリア実績、衣装の解放状況がすべて削除されます。\n本当に真っ白な状態からやり直しますか？");
+                if (confirmReset) {
+                    localStorage.removeItem('player_name');
+                    localStorage.removeItem('game_cleared');
+                    localStorage.removeItem('susumu_outfit');
+                    alert("すべての学習データを初期化しました。最初からお楽しみください！");
+                    location.reload(); 
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

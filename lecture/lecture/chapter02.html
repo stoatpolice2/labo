@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>第2章：文章に背番号をつけよう | 進くんと学ぶ！Webサイト制作</title>
-    <!-- 第1章で作ったstyle.cssをそのまま読み込みます -->
+    <!-- CSSの読み込み -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="utility.css">
 </head>
 <body>
 
@@ -25,7 +27,7 @@
                 <span class="avatar-name">猪狩進</span>
             </div>
             <div class="speech-bubble">
-                見出しや段落を正しく使うと、観覧者だけじゃなく検索エンジンにも『構造がしっかりした素晴らしいサイトだ！』って評価してもらえるんだ。正しい打順（タグの役割）を覚えていこう！
+                見出しや段落を正しく使うと、閲覧者だけじゃなく検索エンジンにも『構造がしっかりした素晴らしいサイトだ！』って評価してもらえるんだ。正しい打順（タグの役割）を覚えていこう！
             </div>
         </div>
 
@@ -37,9 +39,9 @@
                 <table class="explain-table">
                     <thead>
                         <tr>
-                            <th>タグ名</th>
-                            <th>役割</th>
-                            <th>進くんの例え（打順）</th>
+                            <th scope="col">タグ名</th>
+                            <th scope="col">役割</th>
+                            <th scope="col">進くんの例え（打順）</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,12 +53,12 @@
                         <tr>
                             <td><code>&lt;h2&gt;</code></td>
                             <td>中見出し</td>
-                          <td>セクションの要！<strong>「3番・5番打者」</strong></td>
+                            <td>セクションの要！<strong>「3番・5番打者」</strong></td>
                         </tr>
                         <tr>
                             <td><code>&lt;h3&gt;</code></td>
                             <td>小見出し</td>
-                          <td>グループをまとめる<strong>「つなぎの打者」</strong></td>
+                            <td>グループをまとめる<strong>「つなぎの打者」</strong></td>
                         </tr>
                         <tr>
                             <td><code>&lt;h4&gt;〜&lt;h6&gt;</code></td>
@@ -70,6 +72,18 @@
             <div class="memo-box">
                 <div class="memo-title">💡 見出しの鉄則：数字を飛ばさない！</div>
                 <p>文字を大きくしたいからといって <code>&lt;h1&gt;</code> の直後に <code>&lt;h3&gt;</code> を使うのはNGです。必ず <code>&lt;h1&gt;</code> → <code>&lt;h2&gt;</code> → <code>&lt;h3&gt;</code> と順番通りに階層を守りましょう。</p>
+                
+                <hr class="memo-divider">
+
+                <div class="memo-title">⚾ なぜこのルールがあるの？</div>
+                <!-- ul直下のpタグをliタグに修正 -->
+                <ul>
+                    <li><strong>①アクセシビリティ（読み上げ機能）：</strong> 画面読み上げソフトを使う視覚障害のある方が、階層順にスキップしながらページ構造を理解できるようにするためです。階層が飛ぶと案内が混乱してしまいます。</li>
+                    <li><strong>②SEO（検索エンジン対策）：</strong> Googleなどのロボットが「何についての文書か」を正確に理解し、正しく評価してくれるようになります。</li>
+                </ul>
+
+                <p class="memo-subhead"><strong>【なぜ世の中には守られていないサイトが多いの？】</strong></p>
+                <p>「見た目の文字サイズを小さくしたいから」という理由だけで、CSSを使わずに見出しタグ（h3やh4）を選んでしまう人が多いためです。また、階層を飛ばしてもブラウザでエラー画面にならず表示できてしまうことも原因です。</p>
             </div>
         </section>
 
@@ -81,9 +95,9 @@
                 <li><strong>&lt;br&gt;（Break）：</strong> 段落の中で「1行だけ改行したい」ときに使います。閉じタグ（&lt;/br&gt;）は不要です。</li>
             </ul>
 
-            <div class="memo-box" style="background-color: #fef2f2; border-color: #fca5a5; border-left-color: #ef4444;">
-                <div class="memo-title" style="color: #991b1b;">⚠️ やってしまいがちなNG例</div>
-                <p>余白を開けたいからといって <code>&lt;br&gt;&lt;br&gt;&lt;br&gt;</code> と改行タグを連打するのはやめましょう。余白の調整は後でCSS（見た目を整える言語）で行うのがWeb制作のルールです！</p>
+            <div class="memo-box warning">
+                <div class="memo-title">⚠️ やってしまいがちなNG例</div>
+                <p>余白を開けたいからといって <code>&lt;br&gt;&lt;br&gt;&lt;br&gt;</code> と改行タグを連打するのはNG！余白の調整はCSS（見た目を整える言語）で行うのが望ましいです。</p>
             </div>
         </section>
 
@@ -93,7 +107,9 @@
 
             <div class="code-card">
                 <div class="code-header">news.html</div>
-                <pre><code>&lt;h1&gt;パワフル野球部・活動日誌&lt;/h1&gt;
+                <div class="code-block-container">
+                    <button class="copy-btn">📋 コピー</button>
+                    <pre><code>&lt;h1&gt;パワフル野球部・活動日誌&lt;/h1&gt;
 
 &lt;h2&gt;春季大会の結果報告&lt;/h2&gt;
 &lt;p&gt;本日行われた春季大会の第1試合は、激闘の末に勝利することができました！&lt;/p&gt;
@@ -101,6 +117,7 @@
 
 &lt;h2&gt;今週の練習メニュー&lt;/h2&gt;
 &lt;p&gt;次戦に向けて、特に守備の連携を中心に強化していきます。&lt;/p&gt;</code></pre>
+                </div>
             </div>
         </section>
 
@@ -115,8 +132,69 @@
                 文字だけのページができたら、次は写真を入れて一気に華やかにしよう！第3章では「画像（&lt;img&gt;）」の貼り方を学ぶよ！
             </div>
         </div>
-
+        
+        <div class="next-chapter-box">
+            <p class="next-chapter-title">ルールは理解できたかな？さあ、次の練習に進もう！</p>
+            <a href="index.html?ch=3" class="next-game-btn">
+                🎮 第3章「画像を飾ろう！〜&lt;img&gt; タグと相対パス〜」のゲームに挑戦！
+            </a>
+        </div>
+        
     </main>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const copyBtns = document.querySelectorAll('.copy-btn');
+
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const container = btn.closest('.code-block-container');
+                if (!container) return;
+
+                const codeElement = container.querySelector('code');
+                if (!codeElement) return;
+
+                const textToCopy = codeElement.innerText;
+
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(() => showSuccess(btn))
+                        .catch(() => fallbackCopy(textToCopy, btn));
+                } else {
+                    fallbackCopy(textToCopy, btn);
+                }
+            });
+        });
+
+        function showSuccess(btn) {
+            const originalText = btn.textContent;
+            btn.textContent = '✅ コピー完了！';
+            btn.style.background = '#10b981';
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#475569';
+            }, 2000);
+        }
+
+        function fallbackCopy(text, btn) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                showSuccess(btn);
+            } catch (err) {
+                alert('コピーに失敗しました。手動で選択してコピーしてください。');
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+    });
+</script>
 </body>
 </html>

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>第1章：HTMLの基本骨格 | 進くんと学ぶ！Webサイト制作</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="utility.css">
 </head>
 <body>
 
@@ -29,13 +31,35 @@
             </div>
         </div>
 
+        <!-- 💡 コラムの位置を本編に入る前の「豆知識」として上部に集約 
+             さらにMemoボックスではなくColumn専用のライトなデザインに変更 -->
+        <aside class="column-card">
+            <div class="column-header">
+                <span class="column-badge">💡 開発秘話</span>
+                <span class="column-title">このノベルゲームの仕組み</span>
+            </div>
+            <p class="column-text">
+                実は、あなたが今遊んでいるこのゲームも、特別な制作ソフトを使わずすべて手書きの<strong>HTML・CSS・JavaScript</strong>だけで作られています！<br>
+                HTMLで骨格を作り、CSSでデザインを整え、JavaScriptでセリフや分岐をコントロールしているんだ。コードの理解を深めれば、あなたも自分だけのオリジナルWebゲームを作れるようになりますよ！
+            </p>
+        </aside>
+
+        <!-- ここから本編セクション（途中で分断されずテンポよく読める） -->
         <section class="content-section">
             <h2>1. 開発環境の準備</h2>
             <p>Webサイト制作を始めるには、テキストエディタとブラウザが必要です。</p>
             <ul class="check-list">
-                <li><strong>テキストエディタ：</strong> 「VS Code」など、コードが見やすいエディタを準備しましょう。</li>
-                <li><strong>ファイル名：</strong> 最初のページは必ず <code>index.html</code> という半角小文字の名前で保存します。</li>
+                <li><strong>テキストエディタ：</strong> 「メモ帳」などでもいいですが、コードエディタがあればより快適です！</li>
+                <li><strong>ファイル名：</strong> 最初のページは必ず <code>index.html</code> という名前で保存します。</li>
             </ul>
+
+            <div class="memo-box warning">
+                <div class="memo-title">⚠️ ファイル保存時の大事なルール</div>
+                <ul>
+                    <li><strong>必ず「半角英小文字」で入力：</strong> 大文字や全角文字（<code>ｉｎｄｅｘ．ｈｔｍｌ</code>）、スペースが入ると、Webページが正しく表示されない原因になります。</li>
+                    <li><strong>ファイルの「拡張子」を確認：</strong> パソコンの設定で「ファイル名拡張子」を表示する設定にしておきましょう。（<code>index.html.txt</code> のようになってしまうのを防ぐためです）</li>
+                </ul>
+            </div>
         </section>
 
         <section class="content-section">
@@ -44,17 +68,20 @@
 
             <div class="code-card">
                 <div class="code-header">index.html</div>
-                <pre><code>&lt;!DOCTYPE html&gt;
+                <div class="code-block-container">
+                    <button class="copy-btn">📋 コピー</button>
+                    <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;僕の野球部サイト&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;はじめてのWebサイト&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Webサイト制作スタート！&lt;/h1&gt;
-    &lt;p&gt;進くんと一緒に、少しずつ作っていこう。&lt;/p&gt;
+    &lt;p&gt;Webサイト制作を始めよう！&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+                </div>
             </div>
         </section>
 
@@ -65,16 +92,16 @@
                 <table class="explain-table">
                     <thead>
                         <tr>
-                            <th>タグ名</th>
-                            <th>読み方</th>
-                            <th>進くんのワンポイント解説</th>
+                            <th scope="col">タグ名</th>
+                            <th scope="col">読み方</th>
+                            <th scope="col">進くんのワンポイント解説</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><code>&lt;!DOCTYPE html&gt;</code></td>
                             <td>ドックタイプ宣言</td>
-                            <td>「これからHTML5を書くよ！」というブラウザへのあいさつだよ。</td>
+                            <td>「このファイルは最新のHTMLルールで書くよ！」というブラウザへの宣言だよ。</td>
                         </tr>
                         <tr>
                             <td><code>&lt;html lang="ja"&gt;</code></td>
@@ -84,7 +111,22 @@
                         <tr>
                             <td><code>&lt;head&gt;</code></td>
                             <td>ヘッド</td>
-                            <td><strong>「設定部屋」</strong>だよ。タイトルや文字化け防止の設定（UTF-8）を書くんだ。</td>
+                            <td><strong>「設定部屋」</strong>だよ。ページのタイトルや文字コードなど、画面に直接見えない設定を書くんだ。</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;meta charset="UTF-8"&gt;</code></td>
+                            <td>メタ・文字コード</td>
+                            <td>文字化けを防ぐための設定だよ！Webでは「UTF-8」を使うのが標準なんだ。</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;meta name="viewport" ...&gt;</code></td>
+                            <td>メタ・ビューポート</td>
+                            <td>スマホやタブレットで見たときに、画面サイズをピッタリ最適化するためのおまじないだよ！</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;title&gt;</code></td>
+                            <td>タイトル</td>
+                            <td>ブラウザのタブや、検索結果のタイトルとして表示される名前を設定するよ。</td>
                         </tr>
                         <tr>
                             <td><code>&lt;body&gt;</code></td>
@@ -113,7 +155,68 @@
             </div>
         </div>
 
+        <div class="next-chapter-box">
+            <p class="next-chapter-title">お疲れ様！準備ができたら次の練習に進もう！</p>
+            <a href="index.html?ch=2" class="next-game-btn">
+                🎮 第2章「文章に背番号をつけよう」のゲームに挑戦！
+            </a>
+        </div>
+        
     </main>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const copyBtns = document.querySelectorAll('.copy-btn');
+
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const container = btn.closest('.code-block-container');
+                if (!container) return;
+
+                const codeElement = container.querySelector('code');
+                if (!codeElement) return;
+
+                const textToCopy = codeElement.innerText;
+
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(() => showSuccess(btn))
+                        .catch(() => fallbackCopy(textToCopy, btn));
+                } else {
+                    fallbackCopy(textToCopy, btn);
+                }
+            });
+        });
+
+        function showSuccess(btn) {
+            const originalText = btn.textContent;
+            btn.textContent = '✅ コピー完了！';
+            btn.style.background = '#10b981';
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#475569';
+            }, 2000);
+        }
+
+        function fallbackCopy(text, btn) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                showSuccess(btn);
+            } catch (err) {
+                alert('コピーに失敗しました。手動で選択してコピーしてください。');
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+    });
+</script>
 </body>
 </html>
