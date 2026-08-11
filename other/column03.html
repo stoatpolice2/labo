@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>無料で高機能なコードエディタ「Brackets」 | Stoat Labo</title>
+<title>無料で高機能なコードエディタ「Phoenix Code」 | Stoat Labo</title>
     
   <!-- ファビコンの設定 -->
   <link rel="icon" href="../images/icon.png" type="image/x-icon">
@@ -16,6 +16,23 @@
   <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
   <meta property="og:site_name" content="Stoat Labo">
   <meta property="og:locale" content="ja_JP">
+
+  <!-- 構造化データ (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "無料で高機能なコードエディタ「Phoenix Code」",
+    "author": {
+      "@type": "Person",
+      "name": "okojo"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Stoat Labo"
+    }
+  }
+  </script>
     
 <style>
     /* ----------------------------------
@@ -258,6 +275,66 @@
         color: #5A443E;
     }
 
+    /* 目次ボックス */
+    .toc-box {
+        background: #FAF5F2;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 30px;
+    }
+
+    .toc-title {
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .toc-list li {
+        margin-bottom: 6px;
+        padding-left: 18px;
+        position: relative;
+    }
+
+    .toc-list li::before {
+        content: "・";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    /* CTAボタン */
+    .cta-container {
+        text-align: center;
+        margin: 30px 0 10px;
+    }
+
+    .download-btn {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF !important;
+        padding: 14px 32px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        text-decoration: none;
+    }
+
     /* ----------------------------------
         IMAGE STYLES & GRID
     ---------------------------------- */
@@ -422,7 +499,7 @@
     <!-- メインビジュアル -->
     <header class="hero">
         <div class="hero-container">
-            <h1 class="header-title">無料で高機能な<br>コードエディタ「Brackets」</h1>
+            <h1 class="header-title">無料で高機能な<br>コードエディタ「Phoenix Code」</h1>
             <p class="header-subtitle">Webページやゲーム制作に！管理人が愛用するエディタをご紹介</p>
         </div>
     </header>
@@ -440,106 +517,146 @@
 
     <div class="container">
 
+        <!-- 簡易目次ボックス -->
+        <div class="toc-box">
+            <div class="toc-title">📌 目次</div>
+            <ul class="toc-list">
+                <li><a href="#intro">はじめに（Phoenix Codeとは？）</a></li>
+                <li><a href="#install">簡単！インストールと初期設定</a></li>
+                <li><a href="#features">ここがすごい！超便利機能7選</a></li>
+                <li><a href="#summary">まとめ＆ダウンロード</a></li>
+            </ul>
+        </div>
+
         <!-- はじめに -->
         <section id="intro" class="section">
             <h2 class="section-title">はじめに</h2>
             <p>皆さんは、Webページやゲームの制作をする際にどんなエディタを使っていますか？<br>
-            この記事では、管理人が愛用している無料で高機能なコードエディタ<strong>「Brackets（ブラケッツ）」</strong>の魅力と便利な機能をご紹介します！</p>
+            この記事では、管理人が愛用している無料で高機能なコードエディタ<strong>「Phoenix Code（フェニックスコード）」</strong>の魅力と便利な機能をご紹介します！</p>
             
             <h3 class="sub-title">コードエディタとは？</h3>
             <p>エディタと一口に言っても、小説などの文章執筆に特化したものなど様々な種類があります。その中でも「コードエディタ」は、<strong>プログラムのコードを書くための機能に特化したエディタ</strong>のことです。<br>
             管理人は主にWebページの作成や、ゲーム制作（シナリオやスクリプトの記述）に活用しています。</p>
 
-            <h3 class="sub-title">Bracketsってどんなソフト？</h3>
-            <p>Bracketsは、元々クリエイター向けソフトでおなじみの<strong>Adobe（アドビ）社が開発した、完全無料のコードエディタ</strong>です。</p>
+            <h3 class="sub-title">Phoenix Codeってどんなソフト？</h3>
+            <p>Phoenix Codeは、かつて多くのクリエイターに愛された名作エディタ「Brackets（ブラケッツ）」の思想を受け継ぎ、次世代Web標準に合わせてリビルドされた<strong>完全無料のオープンソースコードエディタ</strong>です。</p>
 
             <div class="alert-box">
                 <strong>💡 補足情報</strong><br>
-                2021年にAdobeの公式サポートは終了しましたが、現在はオープンソースとして有志のコミュニティによって引き継がれ、今でも世界中のクリエイターに愛用されています。「窓の杜」などのダウンロードサイトや公式サイトから入手して、すぐに使い始めることができます！
+                Bracketsの扱いやすさや直感的な操作感はそのままに、動作が大幅に軽量化され、現代のWeb環境に最適化されています。以前Bracketsを愛用していた方はもちろん、「動作が重いエディタは苦手」という方にもぴったりです！<br>
+                さらに、PCへのインストールだけでなく<strong>ブラウザ上（Web版）でもそのまま動作する</strong>ため、環境を選ばずすぐに試すことができます。
             </div>
         </section>
 
         <!-- インストールと初期設定 -->
         <section id="install" class="section">
-            <h2 class="section-title">簡単！Bracketsのインストールと初期設定</h2>
-            <p>Bracketsの導入は非常にシンプルです。</p>
+            <h2 class="section-title">簡単！Phoenix Codeのインストールと初期設定</h2>
+            <p>Phoenix Codeの導入は非常にシンプルで、初心者にもとても優しい設計になっています。</p>
             
             <h3 class="sub-title">インストール手順</h3>
             <ol style="margin-left: 24px; margin-bottom: 15px; padding-left: 10px;">
-                <li>「窓の杜」や公式サイトなどの配布サイトからインストーラーをダウンロードします。</li>
-                <li>ダウンロードしたWindows用インストーラーファイル（<code>.msi</code>など）をダブルクリックして起動します。</li>
-                <li>インストール画面は英語ですが、基本的には設定を変更せず<strong>「Next（次へ）」</strong>をクリックしていき、最後に<strong>「Install（インストール）」</strong>を押すだけでOKです！</li>
-                <li>完了画面が出たら「Finish」を押して画面を閉じます。</li>
+                <li>Phoenix Codeの公式サイト（phocode.dev）からインストーラーをダウンロードします。</li>
+                <li>ダウンロードしたインストーラーファイルを起動します。</li>
+                <li>画面の指示に従って「次へ」や「Install」をクリックしていくだけで簡単にインストールが完了します！</li>
             </ol>
 
-            <h3 class="sub-title">日本語化は不要！</h3>
-            <p>海外製のエディタはインストール後に有志の「日本語化パッチ」を入れるなどの複雑な作業が必要になることが多いです。<br>
-            しかし、<strong>Bracketsはインストールした直後から完全に日本語化されています。</strong><br>
-            メニュー画面も設定項目も最初から日本語なので、英語が苦手な方でも一切の初期設定なしで、すぐに使い始めることができます。これもBracketsの大きな魅力の一つですね。</p>
+            <h3 class="sub-title">親切なチュートリアルと日本語対応</h3>
+            <p>海外製エディタにありがちな「日本語化パッチの適用」といった複雑な作業は一切不要です。<br>
+            また、<strong>初回起動時には画面上で分かりやすいインタラクティブなチュートリアルが表示</strong>されます。基本操作や便利な機能を実際に手を動かしながら学べるため、初めてコードエディタを使う方でも迷わずスムーズにスタートできます！</p>
+            
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 チュートリアル画面（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column05.jpg" alt="Phoenix Codeのチュートリアル画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>🌐 表示が英語になっている場合の切り替え方法</strong><br>
+                万が一初期状態で英語表示になっている場合は、画面右上の歯車アイコン（Settings）を開き、「Language」の項目から「日本語」を選択するだけで瞬時に日本語化できます。
+            </div>
         </section>
 
         <!-- 機能7選 -->
         <section id="features" class="section">
-            <h2 class="section-title">ここがすごい！Bracketsの超便利機能7選</h2>
+            <h2 class="section-title">ここがすごい！Phoenix Codeの超便利機能7選</h2>
             <p>管理人が実際に使ってみて「これは便利！」と感じた機能をピックアップしてご紹介します。</p>
 
             <!-- 1. ライブプレビュー -->
             <h3 class="sub-title">1. リアルタイムで画面を確認できる「ライブプレビュー」</h3>
-            <p>Brackets最大の目玉機能がこの「ライブプレビュー」です！HTMLやCSSを編集する際、画面右上のイナズママークを押すとブラウザが立ち上がり、<strong>ファイルを保存することなく、入力したコードがリアルタイムで画面に反映</strong>されます。<br>
+            <p>Phoenix Code最大の目玉機能のひとつがこの「ライブプレビュー」です！HTMLやCSSを編集する際、画面上のプレビューアイコンを押すとブラウザが立ち上がり、<strong>ファイルを保存することなく、入力したコードがリアルタイムで画面に反映</strong>されます。<br>
             わざわざ「保存してブラウザを再読み込みする」という作業が一切不要になるため、Web制作のテンポと快適さが劇的に向上します。</p>
 
-            <div class="alert-box" style="margin-top: 12px; margin-bottom: 20px;">
-                <strong>💡 Chrome以外でも使える！エラー対処と設定方法</strong><br>
-                Bracketsのライブプレビューは標準でGoogle Chromeを利用しますが、<strong>Microsoft EdgeなどChrome以外のブラウザでプレビューを行いたい場合</strong>は以下の設定を行うことで解決できます！<br>
-                <ol style="margin-top: 8px; margin-bottom: 8px; padding-left: 20px;">
-                    <li>Bracketsの上部メニュー「デバッグ」＞「環境設定ファイルを開く」をクリック。</li>
-                    <li>開いた <code>brackets.json</code> に <code>"livedev.multibrowser": true</code> を追記して保存。</li>
-                    <li>Bracketsを再起動する。</li>
-                </ol>
-                この設定（マルチブラウザーライブプレビュー）を有効にすると、特定のデバッグポートに依存しなくなるためお好みのブラウザで快適にプレビューを行えるようになります。また、起動時に「リモートデバッグを有効にしてChromeを再起動する必要があります」というエラーメッセージが表示される場合もこの方法で解決します。
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 ライブプレビューの例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column06.jpg" alt="ライブプレビュー機能でコードとブラウザ表示を同時確認している画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>⚠️ ライブプレビュー使用時のご注意</strong><br>
+                通信や反映のタイミングによっては、<strong>コードの変更が即座に反映されず一時的にレイアウトが崩れたように見えてしまう場合</strong>があります。<br>
+                「おかしいな？」と感じたときは、一度ファイルを上書き保存（Ctrl + S / Cmd + S）するか、プレビュー画面を再読み込みしてみましょう！
             </div>
 
             <!-- 2. クイック編集 -->
             <h3 class="sub-title">2. 爆速でコードを編集できる「クイック編集」</h3>
-            <p>Bracketsの代名詞とも言える画期的な機能が「クイック編集」です。HTMLタグ上でショートカットキー（Windows: <code>Ctrl</code> + <code>E</code> / Mac: <code>Cmd</code> + <code>E</code>）を押すと、<strong>別ファイルのCSSを開くことなく、その場にインライン（小窓）で関連するスタイルが表示されて直接編集できます。</strong><br>
+            <p>Bracketsから受け継がれた画期的な機能が「クイック編集」です。HTMLタグ上でショートカットキー（Windows: <code>Ctrl</code> + <code>E</code> / Mac: <code>Cmd</code> + <code>E</code>）を押すと、<strong>別ファイルのCSSを開くことなく、その場にインライン（小窓）で関連するスタイルが表示されて直接編集できます。</strong><br>
             ファイルを行き来するストレスや探す手間が完全にゼロになる、作業の効率化に欠かせない機能です。</p>
 
             <div class="image-container">
                 <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 クイック編集の例（クリックで拡大）</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
-                    <img src="../images/column05.jpg" alt="Bracketsのクイック編集のスクリーンショット" onclick="openModal(this.src)">
+                    <img src="../images/column07.jpg" alt="クイック編集機能を使用中の画面" onclick="openModal(this.src)">
                 </div>
             </div>
 
-            <p style="margin-bottom: 20px;">例えば、カラーコードの上にカーソルを置いてショートカットキーを押すと、グラフィカルなカラーピッカーが立ち上がります。視覚的に色を調整・変更できるほか、カラーコードの形式（HEX、RGB、HSL）の切り替えもワンクリックで簡単に行えます。</p>
+            <!-- 3. デザインモード -->
+            <h3 class="sub-title">3. 感覚的にデザインを調整できる「デザインモード」</h3>
+            <p>Phoenix Codeならではの強力な機能が「デザインモード」です。<br>
+            コードを直接書き換えるだけでなく、画面上の要素をマウス操作で直感的に調整したり、要素ごとにコピー＆ペーストするといったことができます。「コードでの細かい調整」と「視覚的なレイアウト調整」をシームレスに行えるため、デザインの微調整が格段にラクになります。</p>
+            
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 デザインモードの例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column08.jpg" alt="デザインモードで要素を直感的に調整している画面" onclick="openModal(this.src)">
+                </div>
+            </div>
 
-            <!-- 3. 色分け -->
-            <h3 class="sub-title">3. 文字の色分け（シンタックスハイライト）で視認性抜群！</h3>
-            <p>コードの役割や種類ごとに自動でカラーリングしてくれるため、コードの構造が一目で把握できます。</p>
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>✨ コード初心者の方に特におすすめ！</strong><br>デザインモードは「コードはよくわからないけど、配布されているおしゃれなテンプレートを使いたい…」という場合にもおすすめです！既に配置されている要素のコピペや文章の差し替えが楽々できるほか、「うっかり消してはいけないコードを消してしまった！」というよくあるミスが起こりません！
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>💡 編集ができなくなった場合の対処法</strong><br>
+                デザインモードを使用中に画面上の編集操作が利かなくなった場合、バックグラウンドでの通信同期が一時的に切れてしまっている可能性があります。<br>
+                その際は一度ファイルを上書き保存（<code>Ctrl</code> + <code>S</code> / <code>Cmd</code> + <code>S</code>）し、右上の雷マーク（Live Preview）を一度クリックしてOFFにし、再度ONにして接続し直すと解消されます。
+            </div>
 
             <!-- 4. タグ閉じミス検知 -->
-            <h3 class="sub-title">4. 〈〉の閉じ忘れや、余計なタグが一目でわかる！</h3>
+            <h3 class="sub-title">4. 〈〉の閉じ忘れや文法エラーが一目でわかる！</h3>
             <p>初心者が特につまずきやすいのが、タグの閉じ忘れ（<code>&lt;/&gt;</code>の書き忘れ）などのケアレスミスです。<br>
-            Bracketsでは、そういった文法エラーや孤立したタグがあると、対象の箇所を<strong>赤色でハイライト表示</strong>して教えてくれます。エラー原因を探す無駄な時間を減らし、ミスにすぐ気づける安心設計です。</p>
+            Phoenix Codeでは、文法エラーや孤立したタグがあると視覚的にハイライトして教えてくれます。エラー原因を探す無駄な時間を減らし、ミスにすぐ気づける安心設計です。</p>
 
             <!-- 5. 画像・カラープレビュー -->
             <h3 class="sub-title">5. 画像やカラーコードをその場でプレビュー！</h3>
             <p>コード内に書かれた画像ファイル名やカラーコードの上にマウスカーソルを合わせると、<strong>その場で小さなプレビュー画像や実際の色がポップアップ表示</strong>されます。<br>
             「指定した画像が合っているか」「想定通りの色か」をいちいち確認する手間が省けます。</p>
           
-          <div class="image-container">
+            <div class="image-container">
                 <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 画像のプレビューの例（クリックで拡大）</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
-                    <img src="../images/column06.jpg" alt="Bracketsの画像のプレビューのスクリーンショット" onclick="openModal(this.src)">
+                    <img src="../images/column09.jpg" alt="コード上で画像パスにホバーし、小さなサムネイル画像がポップアップ表示されている画面" onclick="openModal(this.src)">
                 </div>
             </div>
 
             <!-- 6. 予測変換 -->
-            <h3 class="sub-title">6. 予測変換機能で執筆を高速化＆タイプミス予防！</h3>
-            <p>コードの最初の数文字を打つだけで、Bracketsが入力候補を自動でリストアップ（コードヒント）してくれます。（※<code>Ctrl</code> + <code>Space</code>キーで手動表示も可能）<br>
+            <h3 class="sub-title">6. 予測変換（コードヒント）で執筆を高速化＆タイプミス予防！</h3>
+            <p>コードの最初の数文字を打つだけで、入力候補を自動でリストアップ（コードヒント）してくれます。<br>
             複雑で長いプロパティ名もすべて手打ちする必要がなくなり、タイピング速度の向上だけでなく「スペルミスによって動かないトラブル」を未然に防ぎます。</p>
 
-            <!-- 7. ファイル切り替え -->
+            <!-- 7. ファイル切り替え＆横断検索 -->
             <h3 class="sub-title">7. 複数ファイルをシームレスに切り替え＆一括置換！</h3>
             <p>画面左側にプロジェクトのフォルダ構造がツリー表示され、クリックひとつで開きたいファイルを瞬時に切り替えられます。<br>
             さらに、複数のファイルを横断して一気に「文字の検索・置換」ができるため、キャラクター名やCSSのクラス名を一斉変更したい時にも大活躍します。</p>
@@ -549,8 +666,15 @@
         <!-- まとめ -->
         <section id="summary" class="section">
             <h2 class="section-title">まとめ</h2>
-            <p>Bracketsは、直感的に使える優れた操作性と、Web制作に特化した便利機能がギュッと詰まった無料コードエディタです。</p>
-            <p style="margin-top: 15px;">「メモ帳」や標準のテキストエディタでコードを書いている方は、ぜひ一度Bracketsの快適さを体験してみてください。制作のスピード感と楽しさが劇的に変わりますよ！</p>
+            <p>Phoenix Codeは、直感的に使える優れた操作性とWeb制作に特化した便利機能に加え、チュートリアルやデザインモードといった最新機能がギュッと詰まった非常に快適な無料コードエディタです。</p>
+            <p style="margin-top: 15px;">「メモ帳」や標準のテキストエディタでコードを書いている方はもちろん、直感的なエディタをお探しの方は、ぜひ一度Phoenix Codeの快適さを体験してみてください。制作のスピード感と楽しさが劇的に変わりますよ！</p>
+
+            <!-- ダウンロードCTAボタン -->
+            <div class="cta-container">
+                <a href="https://phocode.dev/" target="_blank" rel="noopener" class="download-btn">
+                    Phoenix Code 公式サイトを見る ➔
+                </a>
+            </div>
         </section>
 
     </div>
