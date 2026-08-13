@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery & Portfolio | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <style>
+    /* ==========================================
+       1. 基本設定 & デザイン変数
+       ========================================== */
+    :root {
+      --bg-color: #fcfcfc;
+      --text-color: #2b2b2b;
+      --text-muted: #666666;
+      --border-color: #eaeaea;
+      --card-bg: #ffffff;
+      --overlay-bg: rgba(0, 0, 0, 0.85);
+      --max-width: 1000px;
+      --gap: 1.5rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      padding-bottom: 4rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==========================================
+       2. メインビジュアル (ヒーローセクション)
+       ========================================== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 65vh;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: #ffffff;
+      padding: 0 1.5rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================
+       3. インフォメーション (サイト説明 & 更新履歴)
+       ========================================== */
+    .info-container {
+      max-width: var(--max-width);
+      margin: 3.5rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .info-block h2 {
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      color: #444444;
+      white-space: pre-line;
+    }
+
+    .news-list {
+      list-style: none;
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .news-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .news-list::-webkit-scrollbar-thumb {
+      background: #dddddd;
+      border-radius: 2px;
+    }
+
+    .news-item {
+      display: flex;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .news-date {
+      color: var(--text-muted);
+      width: 90px;
+      flex-shrink: 0;
+      font-feature-settings: "tnum";
+    }
+
+    .news-text {
+      color: #333333;
+    }
+
+    /* ==========================================
+       4. ギャラリー & カテゴリフィルター
+       ========================================== */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* カテゴリ切り替えボタンエリア */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: #bbb;
+      color: var(--text-color);
+    }
+
+    .filter-btn.active {
+      background-color: var(--text-color);
+      border-color: var(--text-color);
+      color: #ffffff;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--gap);
+    }
+
+    /* アニメーション用設定 */
+    .gallery-item {
+      position: relative;
+      background-color: var(--card-bg);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    /* フィルター非該当作品を非表示にするクラス */
+    .gallery-item.is-hidden {
+      display: none;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .thumbnail-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+
+    .thumbnail-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .thumbnail-wrapper img {
+      transform: scale(1.04);
+    }
+
+    .caption-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 0.8rem 0.8rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+      color: #ffffff;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-item:hover .caption-overlay {
+      opacity: 1;
+    }
+
+    .item-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .item-category {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    /* ==========================================
+       5. モーダル
+       ========================================== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--overlay-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      padding: 1.5rem;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+
+    .modal-caption {
+      color: #ffffff;
+      margin-top: 0.8rem;
+      text-align: center;
+    }
+
+    .modal-caption h3 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    .modal-caption p {
+      font-size: 0.8rem;
+      color: #aaaaaa;
+      margin-top: 0.2rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -2.2rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .close-btn:hover {
+      opacity: 1;
+    }
+
+    /* ==========================================
+       6. スマホ向け表示調整
+       ========================================== */
+    @media (max-width: 600px) {
+      .hero {
+        height: 50vh;
+        min-height: 280px;
+      }
+
+      .info-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin: 2.5rem auto;
+      }
+
+      main {
+        padding: 0 0.8rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .caption-overlay {
+        position: relative;
+        opacity: 1;
+        background: var(--card-bg);
+        color: var(--text-color);
+        padding: 0.5rem 0.2rem 0.2rem;
+      }
+
+      .item-title {
+        font-size: 0.8rem;
+        color: var(--text-color);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .item-category {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+    }
+
+    /* ==========================================
+       7. フッター
+       ========================================== */
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- メインビジュアル -->
+  <header class="hero">
+    <img src="../images/picture01.jpg" alt="メインビジュアル" class="hero-image">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Gallery & Portfolio</h1>
+      <p class="hero-subtitle">Illustration & Manga </p>
+    </div>
+  </header>
+
+  <!-- サイト説明 ＆ 更新履歴エリア -->
+  <section class="info-container">
+    <div class="info-block">
+      <h2>ABOUT</h2>
+      <p class="about-text">一次創作を中心に、描いたイラストや漫画を掲載しています。作品の無断転載・使用はご遠慮ください。</p><br><p class="about-text">※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。</p>
+    </div>
+
+    <div class="info-block">
+      <h2>INFORMATION</h2>
+      <ul class="news-list">
+        <li class="news-item">
+          <span class="news-date">2026.08.01</span>
+          <span class="news-text">メインビジュアルを変更しました。</span>
+        </li>
+        <li class="news-item">
+          <span class="news-date">2026.07.15</span>
+          <span class="news-text">ギャラリーに「湖上の町」を追加しました。</span>
+        </li>
+        <li class="news-item">
+          <span class="news-date">2026.07.10</span>
+          <span class="news-text">サイトを開設しました。</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ギャラリーコンテンツ -->
+  <main>
+    <div class="section-title">WORKS</div>
+
+    <!-- カテゴリ選択ボタン（data-filterの値と作品のdata-categoryグループを紐付けます） -->
+    <div class="filter-container">
+      <button class="filter-btn active" data-filter="all">ALL</button>
+      <button class="filter-btn" data-filter="illustration">イラスト</button>
+      <button class="filter-btn" data-filter="manga">漫画</button>
+      <button class="filter-btn" data-filter="design">設定資料</button>
+    </div>
+
+    <div class="gallery-grid">
+      
+      <!-- 作品 1 (data-category-group="illustration") -->
+      <article class="gallery-item" data-category-group="illustration" data-fullsrc="picture02.jpg" data-title="湖上の町" data-category="イラスト / 2026年">
+        <div class="thumbnail-wrapper">
+          <img src="../images/picture02.jpg" alt="湖上の町" loading="lazy">
+        </div>
+        <div class="caption-overlay">
+          <span class="item-title">湖上の町</span>
+          <span class="item-category">イラスト</span>
+        </div>
+      </article>
+
+      <!-- 作品 2 (data-category-group="manga") -->
+      <article class="gallery-item" data-category-group="manga" data-fullsrc="picture03.jpg" data-title="戴冠式" data-category="漫画 / 第1話">
+        <div class="thumbnail-wrapper">
+          <img src="../images/picture03.jpg" alt="戴冠式" loading="lazy">
+        </div>
+        <div class="caption-overlay">
+          <span class="item-title">戴冠式</span>
+          <span class="item-category">漫画</span>
+        </div>
+      </article>
+
+      <!-- 作品 3 (data-category-group="design") -->
+      <article class="gallery-item" data-category-group="design" data-fullsrc="picture04.jpg" data-title="城塞都市キャデラ" data-category="設定資料">
+        <div class="thumbnail-wrapper">
+          <img src="../images/picture04.jpg" alt="城塞都市キャデラ" loading="lazy">
+        </div>
+        <div class="caption-overlay">
+          <span class="item-title">城塞都市</span>
+          <span class="item-category">設定資料</span>
+        </div>
+      </article>
+
+      <!-- 作品 4 (data-category-group="illustration") -->
+      <article class="gallery-item" data-category-group="illustration" data-fullsrc="picture05.jpg" data-title="静寂の空" data-category="イラスト / 2025年">
+        <div class="thumbnail-wrapper">
+          <img src="../images/picture05.jpg" alt="静寂の空" loading="lazy">
+        </div>
+        <div class="caption-overlay">
+          <span class="item-title">静寂の空</span>
+          <span class="item-category">イラスト</span>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- モーダル -->
+  <div class="modal" id="imageModal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-btn" id="modalClose" aria-label="閉じる">&times;</button>
+      <img src="../images/" alt="" class="modal-image" id="modalImage">
+      <div class="modal-caption">
+        <h3 id="modalTitle"></h3>
+        <p id="modalCategory"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank">Stoat Labo</a></p>
+    </footer>
+
+  <!-- スクリプト -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- 1. モーダル機能 ---
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalCategory = document.getElementById('modalCategory');
+      const modalClose = document.getElementById('modalClose');
+
+      galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const fullSrc = item.getAttribute('data-fullsrc');
+          const title = item.getAttribute('data-title');
+          const category = item.getAttribute('data-category');
+
+          modalImage.src = fullSrc;
+          modalImage.alt = title;
+          modalTitle.textContent = title;
+          modalCategory.textContent = category;
+
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      const closeModal = () => {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          modalImage.src = '';
+        }, 300);
+      };
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // --- 2. カテゴリフィルター機能 ---
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // アクティブボタンの切り替え
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          galleryItems.forEach(item => {
+            const itemGroup = item.getAttribute('data-category-group');
+
+            if (filterValue === 'all' || filterValue === itemGroup) {
+              item.classList.remove('is-hidden');
+            } else {
+              item.classList.add('is-hidden');
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

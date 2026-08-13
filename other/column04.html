@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プログラミング初心者が見つけたPythonの学習用エディタ「Thonny」 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 36px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section:hover {
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 10px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    /* 目次ボックス */
+    .toc-box {
+        background: #FAF5F2;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 30px;
+    }
+
+    .toc-title {
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .toc-list li {
+        margin-bottom: 6px;
+        padding-left: 18px;
+        position: relative;
+    }
+
+    .toc-list li::before {
+        content: "・";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    /* CTAボタン */
+    .cta-container {
+        text-align: center;
+        margin: 30px 0 10px;
+    }
+
+    .download-btn {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF !important;
+        padding: 14px 32px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        text-decoration: none;
+    }
+
+    /* ----------------------------------
+        IMAGE STYLES
+    ---------------------------------- */
+    .image-container {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .image-frame {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .image-frame img:hover {
+        opacity: 0.85;
+        transform: scale(1.03);
+    }
+
+    /* ----------------------------------
+        MODAL (LIGHTBOX) STYLES
+    ---------------------------------- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        color: #fff;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--accent);
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.5rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">Pythonの学習用エディタ「Thonny」</h1>
+            <p class="header-subtitle">プログラミング初心者が見つけた入門用エディタ</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#intro">はじめに</a></li>
+            <li><a href="#about-python">Pythonとは？</a></li>
+            <li><a href="#features">Thonnyの良いところ</a></li>
+            <li><a href="#summary">まとめ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 簡易目次ボックス -->
+        <div class="toc-box">
+            <div class="toc-title">📌 目次</div>
+            <ul class="toc-list">
+                <li><a href="#intro">はじめに（メモ帳からのステップアップ）</a></li>
+                <li><a href="#about-python">Thonnyの前に、少しだけPythonのお話</a></li>
+                <li><a href="#features">Thonnyを使ってみて感じた良いところ</a></li>
+                <li><a href="#summary">おわりに：初心者にはちょうどいい選択肢かも</a></li>
+            </ul>
+        </div>
+
+        <!-- はじめに -->
+        <section id="intro" class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>Pythonの学習を始めたばかりの自分はコードを入力するときWindowsに標準で搭載されている「メモ帳」を使っていました。</p>
+            <p>ですが、メモ帳だと文字に色がつかないのでコードが見づらく、ちょっとした入力ミスにも気づきにくくて「そろそろPython向けのエディタを使ってみようかな」と思うようになってきた頃合いです。</p>
+            <p>そこで調べてみると、よくおすすめされているのは「Visual Studio Code（VS Code）」というエディタ。</p>
+            <p>さっそく調べてみたのですが、機能がとても豊富で拡張機能や設定項目も多く、プログラミングを始めたばかりの自分は「ちょっと難しそうかも…」と感じてしまいました。</p>
+            <p>そんなときに知ったのが、<strong>Python学習向けエディタの「Thonny（ソニー、もしくはトニー）」</strong>です。</p>
+        </section>
+
+        <!-- Pythonのお話 -->
+        <section id="about-python" class="section">
+            <h2 class="section-title">Thonnyの前に、少しだけPythonのお話</h2>
+            <p>本題に入る前に軽く触れておくと、「Python（パイソン）」というのは読みやすくシンプルな文法が特徴のプログラミング言語です。</p>
+            <p>Webサイトの開発や業務の自動化、AIなど幅広い分野で使われていて、初心者でも始めやすいと言われています。そんなPythonをより快適に学ぶために、自分に合ったエディタを探すことにしました。</p>
+        </section>
+
+        <!-- Thonnyの良いところ -->
+        <section id="features" class="section">
+            <h2 class="section-title">Thonnyを使ってみて感じた良いところ</h2>
+            <p>実際にThonnyを導入してみて、初心者の視点から「使いやすいな」と感じたポイントを紹介します。</p>
+
+            <h3 class="sub-title">1. 導入がとにかく簡単（Pythonが同梱＆完全無料）</h3>
+            <p>通常、プログラミングを始めるときは「Python本体」と「エディタ」をそれぞれ準備する設定（環境構築）が必要で、ここでつまずく人も多いそうです。</p>
+            <p>ですが、Thonnyは<strong>最初からPythonが一緒に同梱されている</strong>ため、インストールして起動するだけで準備が完了します。面倒な設定なしですぐに使えるのがありがたい。</p>
+
+            <h3 class="sub-title">2. 起動直後からUIが日本語で表示できる</h3>
+            <p>海外製のエディタは最初に日本語化の設定が必要なことも多いですが、Thonnyは起動直後からUI（操作画面）を日本語で表示できました。難しい設定なしでそのまま日本語で使えるのもうれしいポイント。</p>
+
+            <h3 class="sub-title">3. シンプルで直感的に理解できるUI</h3>
+            <p>画面を開いたとき、<strong>「おお、すごくスッキリした画面でどれが何なのかすぐわかるぞ！」</strong>と思いました。</p>
+            <p>画面上に余計なボタンや複雑なメニューがなく、上に「実行」や「停止」などの基本ボタンが並んでいるだけです。デザインもシンプルなので、どの機能がどこにあるのか直感的に理解できて、迷わず操作できました。</p>
+
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 Thonnyのシンプルな操作画面（クリックで拡大）</p>
+                <div class="image-frame">
+                    <img src="../images/column10.jpg" alt="Thonnyの操作画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <h3 class="sub-title">4. コードの動きやエラーが分かりやすい</h3>
+            <p>コードを実行したときに、変数にどんな値が入っているのかが画面上で見やすく表示されます。プログラムが1行ずつどう動いているのかを視覚的に追えるので、文法を理解するのにとても役立ちました。</p>
+            <p>また、コードを間違えたときに出てくるエラー表示も、アシスタント機能が初心者向けにやさしく解説してくれるので助かっています。</p>
+        </section>
+
+        <!-- まとめ -->
+        <section id="summary" class="section">
+            <h2 class="section-title">おわりに：初心者にはちょうどいい選択肢かも</h2>
+            <p>最終的には、高機能で圧倒的なシェア率を誇る「VS Code」を使えるようになるのが良いのだと思います。</p>
+            <p>ただ、「まずは最低限の機能がついたシンプルなエディタを使って、気軽にPythonの学習を進めたい！」という方には、とてもとっつきやすいエディタだと感じました。</p>
+            <p>「メモ帳だと少し使いづらいけれど、いきなり高機能なエディタを使うのは不安…」という方は、選択肢のひとつとしていいのではないでしょうか。</p>
+
+            <!-- ダウンロードCTAボタン -->
+            <div class="cta-container">
+                <a href="https://thonny.org/" target="_blank" rel="noopener" class="download-btn">
+                    Thonny 公式サイトを見る ➔
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- モーダル表示用エリア -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // ESCキーでもモーダルを閉じられるように設定
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

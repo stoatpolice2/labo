@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料で高機能なコードエディタ「Phoenix Code」 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 36px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section:hover {
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 20px 0 10px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+        margin-bottom: 15px;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 10px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .rule-list li.rule-ng::before {
+        content: "⚠️";
+        font-size: 0.85rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    /* 目次ボックス */
+    .toc-box {
+        background: #FAF5F2;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 30px;
+    }
+
+    .toc-title {
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .toc-list li {
+        margin-bottom: 6px;
+        padding-left: 18px;
+        position: relative;
+    }
+
+    .toc-list li::before {
+        content: "・";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    /* CTAボタン */
+    .cta-container {
+        text-align: center;
+        margin: 30px 0 10px;
+    }
+
+    .download-btn {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF !important;
+        padding: 14px 32px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        text-decoration: none;
+    }
+
+    /* ----------------------------------
+        IMAGE STYLES & GRID
+    ---------------------------------- */
+    .image-container {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .image-frame {
+        width: 100%;
+        height: 180px; /* サムネイルの高さを統一 */
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 枠に合わせてトリミング表示 */
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .image-frame img:hover {
+        opacity: 0.85;
+        transform: scale(1.03);
+    }
+
+    .image-caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 6px;
+    }
+
+    .img-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 16px 0;
+    }
+
+    /* ----------------------------------
+        MODAL (LIGHTBOX) STYLES
+    ---------------------------------- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        color: #fff;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--accent);
+    }
+
+    /* ----------------------------------
+        TABLE STYLES
+    ---------------------------------- */
+    .table-wrapper {
+        overflow-x: auto;
+        margin: 20px 0;
+    }
+
+    table.compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.92rem;
+    }
+
+    table.compare-table th {
+        background: #FAF5F2;
+        color: var(--primary);
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    table.compare-table td {
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        background: #FFF;
+    }
+
+    /* ----------------------------------
+        BLOCKQUOTE
+    ---------------------------------- */
+    blockquote {
+        background: #FAF5F2;
+        border-left: 4px solid var(--primary);
+        padding: 16px 20px;
+        border-radius: 0 12px 12px 0;
+        margin: 16px 0;
+        font-size: 0.93rem;
+    }
+
+    blockquote strong {
+        color: var(--primary);
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.6rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+        .img-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">無料で高機能な<br>コードエディタ「Phoenix Code」</h1>
+            <p class="header-subtitle">Webページやゲーム制作に！管理人が愛用するエディタをご紹介</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#intro">はじめに</a></li>
+            <li><a href="#install">インストール・設定</a></li>
+            <li><a href="#features">超便利機能7選</a></li>
+            <li><a href="#summary">まとめ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 簡易目次ボックス -->
+        <div class="toc-box">
+            <div class="toc-title">📌 目次</div>
+            <ul class="toc-list">
+                <li><a href="#intro">はじめに（Phoenix Codeとは？）</a></li>
+                <li><a href="#install">簡単！インストールと初期設定</a></li>
+                <li><a href="#features">ここがすごい！超便利機能7選</a></li>
+                <li><a href="#summary">まとめ＆ダウンロード</a></li>
+            </ul>
+        </div>
+
+        <!-- はじめに -->
+        <section id="intro" class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>皆さんは、Webページやゲームの制作をする際にどんなエディタを使っていますか？<br>
+            この記事では、管理人が愛用している無料で高機能なコードエディタ<strong>「Phoenix Code（フェニックスコード）」</strong>の魅力と便利な機能をご紹介します！</p>
+            
+            <h3 class="sub-title">コードエディタとは？</h3>
+            <p>エディタと一口に言っても、小説などの文章執筆に特化したものなど様々な種類があります。その中でも「コードエディタ」は、<strong>プログラムのコードを書くための機能に特化したエディタ</strong>のことです。<br>
+            管理人は主にWebページの作成や、ゲーム制作（シナリオやスクリプトの記述）に活用しています。</p>
+
+            <h3 class="sub-title">Phoenix Codeってどんなソフト？</h3>
+            <p>Phoenix Codeは、かつて多くのクリエイターに愛された名作エディタ「Brackets（ブラケッツ）」の思想を受け継ぎ、次世代Web標準に合わせてリビルドされた<strong>完全無料のオープンソースコードエディタ</strong>です。</p>
+
+            <div class="alert-box">
+                <strong>💡 補足情報</strong><br>
+                Bracketsの扱いやすさや直感的な操作感はそのままに、動作が大幅に軽量化され、現代のWeb環境に最適化されています。以前Bracketsを愛用していた方はもちろん、「動作が重いエディタは苦手」という方にもぴったりです！<br>
+                さらに、PCへのインストールだけでなく<strong>ブラウザ上（Web版）でもそのまま動作する</strong>ため、環境を選ばずすぐに試すことができます。
+            </div>
+        </section>
+
+        <!-- インストールと初期設定 -->
+        <section id="install" class="section">
+            <h2 class="section-title">簡単！Phoenix Codeのインストールと初期設定</h2>
+            <p>Phoenix Codeの導入は非常にシンプルで、初心者にもとても優しい設計になっています。</p>
+            
+            <h3 class="sub-title">インストール手順</h3>
+            <ol style="margin-left: 24px; margin-bottom: 15px; padding-left: 10px;">
+                <li>Phoenix Codeの公式サイト（phocode.dev）からインストーラーをダウンロードします。</li>
+                <li>ダウンロードしたインストーラーファイルを起動します。</li>
+                <li>画面の指示に従って「次へ」や「Install」をクリックしていくだけで簡単にインストールが完了します！</li>
+            </ol>
+
+            <h3 class="sub-title">親切なチュートリアルと日本語対応</h3>
+            <p>海外製エディタにありがちな「日本語化パッチの適用」といった複雑な作業は一切不要です。<br>
+            また、<strong>初回起動時には画面上で分かりやすいインタラクティブなチュートリアルが表示</strong>されます。基本操作や便利な機能を実際に手を動かしながら学べるため、初めてコードエディタを使う方でも迷わずスムーズにスタートできます！</p>
+            
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 チュートリアル画面（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column05.jpg" alt="Phoenix Codeのチュートリアル画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>🌐 表示が英語になっている場合の切り替え方法</strong><br>
+                万が一初期状態で英語表示になっている場合は、画面右上の歯車アイコン（Settings）を開き、「Language」の項目から「日本語」を選択するだけで瞬時に日本語化できます。
+            </div>
+        </section>
+
+        <!-- 機能7選 -->
+        <section id="features" class="section">
+            <h2 class="section-title">ここがすごい！Phoenix Codeの超便利機能7選</h2>
+            <p>管理人が実際に使ってみて「これは便利！」と感じた機能をピックアップしてご紹介します。</p>
+
+            <!-- 1. ライブプレビュー -->
+            <h3 class="sub-title">1. リアルタイムで画面を確認できる「ライブプレビュー」</h3>
+            <p>Phoenix Code最大の目玉機能のひとつがこの「ライブプレビュー」です！HTMLやCSSを編集する際、画面上のプレビューアイコンを押すとブラウザが立ち上がり、<strong>ファイルを保存することなく、入力したコードがリアルタイムで画面に反映</strong>されます。<br>
+            わざわざ「保存してブラウザを再読み込みする」という作業が一切不要になるため、Web制作のテンポと快適さが劇的に向上します。</p>
+
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 ライブプレビューの例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column06.jpg" alt="ライブプレビュー機能でコードとブラウザ表示を同時確認している画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>⚠️ ライブプレビュー使用時のご注意</strong><br>
+                通信や反映のタイミングによっては、<strong>コードの変更が即座に反映されず一時的にレイアウトが崩れたように見えてしまう場合</strong>があります。<br>
+                「おかしいな？」と感じたときは、一度ファイルを上書き保存（Ctrl + S / Cmd + S）するか、プレビュー画面を再読み込みしてみましょう！
+            </div>
+
+            <!-- 2. クイック編集 -->
+            <h3 class="sub-title">2. 爆速でコードを編集できる「クイック編集」</h3>
+            <p>Bracketsから受け継がれた画期的な機能が「クイック編集」です。HTMLタグ上でショートカットキー（Windows: <code>Ctrl</code> + <code>E</code> / Mac: <code>Cmd</code> + <code>E</code>）を押すと、<strong>別のファイルや離れた位置にあるCSSの場所に移動することなく、その場にインライン（小窓）で関連するスタイルが表示されて直接編集できます。</strong><br>
+            ファイルを行き来するストレスや探す手間が完全にゼロになる、作業の効率化に欠かせない機能です。</p>
+
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 クイック編集の例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column07.jpg" alt="クイック編集機能を使用中の画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <!-- 3. デザインモード -->
+            <h3 class="sub-title">3. 感覚的にデザインを調整できる「デザインモード」</h3>
+            <p>Phoenix Codeならではの強力な機能が「デザインモード」です。<br>
+            テキストを直接書き換えるだけでなく、画面上の要素をマウス操作で直感的に調整したり、要素ごとにコピー＆ペーストするといったことができます。「コードでの細かい調整」と「視覚的なレイアウト調整」をシームレスに行えるため、デザインの微調整が格段にラクになります。</p>
+            
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 デザインモードの例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column08.jpg" alt="デザインモードで要素を直感的に調整している画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>✨ コード初心者の方に特におすすめ！</strong><br>デザインモードは「コードはよくわからないけど、配布されているおしゃれなテンプレートを使いたい…」という場合にもおすすめです！既に配置されている要素のコピペや文章の差し替えが楽々できるほか、「うっかり消してはいけないコードを消してしまった！」というよくあるミスが起こりません！
+            </div>
+
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>💡 編集ができなくなった場合の対処法</strong><br>
+                デザインモードを使用中に画面上の編集操作が利かなくなった場合、バックグラウンドでの通信同期が一時的に切れてしまっている可能性があります。<br>
+                その際は一度ファイルを上書き保存（<code>Ctrl</code> + <code>S</code> / <code>Cmd</code> + <code>S</code>）し、右上の雷マーク（Live Preview）を一度クリックしてOFFにし、再度ONにして接続し直すと解消されます。
+            </div>
+
+            <!-- 4. タグ閉じミス検知 -->
+            <h3 class="sub-title">4. 〈〉の閉じ忘れや文法エラーが一目でわかる！</h3>
+            <p>初心者が特につまずきやすいのが、タグの閉じ忘れ（<code>&lt;/&gt;</code>の書き忘れ）などのケアレスミスです。<br>
+            Phoenix Codeでは、文法エラーや孤立したタグがあると視覚的にハイライトして教えてくれます。エラー原因を探す無駄な時間を減らし、ミスにすぐ気づける安心設計です。</p>
+
+            <!-- 5. 画像・カラープレビュー -->
+            <h3 class="sub-title">5. 画像やカラーコードをその場でプレビュー！</h3>
+            <p>コード内に書かれた画像ファイル名やカラーコードの上にマウスカーソルを合わせると、<strong>その場で小さなプレビュー画像や実際の色がポップアップ表示</strong>されます。<br>
+            「指定した画像が合っているか」「想定通りの色か」をいちいち確認する手間が省けます。</p>
+          
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 画像のプレビューの例（クリックで拡大）</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column09.jpg" alt="コード上で画像パスにホバーし、小さなサムネイル画像がポップアップ表示されている画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <!-- 6. 予測変換 -->
+            <h3 class="sub-title">6. 予測変換（コードヒント）で執筆を高速化＆タイプミス予防！</h3>
+            <p>コードの最初の数文字を打つだけで、入力候補を自動でリストアップ（コードヒント）してくれます。<br>
+            複雑で長いプロパティ名もすべて手打ちする必要がなくなり、タイピング速度の向上だけでなく「スペルミスによって動かないトラブル」を未然に防ぎます。</p>
+
+            <!-- 7. ファイル切り替え＆横断検索 -->
+            <h3 class="sub-title">7. 複数ファイルをシームレスに切り替え＆一括置換！</h3>
+            <p>画面左側にプロジェクトのフォルダ構造がツリー表示され、クリックひとつで開きたいファイルを瞬時に切り替えられます。<br>
+            さらに、複数のファイルを横断して一気に「文字の検索・置換」ができるため、キャラクター名やCSSのクラス名を一斉変更したい時にも大活躍します。</p>
+
+        </section>
+
+        <!-- まとめ -->
+        <section id="summary" class="section">
+            <h2 class="section-title">まとめ</h2>
+            <p>Phoenix Codeは、直感的に使える優れた操作性とWeb制作に特化した便利機能に加え、チュートリアルやデザインモードといった最新機能がギュッと詰まった非常に快適な無料コードエディタです。</p>
+            <p style="margin-top: 15px;">「メモ帳」や標準のテキストエディタでコードを書いている方はもちろん、直感的なエディタをお探しの方は、ぜひ一度Phoenix Codeの快適さを体験してみてください。制作のスピード感と楽しさが劇的に変わりますよ！</p>
+
+            <!-- ダウンロードCTAボタン -->
+            <div class="cta-container">
+                <a href="https://phcode.io/" target="_blank" rel="noopener" class="download-btn">
+                    Phoenix Code 公式サイトを見る ➔
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- モーダル表示用エリア -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // ESCキーでもモーダルを閉じられるように設定
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

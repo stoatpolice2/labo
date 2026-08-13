@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milky Sugar | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        /* 全体の設定 */
+        body {
+            background-color: #fffafc;
+            color: #7a6b7b;
+            font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic Pro", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        /* ヘッダー */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #ffd1dc, #e2f0cb, #b5ead7);
+            border-bottom: 4px dashed #ffffff;
+        }
+        header h1 {
+            color: #ffffff;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(180, 150, 160, 0.4);
+            letter-spacing: 2px;
+        }
+        header p {
+            color: #6c5b6b;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        /* ナビゲーションメニュー */
+        nav {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(240, 220, 230, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        nav a {
+            text-decoration: none;
+            color: #8c788a;
+            background-color: #fce4ec;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ffb7b2;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* メインコンテンツ */
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        section {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(245, 230, 235, 0.5);
+            border: 2px solid #f9f0f5;
+        }
+        h2 {
+            color: #b5838d;
+            font-size: 1.4rem;
+            border-bottom: 2px dotted #ffb7b2;
+            padding-bottom: 8px;
+            margin-top: 0;
+            letter-spacing: 1px;
+        }
+
+        /* Newセクション */
+        .new-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .new-list li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed #fce4ec;
+            padding-bottom: 8px;
+        }
+        .new-date {
+            color: #b5838d;
+            font-weight: bold;
+        }
+
+        /* ギャラリーのレイアウト */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .gallery-item {
+            background-color: #f7cac9;
+            height: 120px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4);
+            transition: transform 0.2s, opacity 0.2s;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            opacity: 0.9;
+        }
+        /* サムネイル画像スタイル */
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* モーダル背景 */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(122, 107, 123, 0.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* モーダルの中身（大きさを拡大） */
+        .modal-content {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            width: 85%;
+            max-width: 600px;
+            max-height: 85vh;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative;
+            border: 3px solid #ffccd5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .modal-image-area {
+            width: 100%;
+            max-height: 55vh;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #fff8f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-image-area img {
+            max-width: 100%;
+            max-height: 55vh;
+            object-fit: contain;
+            display: block;
+        }
+        .modal-content p {
+            margin: 15px 0 0 0;
+            font-weight: bold;
+            color: #8c788a;
+            font-size: 0.95rem;
+        }
+        .close-btn {
+            background-color: #ffb7b2;
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 18px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        .close-btn:hover {
+            background-color: #b5838d;
+        }
+
+        /* Profileセクション */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .profile-icon {
+            width: 100px;
+            height: 100px;
+            background-color: #fce4ec;
+            border-radius: 50%;
+            border: 3px solid #ffccd5;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .profile-text {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* 共通リストスタイル */
+        ul.blog-list, ul.novel-list {
+            padding-left: 20px;
+        }
+        ul.blog-list li, ul.novel-list li {
+            margin-bottom: 10px;
+        }
+        ul.blog-list a, ul.novel-list a {
+            color: #6c5b6b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        ul.blog-list a:hover, ul.novel-list a:hover {
+            color: #ffb7b2;
+            text-decoration: underline;
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #a291a0;
+            font-size: 0.8rem;
+            background-color: #fff1f5;
+            border-top: 2px dashed #ffccd5;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Milky Sugar</h1>
+        <p>ミルキーな世界をすこしずつ。</p>
+    </header>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#novel">Novel</a>
+        <a href="#profile">Profile</a>
+    </nav>
+
+    <main>
+        <!-- Newセクション -->
+        <section id="new">
+            <h2>New</h2>
+            <ul class="new-list">
+                <li><span class="new-date">2026.08.01</span><span>Novelに短編小説を1点追加しました。</span></li>
+                <li><span class="new-date">2026.07.28</span><span>Galleryにイラストを2点追加しました。</span></li>
+            </ul>
+        </section>
+
+        <!-- Aboutセクション -->
+        <section id="about">
+            <h2>About</h2>
+            <p>絵と文章を書くことが好きな個人の趣味サイトです。のんびりマイペースに更新していきます。</p>
+        </section>
+
+        <!-- Galleryセクション -->
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <p>描いたイラストや日々の写真をぽつぽつと置いています。（クリックして拡大）</p>
+            <div class="gallery-grid">
+                <!-- サムネイル枠内に <img> タグを設置することで画像が表示されます -->
+                <div class="gallery-item" onclick="openModal('picture01.jpg', 'Illust 01')">
+                    <img src="../images/picture01.jpg" alt="Illust 01">
+                </div>
+                <div class="gallery-item" onclick="openModal('picture02.jpg', 'Illust 02')">
+                    <img src="../images/picture02.jpg" alt="Illust 02">
+                </div>
+                <div class="gallery-item" onclick="openModal('picture03.jpg', 'Illust 03')">
+                    <img src="../images/picture03.jpg" alt="Illust 03">
+                </div>
+                <div class="gallery-item" onclick="openModal('picture04.jpg', 'Illust 04')">
+                    <img src="../images/picture04.jpg" alt="Illust 04">
+                </div>
+            </div>
+        </section>
+
+        <!-- Novelセクション -->
+        <section id="novel">
+            <h2>Novel</h2>
+            <p>ちょっとした空想や、甘めの短編小説などを掲載しています。</p>
+            <ul class="novel-list">
+                <li><a href="novel03.html">甘いミルクティーの魔法（短編）</a> - 2026.08.01</li>
+                <li><a href="novel03.html">星屑のパフェ（連載 prologue）</a> - 2026.07.15</li>
+            </ul>
+        </section>
+
+        <!-- Profileセクション -->
+        <section id="profile">
+            <h2>Profile</h2>
+            <div class="profile-container">
+                <div class="profile-icon">
+                    <img src="../images/icon.png" alt="プロフィール画像">
+                </div>
+                <div class="profile-text">
+                    <p><strong>名前：</strong>管理人</p>
+                    <p>※小説用の子ページのコードはこのテンプレートには含まれていません。「子ページ」カテゴリにあるテンプレートをなどを使用してください</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- モーダルウィンドウのHTML -->
+    <div id="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-image-area">
+                <img id="modal-img" src="" alt="拡大画像">
+            </div>
+            <p id="modal-caption">キャプション</p>
+            <button class="close-btn" onclick="closeModal()">とじる</button>
+        </div>
+    </div>
+
+    <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc, captionText) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-img');
+            const caption = document.getElementById('modal-caption');
+
+            modalImg.src = imageSrc;
+            caption.textContent = captionText;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

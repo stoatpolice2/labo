@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超！初心者向けHTML編集講座 | Stoat Labo</title>
+
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    /* ----------------------------------
+    LAYOUT & NAV
+    ---------------------------------- */
+    .section,
+    .news-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* ホバー時に少し浮き上がるような質感 */
+    .section:hover,
+    .news-section:hover {
+      transform: translateY(-4px); 
+      box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--bg-main);
+    background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    color: var(--text-main);
+    line-height: 1.8;
+    padding-bottom: 60px;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ----------------------------------
+    HERO AREA
+---------------------------------- */
+.hero {
+    background: var(--grad-hero);
+    border-bottom: 2px dashed #E2D5CE;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+    z-index: 0;
+}
+
+.hero::before {
+    width: 160px;
+    height: 160px;
+    top: -40px;
+    left: 5%;
+}
+
+.hero::after {
+    width: 110px;
+    height: 110px;
+    bottom: 10px;
+    right: 6%;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-title {
+    font-size: 2.8rem;
+    letter-spacing: 0.06em;
+    background: var(--grad-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    line-height: 1.25;
+    display: inline-block;
+    filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* ----------------------------------
+    LAYOUT & NAV
+---------------------------------- */
+nav {
+    background: var(--grad-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #FFF;
+    display: block;
+    padding: 14px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+}
+
+.section {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 36px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+    font-size: 1.35rem;
+    color: var(--text-main);
+    position: relative;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    padding-left: 14px;
+}
+
+.section-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 80%;
+    background: var(--grad-primary);
+    border-radius: 4px;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+}
+
+/* ----------------------------------
+    ARTICLE SPECIFIC STYLES
+---------------------------------- */
+h3.sub-title {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin: 24px 0 12px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--border);
+    font-weight: bold;
+}
+
+.rule-list {
+    list-style: none;
+}
+
+.rule-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 16px;
+}
+
+.rule-list li::before {
+    content: "🐾";
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+}
+
+.rule-list li.rule-ng::before {
+    content: "❌";
+    font-size: 0.85rem;
+}
+
+.alert-box {
+    background-color: #FFF6F3;
+    border: 1px dashed var(--primary);
+    padding: 18px;
+    margin-top: 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #5A443E;
+}
+
+.step-item {
+    margin-bottom: 22px;
+    background: #FAF5F2;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.step-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.step-number {
+    display: inline-block;
+    background: var(--grad-primary);
+    color: #FFF;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+/* CODE BLOCK DISPLAY */
+pre {
+    background: #2D2726;
+    color: #F8F5F3;
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+
+code {
+    background: #FFEFEA;
+    color: var(--primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    font-weight: bold;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-weight: normal;
+}
+
+.comment { color: #8C7B75; }
+.tag-name { color: #E06D53; }
+.attr-name { color: #F4C463; }
+.attr-val { color: #98C379; }
+
+footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 60px;
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 40px 15px 30px; }
+    .header-title { font-size: 2.0rem; }
+    .header-subtitle { font-size: 0.88rem; }
+    nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+    nav a { padding: 10px 14px; font-size: 0.88rem; }
+    .container { margin-top: 24px; padding: 0 12px; }
+    .section { padding: 22px 18px; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">超！初心者向けHTML編集講座</h1>
+            <p class="header-subtitle">テンプレートをちょこっといじって自分のサイトを作ってみよう</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#editor">1. 何で編集する？</a></li>
+            <li><a href="#basic">2. 書き換えてみよう</a></li>
+            <li><a href="#trouble">3. よくある失敗</a></li>
+            <li><a href="#upload">4. サイトの公開</a></li>
+            <li><a href="#ai">5. AIに頼る方法</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section class="section">
+            <h2 class="section-title">はじめに：テンプレートをいじるだけでもサイトは作れます！</h2>
+            <p>HTMLの編集は難しそうなイメージがあるかもしれませんが、ゼロからコードを書く必要はありません。</p>
+            <p style="margin-top: 10px;">配布されているテンプレートの文字や画像を書き換えるだけで素敵なサイトが作れます。</p>
+            <p style="margin-top: 10px;">
+                このページでは、テンプレートを編集するときに「ここだけ直せば大丈夫！」というポイントをまとめてみました。参考になれば幸いです🐾
+            </p>
+        </section>
+
+        <!-- 1. 準備編 -->
+        <section id="editor" class="section">
+            <h2 class="section-title">1. 準備編：そもそも何を使って編集するの？</h2>
+            <p>HTMLファイルは、パソコンに最初から入っている「メモ帳」などでも編集できます。でも、文字に色がついて見やすくなったり、入力の手助けをしてくれる「テキスト（コード）エディタ」という専用ソフトを使うと作業が格段に楽になりますよ！</p>
+            
+            <h3 class="sub-title">おすすめの無料エディタ</h3>
+            <ul class="rule-list">
+                <li>
+                    <strong>MaryTextEditor（メアリーテキストエディタ）</strong><br>
+                    動作が非常に軽く、見た目もシンプルです。「メモ帳」に近い感覚で直感的に操作できるため、難しい機能に惑わされたくない初心者の方におすすめです。インストール不要のポータブル版もありますよ！
+                </li>
+                <li>
+                    <strong>サクラエディタ</strong><br>
+                    昔から日本のWeb制作で愛用されている定番ソフトです。画面が見やすく日本語のサポートも充実しているため、安心して使いたい方に向いています。
+                </li>
+                <li>
+                    <strong>Phoenix Code（フェニックスコード）</strong><br>
+                    「Brackets」という有名ソフトの後継で、画面のプレビュー確認やコード補完が得意なWeb制作に特化したエディタです。後述するWebブラウザ版も用意されているため、手軽に高度な編集を行いたい方にぴったりです。
+                </li>
+                <li>
+                    <strong>VS Code（Visual Studio Code）</strong><br>
+                    プロのエンジニアも使用している、世界で最も人気のある超高機能エディタです。将来的に本格的なWeb制作やデザインを勉強したい方やプログラミングもしたい方は、最初からこれに慣れておくのも選択肢です。
+                </li>
+            </ul>
+
+            <h3 class="sub-title">ソフトをダウンロードしたくないときは</h3>
+            <p>「FC2ホームページ」などの管理画面にあるWebエディタを使うと、ソフトを入れずにブラウザ上で編集ができます。初心者の方にはプレビューを見ながら感覚的に編集ができる「TinyMCEエディタ」がおすすめですよ。「Phoenix Code」もダウンロード不要のWeb版があり、これの「デザインモード」機能でも感覚的な編集が可能です🐾</p>
+        </section>
+
+        <!-- 2. 基本編集編 -->
+        <section id="basic" class="section">
+            <h2 class="section-title">2. 実践編：実際にテンプレートを書き換えてみよう</h2>
+            <p>では、書き換える場所を順番に見ていきましょう！</p>
+            
+            <div class="alert-box" style="margin-bottom: 24px;">
+                <strong>💡 作業を始める前の重要テクニック！</strong><br>
+                編集ミスで表示がおかしくなったときにすぐ元に戻せるよう、作業を始める前にHTMLファイルをコピーして「index_backup.html」などの名前で<strong>バックアップ保存</strong>しておきましょう🐾<br>
+                編集した結果は、HTMLファイルをダブルクリックしてブラウザで開くことで確認できます。
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">1</span>ページのタイトルを変える</h3>
+                <p>ブラウザのタブに表示されるサイト名を変えてみましょう。コードの上の方にある <code>&lt;title&gt;</code> という場所を探します。</p>
+                <pre><code><span class="comment">&lt;!-- 変更前 --&gt;</span>
+&lt;<span class="tag-name">title</span>&gt;Gallery & Portfolio&lt;/<span class="tag-name">title</span>&gt;
+
+<span class="comment">&lt;!-- 変更後：自分のサイト名にする --&gt;</span>
+&lt;<span class="tag-name">title</span>&gt;私のイラストギャラリー&lt;/<span class="tag-name">title</span>&gt;</code></pre>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">2</span>文章を書く・改行する（ABOUT・更新履歴）</h3>
+                <p>HTMLのちょっと不思議なところで、キーボードのEnterキーで改行しても画面では改行されません。改行したい場所には <code>&lt;br&gt;</code> や <code>&lt;p&gt;</code><code>&lt;/p&gt;</code> という記号を入れます。</p>
+                <pre><code><span class="comment">&lt;!-- ABOUTの文章を自分用に変える --&gt;</span>
+&lt;<span class="tag-name">p</span> <span class="attr-name">class</span>=<span class="attr-val">"about-text"</span>&gt;
+    はじめまして！〇〇です。&lt;<span class="tag-name">br</span>&gt;
+    好きなものを自由に描いているイラストサイトです。
+&lt;/<span class="tag-name">p</span>&gt;
+
+<span class="comment">&lt;!-- 更新履歴（INFORMATION）を増やす --&gt;</span>
+&lt;<span class="tag-name">li</span> <span class="attr-name">class</span>=<span class="attr-val">"news-item"</span>&gt;
+    &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"news-date"</span>&gt;2026.08.10&lt;/<span class="tag-name">span</span>&gt;
+    &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"news-text"</span>&gt;ギャラリーにイラストを追加しました！&lt;/<span class="tag-name">span</span>&gt;
+&lt;/<span class="tag-name">li</span>&gt;</code></pre>
+            </div>
+
+            <div class="alert-box">
+                <strong>💡 少しだけ注釈</strong><br>
+                 <code>&lt;br&gt;</code> や <code>&lt;p&gt;</code><code>&lt;/p&gt;</code> がないのに文章が改行されている場合、それは<strong>「文章の見た目を整える裏方のルール（CSSといいます）」</strong>が働いているからです。文字の大きさや幅に合わせて、自動で見やすく折り返されています🐾<br>
+            </div><br>
+
+            <div class="step-item">
+                <h3><span class="step-number">3</span>通常の画像を自分の写真や画像に差し替える（基本編）</h3>
+                <p>紹介文やバナーなど、ページ内で通常の画像を表示・差し替えるときは <code>&lt;img&gt;</code> タグの <code>src</code> 属性のファイル名を書き換えます。</p>
+                <pre><code><span class="comment">&lt;!-- 変更前 --&gt;</span>
+&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/sample.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"サンプル画像"</span>&gt;
+
+<span class="comment">&lt;!-- 変更後：自分の画像ファイル名にする --&gt;</span>
+&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/my-photo.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"私の写真"</span>&gt;</code></pre>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">4</span>ギャラリーの画像を自分のイラストに差し替える（応用編）</h3>
+                <p>当サイトで配布している「gallery & portfolio」などのテンプレートは、画像をクリックすると大きなサイズでパッと表示される仕組み（モーダルといいます）になっています。そのため、一覧用のサムネイル画像と拡大用画像の<strong>2ヶ所</strong>のファイル名を同じように書き換える必要があります。</p>
+                <pre><code>&lt;<span class="tag-name">article</span> <span class="attr-name">class</span>=<span class="attr-val">"gallery-item"</span> 
+         <span class="attr-name">data-category-group</span>=<span class="attr-val">"illustration"</span> 
+         <span class="attr-name">data-fullsrc</span>=<span class="attr-val">"images/my-pic01.jpg"</span> <span class="comment">&lt;!-- 👈 ①大きく表示される画像 --&gt;</span>
+         <span class="attr-name">data-title</span>=<span class="attr-val">"星空の街"</span> 
+         <span class="attr-name">data-category</span>=<span class="attr-val">"イラスト / 2026年"</span>&gt;
+    &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"thumbnail-wrapper"</span>&gt;
+        &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/my-pic01.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"星空の街"</span> <span class="attr-name">loading</span>=<span class="attr-val">"lazy"</span>&gt; <span class="comment">&lt;!-- 👈 ②一覧で並ぶ画像 --&gt;</span>
+    &lt;/<span class="tag-name">div</span>&gt;
+    &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"caption-overlay"</span>&gt;
+        &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"item-title"</span>&gt;星空の街&lt;/<span class="tag-name">span</span>&gt;
+        &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"item-category"</span>&gt;イラスト&lt;/<span class="tag-name">span</span>&gt;
+    &lt;/<span class="tag-name">div</span>&gt;
+&lt;/<span class="tag-name">article</span>&gt;</code></pre>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">5</span>文字や画像にリンクを貼る</h3>
+                <p>クリックしたときにほかのページやSNSなどに飛ばしたい時は <code>&lt;a href="URL"&gt;</code> を使います。</p>
+                <pre><code><span class="comment">&lt;!-- 文字にリンクを貼る場合 --&gt;</span>
+&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://twitter.com/〇〇"</span> <span class="attr-name">target</span>=<span class="attr-val">"_blank"</span>&gt;X（旧Twitter）はこちら&lt;/<span class="tag-name">a</span>&gt;
+
+<span class="comment">&lt;!-- 画像をクリックできるようにする場合（&lt;a&gt;の中に&lt;img&gt;を入れる） --&gt;</span>
+&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://〇〇"</span>&gt;
+    &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/banner.png"</span> <span class="attr-name">alt</span>=<span class="attr-val">"home page"</span>&gt;
+&lt;/<span class="tag-name">a</span>&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- 3. トラブルシューティング -->
+        <section id="trouble" class="section">
+            <h2 class="section-title">3. 画像が表示されないときは</h2>
+            <p>「書き換えたのに画像が出なくて画面が崩れちゃう…」という時は、この3つが原因のことが多いです🐾</p><br>
+            <ul class="rule-list">
+                <li class="rule-ng"><strong>拡張子のうっかりミス：</strong> <code>.jpg</code> なのか <code>.png</code> なのか。大文字（<code>.JPG</code>）と小文字（<code>.jpg</code>）が違うだけでも表示されないことがあるので確認してみてください。</li>
+                <li class="rule-ng"><strong>画像の場所（フォルダ）が違う：</strong> <code>&lt;img&gt;</code> タグの <code>src="images/〜"</code> という記述は、「HTMLファイルと同じ階層にある <code>images</code> という名前のフォルダの中を見る」というルール（<strong>相対パス</strong>）になっています。そのため、フォルダを作っていなかったり、画像が別の階層に保存されていると画像が表示されません。</li>
+                <li class="rule-ng"><strong>全角スペースが入っている：</strong> コードのすき間に「全角スペース」が混ざっていると上手く動かなくなります。スペースや記号は必ず「半角」で打ちましょう！</li>
+            </ul>
+
+            <div class="alert-box">
+                <strong>💡 補足：絶対パスについて</strong><br>
+              相対パスの指定が難しいと感じる場合は、完全なURL（例: <code>"https://example.com/images/photo.jpg"</code>）を指定する<strong>「絶対パス」</strong>という書き方でもOKです。<br>
+              ただし、自分のパソコン内で制作中（未公開）の場合はサーバーにアップロードするまでPC上で画像が反映されないため<strong>「相対パス（例:<code>"images/photo.jpg"</code>）」</strong>で管理するのが確実です！
+            </div>
+        </section>
+
+        <!-- 4. 公開・FTP -->
+        <section id="upload" class="section">
+            <h2 class="section-title">4. アップロード編：できあがったサイトを公開してみよう</h2>
+            <p>自分のパソコンで綺麗に表示されたら、最後は無料サーバーなどにファイルをアップロードしてネット上に公開します。</p>
+            
+            <h3 class="sub-title">ファイルを送る・公開する3つの方法</h3>
+            <div class="step-item">
+                <h3>方法①：「FC2」の「ファイルマネージャー」などを使う（かんたん！）</h3>
+                <p>「FTPソフトとか難しそうでよくわからない…」という場合はこれがおすすめです。管理画面のページから、ドラッグ＆ドロップをするだけでポイポイ載せられます。</p>
+            </div>
+            <div class="step-item">
+                <h3>方法②：FTPソフト（FFFTPなど）を使う</h3>
+                <p>定番の無料ソフト「FFFTP」などをパソコンに落として使います。設定がちょっとだけ必要ですが、画像がたくさんあるときは一気に送れるので便利です。</p>
+            </div>
+            <div class="step-item">
+                <h3>方法③：英語に抵抗がないなら「GitHub Pages」がおすすめ！</h3>
+                <p>画面や設定項目が英語表記になりますが、<strong>完全無料＆広告なし</strong>で自分のWebサイトを公開できるのが最大のメリットです！ブラウザ上からのドラッグ＆ドロップでもファイルをアップロードでき、独自ドメインの設定や変更履歴の管理にも強いので、英語に抵抗がない方には非常におすすめです。</p>
+            </div>
+            <div class="alert-box" style="margin-bottom: 24px;">
+                <strong>💬 管理人のひとりごと</strong><br>
+                管理人はこのサイトを制作している途中で「GitHub Pages」のことを知り、「こんな便利なサービスがあるのになんであまりおすすめされているのを見かけないんだ！」と感激しました🐾<br>
+                プログラマー向けである点や、UIが日本語に対応していない点が原因なのかもしれませんが、スマホからもコードを細部まで編集できたり、うっかりミスで消失したファイルを復旧できたりとかなり便利ですよ！
+            </div>
+        </section>
+
+        <!-- 5. AI活用テク -->
+        <section id="ai" class="section">
+            <h2 class="section-title">5. 応用編：わからない部分はAIに頼ってみる！</h2>
+            <p>「デザインを少し変えたいけどコードがわからない…」というときは、ChatGPTやGeminiなどのAIにコードを見せて教えてもらうのも手です！</p>
+            
+            <div class="alert-box" style="margin-top: 12px;">
+                <strong>⚠️ テンプレートの利用規約を確認しましょう！</strong><br>
+                当サイトで配布しているテンプレートはAIによる編集もご自由にしてくださってOKですが、配布サイトによっては禁止されている可能性もあります。必ず配布元の利用規約を確認しましょう！
+            </div>    
+            
+            <h3 class="sub-title">たとえばこんなことを頼めます</h3>
+            <ul class="rule-list">
+                <li><strong>色を一括で変える：</strong> 「このHTMLのメインカラーを、淡い水色系に変更したコードを作って」</li>
+                <li><strong>不要な項目を消して新しい項目を作る：</strong> 「ギャラリーの項目を消して、代わりにコラムの項目を作って」</li>
+            </ul>
+
+            <h3 class="sub-title">AIに聞くときのアドバイス</h3>
+            <div class="alert-box">
+                <strong>📝 コピペで使える質問の例</strong><br>
+                「以下のHTMLコードを使ってサイトを作っています。［ここにやりたいことを書く］をしたいので修正後のコードを教えてください。<br>
+                 <br>
+                （ここに自分のHTMLを貼り付ける）」
+            </div>
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-muted);">
+                ※AIも完璧ではないので、長すぎるコードや複雑なデザインだと上手くいかないこともあります。「できるだけ具体的に質問する」のがコツです！
+            </p>
+
+        </section>
+
+        <!-- まとめ -->
+        <section class="section">
+            <h2 class="section-title">おわりに</h2>
+            <p>元のファイルをバックアップ（コピー）しておけば、失敗しても何回でもやり直せますのでゆっくり1つずつ試してみてくださいね！</p>
+            <p style="margin-top: 10px;">
+                自分の手でサイトが書き換わっていくのはすごく楽しいので、ぜひ自分だけの素敵なWebサイトを作ってみてください🐾
+            </p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

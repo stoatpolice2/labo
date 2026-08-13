@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>進くんと学ぶ！Webサイト制作入門 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="images/susumu_icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="進くんと学ぶ！Webサイト制作入門 | Stoat Labo">
+  <meta property="og:description" content="進くんと学ぶ体験型Web学習！会話パートと実践パートでHTML/CSSの基礎をマスターしよう。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/lecture/About">
+  <meta property="og:image" content="images/game_ss.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES (ネイビー・青系)
+    ---------------------------------- */
+    :root {
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --accent: #0284c7;
+      --bg-main: #f0f4f8;
+      --bg-card: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%);
+      --grad-hero: linear-gradient(180deg, #eff6ff 0%, #f0f4f8 100%);
+      --shadow-sm: 0 6px 18px rgba(30, 58, 138, 0.12);
+      --shadow-lg: 0 14px 32px rgba(30, 58, 138, 0.2);
+    }
+
+    /* ----------------------------------
+     LAYOUT & NAV
+    ---------------------------------- */
+    .section,
+    .news-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .section:hover,
+    .news-section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(30, 58, 138, 0.15);
+    }
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--bg-main);
+    background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    color: var(--text-main);
+    line-height: 1.8;
+    padding-bottom: 60px;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ----------------------------------
+    HERO AREA
+---------------------------------- */
+.hero {
+    background: var(--grad-hero);
+    border-bottom: 2px dashed #cbd5e1;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.12), rgba(2, 132, 199, 0.12));
+    z-index: 0;
+}
+
+.hero::before {
+    width: 160px;
+    height: 160px;
+    top: -40px;
+    left: 5%;
+}
+
+.hero::after {
+    width: 110px;
+    height: 110px;
+    bottom: 10px;
+    right: 6%;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-title {
+    font-size: 2.8rem;
+    letter-spacing: 0.06em;
+    background: var(--grad-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    line-height: 1.25;
+    display: inline-block;
+    filter: drop-shadow(0 4px 12px rgba(30, 58, 138, 0.2));
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* ----------------------------------
+    LAYOUT & NAV
+---------------------------------- */
+nav {
+    background: var(--grad-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #FFF;
+    display: block;
+    padding: 14px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+}
+
+.section {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 36px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+    font-size: 1.35rem;
+    color: var(--text-main);
+    position: relative;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    padding-left: 14px;
+}
+
+.section-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 80%;
+    background: var(--grad-primary);
+    border-radius: 4px;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(to right, #cbd5e1, #cbd5e1 6px, transparent 6px, transparent 12px);
+}
+
+/* ----------------------------------
+    ARTICLE SPECIFIC STYLES
+---------------------------------- */
+h3.sub-title {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin: 24px 0 12px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--border);
+    font-weight: bold;
+}
+
+.rule-list {
+    list-style: none;
+}
+
+.rule-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+}
+
+.rule-list li::before {
+    content: "⚾";
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+}
+
+.rule-list li.rule-ng::before {
+    content: "❌";
+    font-size: 0.85rem;
+}
+
+.alert-box {
+    background-color: #eff6ff;
+    border: 1px dashed var(--primary);
+    padding: 18px;
+    margin-top: 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+}
+
+.step-item {
+    margin-bottom: 22px;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.step-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.step-number {
+    display: inline-block;
+    background: var(--grad-primary);
+    color: #FFF;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+/* ----------------------------------
+    IMAGE STYLES
+---------------------------------- */
+.image-container {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.image-frame {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background-color: #f1f5f9;
+    display: block;
+}
+
+.image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ratio-hero-sample {
+    aspect-ratio: 850 / 380;
+}
+
+.ratio-complete-sample {
+    aspect-ratio: 460 / 750;
+    max-width: 460px;
+    margin: 0 auto;
+}
+
+/* CODE BLOCK DISPLAY */
+pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+
+code {
+    background: #e0f2fe;
+    color: var(--primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    font-weight: bold;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-weight: normal;
+}
+
+.comment { color: #64748b; }
+.tag-name { color: #38bdf8; }
+.attr-name { color: #facc15; }
+.attr-val { color: #4ade80; }
+
+/* ----------------------------------
+    TOOL LINK BUTTON (ページ下部ボタン)
+---------------------------------- */
+.tool-nav {
+    text-align: center;
+    margin-top: 0px;
+}
+
+.btn-tool {
+    display: inline-block;
+    background: var(--grad-primary);
+    color: #FFF;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-tool:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+    color: #FFF;
+}
+  
+footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 60px;
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 40px 15px 30px; }
+    .header-title { font-size: 2.0rem; }
+    .header-subtitle { font-size: 0.88rem; }
+    nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+    nav a { padding: 10px 14px; font-size: 0.88rem; }
+    .container { margin-top: 24px; padding: 0 12px; }
+    .section { padding: 22px 18px; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">進くんと学ぶ！Webサイト制作入門</h1>
+            <p class="header-subtitle">会話パートと実践パートでHTML/CSSを楽しくマスター</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="index.html">TOP</a></li>
+            <li><a href="#about">1. 講座の魅力</a></li>
+            <li><a href="#howto">2. 学習の進め方</a></li>
+            <li><a href="#curriculum">3. カリキュラム目次</a></li>
+            <li><a href="#features">4. プレイヤー設定と特典</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 1. 導入・講座の魅力 -->
+        <section id="about" class="section">
+            <h2 class="section-title">1. 進くんと学ぶ！Webサイト制作入門とは？</h2>
+
+            <!-- サンプル画像スペース -->
+            <div class="image-container">
+                <div class="image-frame ratio-hero-sample">
+                    <img src="images/game_ss.jpg" alt="進くんと学ぶ！Webサイト制作入門 プレビュー画像" width="850" height="370">
+                </div>
+            </div>
+
+            <p>野球の練習みたいに、Web制作を基礎から楽しく学んでみませんか？</p>
+            <p style="margin-top: 10px;">当講座は、猪狩進くんと一緒に会話形式のゲーム（会話パート）でイメージを掴み、実践的なWebノート（解説パート）でHTML/CSSの基礎を身につける体験型学習システムです⚾</p>
+            
+            <h3 class="sub-title">この講座の嬉しいポイント</h3>
+            <ul class="rule-list">
+                <li><strong>ゲーム形式で楽しく理解：</strong> 進くんとの会話やクイズを楽しみながらWeb制作の基本概念が身につきます。</li>
+                <li><strong>HTML/CSSの基礎を網羅：</strong> 基礎的なタグの扱いからCSSを使ったデザインの調整までしっかり学べます。</li>
+                <li><strong>プレイヤー名変換機能：</strong> 設定した名前で進くんが呼びかけてくれるので、より没入感をもって楽しめます。</li>
+                <li><strong>全章クリア特典：</strong> 全章をクリアすると限定のエピローグや衣装切替機能が解放されます！</li>
+            </ul>
+        </section>
+
+        <!-- 2. 学習の進め方 -->
+        <section id="howto" class="section">
+            <h2 class="section-title">2. 実践編：おすすめの学習ステップ</h2>
+            <p>学習の流れはとってもシンプル！会話パートと解説Webページを行き来することで、知識がしっかり定着します。</p><br>
+
+            <div class="step-item">
+                <h3><span class="step-number">1</span>ゲームパートで概念を把握する</h3>
+                <p>まずはゲームパートからスタート！進くんとの会話やクイズを楽しみながら、Web制作の大まかな概念や流れを掴みます。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">2</span>解説ページへ移動する</h3>
+                <p>会話パートの最後に出てくるボタンを押して、解説ページへ移動しましょう。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">3</span>実際のコードを見ながら復習する</h3>
+                <p>具体的なコード例を見ながら、手書きHTML/CSSの正しい書き方やタグの使い分けを詳しくチェックします。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">4</span>次の章のゲームへ挑戦！</h3>
+                <p>解説ページの末尾から次の章のゲームパートへ進みましょう。全5章を順番にクリアしてマスターを目指します！</p>
+            </div>
+        </section>
+
+        <!-- 3. カリキュラム目次 -->
+        <section id="curriculum" class="section">
+            <h2 class="section-title">3. カリキュラム目次一覧</h2>
+            
+            <ul class="rule-list">
+                <li><strong>第1章：まずは道具を揃えよう！〜HTMLの基本骨格〜</strong><br><span style="font-size:0.9rem; color:var(--text-muted);">HTMLの役割と、文書の基礎となるタグ（DOCTYPE宣言やpタグ）の考え方を学びます。</span></li>
+                <li><strong>第2章：文章に背番号をつけよう！〜見出し・段落・改行〜</strong><br><span style="font-size:0.9rem; color:var(--text-muted);">見出しタグ（h1〜h6）の正しい順番や、文章の段落（p）と改行（br）の使い分けをマスターします。</span></li>
+                <li><strong>第3章：試合のハイライト（画像）を飾ろう！〜imgタグと相対パス〜</strong><br><span style="font-size:0.9rem; color:var(--text-muted);">画像を表示するimgタグの使い方と、ファイルの場所を示す「相対パス」の概念を理解します。</span></li>
+                <li><strong>第4章：他のグラウンドへ遠征だ！〜aタグと別タブ表示〜</strong><br><span style="font-size:0.9rem; color:var(--text-muted);">ページ同士をつなぐリンク（aタグ）や、外部サイトを安全に開くtarget="_blank"を学びます。</span></li>
+                <li><strong>第5章：CSSでユニフォームを着せよう！〜CSSの基礎〜</strong><br><span style="font-size:0.9rem; color:var(--text-muted);">見た目を飾るCSSの書き方（セレクタ・プロパティ・値）や、色・サイズ・配置の変え方を学びます。</span></li>
+            </ul>
+        </section>
+
+        <!-- 4. プレイヤー設定と特典 -->
+        <section id="features" class="section">
+            <h2 class="section-title">4. プレイヤー設定とクリア特典</h2>
+            <p>お名前設定や豪華なクリア特典など、学習を楽しく継続できる仕組みが満載です！</p>
+            <p style="margin-top: 10px;">名前設定フォームからお好きな名前を入力すると、進くんが会話内でその名前を呼びかけてくれます。</p>
+
+            <h3 class="sub-title">全5章完走の豪華特典 👑</h3>
+            <ul class="rule-list">
+                <li><strong>エピローグの解放：</strong> 全5章をクリアすると限定ストーリー（エピローグ）を閲覧できるようになります。</li>
+                <li><strong>衣装切替機能：</strong> クリア後はゲーム内の「👕 衣装切替」ボタンから、ブレザー姿の進くんと一緒に復習が可能です。</li>
+            </ul>
+
+            <div class="alert-box" style="border-color: #64748b; background-color: #f1f5f9; color: #334155;">
+                <strong>⚠️ 学習データについて</strong><br>
+                設定した名前やクリア実績、衣装の解放状況はお使いのブラウザ（Local Storage）に自動保存されます。「学習データをリセット」ボタンを押すことで、いつでも初期状態に戻すことができます。
+            </div>
+        </section>
+
+        <!-- 5. お知らせ -->
+        <section id="credit" class="section">
+            <h2 class="section-title">5. 制作・技術に関するお知らせ</h2>
+            <p style="margin-bottom: 20px;">当コンテンツのプログラム構築および一部グラフィックには補助ツールとして生成AI技術を活用しております。より分かりやすく快適な学習体験をお届けできるよう、手作業での調整や工夫を重ねて制作しています。</p>
+    </div>
+        
+        <!-- 学習開始ボタン -->
+        <div class="tool-nav">
+            <a href="portal.html" class="btn-tool">🎮 ゲームのトップページへ ⚾</a>
+        </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
+    </footer>
+
+</body>
+</html>

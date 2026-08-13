@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四季彩エディタ | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/editor.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="四季彩エディタ | Stoat Labo">
+  <meta property="og:description" content="季節を感じる、あなただけの執筆ルーム">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/editor.png">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+
+<!-- Google Fonts (丸ゴシック体) と Material Symbols (角丸アイコン) の読み込み -->
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+
+<style>
+  :root {
+    /* デフォルトの背景・UI色（ライトモード） */
+    --desk-bg: #f5f6fa;
+    --paper-bg: #ffffff;
+    --text-color: #4a4a4a;
+    --ui-btn-bg: #ffffff;
+    --ui-btn-text: #4a4a4a;
+    --ui-btn-hover: #f0f0f0;
+    --drawer-bg: rgba(255, 255, 255, 0.95);
+    
+    /* 🌸 春テーマ（デフォルト） */
+    --theme-spring-accent: #ff758c;
+    --theme-spring-grad: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    --theme-spring-shadow: rgba(255, 117, 140, 0.2);
+
+    /* 🌿 夏テーマ */
+    --theme-summer-accent: #10b981;
+    --theme-summer-grad: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    --theme-summer-shadow: rgba(16, 185, 129, 0.2);
+
+    /* 🍁 秋テーマ */
+    --theme-autumn-accent: #f59e0b;
+    --theme-autumn-grad: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    --theme-autumn-shadow: rgba(245, 158, 11, 0.2);
+
+    /* ❄️ 冬テーマ */
+    --theme-winter-accent: #3b82f6;
+    --theme-winter-grad: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+    --theme-winter-shadow: rgba(59, 130, 246, 0.2);
+
+    /* 現在のテーマ（初期値は春） */
+    --accent-color: var(--theme-spring-accent);
+    --accent-grad: var(--theme-spring-grad);
+    --shadow-color: var(--theme-spring-shadow);
+    --particle-shadow: rgba(255, 117, 140, 0.4);
+
+    --border-radius-lg: 24px;
+    --border-radius-sm: 16px;
+  }
+
+  /* 季節ごとのテーマ切り替えクラス */
+  body.season-summer {
+    --accent-color: var(--theme-summer-accent);
+    --accent-grad: var(--theme-summer-grad);
+    --shadow-color: var(--theme-summer-shadow);
+    --particle-shadow: rgba(16, 185, 129, 0.4);
+    --ui-btn-hover: #ecfdf5;
+  }
+  body.season-autumn {
+    --accent-color: var(--theme-autumn-accent);
+    --accent-grad: var(--theme-autumn-grad);
+    --shadow-color: var(--theme-autumn-shadow);
+    --particle-shadow: rgba(245, 158, 11, 0.4);
+    --ui-btn-hover: #fffbeb;
+  }
+  body.season-winter {
+    --accent-color: var(--theme-winter-accent);
+    --accent-grad: var(--theme-winter-grad);
+    --shadow-color: var(--theme-winter-shadow);
+    --particle-shadow: rgba(59, 130, 246, 0.4);
+    --ui-btn-hover: #eff6ff;
+  }
+  body.season-spring {
+    --ui-btn-hover: #fff1f2;
+  }
+
+  /* ダークモード時（季節のアクセントカラーは維持） */
+  body.theme-dark {
+    --desk-bg: #1e1e24;
+    --paper-bg: #2a2a35;
+    --text-color: #e2e2e2;
+    --ui-btn-bg: #3b3b4a;
+    --ui-btn-text: #e2e2e2;
+    --drawer-bg: rgba(42, 42, 53, 0.95);
+  }
+
+  body {
+    background-color: var(--desk-bg);
+    color: var(--text-color);
+    font-family: 'M PLUS Rounded 1c', "Hiragino Maru Gothic ProN", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    transition: background-color 0.4s ease, color 0.4s ease, --accent-color 0.4s ease;
+    overflow: hidden;
+  }
+
+  /* --- パーティクル（演出）エフェクト用コンテナ --- */
+  #effect-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 500;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    opacity: 0.7;
+    animation: fall linear infinite, sway ease-in-out infinite alternate;
+    box-shadow: 0 2px 8px var(--particle-shadow);
+  }
+
+  .particle-spring { background: var(--theme-spring-grad); border-radius: 15px 0px 15px 0px; }
+  .particle-summer { background: var(--theme-summer-grad); border-radius: 0px 15px 0px 15px; }
+  .particle-autumn { background: var(--theme-autumn-grad); border-radius: 15px 5px 15px 5px; }
+  .particle-winter { background: #ffffff; border-radius: 50%; box-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px var(--theme-winter-shadow); }
+
+  @keyframes fall {
+    0% { top: -10%; }
+    100% { top: 110%; }
+  }
+  @keyframes sway {
+    0% { transform: translateX(0px) rotate(0deg); }
+    100% { transform: translateX(30px) rotate(45deg); }
+  }
+
+  /* --- 執筆エリア --- */
+  #editor-container {
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    padding: 40px 20px; box-sizing: border-box;
+    overflow: hidden; z-index: 600;
+  }
+
+  #editor {
+    font-family: 'M PLUS Rounded 1c', "Hiragino Maru Gothic ProN", sans-serif;
+    width: 100%; max-width: 800px; height: 100%;
+    background-color: var(--paper-bg);
+    box-shadow: 0 10px 40px var(--shadow-color);
+    border-radius: var(--border-radius-lg);
+    padding: 60px 80px;
+    font-size: 16px; line-height: 2.0;
+    overflow-y: auto; overflow-x: hidden;
+    outline: none; box-sizing: border-box;
+    white-space: pre-wrap;
+    transition: background-color 0.4s, box-shadow 0.4s, padding 0.3s, max-width 0.4s;
+  }
+
+  body.vertical-mode #editor {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    overflow-y: hidden; overflow-x: auto;
+    max-width: 1000px; height: 92%; max-height: 850px;
+  }
+
+  #editor::-webkit-scrollbar { width: 10px; height: 10px; }
+  #editor::-webkit-scrollbar-track { background: transparent; }
+  #editor::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px; opacity: 0.5;
+  }
+
+  /* 縦中横（2桁の半角英数字を1マスに立たせる） */
+  .tcy {
+    text-combine-upright: all;
+  }
+
+  /* --- 左上のFABメニューボタン --- */
+  #menuToggleBtn {
+    position: fixed;
+    top: 30px; left: 30px;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--accent-grad);
+    color: #ffffff;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s ease, background 0.4s ease, box-shadow 0.4s ease;
+    z-index: 900;
+  }
+  #menuToggleBtn:hover { transform: scale(1.08); }
+  #menuToggleBtn:active { transform: scale(0.95); }
+  #menuToggleBtn .material-symbols-rounded { font-size: 32px; }
+
+  /* --- 右上のUndo/Redoボタン --- */
+  #historyControls {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    gap: 12px;
+    z-index: 900;
+  }
+  #historyControls button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--ui-btn-bg);
+    color: var(--accent-color);
+    box-shadow: 0 6px 20px var(--shadow-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  #historyControls button:hover {
+    transform: scale(1.08);
+    background-color: var(--ui-btn-hover);
+  }
+  #historyControls button:active {
+    transform: scale(0.95);
+  }
+  #historyControls button .material-symbols-rounded {
+    font-size: 26px;
+  }
+
+  /* --- 右下の文字数バッジ --- */
+  #charCountBadge {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    background-color: var(--ui-btn-bg);
+    color: var(--accent-color);
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    font-size: 16px; font-weight: bold;
+    display: flex; align-items: center; gap: 8px;
+    z-index: 900; pointer-events: none;
+    transition: background-color 0.3s ease, color 0.4s ease;
+  }
+
+  /* --- ドロワーメニュー --- */
+  .toolbar {
+    position: fixed;
+    top: 0; left: -320px;
+    width: 300px; height: 100%;
+    background-color: var(--drawer-bg);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    display: flex; flex-direction: column; gap: 16px;
+    z-index: 1000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box; overflow-y: auto;
+    border-top-right-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+  }
+
+  body.menu-open .toolbar { left: 0; }
+  #overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.2); z-index: 999; transition: opacity 0.3s ease; }
+  body.menu-open #overlay { display: block; }
+
+  .menu-header {
+    font-size: 1.2em; font-weight: bold; text-align: center;
+    padding-bottom: 20px; color: var(--accent-color);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: color 0.4s;
+  }
+
+  button.menu-btn, select {
+    padding: 14px 18px; border: none; border-radius: var(--border-radius-sm);
+    background-color: var(--ui-btn-bg); color: var(--ui-btn-text);
+    cursor: pointer; outline: none; transition: all 0.2s ease;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 15px; width: 100%; box-sizing: border-box;
+    font-family: inherit; font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  button.menu-btn:hover { background-color: var(--ui-btn-hover); color: var(--accent-color); }
+  button.menu-btn .material-symbols-rounded { color: var(--accent-color); transition: color 0.4s; }
+
+  .btn-accent { background: var(--accent-grad) !important; color: white !important; transition: background 0.4s ease; }
+  .btn-accent .material-symbols-rounded { color: white !important; }
+  .btn-accent:hover { opacity: 0.9; }
+
+  .size-controls {
+    display: flex; align-items: center; justify-content: space-between;
+    background-color: var(--ui-btn-bg); border-radius: var(--border-radius-sm);
+    padding: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .size-controls button {
+    background: transparent; border: none; color: var(--accent-color);
+    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+  }
+  .size-controls button:hover { background-color: var(--ui-btn-hover); }
+
+  hr.divider {
+    width: 100%; border: 0;
+    border-top: 2px dashed var(--accent-color);
+    opacity: 0.3; margin: 10px 0; transition: border-color 0.4s;
+  }
+
+  .statusbar { position: fixed; bottom: 90px; right: 30px; font-size: 13px; pointer-events: none; z-index: 900; }
+  .error-msg { color: var(--accent-color); font-weight: bold; background: var(--drawer-bg); padding: 5px 15px; border-radius: 20px; }
+  .error-mark { text-decoration: underline wavy var(--accent-color); text-decoration-thickness: 1px; }
+
+  /* スマートフォン向けレスポンシブ対応 */
+  @media screen and (max-width: 768px) {
+    #editor { padding: 30px 20px; }
+    body.vertical-mode #editor { padding: 40px 30px; height: 100%; max-height: none; }
+    #menuToggleBtn { top: 20px; left: 20px; width: 50px; height: 50px; }
+    #menuToggleBtn .material-symbols-rounded { font-size: 26px; }
+    
+    #historyControls { top: 20px; right: 20px; gap: 10px; }
+    #historyControls button { width: 44px; height: 44px; }
+    #historyControls button .material-symbols-rounded { font-size: 22px; }
+    
+    #charCountBadge { bottom: 20px; right: 20px; padding: 10px 20px; font-size: 14px; }
+    .statusbar { bottom: 70px; right: 20px; }
+  }
+</style>
+</head>
+<body class="season-spring">
+
+<!-- パーティクルエフェクト用コンテナ -->
+<div id="effect-container"></div>
+<div id="overlay"></div>
+
+<!-- ドロワーメニュー -->
+<div class="toolbar" id="drawerMenu">
+  <div class="menu-header">
+    <span class="material-symbols-rounded">edit_SHIKISAI</span>
+  </div>
+  
+  <select id="seasonSelect">
+    <option value="spring">🌸 春テーマ（桜）</option>
+    <option value="summer">🌿 夏テーマ（新緑）</option>
+    <option value="autumn">🍁 秋テーマ（夕日と枯葉）</option>
+    <option value="winter">❄️ 冬テーマ（雪）</option>
+  </select>
+
+  <button id="toggleThemeBtn" class="menu-btn">
+    <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
+    <span id="themeText">ダークモードにする</span>
+  </button>
+
+  <button id="toggleEffectBtn" class="menu-btn btn-accent">
+    <span class="material-symbols-rounded" id="effectIcon">filter_vintage</span>
+    <span id="effectText">桜を降らせる 🌸</span>
+  </button>
+
+  <hr class="divider">
+
+  <div class="size-controls">
+    <button id="sizeDownBtn"><span class="material-symbols-rounded">remove</span></button>
+    <span style="font-size: 0.9em; font-weight:bold; color:var(--text-color);">文字サイズ</span>
+    <button id="sizeUpBtn"><span class="material-symbols-rounded">add</span></button>
+  </div>
+
+  <button id="toggleVerticalBtn" class="menu-btn">
+    <span class="material-symbols-rounded" id="verticalIcon">vertical_distribute</span>
+    <span id="verticalText">縦書きに変更</span>
+  </button>
+
+  <hr class="divider">
+
+  <button id="proofreadBtn" class="menu-btn">
+    <span class="material-symbols-rounded">spellcheck</span>
+    原稿を校正する
+  </button>
+  
+  <button id="saveFileBtn" class="menu-btn">
+    <span class="material-symbols-rounded" id="saveIcon">download</span>
+    <span id="saveText">テキスト保存</span>
+  </button>
+  
+  <button id="clearBtn" class="menu-btn" style="color: #ff5252;">
+    <span class="material-symbols-rounded" style="color: #ff5252;">delete</span>
+    すべて消去
+  </button>
+</div>
+
+<!-- 執筆エリア -->
+<div id="editor-container">
+  <div id="editor" contenteditable="true" spellcheck="false"></div>
+</div>
+
+<!-- メニュー開閉ボタン (左上) -->
+<button id="menuToggleBtn" title="メニュー">
+  <span class="material-symbols-rounded">menu</span>
+</button>
+
+<!-- Undo/Redoボタン (右上) -->
+<div id="historyControls">
+  <button id="undoBtn" title="元に戻す"><span class="material-symbols-rounded">undo</span></button>
+  <button id="redoBtn" title="やり直す"><span class="material-symbols-rounded">redo</span></button>
+</div>
+
+<!-- 文字数バッジ (右下) -->
+<div id="charCountBadge">
+  <span class="material-symbols-rounded">edit_document</span>
+  <span id="wordCount">0</span>
+</div>
+
+<!-- ステータスバー -->
+<div class="statusbar">
+  <div id="alertMessage"></div>
+</div>
+
+<script>
+  const editor = document.getElementById('editor');
+  const wordCount = document.getElementById('wordCount');
+  const alertMessage = document.getElementById('alertMessage');
+  const body = document.body;
+  
+  // メニュー開閉
+  const menuToggleBtn = document.getElementById('menuToggleBtn');
+  const overlay = document.getElementById('overlay');
+  const toggleMenu = () => body.classList.toggle('menu-open');
+  const closeMenu = () => body.classList.remove('menu-open');
+  menuToggleBtn.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // 履歴管理（Undo/Redo）システム
+  let editorHistory = [];
+  let historyIndex = -1;
+  const MAX_HISTORY = 50; 
+  let typingTimer;
+
+  function saveHistoryState() {
+    const currentHTML = editor.innerHTML;
+    if (historyIndex >= 0 && editorHistory[historyIndex] === currentHTML) return;
+
+    if (historyIndex < editorHistory.length - 1) {
+      editorHistory = editorHistory.slice(0, historyIndex + 1);
+    }
+
+    editorHistory.push(currentHTML);
+    
+    if (editorHistory.length > MAX_HISTORY) {
+      editorHistory.shift();
+    } else {
+      historyIndex++;
+    }
+  }
+
+  function undo() {
+    if (historyIndex > 0) {
+      historyIndex--;
+      editor.innerHTML = editorHistory[historyIndex];
+      updateWordCountAndStorage();
+    }
+  }
+
+  function redo() {
+    if (historyIndex < editorHistory.length - 1) {
+      historyIndex++;
+      editor.innerHTML = editorHistory[historyIndex];
+      updateWordCountAndStorage();
+    }
+  }
+
+  function updateWordCountAndStorage() {
+    const text = editor.innerText.replace(/\n/g, '');
+    wordCount.textContent = text.length;
+    localStorage.setItem('novelData', editor.innerHTML);
+    alertMessage.className = '';
+    alertMessage.textContent = '';
+  }
+
+  // キーボードショートカット
+  editor.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key.toLowerCase() === 'z') {
+      e.preventDefault(); 
+      undo();
+    }
+    if (e.ctrlKey && e.key.toLowerCase() === 'y') {
+      e.preventDefault();
+      redo();
+    }
+  });
+
+  // UIボタンでのUndo/Redo
+  document.getElementById('undoBtn').addEventListener('click', undo);
+  document.getElementById('redoBtn').addEventListener('click', redo);
+
+  // 初期化
+  const savedText = localStorage.getItem('novelData');
+  if (savedText) {
+    editor.innerHTML = savedText;
+  }
+  saveHistoryState();
+  updateWordCountAndStorage();
+
+  editor.addEventListener('input', () => {
+    updateWordCountAndStorage();
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(saveHistoryState, 500);
+  });
+
+  const toggleThemeBtn = document.getElementById('toggleThemeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+  toggleThemeBtn.addEventListener('click', () => {
+    body.classList.toggle('theme-dark');
+    if (body.classList.contains('theme-dark')) {
+      themeIcon.textContent = 'light_mode';
+      themeText.textContent = 'ライトモードにする';
+    } else {
+      themeIcon.textContent = 'dark_mode';
+      themeText.textContent = 'ダークモードにする';
+    }
+  });
+
+  const seasonSelect = document.getElementById('seasonSelect');
+  const effectContainer = document.getElementById('effect-container');
+  const toggleEffectBtn = document.getElementById('toggleEffectBtn');
+  const effectText = document.getElementById('effectText');
+  const effectIcon = document.getElementById('effectIcon');
+
+  let effectInterval;
+  let isEffectActive = false;
+  let currentSeason = 'spring';
+
+  const seasonConfig = {
+    spring: { offText: '桜を降らせる 🌸', onText: '桜を止める 🌸', icon: 'filter_vintage' },
+    summer: { offText: '新緑を降らせる 🌿', onText: '新緑を止める 🌿', icon: 'eco' },
+    autumn: { offText: '落ち葉を降らせる 🍁', onText: '落ち葉を止める 🍁', icon: 'energy_savings_leaf' },
+    winter: { offText: '雪を降らせる ❄️', onText: '雪を止める ❄️', icon: 'ac_unit' }
+  };
+
+  seasonSelect.addEventListener('change', (e) => {
+    currentSeason = e.target.value;
+    body.className = body.className.replace(/season-\w+/g, '').trim();
+    body.classList.add(`season-${currentSeason}`);
+    effectIcon.textContent = seasonConfig[currentSeason].icon;
+    if (isEffectActive) {
+      effectText.textContent = seasonConfig[currentSeason].onText;
+    } else {
+      effectText.textContent = seasonConfig[currentSeason].offText;
+    }
+    effectContainer.innerHTML = '';
+  });
+
+  function createParticle() {
+    const particle = document.createElement('div');
+    particle.classList.add('particle', `particle-${currentSeason}`);
+    particle.style.left = Math.random() * 100 + 'vw';
+    if (currentSeason === 'winter') {
+      particle.style.width = Math.random() * 4 + 6 + 'px';
+      particle.style.height = particle.style.width;
+    } else {
+      particle.style.width = Math.random() * 8 + 10 + 'px';
+      particle.style.height = Math.random() * 8 + 10 + 'px';
+    }
+    particle.style.animationDuration = (Math.random() * 5 + 8) + 's, ' + (Math.random() * 3 + 3) + 's';
+    effectContainer.appendChild(particle);
+    setTimeout(() => { particle.remove(); }, 15000);
+  }
+
+  toggleEffectBtn.addEventListener('click', () => {
+    isEffectActive = !isEffectActive;
+    if (isEffectActive) {
+      effectText.textContent = seasonConfig[currentSeason].onText;
+      effectInterval = setInterval(createParticle, 600);
+    } else {
+      effectText.textContent = seasonConfig[currentSeason].offText;
+      clearInterval(effectInterval);
+      effectContainer.innerHTML = '';
+    }
+  });
+
+  let currentFontSize = 16;
+  document.getElementById('sizeUpBtn').addEventListener('click', () => {
+    if(currentFontSize < 40) currentFontSize += 2;
+    editor.style.fontSize = currentFontSize + 'px';
+  });
+  document.getElementById('sizeDownBtn').addEventListener('click', () => {
+    if(currentFontSize > 12) currentFontSize -= 2;
+    editor.style.fontSize = currentFontSize + 'px';
+  });
+
+  const toggleVerticalBtn = document.getElementById('toggleVerticalBtn');
+  const verticalIcon = document.getElementById('verticalIcon');
+  const verticalText = document.getElementById('verticalText');
+  toggleVerticalBtn.addEventListener('click', () => {
+    body.classList.toggle('vertical-mode');
+    if (body.classList.contains('vertical-mode')) {
+      verticalIcon.textContent = 'horizontal_distribute';
+      verticalText.textContent = '横書きに変更';
+    } else {
+      verticalIcon.textContent = 'vertical_distribute';
+      verticalText.textContent = '縦書きに変更';
+    }
+    closeMenu();
+  });
+
+  function getEditorLines() {
+    let html = editor.innerHTML;
+    html = html.replace(/<(div|p)[^>]*>\s*<br\s*\/?>\s*<\/\1>/gi, '\n');
+    html = html.replace(/<(div|p|h[1-6]|li|blockquote)[^>]*>/gi, '\n');
+    html = html.replace(/<\/(div|p|h[1-6]|li|blockquote)>/gi, '');
+    html = html.replace(/<br\s*\/?>/gi, '\n');
+    html = html.replace(/<[^>]+>/g, '');
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    let text = txt.value;
+    if (text.startsWith('\n')) text = text.substring(1);
+    return text.split('\n');
+  }
+
+  // --- 追加：画面サイズ/端末に応じて保存ボタンの表示を切り替える処理 ---
+  const saveIcon = document.getElementById('saveIcon');
+  const saveText = document.getElementById('saveText');
+
+  function updateSaveBtnUI() {
+    const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+      saveIcon.textContent = 'content_copy';
+      saveText.textContent = '全文をコピー';
+    } else {
+      saveIcon.textContent = 'download';
+      saveText.textContent = 'テキスト保存';
+    }
+  }
+  window.addEventListener('resize', updateSaveBtnUI);
+  updateSaveBtnUI(); // 初期読み込み時に実行
+
+  // --- 変更：保存ボタンクリック時の処理 ---
+  document.getElementById('saveFileBtn').addEventListener('click', async () => {
+    const lines = getEditorLines();
+    const text = lines.join('\n').trim();
+
+    if (!text) {
+      closeMenu();
+      return;
+    }
+
+    const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // スマホ観覧時：クリップボードにコピー
+      try {
+        await navigator.clipboard.writeText(text);
+        alertMessage.className = '';
+        alertMessage.textContent = '✨ 全文をクリップボードにコピーしました！';
+        setTimeout(() => { alertMessage.textContent = ''; }, 3000);
+      } catch (err) {
+        alertMessage.className = 'error-msg';
+        alertMessage.textContent = 'コピーに失敗しました。';
+        setTimeout(() => { alertMessage.textContent = ''; }, 3000);
+      }
+    } else {
+      // PC観覧時：テキストファイルとしてダウンロード
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const dateStr = `${y}${m}${d}`;
+      let fileName = `${dateStr}_novel_draft.txt`;
+
+      let firstLine = text.split('\n')[0].trim().substring(0, 15);
+      firstLine = firstLine.replace(/[\\/:*?"<>|]/g, '');
+      if (firstLine) fileName = `${dateStr}_${firstLine}.txt`;
+
+      // Windows環境等の文字化け対策（BOM付与）
+      const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      const blob = new Blob([bom, text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    closeMenu();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if(confirm('本当にすべて削除しますか？（元に戻せません）')){
+      editor.innerHTML = '';
+      updateWordCountAndStorage();
+      saveHistoryState();
+      closeMenu();
+    }
+  });
+
+  document.getElementById('proofreadBtn').addEventListener('click', () => {
+    const lines = getEditorLines();
+    let openBrackets = 0;
+    let hasError = false;
+
+    for (let line of lines) {
+      if (line.trim() === '') continue;
+      
+      if (/^[ \t]/.test(line) || /^[^\u3000「『（〈《【]/.test(line.replace(/^[ \t]+/, ''))) {
+        hasError = true;
+      }
+      else if (/([！？])[ \t]+/.test(line) || /([！？])(?![\u3000」』）】！？]|$)/.test(line.replace(/([！？])[ \t]+/g, '$1'))) {
+        hasError = true;
+      }
+      else if (/(?<![…])(…)(?![…])/.test(line)) {
+        hasError = true;
+      }
+      else if (/(?<![—])(—)(?![—])/.test(line)) {
+        hasError = true;
+      }
+      else if (/(?<![0-9a-zA-Z])([0-9a-zA-Z]{2})(?![0-9a-zA-Z])/.test(line)) {
+        hasError = true;
+      }
+      
+      if (hasError) break;
+    }
+
+    let autoFix = false;
+    if (hasError) {
+      autoFix = confirm('校正すべき箇所（または2桁の半角数字）が見つかりました。\n自動で修正（校正・縦中横への変換）しますか？\n（「キャンセル」を選ぶと指摘のみ行います）');
+    }
+
+    const processedLines = lines.map(line => {
+      if (line === '') return '<div><br></div>';
+      
+      let l = line;
+      let originalL = l;
+
+      const openCount = (l.match(/「/g) || []).length;
+      const closeCount = (l.match(/」/g) || []).length;
+      openBrackets += (openCount - closeCount);
+
+      if (autoFix) {
+        l = l.replace(/^[ \t]+/, '');
+        if (/^[^\u3000「『（〈《【]/.test(l)) {
+          l = '\u3000' + l;
+        }
+        
+        l = l.replace(/([！？])[ \t]+/g, '$1');
+        l = l.replace(/([！？])(?![\u3000」』）】！？]|$)/g, '$1\u3000');
+        
+        l = l.replace(/(?<![…])(…)(?![…])/g, '……');
+        l = l.replace(/(?<![—])(—)(?![—])/g, '――');
+        
+        l = l.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        l = l.replace(/(?<![0-9a-zA-Z])([0-9a-zA-Z]{2})(?![0-9a-zA-Z])/g, '<span class="tcy">$1</span>');
+        
+        return `<div>${l}</div>`;
+      } else {
+        l = l.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        
+        if (/^[ \t]/.test(originalL) || /^[^\u3000「『（〈《【]/.test(originalL.replace(/^[ \t]+/, ''))) {
+          l = `<span class="error-mark" title="行頭は全角スペースかカッコで始めます">${l.charAt(0)}</span>${l.slice(1)}`;
+        }
+        if (/([！？])[ \t]+/.test(originalL) || /([！？])(?![\u3000」』）】！？]|$)/.test(originalL.replace(/([！？])[ \t]+/g, '$1'))) {
+          l = l.replace(/([！？])/g, '<span class="error-mark" title="！や？の後は全角スペースを空けます">$1</span>');
+        }
+        l = l.replace(/(?<![…])(…)(?![…])/g, '<span class="error-mark" title="三点リーダーは2つ（……）セットが基本です">$1</span>');
+        l = l.replace(/(?<![—])(—)(?![—])/g, '<span class="error-mark" title="ダッシュは2つ（――）セットが基本です">$1</span>');
+        l = l.replace(/(?<![0-9a-zA-Z])([0-9a-zA-Z]{2})(?![0-9a-zA-Z])/g, '<span class="error-mark" title="2桁の半角英数字は自動修正で縦中横にできます">$1</span>');
+
+        return `<div>${l}</div>`;
+      }
+    });
+
+    editor.innerHTML = processedLines.join('');
+    updateWordCountAndStorage();
+    saveHistoryState(); 
+    
+    if (openBrackets !== 0) {
+      alertMessage.className = 'error-msg';
+      alertMessage.textContent = '※「」の数が合っていません。閉じ忘れの可能性があります。';
+    }
+    
+    closeMenu();
+  });
+</script>
+</body>
+</html>

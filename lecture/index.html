@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進くんと学ぶ！Webサイト制作入門 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="images/susumu_icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="進くんと学ぶ！Webサイト制作入門 | Stoat Labo">
+  <meta property="og:description" content="進くんと学ぶ体験型Web学習！会話パートと実践パートでHTML/CSSの基礎をマスターしよう。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/lecture/About">
+  <meta property="og:image" content="images/game_ss.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+
+    <!-- ゲーム画面全体コンテナ -->
+    <div id="game-container">
+        <!-- 背景画像 -->
+        <div id="bg-layer"></div>
+
+        <!-- 猪狩進の立ち絵 -->
+        <img id="susumu-img" src="images/susumu_normal.png" alt="猪狩進">
+
+        <!-- 名前入力画面（初期状態） -->
+        <div id="name-input-box" class="overlay-box">
+            <p>お名前を教えてね！</p>
+            <input type="text" id="player-name-input" placeholder="マネージャー" maxlength="10">
+            <button id="start-btn">決定</button>
+        </div>
+
+        <!-- 選択肢枠（クイズ時などに表示） -->
+        <div id="choice-box" class="overlay-box hidden"></div>
+
+        <!-- メッセージボックス -->
+        <div id="message-box" class="hidden">
+            <div id="speaker-name">猪狩進</div>
+            <div id="message-text"></div>
+            <div id="next-arrow">▼</div>
+        </div>
+    </div>
+
+    <!-- シナリオデータを読み込む -->
+    <script src="js/scenariodata.js"></script>
+
+    <!-- ゲームのメイン処理を読み込む -->
+    <script src="js/game.js"></script>
+</body>
+</html>
