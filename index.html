@@ -1,913 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Stoat Labo | Web創作支援サイト</title>
-    
+
   <!-- ファビコンの設定 -->
-  <link rel="icon" href="images/icon.png" type="image/x-icon">
+  <link href="images/icon.png" rel="icon" type="image/x-icon"/>
 
   <!-- Open Graph Protocol (OGP) の設定 -->
-  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
-  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
-  <meta property="og:image" content="https://stoatpolice2.github.io/labo/images/ogp.jpg">
-  <meta property="og:site_name" content="Stoat Labo">
-  <meta property="og:locale" content="ja_JP">
-    
-  <style>
-    /* ---------------------------------- CSS RESET & VARIABLES ---------------------------------- */
-    :root {
-      --primary: #E06D53;
-      --primary-hover: #C8563C;
-      --accent: #E8963E;
-      --bg-main: #FAF7F5;
-      --bg-card: #FFFFFF;
-      --text-main: #332C2B;
-      --text-muted: #7A6E6B;
-      --border: #E6DAD3;
-      --radius: 16px;
-      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
-      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
-      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
-      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-      background-color: var(--bg-main);
-      background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
-      background-size: 24px 24px;
-      color: var(--text-main);
-      line-height: 1.8;
-      padding-bottom: 60px;
-      overflow-x: hidden; /* スマホ表示時の横揺れ・ガタつき防止 */
-    }
-
-    a {
-      color: var(--primary);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    a:hover {
-      color: var(--primary-hover);
-      text-decoration: underline;
-    }
-
-    /* ---------------------------------- HERO AREA ---------------------------------- */
-    .hero {
-      background: var(--grad-hero);
-      border-bottom: 2px dashed #E2D5CE;
-      padding: 65px 20px 50px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
-      z-index: 0;
-    }
-
-    .hero::before {
-      width: 160px;
-      height: 160px;
-      top: -40px;
-      left: 5%;
-    }
-
-    .hero::after {
-      width: 110px;
-      height: 110px;
-      bottom: 10px;
-      right: 6%;
-    }
-
-    .hero-container {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .header-title {
-      font-size: 3.8rem;
-      letter-spacing: 0.06em;
-      background: var(--grad-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 900;
-      line-height: 1.15;
-      display: inline-block;
-      filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
-    }
-
-    .header-subtitle {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin-top: 12px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    /* ---------------------------------- LAYOUT & NAV ---------------------------------- */
-    nav {
-      background: var(--grad-primary);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
-    }
-
-    nav ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: #FFF;
-      display: block;
-      padding: 14px 22px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      transition: background-color 0.2s;
-      white-space: nowrap;
-    }
-
-    nav a:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      text-decoration: none;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 40px auto 0;
-      padding: 0 20px;
-    }
-
-    .section,
-    .news-section {
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      padding: 36px;
-      margin-bottom: 40px;
-      box-shadow: var(--shadow-sm);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-    }
-
-    /* ホバー時に少し浮き上がるような質感 */
-    .section:hover,
-    .news-section:hover {
-      transform: translateY(-4px); 
-      box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
-    }
-
-    .section-title {
-      font-size: 1.35rem;
-      color: var(--text-main);
-      position: relative;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      padding-left: 14px;
-    }
-
-    .section-title::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 6px;
-      height: 80%;
-      background: var(--grad-primary);
-      border-radius: 4px;
-    }
-
-    .section-title::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
-    }
-
-    /* ---------------------------------- NEWS / HISTORY ---------------------------------- */
-    .news-scroll-box {
-      max-height: 140px;
-      overflow-y: auto;
-      padding-right: 10px;
-    }
-
-    .news-scroll-box::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .news-scroll-box::-webkit-scrollbar-track {
-      background: #FAF5F2;
-      border-radius: 10px;
-    }
-
-    .news-scroll-box::-webkit-scrollbar-thumb {
-      background: #E2D5CE;
-      border-radius: 10px;
-    }
-
-    .news-scroll-box::-webkit-scrollbar-thumb:hover {
-      background: var(--primary);
-    }
-
-    .news-list {
-      list-style: none;
-    }
-
-    .news-item {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding: 8px 0;
-      border-bottom: 1px dashed var(--border);
-      font-size: 0.88rem;
-    }
-
-    .news-item:last-child {
-      border-bottom: none;
-    }
-
-    .news-date {
-      font-family: monospace, sans-serif;
-      font-weight: bold;
-      color: var(--primary);
-      background: #FFEFEA;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      flex-shrink: 0;
-    }
-
-    .news-text {
-      color: var(--text-main);
-    }
-
-    /* ---------------------------------- RULES ---------------------------------- */
-    .rule-list {
-      list-style: none;
-    }
-
-    .rule-list li {
-      position: relative;
-      padding-left: 28px;
-      margin-bottom: 14px;
-    }
-
-    .rule-list li::before {
-      content: "🐾";
-      position: absolute;
-      left: 0;
-      font-size: 0.9rem;
-    }
-
-    .rule-list li.rule-ng::before {
-      content: "❌";
-      font-size: 0.85rem;
-    }
-
-    .alert-box {
-      background-color: #FFF6F3;
-      border: 1px dashed var(--primary);
-      padding: 18px;
-      margin-top: 18px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      color: #5A443E;
-    }
-
-    .alert-box code {
-      background-color: #F4ECE7;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-      color: var(--primary-hover);
-      font-weight: bold;
-    }
-
-    .code-preview {
-      display: block;
-      background-color: #F8F1ED;
-      border: 1px solid #E6DAD3;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      font-family: monospace;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      color: #66524A;
-      white-space: pre-wrap;
-      word-break: break-all;
-      overflow-x: auto;
-    }
-
-    /* ---------------------------------- HOW TO USE STEPS ---------------------------------- */
-    .step-item {
-      margin-bottom: 22px;
-      background: #FAF5F2;
-      padding: 18px 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: all 0.2s ease;
-    }
-
-    .step-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .step-item:hover {
-      background-color: #FFF5F1;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .step-item h3 {
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-    }
-
-    .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--grad-primary);
-      color: #FFF;
-      font-weight: bold;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      font-size: 0.85rem;
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
-
-    /* ---------------------------------- COLUMN ---------------------------------- */
-    .column-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .column-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #FAF5F2;
-      padding: 20px 24px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-
-    .column-card:hover {
-      background-color: #FFF5F1;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-sm);
-      text-decoration: none;
-    }
-
-    .column-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .column-card-title {
-      font-size: 1.05rem;
-      font-weight: bold;
-      color: var(--text-main);
-      transition: color 0.2s;
-    }
-
-    .column-card:hover .column-card-title {
-      color: var(--primary);
-    }
-
-    .column-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .column-arrow {
-      color: var(--primary);
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-left: 16px;
-    }
-
-    /* ---------------------------------- CATEGORY TABS ---------------------------------- */
-    .category-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      background: #FAF5F2;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.88rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .tab-btn:hover {
-      background-color: #FFEFEA;
-      color: var(--primary);
-    }
-
-    .tab-btn.active {
-      background: var(--grad-primary);
-      color: #FFF;
-      border-color: transparent;
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* ---------------------------------- TEMPLATE CARDS & ANIMATION ---------------------------------- */
-    .template-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 24px;
-    }
-
-    .template-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      background: #FFF;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
-      opacity: 0;
-    }
-
-    .template-card:hover {
-      transform: translateY(-8px) !important;
-      box-shadow: var(--shadow-lg);
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .template-card.fade-in {
-      animation: fadeInUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    .template-card.is-hidden {
-      display: none !important;
-    }
-
-    .template-img {
-      width: 100%;
-      height: 160px;
-      background-color: #FDF3EF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .template-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .template-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .template-title {
-      font-size: 1.15rem;
-      margin-bottom: 6px;
-      color: var(--text-main);
-      font-weight: 700;
-    }
-
-    .tag-list {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .tag {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: bold;
-      background-color: #F4ECE7;
-      color: #705B54;
-    }
-
-    .tag-accent {
-      background-color: #FFEFEA;
-      color: var(--primary);
-    }
-
-    .template-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-
-    .template-links {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      width: 50%;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-full {
-      width: 100%;
-    }
-
-    .btn-demo {
-      background-color: #F7EFEA;
-      color: #66524A;
-    }
-
-    .btn-code {
-      background: var(--grad-primary);
-      color: #FFF;
-      box-shadow: 0 4px 10px rgba(224, 109, 83, 0.2);
-    }
-
-    .btn:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
-      text-decoration: none;
-    }
-
-    /* ---------------------------------- PROFILE & CONTACT ---------------------------------- */
-    .contact-list {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .contact-item-link {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: #FAF5F2;
-      padding: 14px 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      text-decoration: none !important;
-      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
-    }
-
-    .contact-item-link:hover {
-      background-color: #FFF5F1;
-      border-color: var(--primary);
-      transform: translateX(4px);
-    }
-
-    .contact-icon,
-    .profile-img {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .contact-icon {
-      background: #FFF;
-    }
-
-    .contact-icon-svg {
-      color: var(--text-main);
-      transition: color 0.2s;
-    }
-
-    .contact-item-link:hover .contact-icon-svg {
-      color: var(--primary);
-    }
-
-    .profile-img {
-      overflow: hidden;
-      border: 2px solid #FFF;
-      background-color: #E8DDD7;
-    }
-
-    .profile-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .contact-detail {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .contact-label {
-      font-size: 0.72rem;
-      font-weight: bold;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .contact-name,
-    .contact-value {
-      font-weight: bold;
-      font-size: 0.92rem;
-      color: var(--primary);
-      word-break: break-all;
-      transition: color 0.2s;
-    }
-
-    .contact-item-link:hover .contact-name,
-    .contact-item-link:hover .contact-value {
-      color: var(--primary-hover);
-    }
-
-    /* ---------------------------------- LINK SECTION STYLES ---------------------------------- */
-    .link-sub-title {
-      font-size: 1.05rem;
-      font-weight: bold;
-      color: var(--text-main);
-      margin: 28px 0 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .link-sub-title:first-of-type {
-      margin-top: 0;
-    }
-
-    /* オレンジ色の破線枠で作る自サイトリンクカード */
-    .banner-wrapper {
-      background-color: #FFF6F3;
-      border: 1px dashed var(--primary);
-      padding: 18px 20px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .banner-text-area {
-      flex: 1;
-      font-size: 0.88rem;
-    }
-
-    .banner-text-area p {
-      margin-bottom: 8px;
-      color: #5A443E;
-    }
-
-    .banner-meta {
-      background-color: #FAF5F2;
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-    }
-
-    .banner-img-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-
-    .banner-img-200-40 {
-      width: 200px;
-      height: 40px;
-      object-fit: cover;
-      display: block;
-      border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(224, 109, 83, 0.15);
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .banner-img-200-40:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
-    }
-
-    .banner-note {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    /* サーチエンジンのグリッド表示（オレンジ実線カード） */
-    .search-engine-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 12px;
-    }
-
-    .search-engine-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background-color: #FFF6F3;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid rgba(224, 109, 83, 0.3);
-      text-decoration: none !important;
-      transition: background-color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-
-    .search-engine-card:hover {
-      background-color: #FFEFEA;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .search-engine-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      overflow: hidden;
-    }
-
-    .search-engine-name {
-      font-weight: bold;
-      font-size: 0.9rem;
-      color: var(--primary);
-      transition: color 0.2s;
-    }
-
-    .search-engine-card:hover .search-engine-name {
-      color: var(--primary-hover);
-    }
-
-    .search-engine-desc {
-      font-size: 0.78rem;
-      color: #5A443E;
-      line-height: 1.4;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    footer {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-top: 60px;
-    }
-
-    /* ---------------------------------- MOBILE OPTIMIZATION ---------------------------------- */
-    @media (max-width: 600px) {
-      .hero {
-        padding: 45px 15px 35px;
-      }
-      .header-title {
-        font-size: 2.8rem;
-      }
-      .header-subtitle {
-        font-size: 0.9rem;
-      }
-      nav ul {
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding: 0 10px;
-      }
-      nav a {
-        padding: 10px 14px;
-        font-size: 0.88rem;
-      }
-
-      .container {
-        margin-top: 32px;
-        padding: 0 16px;
-      }
-
-      .section,
-      .news-section {
-        padding: 24px 20px;
-        margin-bottom: 32px;
-        box-shadow: 0 6px 18px rgba(224, 109, 83, 0.12);
-        border: 1px solid #E6DAD3;
-      }
-
-      .section-title {
-        font-size: 1.25rem;
-        margin-bottom: 20px;
-        padding-left: 14px;
-      }
-
-      .template-grid {
-        gap: 20px;
-      }
-
-      .column-card {
-        padding: 16px;
-      }
-
-      /* スマホ表示時の調整 */
-      .banner-wrapper {
-        flex-direction: column-reverse;
-        align-items: stretch;
-        gap: 14px;
-      }
-
-      .banner-img-area {
-        align-items: center;
-      }
-
-      .search-engine-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .search-engine-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .search-engine-desc {
-        white-space: normal;
-      }
-    }
-  </style>
+  <meta content="Stoat Labo | Web創作支援サイト" property="og:title"/>
+  <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description"/>
+  <meta content="website" property="og:type"/>
+  <meta content="https://stoatpolice2.github.io/labo/" property="og:url"/>
+  <meta content="https://stoatpolice2.github.io/labo/images/ogp.jpg" property="og:image"/>
+  <meta content="Stoat Labo" property="og:site_name"/>
+  <meta content="ja_JP" property="og:locale"/>
+
+  <!-- スタイルシート -->
+  <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
 
-  <!-- メインビジュアル -->
+  <!-- ==========================================
+       1. メインビジュアル (HERO)
+  ========================================== -->
   <header class="hero">
     <div class="hero-container">
       <h1 class="header-title">Stoat Labo</h1>
@@ -915,7 +32,9 @@
     </div>
   </header>
 
-  <!-- ナビゲーション -->
+  <!-- ==========================================
+       2. グローバルナビゲーション
+  ========================================== -->
   <nav>
     <ul>
       <li><a href="#rules">利用規約</a></li>
@@ -929,9 +48,14 @@
     </ul>
   </nav>
 
+  <!-- ==========================================
+       メインコンテンツエリア
+  ========================================== -->
   <div class="container">
 
-    <!-- 1. 更新履歴 -->
+    <!-- ------------------------------------------
+         [SECTION] 更新履歴
+    ------------------------------------------- -->
     <div class="news-section">
       <h2 class="section-title">更新履歴</h2>
       <div class="news-scroll-box">
@@ -944,66 +68,82 @@
       </div>
     </div>
 
-    <!-- 2. このサイトについて -->
-    <section id="about" class="section">
+    <!-- ------------------------------------------
+         [SECTION] このサイトについて
+    ------------------------------------------- -->
+    <section class="section" id="about">
       <h2 class="section-title">このサイトについて</h2>
-      <p style="margin-top: 10px;">
-        当サイトは、小説、イラストなどの創作活動をされている方向けのWebサイト用テンプレート配布＆Webツール公開サイトです。
-      </p>
-      <p style="margin-top: 10px;">
-        ※当サイトのテンプレートやツールを利用したことで発生したいかなるトラブルや損害についても、管理人は一切の責任を負いかねます。自己責任でのご利用をお願いいたします。
-      </p>
-      <p style="margin-top: 10px;">
-        ※当サイトで配布しているテンプレートやツールはAI（Gemini）を活用して制作・調整を行っています。
-      </p>
-      <p style="margin-top: 10px;">
-        ※管理人が二次創作者なのでしばしば二次創作要素のある制作物も掲載します。
-      </p>
+      <p style="margin-top: 10px;">当サイトは、小説、イラストなどの創作活動をされている方向けのWebサイト用テンプレート配布＆Webツール公開サイトです。</p>
+      <p style="margin-top: 10px;">※当サイトのテンプレートやツールを利用したことで発生したいかなるトラブルや損害についても、管理人は一切の責任を負いかねます。自己責任でのご利用をお願いいたします。</p>
+      <p style="margin-top: 10px;">※当サイトで配布しているテンプレートやツールはAI（Gemini）を活用して制作・調整を行っています。</p>
+      <p style="margin-top: 10px;">※管理人が二次創作者なのでしばしば二次創作要素のある制作物も掲載します。</p>
     </section>
 
-    <!-- 3. テンプレートの利用規約 -->
-    <section id="rules" class="section">
+    <!-- ------------------------------------------
+         [SECTION] テンプレートの利用規約
+    ------------------------------------------- -->
+    <section class="section" id="rules">
       <h2 class="section-title">テンプレートの利用規約</h2>
       <ul class="rule-list">
-        <li><strong>創作ジャンル不問：</strong> 一次創作、二次創作を問わず、どんなジャンルのサイトでもご利用いただけます。</li>
-        <li><strong>R-18コンテンツでの利用可：</strong> 成人向け（R-18）コンテンツを取り扱うサイトでのご利用も可能です。</li>
-        <li><strong>クレジット表記の削除可：</strong> テンプレート内のクレジット表記は削除していただいて構いません（残していただけるととても喜びます！）</li>
-        <li><strong>カスタマイズ自由：</strong> HTML/CSSの改変、デザインの変更はご自由にどうぞ。AIを利用した編集もOKです。</li>
-        <li class="rule-ng"><strong>自作発言・二次配布の禁止：</strong> テンプレート自体の自作発言、および再配布（改変後の再配布を含む）は固く禁止いたします。</li>
+        <li>
+          <strong>創作ジャンル不問：</strong>
+          一次創作、二次創作を問わず、どんなジャンルのサイトでもご利用いただけます。
+        </li>
+        <li>
+          <strong>R-18コンテンツでの利用可：</strong>
+          成人向け（R-18）コンテンツを取り扱うサイトでのご利用も可能です。
+        </li>
+        <li>
+          <strong>クレジット表記の削除可：</strong>
+          テンプレート内のクレジット表記は削除していただいて構いません（残していただけるととても喜びます！）
+        </li>
+        <li>
+          <strong>カスタマイズ自由：</strong>
+          HTML/CSSの改変、デザインの変更はご自由にどうぞ。AIを利用した編集もOKです。
+        </li>
+        <li class="rule-ng">
+          <strong>自作発言・二次配布の禁止：</strong>
+          テンプレート自体の自作発言、および再配布（改変後の再配布を含む）は固く禁止いたします。
+        </li>
       </ul>
+
       <div class="alert-box">
-        <strong>⚠️ サーバー規約に関するご注意</strong><br>
+        <strong>⚠️ サーバー規約に関するご注意</strong><br/>
         当サイトではR-18サイトでのテンプレート使用を許可しておりますが、ご利用のレンタルサーバーやホスティングサービスによってはR-18コンテンツの掲載が禁止されている場合があります。必ずご自身が利用するサーバーの利用規約をご確認のうえご利用ください。
       </div>
     </section>
 
-    <!-- 4. 使い方 -->
-    <section id="how-to" class="section">
+    <!-- ------------------------------------------
+         [SECTION] 使い方
+    ------------------------------------------- -->
+    <section class="section" id="how-to">
       <h2 class="section-title">テンプレートの使い方</h2>
+
       <div class="step-item">
-        <h3><span class="step-number">1</span>コードを取得</h3>
+        <h3><span class="step-number">1</span> コードを取得</h3>
         <p>「テンプレート」一覧からお好みのデザインを選び、「HTML取得」ボタンを押すとコードがクリップボードにコピーされます。</p>
       </div>
+
       <div class="step-item">
-        <h3><span class="step-number">2</span>ファイルを編集する</h3>
+        <h3><span class="step-number">2</span> ファイルを編集する</h3>
         <p>「メモ帳」などのテキストエディタにコピーしたコードを貼り付けて保存します。画像や文章をご自由に差し替えてご利用ください。</p>
       </div>
+
       <div class="step-item">
-        <h3><span class="step-number">3</span>サーバーへアップロード</h3>
+        <h3><span class="step-number">3</span> サーバーへアップロード</h3>
         <p>準備したサーバーにファイルをアップロードすればサイトの公開は完了です！</p>
       </div>
-      
-      <div class="alert-box">
-        <strong>💡 CSSやJavaScriptについて</strong><br>
-        「HTML取得」からコピーできるコードは初心者の方でも使いやすいようHTML、CSS 、JavaScriptをまとめてあります。
-        それぞれのコードを別ファイルに分離したい方は<a href="tool/splitter.html" target="_blank">こちら</a>のツールをご利用ください。
-        </div>
 
       <div class="alert-box">
-        <strong>💡 ファビコンやOGP設定について</strong><br>
+        <strong>💡 CSSやJavaScriptについて</strong><br/>
+        「HTML取得」からコピーできるコードは初心者の方でも使いやすいようHTML、CSS 、JavaScriptをまとめてあります。それぞれのコードを別ファイルに分離したい方は<a href="tool/splitter.html" target="_blank">こちら</a>のツールをご利用ください。
+      </div>
+
+      <div class="alert-box">
+        <strong>💡 ファビコンやOGP設定について</strong><br/>
         配布しているテンプレートのコードにはファビコンやリンクカードの設定も含まれています。ご自身のサイトで利用される場合は以下の部分を削除するか、ご自身のサイトのものに差し替えてください。
-        
-        <code class="code-preview">&lt;!-- ファビコンの設定 --&gt;
+        <code class="code-preview">
+&lt;!-- ファビコンの設定 --&gt;
 &lt;link rel="icon" href="images/icon.png" type="image/x-icon"&gt;
 
 &lt;!-- Open Graph Protocol (OGP) の設定 --&gt;
@@ -1013,12 +153,15 @@
 &lt;meta property="og:url" content="https://stoatpolice2.github.io/labo/"&gt;
 &lt;meta property="og:image" content="https://stoatpolice2.github.io/labo/images/icon.png"&gt;
 &lt;meta property="og:site_name" content="Stoat Labo"&gt;
-&lt;meta property="og:locale" content="ja_JP"&gt;</code>
+&lt;meta property="og:locale" content="ja_JP"&gt;
+        </code>
       </div>
     </section>
 
-    <!-- 5. テンプレート一覧 -->
-    <section id="templates" class="section">
+    <!-- ------------------------------------------
+         [SECTION] テンプレート一覧
+    ------------------------------------------- -->
+    <section class="section" id="templates">
       <h2 class="section-title">テンプレート</h2>
 
       <!-- カテゴリ切り替えタブボタン -->
@@ -1031,10 +174,10 @@
       </div>
 
       <div class="template-grid">
-        <!-- カード -->
+        <!-- カード 1 -->
         <div class="template-card" data-category="novel">
           <div class="template-img">
-            <img src="images/demo01.JPG" alt="Simple Page プレビュー画像">
+            <img alt="Simple Page プレビュー画像" src="images/demo01.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Simple Page</h3>
@@ -1044,16 +187,16 @@
             </div>
             <p class="template-desc">小説サイト向けのシンプルなテンプレート。スマホやPCのダークモード設定に自動で合わせて配色が変化します。</p>
             <div class="template-links">
-              <a href="template/demo01.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="template/demo01.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/demo01.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="template/demo01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 2 -->
         <div class="template-card" data-category="sub">
           <div class="template-img">
-            <img src="images/novel01.JPG" alt="Simple Novel プレビュー画像">
+            <img alt="Simple Novel プレビュー画像" src="images/novel01.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Simple Novel</h3>
@@ -1064,35 +207,35 @@
             </div>
             <p class="template-desc">小説用の子ページです。デフォルトは横書きですが、縦書きにも変更できます。</p>
             <div class="template-links">
-              <a href="template/novel01.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="novel01.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/novel01.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="novel01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 3 -->
         <div class="template-card" data-category="illust">
           <div class="template-img">
-            <img src="images/demo02.JPG" alt="Gallery & Portfolio プレビュー画像">
+            <img alt="Gallery &amp; Portfolio プレビュー画像" src="images/demo02.JPG"/>
           </div>
           <div class="template-body">
-            <h3 class="template-title">Gallery & Portfolio</h3>
+            <h3 class="template-title">Gallery &amp; Portfolio</h3>
             <div class="tag-list">
               <span class="tag tag-accent">イラスト向け</span>
               <span class="tag">カテゴリ分け可</span>
             </div>
             <p class="template-desc">イラストサイト向けのモダンなテンプレート。イラストをカテゴリ分けして展示できます。</p>
             <div class="template-links">
-              <a href="template/demo02.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="template/demo02.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/demo02.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="template/demo02.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 4 -->
         <div class="template-card" data-category="page">
           <div class="template-img">
-            <img src="images/link01.JPG" alt="Interactive Canvas プレビュー画像">
+            <img alt="Interactive Canvas プレビュー画像" src="images/link01.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Interactive Canvas</h3>
@@ -1102,16 +245,16 @@
             </div>
             <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ポスターやノートの1ページにステッカーを貼り付けたような遊び心のあるデザインです。マウスを乗せるとアイコンがピコピコと動きます。</p>
             <div class="template-links">
-              <a href="pages/link01.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="pages/link01.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="pages/link01.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="pages/link01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 5 -->
         <div class="template-card" data-category="page">
           <div class="template-img">
-            <img src="images/link02.JPG" alt="Social Orbit プレビュー画像">
+            <img alt="Social Orbit プレビュー画像" src="images/link02.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Social Orbit</h3>
@@ -1121,16 +264,16 @@
             </div>
             <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。宇宙をイメージした背景に、ネオン発光演出を取り入れたアイコンを配置してサイバー感のあるデザインにしました。</p>
             <div class="template-links">
-              <a href="pages/link02.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="pages/link02.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="pages/link02.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="pages/link02.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 6 -->
         <div class="template-card" data-category="page">
           <div class="template-img">
-            <img src="images/link03.JPG" alt="Editorial Magazinerack プレビュー画像">
+            <img alt="Editorial Magazinerack プレビュー画像" src="images/link03.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Editorial Magazinerack</h3>
@@ -1140,16 +283,16 @@
             </div>
             <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。モノトーンとベージュを基調とし、上品なフォントを使用したシックで落ち着いたデザインです。</p>
             <div class="template-links">
-              <a href="pages/link03.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="pages/link03.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="pages/link03.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="pages/link03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 7 -->
         <div class="template-card" data-category="page">
           <div class="template-img">
-            <img src="images/link04.JPG" alt="Pastel Bubble プレビュー画像">
+            <img alt="Pastel Bubble プレビュー画像" src="images/link04.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Pastel Bubble</h3>
@@ -1159,16 +302,16 @@
             </div>
             <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ふわふわと浮かぶしゃぼん玉をイメージした可愛らしいデザインです。</p>
             <div class="template-links">
-              <a href="pages/link04.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="pages/link04.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="pages/link04.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="pages/link04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 8 -->
         <div class="template-card" data-category="page">
           <div class="template-img">
-            <img src="images/link05.JPG" alt="Stadium Field プレビュー画像">
+            <img alt="Stadium Field プレビュー画像" src="images/link05.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Stadium Field</h3>
@@ -1178,16 +321,16 @@
             </div>
             <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。野球のボールをイメージしたアイコンが特徴です。背景にグラウンドやスタジアムっぽい画像を使用する前提のデザインになっています。</p>
             <div class="template-links">
-              <a href="pages/link05.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="pages/link05.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="pages/link05.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="pages/link05.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
 
-        <!-- カード -->
+        <!-- カード 9 -->
         <div class="template-card" data-category="novel illust">
           <div class="template-img">
-            <img src="images/demo03.JPG" alt="Milky Sugar プレビュー画像">
+            <img alt="Milky Sugar プレビュー画像" src="images/demo03.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Milky Sugar</h3>
@@ -1198,16 +341,16 @@
             </div>
             <p class="template-desc">パステルカラーが可愛いテンプレート。甘いお菓子をイメージしたデザインになっています。</p>
             <div class="template-links">
-              <a href="template/demo03.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="template/demo03.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/demo03.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="template/demo03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
-          
-        <!-- カード -->
+
+        <!-- カード 10 -->
         <div class="template-card" data-category="sub">
           <div class="template-img">
-            <img src="images/novel03.JPG" alt="Milky Novel プレビュー画像">
+            <img alt="Milky Novel プレビュー画像" src="images/novel03.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Milky Novel</h3>
@@ -1218,16 +361,16 @@
             </div>
             <p class="template-desc">小説用の子ページです。名前変換機能がついており、苗字と名前を設定できます。</p>
             <div class="template-links">
-              <a href="template/novel03.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="novel03.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/novel03.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="novel03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
-          
-        <!-- カード -->
+
+        <!-- カード 11 -->
         <div class="template-card" data-category="page">
           <div class="template-img">
-            <img src="images/link06.JPG" alt="Number #27 プレビュー画像">
+            <img alt="Number #27 プレビュー画像" src="images/link06.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Number #27</h3>
@@ -1235,18 +378,20 @@
               <span class="tag tag-accent">単ページ</span>
               <span class="tag">リッチ</span>
             </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。<a href="susumu.html" target="_blank" style="color:var(--primary); text-decoration:underline;">こちら</a>のページを元に作成した高級感のあるデザインとなっています。</p>
+            <p class="template-desc">
+              SNSなどをまとめるリンク集用のテンプレートです。<a href="susumu.html" style="color:var(--primary); text-decoration:underline;" target="_blank">こちら</a>のページを元に作成した高級感のあるデザインとなっています。
+            </p>
             <div class="template-links">
-              <a href="pages/link06.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="pages/link06.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="pages/link06.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="pages/link06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
-        
-        <!-- カード -->
+
+        <!-- カード 12 -->
         <div class="template-card" data-category="novel illust">
           <div class="template-img">
-            <img src="images/demo04.JPG" alt="Silent Night プレビュー画像">
+            <img alt="Silent Night プレビュー画像" src="images/demo04.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Silent Night</h3>
@@ -1257,16 +402,16 @@
             </div>
             <p class="template-desc">「雪の降る静かな夜」をイメージしたテンプレートです。はらはらと雪が降る幻想的なアニメーションが楽しめます。</p>
             <div class="template-links">
-              <a href="template/demo04.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="template/demo04.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/demo04.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="template/demo04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
-        
-        <!-- カード -->
+
+        <!-- カード 13 -->
         <div class="template-card" data-category="sub">
           <div class="template-img">
-            <img src="images/novel04.JPG" alt="Silent Novel プレビュー画像">
+            <img alt="Silent Novel プレビュー画像" src="images/novel04.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Silent Novel</h3>
@@ -1276,16 +421,16 @@
             </div>
             <p class="template-desc">小説用の子ページです。「Silent Night」とお揃いの、雪が降る幻想的なデザインです。</p>
             <div class="template-links">
-              <a href="template/novel04.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="novel04.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/novel04.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="novel04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
-        
-        <!-- カード -->
+
+        <!-- カード 14 -->
         <div class="template-card" data-category="illust">
           <div class="template-img">
-            <img src="images/demo05.JPG" alt="Chess Board プレビュー画像">
+            <img alt="Chess Board プレビュー画像" src="images/demo05.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">Chess Board</h3>
@@ -1295,24 +440,26 @@
             </div>
             <p class="template-desc">チェスの盤面をイメージしたポートフォリオ用テンプレートです。マスにマウスを乗せると背景の駒アイコンが浮かび上がります。</p>
             <div class="template-links">
-              <a href="template/demo05.html" target="_blank" class="btn btn-demo">Demo</a>
-              <button type="button" data-file="template/demo05.html" onclick="copyHtmlFromFile(this)" class="btn btn-code">HTML取得</button>
+              <a class="btn btn-demo" href="template/demo05.html" target="_blank">Demo</a>
+              <button class="btn btn-code" data-file="template/demo05.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- 6. 創作支援ツール -->
-    <section id="tools" class="section">
+    <!-- ------------------------------------------
+         [SECTION] 創作支援ツール
+    ------------------------------------------- -->
+    <section class="section" id="tools">
       <h2 class="section-title">創作支援ツール</h2>
-      <div class="template-grid">
 
+      <!-- メインツール -->
+      <div class="template-grid">
         <!-- おしながきジェネレーター -->
         <div class="template-card fade-in">
           <div class="template-img">
-            <img src="images/tool01.JPG" alt="おしながきジェネレーター プレビュー画像">
+            <img alt="おしながきジェネレーター プレビュー画像" src="images/tool01.JPG">
           </div>
           <div class="template-body">
             <h3 class="template-title">おしながきジェネレーター β版</h3>
@@ -1322,16 +469,16 @@
             </div>
             <p class="template-desc">同人誌やお品書きをWeb上で直感的に編集し、そのまま画像ファイルとして出力・保存できるツールです。SNSでの宣伝などにご利用ください。</p>
             <div class="template-links">
-              <a href="tool/manual01.html" class="btn btn-demo">使い方・説明</a>
-              <a href="tool/generator.html" target="_blank" rel="noopener" class="btn btn-code">ツールを使う</a>
+              <a class="btn btn-demo" href="tool/manual01.html">使い方・説明</a>
+              <a class="btn btn-code" href="tool/generator.html" rel="noopener" target="_blank">ツールを使う</a>
             </div>
           </div>
         </div>
-        
-       <!-- 四季彩エディタ -->
+
+        <!-- 四季彩エディタ -->
         <div class="template-card fade-in">
           <div class="template-img">
-            <img src="images/tool03.JPG" alt="四季彩エディタ プレビュー画像">
+            <img alt="四季彩エディタ プレビュー画像" src="images/tool02.JPG">
           </div>
           <div class="template-body">
             <h3 class="template-title">四季彩エディタ β版</h3>
@@ -1341,99 +488,91 @@
             </div>
             <p class="template-desc">「どうせ書くなら、かわいいほう」がテーマの小説エディタです。縦書き・横書きの切り替え、文字数カウント、自動校正機能などがあります。</p>
             <div class="template-links">
-              <a href="tool/manual02.html" class="btn btn-demo">使い方・説明</a>
-              <a href="tool/editor.html" target="_blank" rel="noopener" class="btn btn-code">ツールを使う</a>
+              <a class="btn btn-demo" href="tool/manual02.html">使い方・説明</a>
+              <a class="btn btn-code" href="tool/editor.html" rel="noopener" target="_blank">ツールを使う</a>
             </div>
           </div>
         </div>
+      </div>
 
+      <!-- ユーティリティツール群 -->
+      <h3 class="tool-sub-title">🛠️ ユーティリティ・単機能ツール</h3>
+      <div class="mini-tool-grid">
         <!-- 画像一括リサイズ＆切り抜きツール -->
-        <div class="template-card fade-in">
-          <div class="template-img">
-            <img src="images/tool02.JPG" alt="画像一括リサイズ＆切り抜きツール プレビュー画像">
+        <div class="mini-tool-card">
+          <div class="mini-tool-info">
+            <span class="mini-tool-title">画像一括リサイズ＆切り抜きツール</span>
+            <span class="mini-tool-desc">複数の画像を一括で指定サイズにトリミングできるツール。サイト掲載用のサムネイル作成などに。</span>
           </div>
-          <div class="template-body">
-            <h3 class="template-title">画像一括リサイズ＆切り抜きツール</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">WEBツール</span>
-              <span class="tag">画像処理</span>
-            </div>
-            <p class="template-desc">複数の画像を一括で指定サイズにリサイズ・トリミングできるツールです。サイト掲載用のサムネイル作成などに役立ちます。</p>
-            <div class="template-links">
-              <a href="tool/croptool.html" target="_blank" rel="noopener" class="btn btn-code btn-full">ツールを使う</a>
-            </div>
-          </div>
-        </div>
-        
-        <!-- かんたんHTML分割ツール -->
-        <div class="template-card fade-in">
-          <div class="template-img">
-            <img src="images/tool04.JPG" alt="かんたんHTML分割ツール プレビュー画像">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">かんたんHTML分割ツール</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">WEBツール</span>
-            </div>
-            <p class="template-desc">HTMLファイル内の <code>&lt;style&gt;</code> や <code>&lt;script&gt;</code> を自動抽出し、index.html / style.css / script.js の3つのファイルに分離するツールです。</p>
-            <div class="template-links">
-              <a href="tool/splitter.html" target="_blank" rel="noopener" class="btn btn-code btn-full">ツールを使う</a>
-            </div>
+          <div class="mini-tool-action">
+            <a class="btn btn-code btn-sm" href="tool/croptool.html" rel="noopener" target="_blank">ツールを使う</a>
           </div>
         </div>
 
+        <!-- かんたんHTML分割ツール -->
+        <div class="mini-tool-card">
+          <div class="mini-tool-info">
+            <span class="mini-tool-title">かんたんHTML分割ツール</span>
+            <span class="mini-tool-desc">HTML内の <code>&lt;style&gt;</code> や <code>&lt;script&gt;</code> を自動抽出し、index.html / style.css / script.js に分割するツール。</span>
+          </div>
+          <div class="mini-tool-action">
+            <a class="btn btn-code btn-sm" href="tool/splitter.html" rel="noopener" target="_blank">ツールを使う</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 7. コラム -->
-    <section id="column" class="section">
+    <!-- ------------------------------------------
+         [SECTION] コラム
+    ------------------------------------------- -->
+    <section class="section" id="column">
       <h2 class="section-title">コラム</h2>
       <div class="column-list">
-        
-        <a href="other/column01.html" class="column-card">
+        <a class="column-card" href="other/column01.html">
           <div class="column-info">
             <div class="column-card-title">超！初心者向けHTML編集講座</div>
             <div class="column-desc">テンプレートを取得した後のテキスト編集方法や、基本的なタグの書き方をわかりやすく解説しています。</div>
           </div>
           <div class="column-arrow">→</div>
         </a>
-        
-          <a href="other/column02.html" class="column-card">
+
+        <a class="column-card" href="other/column02.html">
           <div class="column-info">
             <div class="column-card-title">無料レンタルサーバーおすすめ3選</div>
             <div class="column-desc">管理人が使っている無料のレンタルサーバー「FC2」「Wix」「GitHub Pages」さんをご紹介しています。</div>
           </div>
           <div class="column-arrow">→</div>
         </a>
-          
-        <a href="other/column03.html" class="column-card">
+
+        <a class="column-card" href="other/column03.html">
           <div class="column-info">
             <div class="column-card-title">無料で高機能なコードエディタ「Phoenix Code」</div>
-            <div class="column-desc">管理人が愛用しているエディタ「Phoenix Code」をご紹介をご紹介しています。</div>
+            <div class="column-desc">管理人が愛用しているエディタ「Phoenix Code」をご紹介しています。</div>
           </div>
           <div class="column-arrow">→</div>
         </a>
-        
-         <a href="other/column04.html" class="column-card">
+
+        <a class="column-card" href="other/column04.html">
           <div class="column-info">
             <div class="column-card-title">プログラミング初心者が見つけたPythonの学習用エディタ「Thonny」</div>
             <div class="column-desc">プログラミング初心者の管理人が「Thonny」を使ってみた感想です。</div>
           </div>
           <div class="column-arrow">→</div>
         </a>
-        
       </div>
     </section>
 
-    <!-- 8. ？？？ -->
-    <section id="mystery" class="section">
+    <!-- ------------------------------------------
+         [SECTION] ？？？
+    ------------------------------------------- -->
+    <section class="section" id="mystery">
       <h2 class="section-title">？？？</h2>
       <p style="margin-bottom: 20px;">二次創作的なものです。</p>
 
-        <div class="template-grid">
+      <div class="template-grid">
         <div class="template-card fade-in" style="opacity: 1;">
           <div class="template-img">
-            <img src="lecture/images/game_ss.JPG" alt="進くんと学ぶ！Webサイト制作入門 プレビュー画像">
+            <img alt="進くんと学ぶ！Webサイト制作入門 プレビュー画像" src="lecture/images/game_ss.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">進くんと学ぶ！Webサイト制作入門</h3>
@@ -1444,16 +583,15 @@
             </div>
             <p class="template-desc">某有名野球ゲームの名物キャッチャー、猪狩進くんと一緒にHTML/CSSの基礎を身につけるノベルゲーム風のWebサイト講座です。</p>
             <div class="template-links">
-              <a href="lecture/manual.html" target="_blank" rel="noopener" class="btn btn-demo">説明・遊び方</a>
-              <a href="lecture/portal.html" target="_blank" rel="noopener" class="btn btn-code">プレイする！</a>
+              <a class="btn btn-demo" href="lecture/manual.html" rel="noopener" target="_blank">説明・遊び方</a>
+              <a class="btn btn-code" href="lecture/portal.html" rel="noopener" target="_blank">プレイする！</a>
             </div>
           </div>
         </div>
-      
-      <div class="template-grid">
+
         <div class="template-card fade-in" style="opacity: 1;">
           <div class="template-img">
-            <img src="images/susumu.JPG" alt="SUSUMU IKARI #27 プレビュー画像">
+            <img alt="SUSUMU IKARI #27 プレビュー画像" src="images/susumu.JPG"/>
           </div>
           <div class="template-body">
             <h3 class="template-title">SUSUMU IKARI #27</h3>
@@ -1462,35 +600,37 @@
             </div>
             <p class="template-desc">「スポンサー企業が制作した猪狩進サポートサイト」というテーマで作成したWebページです。二次創作と言えるかも。</p>
             <div class="template-links">
-              <a href="other/susumu.html" target="_blank" class="btn btn-code btn-full">ページを見に行く</a>
+              <a class="btn btn-code btn-full" href="other/susumu.html" target="_blank">ページを見に行く</a>
             </div>
           </div>
         </div>
-      
+      </div>
     </section>
 
-    <!-- 9. 連絡先 -->
-    <section id="access" class="section">
+    <!-- ------------------------------------------
+         [SECTION] 連絡先
+    ------------------------------------------- -->
+    <section class="section" id="access">
       <h2 class="section-title">連絡先</h2>
       <p>テンプレートの使用報告（任意）やご連絡はWaveboxまでお願いします。</p>
 
       <div class="contact-list">
         <!-- プロフィール -->
-        <a href="other/about.html" class="contact-item-link">
+        <a class="contact-item-link" href="other/about.html">
           <div class="profile-img">
-            <img src="images/icon.png" alt="okojo のプロフィール画像">
+            <img alt="okojo のプロフィール画像" src="images/icon.png"/>
           </div>
           <div class="contact-detail">
             <span class="contact-label">管理人</span>
             <span class="contact-name">okojo</span>
           </div>
         </a>
-          
+
         <!-- mixi2 -->
-        <a href="https://mixi.social/@stoatpolice2" target="_blank" rel="noopener" class="contact-item-link">
+        <a class="contact-item-link" href="https://mixi.social/@stoatpolice2" rel="noopener" target="_blank">
           <span class="contact-icon contact-icon-svg">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22">
+              <rect height="18" rx="5" width="18" x="3" y="3"></rect>
               <path d="M7 17V8l5 5 5-5v9"></path>
             </svg>
           </span>
@@ -1501,9 +641,9 @@
         </a>
 
         <!-- G×H -->
-        <a href="https://caspardt.web.fc2.com/" target="_blank" rel="noopener" class="contact-item-link">
+        <a class="contact-item-link" href="https://caspardt.web.fc2.com/" rel="noopener" target="_blank">
           <span class="contact-icon contact-icon-svg">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
@@ -1513,11 +653,11 @@
             <span class="contact-value">G×H</span>
           </div>
         </a>
-        
+
         <!-- Fan Site -->
-        <a href="https://akatsukibrothers.wixsite.com/susumu" target="_blank" rel="noopener" class="contact-item-link">
+        <a class="contact-item-link" href="https://akatsukibrothers.wixsite.com/susumu" rel="noopener" target="_blank">
           <span class="contact-icon contact-icon-svg">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22">
               <path d="M12 20h9"></path>
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
             </svg>
@@ -1529,10 +669,10 @@
         </a>
 
         <!-- GitHub -->
-        <a href="https://github.com/stoatpolice2" target="_blank" rel="noopener" class="contact-item-link">
+        <a class="contact-item-link" href="https://github.com/stoatpolice2" rel="noopener" target="_blank">
           <span class="contact-icon contact-icon-svg">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path>
             </svg>
           </span>
           <div class="contact-detail">
@@ -1542,9 +682,9 @@
         </a>
 
         <!-- Wavebox -->
-        <a href="https://wavebox.me/wave/cvyocgirkkyo68d2/" target="_blank" rel="noopener" class="contact-item-link">
+        <a class="contact-item-link" href="https://wavebox.me/wave/cvyocgirkkyo68d2/" rel="noopener" target="_blank">
           <span class="contact-icon contact-icon-svg">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
@@ -1557,116 +697,52 @@
       </div>
     </section>
 
-    <!-- 10. リンク -->
-    <section id="link" class="section">
+    <!-- ------------------------------------------
+         [SECTION] リンク
+    ------------------------------------------- -->
+    <section class="section" id="link">
       <h2 class="section-title">リンク</h2>
 
-      <!-- 当サイトへのリンクについて -->
       <h3 class="link-sub-title">当サイトへのリンクについて</h3>
       <div class="banner-wrapper">
         <div class="banner-text-area">
-          <p>当サイトはリンクフリーです。<br>バナー画像をご使用の際は直リンクを避け、保存してご利用ください。</p>
+          <p>
+            当サイトはリンクフリーです。<br/>
+            バナー画像をご使用の際は直リンクを避け、保存してご利用ください。
+          </p>
           <div class="banner-meta">
-            <strong>サイト名：</strong> Stoat Labo<br>
-            <strong>URL：</strong> <code>https://stoatpolice2.github.io/labo/</code>
+            <strong>サイト名：</strong>Stoat Labo<br/>
+            <strong>URL：</strong><code>https://stoatpolice2.github.io/labo/</code>
           </div>
         </div>
         <div class="banner-img-area">
-          <img src="images/banner.png" alt="Stoat Labo バナー" class="banner-img-200-40">
+          <img alt="Stoat Labo バナー" class="banner-img-200-40" src="images/banner.png"/>
           <span class="banner-note">直リンク不可 / 200 × 40 px</span>
         </div>
       </div>
 
-      <!-- サーチエンジン -->
       <h3 class="link-sub-title">サーチエンジン</h3>
       <div class="search-engine-grid">
-        <!-- サーチエンジン項目1 -->
-        <a href="https://compslink.jp" target="_blank" rel="noopener" class="search-engine-card">
-          <img src="images/banner01.png" alt="COMPASS LINK" class="banner-img-200-40">
+        <a class="search-engine-card" href="https://compslink.jp" rel="noopener" target="_blank">
+          <img alt="COMPASS LINK" class="banner-img-200-40" src="images/banner01.png"/>
           <div class="search-engine-info">
             <span class="search-engine-name">COMPASS LINK</span>
             <span class="search-engine-desc">同人系総合サーチ</span>
           </div>
         </a>
-          
-    </div>
+      </div>
+    </section>
+
   </div>
 
+  <!-- ==========================================
+       フッター
+  ========================================== -->
   <footer>
-    <p>&copy; Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
+    <p>© Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
   </footer>
 
   <!-- JS スクリプト -->
-  <script>
-    // カテゴリ切り替え & Stagger アニメーション関数
-    function filterTemplates(category, btnElement) {
-      const buttons = document.querySelectorAll('.tab-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      btnElement.classList.add('active');
-
-      let visibleIndex = 0;
-      const cards = document.querySelectorAll('#templates .template-card');
-
-      cards.forEach(card => {
-        const cardCategories = card.getAttribute('data-category') || '';
-        const categoryArray = cardCategories.split(' ');
-
-        card.classList.remove('fade-in');
-        card.style.animationDelay = '0s';
-
-        if (category === 'all' || categoryArray.includes(category)) {
-          card.classList.remove('is-hidden');
-          const delay = visibleIndex * 0.06;
-          card.style.animationDelay = `${delay}s`;
-
-          requestAnimationFrame(() => {
-            card.classList.add('fade-in');
-          });
-
-          visibleIndex++;
-        } else {
-          card.classList.add('is-hidden');
-        }
-      });
-    }
-
-    // 指定したファイルを取得してクリップボードにコピーする関数
-    async function copyHtmlFromFile(buttonElement) {
-      const filePath = buttonElement.getAttribute('data-file');
-      if (!filePath) return;
-
-      const originalText = buttonElement.textContent;
-
-      try {
-        const response = await fetch(filePath);
-        if (!response.ok) {
-          throw new Error(`ファイルの読み込みに失敗しました (${response.status})`);
-        }
-        const textData = await response.text();
-        await navigator.clipboard.writeText(textData);
-
-        // 成功時の演出（グラデーションを上書きできるよう background を一括操作）
-        buttonElement.textContent = 'コピー完了！';
-        buttonElement.style.background = '#66524A';
-
-        setTimeout(() => {
-          buttonElement.textContent = originalText;
-          buttonElement.style.background = ''; // インラインスタイルを解除して元のCSSに戻す
-        }, 2000);
-
-      } catch (error) {
-        console.error('Copy Error:', error);
-        alert('コードの取得・コピーに失敗しました。\n※ローカル環境で直接ファイルを開いている場合はサーバー上で動作確認してください。')
-      }
-    }
-
-    // 初回読み込み時
-    document.addEventListener('DOMContentLoaded', () => {
-      const defaultTab = document.querySelector('.tab-btn.active');
-      if (defaultTab) {
-        filterTemplates('all', defaultTab);
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
