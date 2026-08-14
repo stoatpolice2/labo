@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <style>
+    /* ----------------------------------
+       CSS RESET & VARIABLES
+    ---------------------------------- */
+   :root {
+     --primary: #E06D53;
+     --primary-hover: #C8563C;
+     --accent: #E8963E;
+     --bg-main: #FAF7F5;
+     --bg-card: #FFFFFF;
+     --text-main: #332C2B;
+     --text-muted: #7A6E6B;
+     --border: #E6DAD3;
+     --radius: 16px;
+     --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+     --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+     --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+     --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+   }
+
+   /* ----------------------------------
+    LAYOUT & NAV
+    ---------------------------------- */
+    .section,
+    .news-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* ホバー時に少し浮き上がるような質感 */
+    .section:hover,
+    .news-section:hover {
+      transform: translateY(-4px); 
+      box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background-color: var(--bg-main);
+      background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: var(--text-main);
+      line-height: 1.8;
+      padding-bottom: 60px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    /* ----------------------------------
+       HERO AREA
+    ---------------------------------- */
+    .hero {
+      background: var(--grad-hero);
+      border-bottom: 2px dashed #E2D5CE;
+      padding: 50px 20px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      font-size: 3rem;
+      letter-spacing: 0.06em;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      line-height: 1.15;
+      display: inline-block;
+      filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+      font-size: 1.00rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+       LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+      background: var(--grad-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #FFF;
+      display: block;
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      position: relative;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      padding-left: 14px;
+    }
+
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 80%;
+      background: var(--grad-primary);
+      border-radius: 4px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+       PROFILE HEADER
+    ---------------------------------- */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #FFF;
+      box-shadow: var(--shadow-lg);
+      flex-shrink: 0;
+      background-color: #E8DDD7;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info h2 {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .profile-info .role {
+      font-size: 0.88rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* ----------------------------------
+       GRID & CARDS
+    ---------------------------------- */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .info-card {
+      background: #FAF5F2;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s;
+    }
+
+    .info-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: var(--shadow-sm);
+      background-color: #FFF5F1;
+      border-color: var(--primary);
+    }
+
+    .info-card-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .info-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ----------------------------------
+       BACK BUTTON
+    ---------------------------------- */
+    .back-nav {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      background: var(--grad-primary);
+      color: #FFF;
+      padding: 12px 32px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+
+    /* レスポンシブ (スマホ表示時の横スクロール設定) */
+    @media (max-width: 600px) {
+      .hero { padding: 35px 15px 25px; }
+      .header-title { font-size: 2.2rem; }
+      
+      nav ul {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px;
+      }
+      nav a { padding: 10px 14px; font-size: 0.88rem; }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+      .container { margin-top: 20px; padding: 0 12px; }
+      .section { padding: 22px 18px; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- メインビジュアル -->
+  <header class="hero">
+    <div class="hero-container">
+      <h1 class="header-title">About Me</h1>
+      <p class="header-subtitle">管理人の自己紹介</p>
+    </div>
+  </header>
+
+  <!-- ナビゲーション -->
+  <nav>
+    <ul>
+      <li><a href="../index.html#about">はじめに</a></li>
+      <li><a href="../index.html#rules">利用規約</a></li>
+      <li><a href="../index.html#how-to">使い方</a></li>
+      <li><a href="../index.html#templates">テンプレート</a></li>
+      <li><a href="../index.html#column">コラム</a></li>
+      <li><a href="../index.html#mystery">🐾</a></li>
+      <li><a href="../index.html#access">連絡先</a></li>
+      <li><a href="../index.html#link">リンク</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <!-- プロフィール -->
+    <section id="profile" class="section">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <img src="../images/icon.png" alt="okojo のプロフィール画像">
+        </div>
+        <div class="profile-info">
+          <h2>okojo</h2>
+          <span class="role">Stoat Labo 管理人</span>
+        </div>
+      </div>
+      <p>
+        管理人の okojo と申します。<br>
+        趣味でWEBツール制作・同人小説・イラスト・ゲームなどの創作活動を行なっています。<br>
+      </p>
+    </section>
+
+    <!-- 好きなもの -->
+    <section id="likes" class="section">
+      <h2 class="section-title">好きなもの</h2>
+      <p>趣味やはまっているものなど。</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">🎨 二次創作</div>
+          <div class="info-card-desc">メインの趣味です。どこかで見かけてもそっとしておいてあげてください。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🎮 ゲーム</div>
+          <div class="info-card-desc">PS系のゲームとスマホアプリを主に楽しんでいます。最近はパワプロに再燃中。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">💻 コーディング</div>
+          <div class="info-card-desc">Webサイトやツール、ノベルゲームの制作など。まだまだわからないことだらけ。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🤖 プログラミング</div>
+          <div class="info-card-desc">初心者です。とりあえずPythonで簡単なスクリプトを作るところから始めています。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 愛用しているツール -->
+    <section id="tools" class="section">
+      <h2 class="section-title">愛用しているツール</h2>
+      <p>テンプレート制作や二次創作で使っているツールです。</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">🐦 Phoenix Code</div>
+          <div class="info-card-desc">HTML/CSSコーディングのメインエディタ。主にゲーム制作時に使ってます。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">✨ Gemini</div>
+          <div class="info-card-desc">コードのリファクタリング、レイアウトのアイデア出しなどの相棒。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🔥 FireAlpaca</div>
+          <div class="info-card-desc">イラストや漫画の執筆で愛用しています。鉛筆ツールの書き心地がお気に入り。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🦖 Tyrano Script</div>
+          <div class="info-card-desc">姉妹ソフトのTyrano Builderも併せてゲーム制作でお世話になっています。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- トップへ戻るボタン -->
+    <div class="back-nav">
+      <a href="../index.html" class="btn-back">← トップページに戻る</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
