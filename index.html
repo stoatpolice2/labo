@@ -694,6 +694,133 @@
       color: var(--primary-hover);
     }
 
+    /* ---------------------------------- LINK SECTION STYLES ---------------------------------- */
+    .link-sub-title {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--text-main);
+      margin: 28px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .link-sub-title:first-of-type {
+      margin-top: 0;
+    }
+
+    /* オレンジ色の破線枠で作る自サイトリンクカード */
+    .banner-wrapper {
+      background-color: #FFF6F3;
+      border: 1px dashed var(--primary);
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .banner-text-area {
+      flex: 1;
+      font-size: 0.88rem;
+    }
+
+    .banner-text-area p {
+      margin-bottom: 8px;
+      color: #5A443E;
+    }
+
+    .banner-meta {
+      background-color: #FAF5F2;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+    }
+
+    .banner-img-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .banner-img-200-40 {
+      width: 200px;
+      height: 40px;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(224, 109, 83, 0.15);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .banner-img-200-40:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .banner-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* サーチエンジンのグリッド表示（オレンジ実線カード） */
+    .search-engine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 12px;
+    }
+
+    .search-engine-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background-color: #FFF6F3;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(224, 109, 83, 0.3);
+      text-decoration: none !important;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .search-engine-card:hover {
+      background-color: #FFEFEA;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-engine-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    .search-engine-name {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: var(--primary);
+      transition: color 0.2s;
+    }
+
+    .search-engine-card:hover .search-engine-name {
+      color: var(--primary-hover);
+    }
+
+    .search-engine-desc {
+      font-size: 0.78rem;
+      color: #5A443E;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     footer {
       text-align: center;
       color: var(--text-muted);
@@ -750,6 +877,31 @@
       .column-card {
         padding: 16px;
       }
+
+      /* スマホ表示時の調整 */
+      .banner-wrapper {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 14px;
+      }
+
+      .banner-img-area {
+        align-items: center;
+      }
+
+      .search-engine-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-engine-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .search-engine-desc {
+        white-space: normal;
+      }
     }
   </style>
 </head>
@@ -773,6 +925,7 @@
       <li><a href="#column">コラム</a></li>
       <li><a href="#mystery">🐾</a></li>
       <li><a href="#access">連絡先</a></li>
+      <li><a href="#link">リンク</a></li>
     </ul>
   </nav>
 
@@ -784,8 +937,8 @@
       <div class="news-scroll-box">
         <ul class="news-list">
           <li class="news-item">
-            <span class="news-date">2026.08.10</span>
-            <span class="news-text">プレオープンしました</span>
+            <span class="news-date">2026.08.14</span>
+            <span class="news-text">サイト公開しました</span>
           </li>
         </ul>
       </div>
@@ -804,7 +957,7 @@
         ※当サイトで配布しているテンプレートやツールはAI（Gemini）を活用して制作・調整を行っています。
       </p>
       <p style="margin-top: 10px;">
-        ※管理人が二次創作者なのでしばしば二次創作的な制作物や発言が飛び出します。
+        ※管理人が二次創作者なのでしばしば二次創作要素のある制作物も掲載します。
       </p>
     </section>
 
@@ -1252,7 +1405,7 @@
           </div>
           <div class="column-arrow">→</div>
         </a>
-         
+          
         <a href="other/column03.html" class="column-card">
           <div class="column-info">
             <div class="column-card-title">無料で高機能なコードエディタ「Phoenix Code」</div>
@@ -1291,7 +1444,7 @@
             </div>
             <p class="template-desc">某有名野球ゲームの名物キャッチャー、猪狩進くんと一緒にHTML/CSSの基礎を身につけるノベルゲーム風のWebサイト講座です。</p>
             <div class="template-links">
-              <a href="lecture/manual.html" class="btn btn-demo">説明・遊び方</a>
+              <a href="lecture/manual.html" target="_blank" rel="noopener" class="btn btn-demo">説明・遊び方</a>
               <a href="lecture/portal.html" target="_blank" rel="noopener" class="btn btn-code">プレイする！</a>
             </div>
           </div>
@@ -1404,6 +1557,39 @@
       </div>
     </section>
 
+    <!-- 10. リンク -->
+    <section id="link" class="section">
+      <h2 class="section-title">リンク</h2>
+
+      <!-- 当サイトへのリンクについて -->
+      <h3 class="link-sub-title">当サイトへのリンクについて</h3>
+      <div class="banner-wrapper">
+        <div class="banner-text-area">
+          <p>当サイトはリンクフリーです。<br>バナー画像をご使用の際は直リンクを避け、保存してご利用ください。</p>
+          <div class="banner-meta">
+            <strong>サイト名：</strong> Stoat Labo<br>
+            <strong>URL：</strong> <code>https://stoatpolice2.github.io/labo/</code>
+          </div>
+        </div>
+        <div class="banner-img-area">
+          <img src="images/banner.png" alt="Stoat Labo バナー" class="banner-img-200-40">
+          <span class="banner-note">直リンク不可 / 200 × 40 px</span>
+        </div>
+      </div>
+
+      <!-- サーチエンジン -->
+      <h3 class="link-sub-title">サーチエンジン</h3>
+      <div class="search-engine-grid">
+        <!-- サーチエンジン項目1 -->
+        <a href="https://compslink.jp" target="_blank" rel="noopener" class="search-engine-card">
+          <img src="images/banner01.png" alt="COMPASS LINK" class="banner-img-200-40">
+          <div class="search-engine-info">
+            <span class="search-engine-name">COMPASS LINK</span>
+            <span class="search-engine-desc">同人系総合サーチ</span>
+          </div>
+        </a>
+          
+    </div>
   </div>
 
   <footer>
@@ -1470,7 +1656,7 @@
 
       } catch (error) {
         console.error('Copy Error:', error);
-        alert('コードの取得・コピーに失敗しました。\n※ローカル環境で直接ファイルを開いている場合はサーバー上で動作確認してください。');
+        alert('コードの取得・コピーに失敗しました。\n※ローカル環境で直接ファイルを開いている場合はサーバー上で動作確認してください。')
       }
     }
 
