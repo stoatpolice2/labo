@@ -456,7 +456,7 @@
         }
         drawSnow();
 
-        /* --- 2. Galleryモーダル表示機能 (修正済み) --- */
+        /* --- 2. Galleryモーダル表示機能 --- */
         const modal = document.getElementById('image-modal');
         const modalImg = document.getElementById('modal-img');
         const modalClose = document.getElementById('modal-close');
@@ -486,7 +486,7 @@
             }
         });
 
-        // ESCキー押下でも閉じられるよう利便性向上
+        // ESCキー押下でも閉じられる
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('is-active')) {
                 closeModal();
