@@ -1,0 +1,1192 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FC2だけでつくる個人サイト入門 | Stoat Labo</title>
+
+        <!-- ファビコンの設定 -->
+        <link href="images/icon.png" rel="icon" type="image/x-icon" />
+
+        <!-- Open Graph Protocol (OGP) の設定 -->
+        <meta content="Stoat Labo | Web創作支援サイト" property="og:title" />
+        <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description" />
+        <meta content="website" property="og:type" />
+        <meta content="https://stoatpolice2.github.io/labo/" property="og:url" />
+        <meta content="https://stoatpolice2.github.io/labo/images/ogp.jpg" property="og:image" />
+        <meta content="Stoat Labo" property="og:site_name" />
+        <meta content="ja_JP" property="og:locale" />
+
+        <style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+            :root {
+                --primary: #e06d53;
+                --primary-hover: #c8563c;
+                --accent: #e8963e;
+                --bg-main: #faf7f5;
+                --bg-card: #ffffff;
+                --text-main: #332c2b;
+                --text-muted: #7a6e6b;
+                --border: #e6dad3;
+                --radius: 16px;
+                --grad-primary: linear-gradient(135deg, #e06d53 0%, #e8963e 100%);
+                --grad-hero: linear-gradient(180deg, #fff5f2 0%, #faf7f5 100%);
+                --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+                --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+                background-color: var(--bg-main);
+                background-image: radial-gradient(#e8ddd7 1.5px, transparent 1.5px);
+                background-size: 24px 24px;
+                color: var(--text-main);
+                line-height: 1.8;
+                padding-bottom: 60px;
+            }
+
+            a {
+                color: var(--primary);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+            a:hover {
+                color: var(--primary-hover);
+                text-decoration: underline;
+            }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+            .hero {
+                background: var(--grad-hero);
+                border-bottom: 2px dashed #e2d5ce;
+                padding: 55px 20px 45px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .hero::before,
+            .hero::after {
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+                z-index: 0;
+            }
+
+            .hero::before {
+                width: 160px;
+                height: 160px;
+                top: -40px;
+                left: 5%;
+            }
+
+            .hero::after {
+                width: 110px;
+                height: 110px;
+                bottom: 10px;
+                right: 6%;
+            }
+
+            .hero-container {
+                position: relative;
+                z-index: 1;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .header-title {
+                font-size: 2.2rem;
+                letter-spacing: 0.04em;
+                background: var(--grad-primary);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 900;
+                line-height: 1.3;
+                display: inline-block;
+                filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+            }
+
+            .header-subtitle {
+                font-size: 1rem;
+                color: var(--text-muted);
+                margin-top: 12px;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+            }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+            nav {
+                background: var(--grad-primary);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+            }
+
+            nav ul {
+                display: flex;
+                justify-content: center;
+                list-style: none;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            nav li {
+                position: relative;
+            }
+
+            nav a, nav span.nav-dropdown-btn {
+                color: #fff;
+                display: block;
+                padding: 14px 18px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                letter-spacing: 0.03em;
+                transition: all 0.2s;
+                white-space: nowrap;
+                cursor: pointer;
+            }
+
+            nav a:hover, nav span.nav-dropdown-btn:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                text-decoration: none;
+            }
+
+            /* Nav 内ドロップダウンメニュー */
+            .nav-dropdown-content {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: #ffffff;
+                min-width: 260px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                border-radius: 0 0 12px 12px;
+                overflow: hidden;
+                border: 1px solid var(--border);
+                z-index: 101;
+            }
+
+            .nav-dropdown-content a {
+                color: var(--text-main);
+                padding: 12px 16px;
+                font-size: 0.88rem;
+                border-bottom: 1px solid #f2e9e4;
+                font-weight: normal;
+            }
+
+            .nav-dropdown-content a:hover {
+                background-color: #fff5f2;
+                color: var(--primary);
+            }
+
+            .dropdown:hover .nav-dropdown-content {
+                display: block;
+            }
+
+            .container {
+                max-width: 900px;
+                margin: 40px auto 0;
+                padding: 0 20px;
+            }
+
+            .section {
+                background: var(--bg-card);
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                padding: 36px;
+                margin-bottom: 36px;
+                box-shadow: var(--shadow-sm);
+                transition:
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+            }
+
+            .section:hover {
+                box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+            }
+
+            .section-title {
+                font-size: 1.35rem;
+                color: var(--text-main);
+                position: relative;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                font-weight: 700;
+                padding-left: 14px;
+            }
+
+            .section-title::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 6px;
+                height: 80%;
+                background: var(--grad-primary);
+                border-radius: 4px;
+            }
+
+            .section-title::after {
+                content: "";
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: repeating-linear-gradient(
+                    to right,
+                    #e8ddd7,
+                    #e8ddd7 6px,
+                    transparent 6px,
+                    transparent 12px
+                );
+            }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+            h3.sub-title {
+                font-size: 1.1rem;
+                color: var(--primary);
+                margin: 20px 0 10px 0;
+                padding-bottom: 4px;
+                border-bottom: 1px dashed var(--border);
+                font-weight: bold;
+            }
+
+            .rule-list {
+                list-style: none;
+                margin-bottom: 15px;
+            }
+
+            .rule-list li {
+                position: relative;
+                padding-left: 28px;
+                margin-bottom: 10px;
+            }
+
+            .rule-list li::before {
+                content: "🐾";
+                position: absolute;
+                left: 0;
+                font-size: 0.9rem;
+            }
+
+            .rule-list li.rule-ng::before {
+                content: "⚠️";
+                font-size: 0.85rem;
+            }
+
+            .alert-box {
+                background-color: #fff6f3;
+                border: 1px dashed var(--primary);
+                padding: 18px;
+                margin-top: 18px;
+                border-radius: 12px;
+                font-size: 0.9rem;
+                color: #5a443e;
+            }
+
+            /* 目次ボックス */
+            .toc-box {
+                background: #faf5f2;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 20px 24px;
+                margin-bottom: 30px;
+            }
+
+            .toc-title {
+                font-weight: bold;
+                color: var(--primary);
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .toc-list {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            .toc-list li {
+                margin-bottom: 6px;
+                padding-left: 18px;
+                position: relative;
+            }
+
+            .toc-list li::before {
+                content: "・";
+                position: absolute;
+                left: 0;
+                color: var(--primary);
+            }
+
+            .step-item {
+                margin-bottom: 22px;
+                background: #faf5f2;
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid var(--border);
+            }
+
+            .step-item h3 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+                color: var(--text-main);
+            }
+
+            .step-number {
+                display: inline-block;
+                background: var(--grad-primary);
+                color: #fff;
+                font-weight: bold;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-size: 0.85rem;
+                margin-right: 8px;
+            }
+
+    /* ----------------------------------
+        DEMO CODE COPY BOX STYLES
+    ---------------------------------- */
+            .code-box-wrapper {
+                margin: 20px 0;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                overflow: hidden;
+                background: #2d2726;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .code-box-header {
+                background: #3d3534;
+                padding: 10px 16px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #4a403e;
+            }
+
+            .code-box-title {
+                color: #e8ddd7;
+                font-size: 0.85rem;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .copy-btn {
+                background: var(--grad-primary);
+                color: #fff;
+                border: none;
+                padding: 6px 14px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .copy-btn:hover {
+                opacity: 0.9;
+                transform: scale(1.03);
+            }
+
+            .copy-btn.copied {
+                background: #4a90e2;
+            }
+
+            .code-box-body pre {
+                margin: 0;
+                padding: 16px;
+                max-height: 320px;
+                overflow-y: auto;
+                border-radius: 0;
+                background: transparent;
+            }
+
+    /* ----------------------------------
+        IMAGE STYLES
+    ---------------------------------- */
+            .image-container {
+                margin: 20px 0;
+                text-align: center;
+            }
+
+            .image-frame {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid var(--border);
+                background-color: #F8F5F3;
+                display: block;
+            }
+
+            .image-frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                cursor: pointer;
+                transition: transform 0.2s ease, opacity 0.2s ease;
+            }
+
+            .image-frame img:hover {
+                opacity: 0.88;
+                transform: scale(1.02);
+            }
+
+            /* 右下の拡大バッジ */
+            .image-frame::after {
+                content: "🔍 拡大表示";
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background: rgba(51, 44, 43, 0.75);
+                color: #ffffff;
+                font-size: 0.75rem;
+                font-weight: bold;
+                padding: 4px 10px;
+                border-radius: 20px;
+                pointer-events: none;
+                backdrop-filter: blur(2px);
+                transition: background 0.2s ease;
+            }
+
+            .image-frame:hover::after {
+                background: rgba(224, 109, 83, 0.9);
+            }
+
+    /* ----------------------------------
+        MODAL STYLES
+    ---------------------------------- */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.85);
+                backdrop-filter: blur(4px);
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal-content {
+                max-width: 90%;
+                max-height: 90vh;
+                object-fit: contain;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                color: #fff;
+                font-size: 35px;
+                font-weight: bold;
+                cursor: pointer;
+                line-height: 1;
+                transition: color 0.2s ease;
+            }
+
+            .modal-close:hover {
+                color: var(--accent);
+            }
+
+    /* ----------------------------------
+        CODE BLOCK & INLINE CODE STYLES
+    ---------------------------------- */
+            pre {
+                background: #2d2726;
+                color: #f8f5f3;
+                padding: 16px;
+                border-radius: 10px;
+                overflow-x: auto;
+                font-family: Consolas, Monaco, "Courier New", monospace;
+                font-size: 0.88rem;
+                line-height: 1.5;
+                margin: 12px 0;
+            }
+
+            /* 地の文中の <code> タグのデザインを強調 */
+            code {
+                background: #ffe8e2;
+                color: #c84022;
+                border: 1px solid #f2c7bd;
+                padding: 2px 7px;
+                margin: 0 2px;
+                border-radius: 5px;
+                font-family: Consolas, Monaco, "Courier New", monospace;
+                font-size: 0.88rem;
+                font-weight: 700;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            }
+
+            pre code {
+                background: none;
+                color: inherit;
+                border: none;
+                padding: 0;
+                margin: 0;
+                font-weight: normal;
+                box-shadow: none;
+            }
+
+            .comment {
+                color: #8c7b75;
+            }
+            .tag-name {
+                color: #e06d53;
+            }
+            .attr-name {
+                color: #f4c463;
+            }
+            .attr-val {
+                color: #98c379;
+            }
+
+            footer {
+                text-align: center;
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                margin-top: 60px;
+            }
+
+            @media (max-width: 600px) {
+                .hero {
+                    padding: 40px 15px 30px;
+                }
+                .header-title {
+                    font-size: 1.6rem;
+                }
+                .header-subtitle {
+                    font-size: 0.88rem;
+                }
+                nav ul {
+                    flex-wrap: nowrap;
+                    justify-content: flex-start;
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    padding: 0 10px;
+                }
+                nav a, nav span.nav-dropdown-btn {
+                    padding: 10px 14px;
+                    font-size: 0.88rem;
+                }
+                .nav-dropdown-content {
+                    position: fixed;
+                    left: 10px;
+                    right: 10px;
+                    width: auto;
+                    top: 50px;
+                }
+                .container {
+                    margin-top: 24px;
+                    padding: 0 12px;
+                }
+                .section {
+                    padding: 22px 18px;
+                    margin-bottom: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- メインビジュアル -->
+        <header id="top" class="hero">
+            <div class="hero-container">
+                <h1 class="header-title">FC2だけでつくる個人サイト入門</h1>
+                <p class="header-subtitle">エディタもFTPも不要！ブラウザひとつで自分のホームページを作ってみよう</p>
+            </div>
+        </header>
+
+        <!-- ナビゲーション -->
+        <nav>
+            <ul>
+                <li><a href="../index.html">Stoat Labo TOP</a></li>
+                <li><a href="#top">▲ ページ先頭</a></li>
+                <li class="dropdown">
+                    <span class="nav-dropdown-btn">📌 目次 ▾</span>
+                    <div class="nav-dropdown-content">
+                        <a href="#intro">はじめに</a>
+                        <a href="#setup">1. ファイルを作成しよう</a>
+                        <a href="#title">2. タイトルを変更しよう</a>
+                        <a href="#text">3. テキストを編集してみよう</a>
+                        <a href="#link">4. リンクを追加してみよう</a>
+                        <a href="#image">5. 画像を差し替えてみよう</a>
+                        <a href="#css">6. CSSでアレンジしてみよう</a>
+                        <a href="#publish">7. サイトを公開しよう！</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <!-- 簡易目次ボックス -->
+            <div class="toc-box">
+                <div class="toc-title">📌 目次</div>
+                <ul class="toc-list">
+                    <li><a href="#intro">はじめに：ソフトなしでサイトを作ろう！</a></li>
+                    <li><a href="#setup">1. ファイルを作成しよう</a></li>
+                    <li><a href="#title">2. ページのタイトルを変更しよう</a></li>
+                    <li><a href="#text">3. テキストを編集してみよう</a></li>
+                    <li><a href="#link">4. リンクを追加してみよう</a></li>
+                    <li><a href="#image">5. 画像をアップロードして差し替えてみよう</a></li>
+                    <li><a href="#css">6. CSSで見た目をアレンジしてみよう（挑戦編）</a></li>
+                    <li><a href="#publish">7. プレビューで確認してサイトを公開しよう！</a></li>
+                </ul>
+            </div>
+
+            <!-- 導入 -->
+            <section id="intro" class="section">
+                <h2 class="section-title">はじめに：特別なソフトがなくてもサイトは作れます！</h2>
+                <p>
+                    Webサイト制作と聞くと「特別なソフト（エディタ）を入れたり、FTPソフトでファイルを転送したり…」と難しく感じてしまうかもしれません。
+                </p>
+                <p style="margin-top: 10px">
+                    ですが、<strong>FC2ホームページ</strong>の標準機能を使えば、ブラウザひとつで簡単に個人サイトを作成・公開できます！
+                </p>
+                <p style="margin-top: 10px">
+                    このページでは、ブラウザ上でコードを編集しながらWebサイトを作る手順を具体的に解説していきます🐾
+                </p>
+            </section>
+
+            <!-- 1. 下準備 -->
+            <section id="setup" class="section">
+                <h2 class="section-title">1. ファイルを作成しよう</h2>
+
+                <div class="step-item" style="margin-top: 18px">
+                    <h3><span class="step-number">1</span>FC2 IDの作成とログイン</h3>
+                    <p>
+                        FC2の公式サイトを開き、「新規登録」ボタンからFC2
+                        IDを作成します。登録完了後、FC2ホームページの管理画面にログインします。
+                    </p>
+                    
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_01.jpg" alt="FC2ホームページのログイン画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">2</span>ファイルマネージャーを開く</h3>
+                    <p>管理画面の左メニューにある「ファイルマネージャー」をクリックします。</p>
+                    
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_02.jpg" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">3</span>HTMLファイルの新規作成</h3>
+                    <p>
+                        ファイルマネージャーの画面上で右クリックをし、<strong>「ファイルを作成」</strong>を選択します。ファイル形式の選択画面が出たら<strong>「HTML」</strong>を選びます。
+                    </p>
+                    
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_03.jpg" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">4</span>仮のファイル名で決定</h3>
+                    <p>デフォルトで「newfile.html」と入力されているので、そのまま決定します。</p>
+                    <div class="alert-box">
+                        <strong>💡 なぜ「newfile.html」にするの？</strong><br>
+                        本来、ホームページのトップページは
+                        <code>index.html</code>
+                        というファイル名にする必要があります（それによってサーバーが自動的にトップページだと認識してくれます）<br>ただし、今回はサーバー上で編集をするという都合上、作成途中の状態が人目に触れてしまうのを防ぐために最初は「newfile.html」という仮の名前で作業を進めます🐾
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">5</span>編集画面（エディタ）を開く</h3>
+                    <p>
+                        作成された「newfile.html」を右クリックし、<strong>「ソース表示で編集」</strong>を選択します。別ウィンドウで編集画面が開きます。
+                    </p>
+                    
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_04.jpg" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                </div>
+
+                <div class="alert-box">
+                    <strong>💡 「メモ帳」よりも編集しやすい！</strong><br>
+                    FC2さんのWebエディタには「コードを色分けして表示」「<code>&lt;&gt;</code>の閉じ忘れがあると赤色で表示」「リアルタイムでプレビューできる機能」など、編集に便利な機能が付いています🐾
+                </div>
+                <br>
+
+                <div class="step-item">
+                    <h3><span class="step-number">6</span>デモコードを貼り付ける</h3>
+                <p>練習用のコードを作成したのでコピーしてご利用ください🐾</p>
+
+                <!-- デモコード コピーボックス -->
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 練習用デモコード（index.html）</span>
+                        <button class="copy-btn" onclick="copyDemoCode()">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+                        <pre><code id="demoCode">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;ようこそ！私のプロフィール&lt;/title&gt;
+  
+  &lt;style&gt;
+    /* 全体の基本設定 */
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    /* ヘッダーの設定 */
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    /* メインコンテンツの設定 */
+    main {
+      background: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+
+    /* 画像のサイズ調整 */
+    .profile-img {
+      max-width: 200px;
+      height: auto;
+      border-radius: 50%;
+      display: block;
+      margin: 10px 0;
+    }
+
+    /* リンクの装飾 */
+    a {
+      color: #4a90e2;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* フッターの設定 */
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- 1. ヘッダー領域 --&gt;
+  &lt;header&gt;
+    &lt;h1&gt;★ここにサイトのタイトルを入れる★&lt;/h1&gt;
+    &lt;p&gt;～ はじめての個人サイトへようこそ ～&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;!-- 2. プロフィール --&gt;
+    &lt;section&gt;
+      &lt;h2&gt;自己紹介&lt;/h2&gt;
+      &lt;img src="https://via.placeholder.com/200" alt="プロフィール画像" class="profile-img"&gt;
+      &lt;p&gt;
+        こんにちは！ここに簡単な自己紹介文を書きます。&lt;br&gt;
+        好きなことや趣味、最近ハマっていることなどを自由に入力してみましょう。
+      &lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 3. 箇条書きリスト --&gt;
+    &lt;section&gt;
+      &lt;h2&gt;好きなものリスト&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;読書（ミステリー小説）&lt;/li&gt;
+        &lt;li&gt;カフェ巡り&lt;/li&gt;
+        &lt;li&gt;Webサイト制作&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 4. リンクの追加 --&gt;
+    &lt;section&gt;
+      &lt;h2&gt;お気に入りリンク&lt;/h2&gt;
+      &lt;p&gt;良く使うWebサイトや、SNSへのリンクを設定してみましょう。&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="https://example.com" target="_blank" rel="noopener"&gt;お気に入りのサイト（新しいタブで開く）&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#top"&gt;ページの先頭へ戻る（ページ内リンク）&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;!-- 5. フッター領域 --&gt;
+  &lt;footer&gt;
+    &lt;p&gt;&amp;copy; 2026 あなたのお名前. All Rights Reserved.&lt;/p&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                </div>
+                    <p>
+                        編集画面は最初は真っ白なので、上の「練習用デモコード」をコピーしてそのまま貼り付けます。その後、左上の「上書き保存」を押していったん保存しておきましょう。
+                    </p>
+                    
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_05.jpg" alt="FC2ホームページのエディタ画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                </div>
+                    
+            </section>
+
+            <!-- 2. タイトルの変更 -->
+            <section id="title" class="section">
+                <h2 class="section-title">2. ページのタイトルを変更しよう</h2>
+                <p>編集画面の6行目あたりに、以下の記述があります。</p>
+
+                <pre><code>&lt;<span class="tag-name">title</span>&gt;ようこそ！私のプロフィール&lt;/<span class="tag-name">title</span>&gt;</code></pre>
+
+                <p style="margin-top: 12px">
+                    <code>&lt;title&gt;</code> と
+                    <code>&lt;/title&gt;</code>
+                    の間にある文字が、ブラウザの「タブ」に表示されるページ名になります。<br>
+                    ポインタを移動させて、「メモ帳」で文章を編集するようにお好みのタイトルに書き換えてみましょう！
+                </p>
+            </section>
+
+            <!-- 3. テキストの編集 -->
+            <section id="text" class="section">
+                <h2 class="section-title">3. テキストを編集してみよう</h2>
+                <p>
+                    画面を下にスクロールしていくと、<code>&lt;body&gt;</code>
+                    タグの中に実際のページに表示される文章が書かれています。
+                </p>
+
+                <h3 class="sub-title">ヘッダー（タイトル部分）の編集</h3>
+                <p>69行目付近にある以下の部分を探してみましょう。</p>
+
+                <pre><code><span class="comment">&lt;!-- 1. ヘッダー領域（テキストの編集を試す） --&gt;</span>
+&lt;<span class="tag-name">header</span>&gt;
+  &lt;<span class="tag-name">h1</span>&gt;★ここにサイトのタイトルを入れる★&lt;/<span class="tag-name">h1</span>&gt;
+  &lt;<span class="tag-name">p</span>&gt;～ はじめての個人サイトへようこそ ～&lt;/<span class="tag-name">p</span>&gt;
+&lt;/<span class="tag-name">header</span>&gt;</code></pre>
+
+                <div class="alert-box">
+                    <strong>💡 ヒント：<code>&lt;!--</code> と <code>--&gt;</code> について</strong><br>
+                    <code>&lt;!--</code> と
+                    <code>--&gt;</code>
+                    で囲まれた文字は「コメント」と呼ばれ、実際のページには表示されません。自分用のメモや解説文として使われます🐾
+                </div>
+                <br>
+
+                <ul class="rule-list">
+                    <li>
+                        <strong><code>&lt;h1&gt;</code> タグ：</strong>
+                        ページ内で最も重要な「大見出し」を表します。サイト名やページの題名に使いましょう。
+                    </li>
+                    <li>
+                        <strong><code>&lt;p&gt;</code> タグ：</strong> 文章の「段落」を表します。文章を入力して
+                        <code>&lt;/p&gt;</code> で閉じることで、ひとまとまりの段落として表示されます。
+                    </li>
+                </ul>
+
+                <p style="margin-top: 14px">
+                    「★ここにサイトのタイトルを入れる★」の部分を自分のサイト名に書き換えてみましょう！
+                </p>
+
+                <h3 class="sub-title">プロフィールやリストの編集</h3>
+                <p>
+                    さらに下の行にある「自己紹介」や「好きなものリスト」のテキストも、同じように好きな文章に書き換えてみてください。
+                </p>
+                <ul class="rule-list" style="margin-top: 10px">
+                    <li>
+                        <strong><code>&lt;ul&gt;</code> と <code>&lt;li&gt;</code> タグ：</strong>
+                        箇条書きリストを作成するタグです。<code>&lt;li&gt;項目&lt;/li&gt;</code>
+                        を増やすことで、リストの項目を増やすことができます。
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 4. リンク追加 -->
+            <section id="link" class="section">
+                <h2 class="section-title">4. リンクを追加してみよう</h2>
+                <p>お気に入りのサイトやSNSへのリンクを設定してみましょう。</p>
+
+                <pre><code><span class="comment">&lt;!-- 練習ポイント: target="_blank" の意味や href の書き方 --&gt;</span>
+&lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://example.com"</span> <span class="attr-name">target</span>=<span class="attr-val">"_blank"</span> <span class="attr-name">rel</span>=<span class="attr-val">"noopener"</span>&gt;お気に入りのサイト（新しいタブで開く）&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;</code></pre>
+
+                <ul class="rule-list" style="margin-top: 14px">
+                    <li>
+                        <strong><code>href="..."</code> ：</strong> 移動先のWebサイトのURLを入力します。
+                    </li>
+                    <li>
+                        <strong><code>target="_blank"</code> ：</strong>
+                        この記述を入れておくと、リンクをクリックしたときに「新しいタブ」で開くようになります。
+                    </li>
+                </ul>
+
+                <p style="margin-top: 10px">
+                    ご自分のX（旧Twitter）アカウントや、お気に入りのサイトのURL（<code>https://...</code>）に書き換えてみましょう！
+                </p>
+            </section>
+
+            <!-- 5. 画像アップロード -->
+            <section id="image" class="section">
+                <h2 class="section-title">5. 画像をアップロードして差し替えてみよう</h2>
+                <p>サイトに自分の好きな画像を掲載してみましょう。</p>
+
+                <h3 class="sub-title">ステップ①：画像ファイルのアップロード</h3>
+                <div class="step-item">
+                    <h3><span class="step-number">1</span>アップロードボタンを押す</h3>
+                    <p>
+                        ファイルマネージャー画面の左上にある
+                        <strong>💾（フロッピーディスク）のアイコン</strong>
+                        をクリックします（マウスを重ねると「アップロードするファイルを選択」と表示されます）
+                    </p>
+                    
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_06.jpg" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">2</span>ドラッグ＆ドロップで追加</h3>
+                    <p>
+                        ドロップエリアが表示されるので、パソコン内にある画像ファイル（例：<code>profile.jpg</code>）をドラッグ＆ドロップします。一覧に画像ファイルが追加されればアップロード完了です！
+                    </p>
+                </div>
+
+                <h3 class="sub-title">ステップ②：コード上の画像を差し替える</h3>
+                <p>HTML編集画面に戻り、画像を表示している以下のコードを探します。</p>
+
+                <pre><code>&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"https://via.placeholder.com/200"</span> <span class="attr-name">alt</span>=<span class="attr-val">"プロフィール画像"</span> <span class="attr-name">class</span>=<span class="attr-val">"profile-img"</span>&gt;</code></pre>
+
+                <ul class="rule-list" style="margin-top: 12px">
+                    <li>
+                        <strong><code>src="..."</code> ：</strong>
+                        表示したい画像ファイルの名前を指定します。先ほどアップロードした画像ファイル名（例:
+                        <code>profile.jpg</code>）に変更します。
+                    </li>
+                    <li>
+                        <strong><code>alt="..."</code> ：</strong>
+                        画像が表示されない場合に代わりに表示される説明文（または音声読み上げ用）です。
+                    </li>
+                </ul>
+
+                <pre style="margin-top: 14px"><code><span class="comment">&lt;!-- 書き換え例 --&gt;</span>
+&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"profile.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"私のイラスト"</span> <span class="attr-name">class</span>=<span class="attr-val">"profile-img"</span>&gt;</code></pre>
+            </section>
+
+            <!-- 6. CSSアレンジ -->
+            <section id="css" class="section">
+                <h2 class="section-title">6. CSSで見た目をアレンジしてみよう（挑戦編）</h2>
+                <p>
+                    コードの上部（10〜62行目あたり）にある <code>&lt;style&gt;</code> 〜
+                    <code>&lt;/style&gt;</code>
+                    の間には、デザインを整える「CSS」が書かれています。少し数値を変更するだけで、サイトの雰囲気が一変します！
+                </p>
+
+                <ul class="rule-list" style="margin-top: 14px">
+                    <li>
+                        <strong>ヘッダーの色を変える：</strong><br>
+                        <code>header { background-color: #4a90e2; }</code>
+                        のカラーコード（<code>#4a90e2</code>）を、好きな色のコード（例: ピンクなら
+                        <code>#ffb6c1</code> など）に変えてみましょう。
+                    </li>
+                    <li>
+                        <strong>角丸の具合を変える：</strong><br>
+                        <code>border-radius: 8px;</code> の数値を <code>0px</code> にすると四角く、<code>20px</code>
+                        にするとより丸みを帯びたデザインになります。
+                    </li>
+                </ul>
+                <div class="alert-box">
+                    <strong>💡 ヒント：最初はテンプレートを借りるのがおすすめ！</strong><br>
+                    挑戦編としてCSSにも軽く触れましたが、最初は配布されているテンプレートのCSSをそのまま使ってHTMLだけを編集するのがおすすめです🐾
+                </div>
+            </section>
+
+            <!-- 7. サイトの公開 -->
+            <section id="publish" class="section">
+                <h2 class="section-title">7. プレビューで確認してサイトを公開しよう！</h2>
+
+                <h3 class="sub-title">途中経過をプレビューで確認する</h3>
+                <p>
+                    <span>編集画面の上側にある</span
+                    ><strong>「プレビュー」</strong
+                    >をクリックすると、現在の見映えを確認できます。全画面で確認したい場合はいったん「上書き保存」をし、該当ファイルをダブルクリックで開きましょう。
+                </p>
+                
+            <div class="image-container">
+                <div class="image-frame">
+                    <img src="../images/FC2_07.jpg" alt="FC2ホームページのエディタ画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+                
+                <h3 class="sub-title">いよいよサイトを公開！</h3>
+                <p>デザインや文章が完成したら、いよいよ世界中に公開しましょう！</p>
+
+                <div class="step-item" style="margin-top: 14px">
+                    <h3><span class="step-number">1</span>上書き保存をする</h3>
+                    <p>編集画面の左上にある <strong>「上書き保存」</strong> をクリックします。</p>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">2</span>名前を変更する</h3>
+                    <p>
+                        ファイルマネージャーに戻り、「newfile.html」を右クリックして
+                        <strong>「名前を変更」</strong> を選択します。
+                    </p>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">3</span>index.html に書き換える</h3>
+                    <p>
+                        ファイルを右クリックしてコマンドから「名前を変更」を選び、 <strong><code>index.html</code></strong> に変更します。
+                    </p>
+
+                    <!-- 拡張子について -->
+                    <div class="alert-box" style="margin-top: 12px;">
+                        <strong>⚠️ 注意：ファイルの拡張子（.html）に注意しよう</strong><br>
+                        FC2のファイルマネージャーで編集する場合は拡張子が表示される仕様になっていますが、「メモ帳」などで編集する場合は注意が必要です。<br>
+                        PCの設定で「拡張子を表示しない」になっていると、<code>index.html</code> と入力した結果 <code>index.html.html</code> という名前になってしまい、トップページとして正しく読み込まれないことがあります🐾
+                    </div>
+                </div>
+
+                <p style="margin-top: 16px">
+                    これで、あなたの個人サイトが公開されました！<br>
+                    保存したファイルをダブルクリックすると実際のページ開くので、正しく表示されるか確認してみましょう。
+                </p>
+
+                <!-- キャッシュ・強制更新について -->
+                <div class="alert-box" style="margin-top: 20px">
+                    <strong>💡 ページや画像が反映されない・更新されないときは？</strong><br>
+                    アップロード直後は反映に数十秒〜数分かかることがあります。<br>
+                    また、ブラウザに古いデータが残っている（キャッシュ）場合があるため、以下の方法を試してみてください🐾
+                    <ul style="margin: 8px 0 0 18px;">
+                        <li><strong>強力な更新（スーパーリロード）：</strong> Windowsは <code>Ctrl</code> + <code>F5</code>（Macは <code>Cmd</code> + <code>Shift</code> + <code>R</code>）</li>
+                        <li><strong>シークレットモード：</strong> シークレットウインドウでURLを開いて確認する</li>
+                    </ul>
+                </div>
+                    
+                <h3 class="sub-title">エディタソフトを使って作成する場合</h3>
+                <p>今回はFC2のブラウザ機能のみで完結させましたが、自分のパソコンのエディタソフトで作成した場合も、出来上がったHTMLファイルを「手順5：画像のアップロード」と同じやり方でドラッグ＆ドロップすればOKです！🐾</p>
+            </section>
+
+            <!-- まとめ -->
+            <section class="section">
+                <h2 class="section-title">おわりに</h2>
+                <p>特別なツールを使わなくても、ブラウザの管理画面だけで自分だけのWebサイトを作ることができます。</p>
+                    <p>ぜひ自分だけの素敵なWebサイトを作ってみてくださいね🐾</p>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+        </footer>
+
+        <!-- モーダル表示用のHTML構造 -->
+        <div id="imageModal" class="modal" onclick="closeModal()">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-content" src="" alt="拡大表示画像">
+        </div>
+
+        <!-- 各種JavaScript -->
+        <script>
+            /* デモコード コピー処理 */
+            function copyDemoCode() {
+                const codeElement = document.getElementById("demoCode");
+                const codeText = codeElement.textContent;
+                const btn = document.querySelector(".copy-btn");
+
+                navigator.clipboard
+                    .writeText(codeText)
+                    .then(() => {
+                        btn.textContent = "✨ コピーしました！";
+                        btn.classList.add("copied");
+                        setTimeout(() => {
+                            btn.textContent = "📋 コードをコピー";
+                            btn.classList.remove("copied");
+                        }, 2000);
+                    })
+                    .catch((err) => {
+                        console.error("コピーに失敗しました:", err);
+                    });
+            }
+
+            /* モーダル表示処理 */
+            function openModal(imageSrc) {
+                const modal = document.getElementById("imageModal");
+                const modalImg = document.getElementById("modalImage");
+                modalImg.src = imageSrc;
+                modal.style.display = "flex";
+            }
+
+            /* モーダル非表示処理 */
+            function closeModal() {
+                const modal = document.getElementById("imageModal");
+                modal.style.display = "none";
+            }
+        </script>
+    </body>
+</html>
