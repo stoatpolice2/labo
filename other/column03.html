@@ -327,6 +327,7 @@
     }
 
     .image-frame {
+        position: relative;
         width: 100%;
         height: 180px; /* サムネイルの高さを統一 */
         border-radius: 12px;
@@ -346,8 +347,29 @@
     }
 
     .image-frame img:hover {
-        opacity: 0.85;
-        transform: scale(1.03);
+        opacity: 0.88;
+        transform: scale(1.02);
+    }
+
+    /* 右下の拡大バッジ */
+    .image-frame::after {
+        content: "🔍 拡大表示";
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(51, 44, 43, 0.75);
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 20px;
+        pointer-events: none;
+        backdrop-filter: blur(2px);
+        transition: background 0.2s ease;
+    }
+
+    .image-frame:hover::after {
+        background: rgba(224, 109, 83, 0.9);
     }
 
     .image-caption {
@@ -372,7 +394,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -548,7 +571,7 @@
             また、<strong>初回起動時には画面上で分かりやすいインタラクティブなチュートリアルが表示</strong>されます。基本操作や便利な機能を実際に手を動かしながら学べるため、初めてコードエディタを使う方でも迷わずスムーズにスタートできます！</p>
             
             <div class="image-container">
-                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 チュートリアル画面（クリックで拡大）</p>
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 チュートリアル画面</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
                     <img src="../images/column05.jpg" alt="Phoenix Codeのチュートリアル画面" onclick="openModal(this.src)">
                 </div>
@@ -571,7 +594,7 @@
             わざわざ「保存してブラウザを再読み込みする」という作業が一切不要になるため、Web制作のテンポと快適さが劇的に向上します。</p>
 
             <div class="image-container">
-                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 ライブプレビューの例（クリックで拡大）</p>
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 ライブプレビューの例</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
                     <img src="../images/column06.jpg" alt="ライブプレビュー機能でコードとブラウザ表示を同時確認している画面" onclick="openModal(this.src)">
                 </div>
@@ -589,7 +612,7 @@
             ファイルを行き来するストレスや探す手間が完全にゼロになる、作業の効率化に欠かせない機能です。</p>
 
             <div class="image-container">
-                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 クイック編集の例（クリックで拡大）</p>
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 クイック編集の例</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
                     <img src="../images/column07.jpg" alt="クイック編集機能を使用中の画面" onclick="openModal(this.src)">
                 </div>
@@ -601,7 +624,7 @@
             テキストを直接書き換えるだけでなく、画面上の要素をマウス操作で直感的に調整したり、要素ごとにコピー＆ペーストするといったことができます。「コードでの細かい調整」と「視覚的なレイアウト調整」をシームレスに行えるため、デザインの微調整が格段にラクになります。</p>
             
             <div class="image-container">
-                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 デザインモードの例（クリックで拡大）</p>
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 デザインモードの例</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
                     <img src="../images/column08.jpg" alt="デザインモードで要素を直感的に調整している画面" onclick="openModal(this.src)">
                 </div>
@@ -628,7 +651,7 @@
             「指定した画像が合っているか」「想定通りの色か」をいちいち確認する手間が省けます。</p>
           
             <div class="image-container">
-                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 画像のプレビューの例（クリックで拡大）</p>
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 画像のプレビューの例</p>
                 <div class="image-frame" style="height: auto; max-height: 250px;">
                     <img src="../images/column09.jpg" alt="コード上で画像パスにホバーし、小さなサムネイル画像がポップアップ表示されている画面" onclick="openModal(this.src)">
                 </div>

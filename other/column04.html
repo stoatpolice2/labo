@@ -308,6 +308,7 @@
     }
 
     .image-frame {
+        position: relative;
         width: 100%;
         height: auto;
         max-height: 300px;
@@ -328,8 +329,29 @@
     }
 
     .image-frame img:hover {
-        opacity: 0.85;
-        transform: scale(1.03);
+        opacity: 0.88;
+        transform: scale(1.02);
+    }
+
+    /* 右下の拡大バッジ */
+    .image-frame::after {
+        content: "🔍 拡大表示";
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(51, 44, 43, 0.75);
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 20px;
+        pointer-events: none;
+        backdrop-filter: blur(2px);
+        transition: background 0.2s ease;
+    }
+
+    .image-frame:hover::after {
+        background: rgba(224, 109, 83, 0.9);
     }
 
     /* ----------------------------------
@@ -341,7 +363,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -467,7 +490,7 @@
             <p>画面上に余計なボタンや複雑なメニューがなく、上に「実行」や「停止」などの基本ボタンが並んでいるだけです。デザインもシンプルなので、どの機能がどこにあるのか直感的に理解できて、迷わず操作できました。</p>
 
             <div class="image-container">
-                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 Thonnyのシンプルな操作画面（クリックで拡大）</p>
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 Thonnyのシンプルな操作画面</p>
                 <div class="image-frame">
                     <img src="../images/column10.jpg" alt="Thonnyの操作画面" onclick="openModal(this.src)">
                 </div>
