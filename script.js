@@ -56,7 +56,7 @@ async function copyHtmlFromFile(buttonElement) {
 
   } catch (error) {
     console.error('Copy Error:', error);
-    alert('コードの取得・コピーに失敗しました。\n※ローカル環境で直接ファイルを開いている場合はサーバー上で動作確認してください。')
+    alert('コードの取得・コピーに失敗しました。')
   }
 }
 
