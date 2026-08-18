@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>かんたんWebエディタの使い方 | かんたんWebツール</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/easycode.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="かんたんWebエディタ | Stoat Labo">
+  <meta property="og:description" content="コードがわからなくても大丈夫！ボタン操作だけで直感的にWebページを編集できるHTMLエディタ">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/tool03.JPG">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES (アクア・スカイブルーテーマ)
+    ---------------------------------- */
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent: #38bdf8;
+      --bg-main: #f0f9ff;
+      --bg-card: #FFFFFF;
+      --text-main: #0c4a6e;
+      --text-muted: #0284c7;
+      --border: #bae6fd;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      --grad-hero: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+      --shadow-sm: 0 6px 18px rgba(2, 132, 199, 0.08);
+      --shadow-lg: 0 14px 32px rgba(2, 132, 199, 0.18);
+    }
+
+    /* ----------------------------------
+      LAYOUT & NAV
+    ---------------------------------- */
+    .section,
+    .news-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* ホバー時に少し浮き上がる質感 */
+    .section:hover,
+    .news-section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
+    }
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--bg-main);
+    background-image: radial-gradient(#bae6fd 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    color: var(--text-main);
+    line-height: 1.8;
+    padding-bottom: 60px;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ----------------------------------
+    HERO AREA
+---------------------------------- */
+.hero {
+    background: var(--grad-hero);
+    border-bottom: 2px dashed #bae6fd;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(2, 132, 199, 0.15));
+    z-index: 0;
+}
+
+.hero::before {
+    width: 160px;
+    height: 160px;
+    top: -40px;
+    left: 5%;
+}
+
+.hero::after {
+    width: 110px;
+    height: 110px;
+    bottom: 10px;
+    right: 6%;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-title {
+    font-size: 2.8rem;
+    letter-spacing: 0.06em;
+    background: var(--grad-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    line-height: 1.25;
+    display: inline-block;
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* ----------------------------------
+    LAYOUT & NAV
+---------------------------------- */
+nav {
+    background: var(--grad-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #FFF;
+    display: block;
+    padding: 14px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+}
+
+.section {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 36px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+    font-size: 1.35rem;
+    color: var(--text-main);
+    position: relative;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    padding-left: 14px;
+}
+
+.section-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 80%;
+    background: var(--grad-primary);
+    border-radius: 4px;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(to right, #bae6fd, #bae6fd 6px, transparent 6px, transparent 12px);
+}
+
+/* ----------------------------------
+    ARTICLE SPECIFIC STYLES
+---------------------------------- */
+h3.sub-title {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin: 24px 0 12px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--border);
+    font-weight: bold;
+}
+
+.rule-list {
+    list-style: none;
+}
+
+.rule-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+}
+
+.rule-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+}
+
+.alert-box {
+    background-color: #f0f9ff;
+    border: 1px dashed var(--primary);
+    padding: 18px;
+    margin-top: 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.step-item {
+    margin-bottom: 22px;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.step-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.step-number {
+    display: inline-block;
+    background: var(--grad-primary);
+    color: #FFF;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+/* ----------------------------------
+    Q&A STYLES
+---------------------------------- */
+.qa-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.qa-item {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.qa-question {
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--primary-hover);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.qa-question::before {
+    content: "Q.";
+    background: var(--grad-primary);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.qa-answer {
+    font-size: 0.93rem;
+    color: var(--text-main);
+    line-height: 1.7;
+    padding-left: 32px;
+}
+
+/* ----------------------------------
+    IMAGE STYLES
+---------------------------------- */
+.image-container {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.image-frame {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background-color: #f8fafc;
+    display: block;
+}
+
+.image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ratio-hero-sample {
+    aspect-ratio: 850 / 380;
+}
+
+.ratio-complete-sample {
+    aspect-ratio: 460 / 750;
+    max-width: 460px;
+    margin: 0 auto;
+}
+
+/* CODE BLOCK DISPLAY */
+pre {
+    background: #0f172a;
+    color: #f0f9ff;
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+
+code {
+    background: #e0f2fe;
+    color: var(--primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    font-weight: bold;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-weight: normal;
+}
+
+.comment { color: #64748b; }
+.tag-name { color: #38bdf8; }
+.attr-name { color: #f43f5e; }
+.attr-val { color: #10b981; }
+
+/* ----------------------------------
+    TOOL LINK BUTTON
+---------------------------------- */
+.tool-nav {
+    text-align: center;
+    margin-top: 0px;
+}
+
+.btn-tool {
+    display: inline-block;
+    background: var(--grad-primary);
+    color: #FFF;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+  
+footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 60px;
+}
+
+.btn-tool:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+    color: #FFF;
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 40px 15px 30px; }
+    .header-title { font-size: 2.0rem; }
+    .header-subtitle { font-size: 0.88rem; }
+    nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+    nav a { padding: 10px 14px; font-size: 0.88rem; }
+    .container { margin-top: 24px; padding: 0 12px; }
+    .section { padding: 22px 18px; margin-bottom: 20px; }
+    .qa-answer { padding-left: 0; margin-top: 8px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">かんたんWebエディタ</h1>
+            <p class="header-subtitle">専門知識は一切不要！ボタン操作で直感的にWebページを作ろう</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">HOME</a></li>
+            <li><a href="#about">1. ツールの魅力</a></li>
+            <li><a href="#features">2. 便利な機能</a></li>
+            <li><a href="#howto">3. 基本の使い方</a></li>
+            <li><a href="#save">4. 保存・コピー</a></li>
+            <li><a href="#qa">5. Q&amp;A</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 1. 導入・ツールの魅力 -->
+        <section id="about" class="section">
+            <h2 class="section-title">1. かんたんWebエディタとは？</h2>
+
+            <!-- サンプル画像スペース -->
+            <div class="image-container">
+                <div class="image-frame ratio-hero-sample">
+                    <img src="../images/tool03.JPG" alt="かんたんWebエディタ サンプル画像" width="850" height="380">
+                </div>
+            </div>
+
+            <p>「テンプレートを編集して公開してみたいけれど、どこを触ればいいか不安…」という方に！</p>
+            <p style="margin-top: 10px;">「かんたんWebエディタ」は、難しいコードを覚えなくても、ボタンを押すだけで直感的にWebページが編集できる無料のブラウザツールです🐾</p>
+            
+            <div class="alert-box">
+                    <strong>💡 当ツールのご利用について</strong><br>
+                    こちらのツールは<strong>「既存のテンプレートのHTMLだけを手軽に編集すること」</strong>を目的としたツールです。CSSやJavaScriptの編集を想定した機能は搭載していません。
+                </div>
+            
+            <h3 class="sub-title">このツールの嬉しいポイント</h3>
+            <ul class="rule-list">
+                <li><strong>インストール不要：</strong> ブラウザ上でそのまま動作するため、ダウンロード不要ですぐに使い始められます。</li>
+                <li><strong>🐾 ボタン感覚で要素をワンタップ挿入：</strong> 「太字」「改行」「見出し」などの基本装飾はもちろん、カード枠や中央寄せもボタンひとつでレイアウト可能です。</li>
+                <li><strong>🐾 コードを色分けして表示：</strong> コマンド、文字、数字などを色分けして表示する「シンタックスハイライト」機能つきなのでコードがとっても見やすいです。</li>
+                <li><strong>🐾 リアルタイムプレビュー：</strong> 編集中の画面が隣のウィンドウに反映されるので快適にデザインの調整ができます。PC表示とスマホ表示の切り替えもワンクリック！</li>
+            </ul>
+            <div class="alert-box" style="border-color: #bae6fd; background-color: #f8fafc;">
+                <strong>⚠️ ご注意</strong><br>
+                当ツールはPCでのご利用を想定して作成しています。モバイル端末からご利用の場合は正常に動作しない可能性があります。
+            </div>
+        </section>
+
+        <!-- 2. 便利な機能 -->
+        <section id="features" class="section">
+            <h2 class="section-title">2. 初心者にやさしい安心設計</h2>
+            <p>色々な編集を試していただけるよう、サポート機能や快適な編集環境を整えています。</p><br>
+
+            <ul class="rule-list">
+                <li><strong>🖼️ フォルダから画像を選んで簡単配置：</strong> ダイアログからパソコン内の画像を選択するだけで画像を配置できます。通常画像、拡大機能（モーダル）付き、リンク付き、背景画像など用途に合わせて選べます。</li>
+                <li><strong>🔲 ワンクリックでカード枠を配置：</strong> 「🔲 カード枠（3種類）」のボタンを押すだけで、デザインされた囲み枠や更新履歴欄が一括挿入されます。</li>
+                <li><strong>🎨 カラーパレット連動：</strong> 色選択ツールで選んだお好みのカラーが、文字色だけでなく「カード枠のアクセントカラー」や「ページの背景色」にも反映されます。</li>
+                <li><strong>✨ コード自動整形：</strong> ボタンを押すだけでインデントや改行が美しく整い、コードが見やすくなります。</li>
+                <li><strong>☀️/🌙 テーマ切替：</strong> 目に優しいライトモードとダークモードをいつでも切り替え可能です。</li>
+                <li><strong>❓ 使い方ガイド：</strong> ツール内にもシンプルなチュートリアルポップアップを用意しています。</li>
+            </ul>
+            <div class="alert-box">
+                    <strong>💡 画像機能について</strong><br>
+                    画像機能を使用するとプレビューには画像が表示されますが、コード内に挿入されるのは「画像ファイルを表示するためのタグ」のみとなります。実際のWebページに画像を表示させるときは、<strong>HTMLファイルとは別に画像ファイルもサーバーにアップロードする必要があります！</strong>
+                </div>
+        </section>
+
+        <!-- 3. 基本の使い方 -->
+        <section id="howto" class="section">
+            <h2 class="section-title">3. 実践編：Webページを作ってみよう</h2>
+            <p>操作はとっても簡単！3つのステップであなただけのWebページが完成します。</p><br>
+
+            <div class="step-item">
+                <h3><span class="step-number">1</span>土台となるテンプレートを選ぶ</h3>
+                <p>左上の「📄 テンプレート」ドロップダウンから、作成したいページのイメージを選びます。使いたいテンプレートをご自身で用意している場合は、テンプレートのコードを貼り付けてご利用ください。</p>
+                <div class="alert-box">
+                    <strong>💡 テンプレートについて</strong><br>
+                    ツール内で使用できる2種のテンプレートはご自身のサイトで利用していただいてもOKです！
+                </div>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">2</span>ボタンを使ってパーツを編集する</h3>
+                <p>文章を書き換えたり、装飾したい文字を選択して「太字」「文字色変更」「見出し」などのボタンを押すと文章に反映されます。</p>
+                <p>画像は「🖼️ 画像」ボタンからPC内のファイルを選択して配置します。画像が大きすぎるときは好みの幅（例: 100% や 300px）を指定して任意の大きさにしてください。</p>
+                
+                <div class="alert-box">
+                    <strong>💡 <code>&lt;body&gt;</code>～<code>&lt;/body&gt;</code>の間を編集しよう</strong><br>
+                    サンプル用のテンプレートはコードの上部（<code>&lt;style&gt;</code>～<code>&lt;/style&gt;</code>の間）に「CSS」と呼ばれる「デザインの基本設定」となるコードが入っています。慣れないうちはここは触らず、<code>&lt;body&gt;</code>～<code>&lt;/body&gt;</code>の間のみを編集するのがおすすめです。
+                </div>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">3</span>プレビューを確認する（PC/スマホ切り替え）</h3>
+                <p>右側のプレビュー画面で実際の見栄えを確認します。ヘッダーの「📱 スマホ表示」ボタンを押すと、スマートフォンで開いた時の見え方もその場でチェックできます。</p>
+            </div>
+            <div class="alert-box" style="border-color: #bae6fd; background-color: #f8fafc;">
+                <strong>⚠️ ご注意</strong><br>
+                「左寄せの文字にリンクを貼ったら中央寄せになっちゃった…」というときは、「左寄せ指定のタグごと書き換えてしまった」「CSSによる影響」などの可能性があります。そうなった場合は、<strong>タグを含めずテキストのみを選択して「リンク」ボタンを押してください。</strong>
+            </div>
+        </section>
+
+        <!-- 4. 保存・コピー方法 -->
+        <section id="save" class="section">
+            <h2 class="section-title">4. 完成したページの保存方法</h2>
+            <p>ページの編集が完了したら、右上のアクションボタンからコードを出力・保存しましょう。</p>
+
+            <h3 class="sub-title">保存・利用のながれ</h3>
+            <ul class="rule-list">
+                <li><strong>💾 HTMLを保存：</strong> コードを <code>index.html</code> ファイルとして保存します。</li>
+                <li><strong>📋 コードをコピー：</strong> コード全体をクリップボードにコピーします。</li>
+            </ul>
+
+            <div class="alert-box" style="border-color: #bae6fd; background-color: #f8fafc;">
+                <strong>⚠️ ご注意</strong><br>
+                編集内容は自動保存機能によりお使いのブラウザに記憶されますが、ブラウザのキャッシュを削除したりシークレットモードを使用している場合は消去される場合があります。定期的に「💾 HTMLを保存」を押してファイルを保管することをおすすめします。
+            </div>
+        </section>
+
+        <!-- 5. 困ったときは -->
+        <section id="qa" class="section">
+            <h2 class="section-title">5. 困ったときは（Q&amp;A）</h2>
+            <p>編集作業中につまずきやすいポイントと対処法をまとめました。</p><br>
+
+            <div class="qa-list">
+                <div class="qa-item">
+                    <div class="qa-question">「背景色」や「文字の色・サイズ」を変更したのに反映されません</div>
+                    <div class="qa-answer">
+                        テンプレート側（CSS）であらかじめ色や大きさが強く指定されていると、ボタンで追加したコード（HTML）よりもテンプレート側のルールが優先されてしまうことがあります。<br>
+                        <strong>【対処法】</strong> 文字装飾が効かない場合は、タグを含めずに<strong>「変更したい文字だけ」をピンポイントで囲んでボタンを押す</strong>と反映されやすくなります。<br>
+                        また、CSSで背景色が指定されている場合は<code>&lt;style&gt;</code>～<code>&lt;/style&gt;</code>の間にある<code>--bg-color: #ffffff;</code>などのタグの<code>#ffffff</code>の部分を任意のカラーコードにすることで変更できます。
+                    <div class="alert-box">
+                    <strong>💡 それでも文字の装飾が反映されないときは？</strong><br>
+                    テンプレート内の文字が<code>&lt;h1&gt;</code>などのタグに挟まれている場合は、そのタグに文字の装飾の設定がされている可能性があります。その場合は、文字をタグの外に出す（タグを削除する）とHTMLでの指定が有効になる場合があります。
+                </div>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question">保存したHTMLファイルを開いたら、挿入した画像が表示されなくなりました</div>
+                    <div class="qa-answer">
+                        ツール内で画像を選択した際は、お使いのパソコン内にある画像を一時的にプレビュー表示しています。実際にサーバーやネット上に公開・表示する際は、<strong>HTMLファイルと同じ場所（または指定のフォルダ）へ画像ファイル自体もアップロード・配置する</strong>必要があります。
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question">「HTML保存」でダウンロードしたファイルを開いたら文字化けしています</div>
+                    <div class="qa-answer">
+                        パソコンの「メモ帳」などで開くと文字化けして見えることがあります。確認したい場合は、ダウンロードしたファイルを<strong>Google ChromeやEdgeなどのブラウザにドラッグ＆ドロップして開く</strong>と、正しくデザインが表示されます。
+                    </div>
+                </div>
+            </div>
+        </section>
+      
+        <!-- ツールへのリンクボタン -->
+        <div class="tool-nav">
+            <a href="https://stoatpolice2.github.io/labo/tool/easycode.html" target="_blank" class="btn-tool">かんたんWebエディタを使う 🐾</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
