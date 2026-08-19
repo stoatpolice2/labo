@@ -473,7 +473,7 @@
         <button class="btn-style-mini" onclick="wrapTag('<s>', '</s>')" title="打消線"><s>S</s></button>
       </div>
 
-      <!-- リストを削除し、中央寄せを追加 -->
+      <!-- 中央寄せ -->
       <button onclick="alignCenter()">↔️ 中央寄せ</button>
       
       <select id="cardSelect" onchange="applyCardStyle(this)">
@@ -590,7 +590,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- <title>～</title>の間にある文字がタブに表示される文字になります -->
     <title>Sample Blue</title>
+    
+    <!-- ここから下がCSSと呼ばれる部分です -->
     <style>
         :root {
             --main-color: #e0f2fe;
@@ -741,13 +745,17 @@
             border-top: 1px solid var(--main-color);
         }
     </style>
+    <!-- CSSここまで -->
+    
 </head>
 <body>
 
+<!-- ここから下が実際のページに表示される部分になります -->
     <header>
         <h1>Sample Blue</h1>
         <nav>
             <ul>
+            <!-- <section id="about">などのタグでidを指定した部分に移動するタグです -->
                 <li><a href="#about">About</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#novel">Novel</a></li>
@@ -766,6 +774,7 @@
         <section id="gallery">
             <h2>Gallery</h2>
             <div class="gallery-grid">
+            <!-- <img src="../images/icon.png" alt="サンプル画像">の部分を削除したあと、「拡大画像」などで自分の画像を挿入してください -->
                 <div class="gallery-item"><img src="../images/icon.png" alt="サンプル画像"></div>
                 <div class="gallery-item"><img src="../images/icon.png" alt="サンプル画像"></div>
                 <div class="gallery-item"><img src="../images/icon.png" alt="サンプル画像"></div>
@@ -775,6 +784,7 @@
         <section id="novel">
             <h2>Novel</h2>
             <ul class="novel-list">
+            <!-- <a href="#">作品タイトル</a>の部分を削除したあと、自分の作品タイトルを入力して該当ページへのリンクを設定してください -->
                 <li class="novel-item">
                     <a href="#">作品タイトル 1</a>
                     <span class="novel-tag">長編</span>
@@ -811,7 +821,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- <title>～</title>の間にある文字がタブに表示される文字になります -->
     <title>Sample Orange</title>
+    
+    <!-- ここから下がCSSと呼ばれる部分です -->
     <style>
         :root {
             --main-orange: #f97316;
@@ -970,13 +984,17 @@
             color: #a16207;
         }
     </style>
+    <!-- CSSここまで -->
+    
 </head>
 <body>
 
+<!-- ここから下が実際のページに表示される部分になります -->
     <header>
         <h1>Sample Orange</h1>
         <nav>
             <ul>
+            <!-- <section id="about">などのタグでidを指定した部分に移動するタグです -->
                 <li><a href="#about">About</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#novel">Novel</a></li>
@@ -995,6 +1013,7 @@
         <section id="gallery">
             <h2>Gallery</h2>
             <div class="gallery-grid">
+            <!-- <img src="../images/icon.png" alt="サンプル画像">の部分を削除したあと、「拡大画像」などで自分の画像を挿入してください -->
                 <div class="gallery-item"><img src="../images/icon.png" alt="サンプル画像"></div>
                 <div class="gallery-item"><img src="../images/icon.png" alt="サンプル画像"></div>
                 <div class="gallery-item"><img src="../images/icon.png" alt="サンプル画像"></div>
@@ -1004,6 +1023,7 @@
         <section id="novel">
             <h2>Novel</h2>
             <ul class="novel-list">
+            <!-- <a href="#">作品タイトル</a>の部分を削除したあと、自分の作品タイトルを入力して該当ページへのリンクを設定してください -->
                 <li class="novel-item">
                     <a href="#">作品タイトル 1</a>
                     <span class="novel-tag">長編</span>
