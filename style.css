@@ -353,8 +353,8 @@
 
     /* ---------------------------------- COLUMN ---------------------------------- */
     .column-list {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); /* ★1列から2列グリッドに変更 */
       gap: 16px;
     }
 
@@ -367,6 +367,16 @@
       border-radius: 12px;
       border: 1px solid var(--border);
       transition: all 0.2s;
+      opacity: 0; /* ★フェードインアニメーション用 */
+    }
+
+    /* アニメーション＆非表示用クラス（template-cardと共通の挙動） */
+    .column-card.fade-in {
+      animation: fadeInUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .column-card.is-hidden {
+      display: none !important;
     }
 
     .column-card:hover {
@@ -404,6 +414,14 @@
       font-weight: bold;
       font-size: 1.2rem;
       margin-left: 16px;
+      flex-shrink: 0;
+    }
+
+    /* スマホ表示の調整 */
+    @media (max-width: 600px) {
+      .column-list {
+        grid-template-columns: 1fr; /* スマホでは1列に戻す */
+      }
     }
 
     /* ---------------------------------- CATEGORY TABS ---------------------------------- */

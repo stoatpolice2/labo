@@ -61,6 +61,14 @@
       <div class="news-scroll-box">
         <ul class="news-list">
           <li class="news-item">
+            <span class="news-date">2026.08.20</span>
+            <span class="news-text">コラムに「JavaScriptでホームページをもっとおしゃれに！」をアップしました</span>
+          </li>
+          <li class="news-item">
+            <span class="news-date">2026.08.20</span>
+            <span class="news-text">コラムに「CSSを編集してホームページを華やかに！」をアップしました</span>
+          </li>
+          <li class="news-item">
             <span class="news-date">2026.08.19</span>
             <span class="news-text">創作支援ツール「かんたんWebエディタ」をアップしました</span>
           </li>
@@ -586,54 +594,85 @@
       </div>
     </section>
 
-    <!-- ------------------------------------------
-          [SECTION] コラム
-    ------------------------------------------- -->
-    <section class="section" id="column">
-      <h2 class="section-title">コラム</h2>
-      <div class="column-list">
-        <a class="column-card" href="other/column01.html">
-          <div class="column-info">
-            <div class="column-card-title">超！初心者向けHTML編集講座</div>
-            <div class="column-desc">テンプレートを取得した後のテキスト編集方法や、基本的なタグの書き方をわかりやすく解説しています。</div>
-          </div>
-          <div class="column-arrow">→</div>
-        </a>
+   <!-- ------------------------------------------
+      [SECTION] コラム
+------------------------------------------- -->
+<section class="section" id="column">
+  <h2 class="section-title">コラム</h2>
 
-        <a class="column-card" href="other/column02.html">
-          <div class="column-info">
-            <div class="column-card-title">無料レンタルサーバーおすすめ3選</div>
-            <div class="column-desc">管理人が使っている無料のレンタルサーバー「FC2」「Wix」「GitHub Pages」さんをご紹介しています。</div>
-          </div>
-          <div class="column-arrow">→</div>
-        </a>
+  <!-- カテゴリ切り替えタブボタン -->
+  <div class="category-tabs">
+    <button class="tab-btn active" onclick="filterColumns('all', this)">すべて</button>
+    <button class="tab-btn" onclick="filterColumns('code', this)">コード解説</button>
+    <button class="tab-btn" onclick="filterColumns('env', this)">ツール・環境</button>
+    <button class="tab-btn" onclick="filterColumns('site', this)">サイト運営</button>
+  </div>
 
-        <a class="column-card" href="other/column03.html">
-          <div class="column-info">
-            <div class="column-card-title">無料で高機能なコードエディタ「Phoenix Code」</div>
-            <div class="column-desc">管理人が愛用しているエディタ「Phoenix Code」をご紹介しています。</div>
-          </div>
-          <div class="column-arrow">→</div>
-        </a>
-
-        <a class="column-card" href="other/column04.html">
-          <div class="column-info">
-            <div class="column-card-title">プログラミング初心者が見つけたPythonの学習用エディタ「Thonny」</div>
-            <div class="column-desc">プログラミング初心者の管理人が「Thonny」を使ってみた感想です。</div>
-          </div>
-          <div class="column-arrow">→</div>
-        </a>
-      
-        <a class="column-card" href="other/column05.html">
-          <div class="column-info">
-            <div class="column-card-title">FC2ホームページだけでつくる個人サイト</div>
-            <div class="column-desc">特別なソフトを使わず「FC2ホームページ」の機能だけで個人サイトをつくる方法を解説しています。</div>
-          </div>
-          <div class="column-arrow">→</div>
-        </a>
+  <div class="column-list">
+    <!-- カード 1 -->
+    <a class="column-card fade-in" data-category="code" href="other/column01.html">
+      <div class="column-info">
+        <div class="column-card-title">超！初心者向けHTML編集講座</div>
+        <div class="column-desc">テンプレートを取得した後のテキスト編集方法や、基本的なタグの書き方をわかりやすく解説しています。</div>
       </div>
-      
-    </section>
+      <div class="column-arrow">→</div>
+    </a>
+
+    <!-- カード 2 -->
+    <a class="column-card fade-in" data-category="env" href="other/column02.html">
+      <div class="column-info">
+        <div class="column-card-title">無料レンタルサーバーおすすめ3選</div>
+        <div class="column-desc">管理人が使っている無料のレンタルサーバー「FC2」「Wix」「GitHub Pages」さんをご紹介しています。</div>
+      </div>
+      <div class="column-arrow">→</div>
+    </a>
+
+    <!-- カード 3 -->
+    <a class="column-card fade-in" data-category="env" href="other/column03.html">
+      <div class="column-info">
+        <div class="column-card-title">無料で高機能なコードエディタ「Phoenix Code」</div>
+        <div class="column-desc">管理人が愛用しているエディタ「Phoenix Code」をご紹介しています。</div>
+      </div>
+      <div class="column-arrow">→</div>
+    </a>
+
+    <!-- カード 4 -->
+    <a class="column-card fade-in" data-category="env" href="other/column04.html">
+      <div class="column-info">
+        <div class="column-card-title">プログラミング初心者が見つけたPythonの学習用エディタ「Thonny」</div>
+        <div class="column-desc">プログラミング初心者の管理人が「Thonny」を使ってみた感想です。</div>
+      </div>
+      <div class="column-arrow">→</div>
+    </a>
+
+    <!-- カード 5 -->
+    <a class="column-card fade-in" data-category="site" href="other/column05.html">
+      <div class="column-info">
+        <div class="column-card-title">FC2ホームページだけでつくる個人サイト</div>
+        <div class="column-desc">特別なソフトを使わず「FC2ホームページ」の機能だけで個人サイトをつくる方法を解説しています。</div>
+      </div>
+      <div class="column-arrow">→</div>
+    </a>
+
+    <!-- カード 6 -->
+    <a class="column-card fade-in" data-category="code" href="other/column06.html">
+      <div class="column-info">
+        <div class="column-card-title">CSSを編集してホームページを華やかに！</div>
+        <div class="column-desc">HTMLの編集だけでは物足りなくなってきた方へ！CSS編集の例をご紹介しています。</div>
+      </div>
+      <div class="column-arrow">→</div>
+    </a>
+
+    <!-- カード 7 -->
+    <a class="column-card fade-in" data-category="code" href="other/column07.html">
+      <div class="column-info">
+        <div class="column-card-title">JavaScriptでホームページをもっとおしゃれに！</div>
+        <div class="column-desc">ホームページに「動き」をプラスする定番UIギミック4選をご紹介🐾コードはコピーしてすぐに使えます！</div>
+      </div>
+      <div class="column-arrow">→</div>
+    </a>
+  </div>
+</section>
 
     <!-- ------------------------------------------
           [SECTION] ？？？
