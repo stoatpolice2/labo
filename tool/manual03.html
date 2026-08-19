@@ -493,7 +493,7 @@ footer {
             
             <div class="alert-box">
                     <strong>💡 当ツールのご利用について</strong><br>
-                    こちらのツールは<strong>「既存のテンプレートのHTMLだけを手軽に編集すること」</strong>を目的としたツールです。CSSやJavaScriptの編集を想定した機能は搭載していません。
+                    こちらのツールは<strong>「HTMLだけを手軽に編集すること」</strong>を目的としたツールです。CSSやJavaScriptの編集を想定した機能は搭載していません。
                 </div>
             
             <h3 class="sub-title">このツールの嬉しいポイント</h3>
@@ -503,7 +503,7 @@ footer {
                 <li><strong>🐾 コードを色分けして表示：</strong> コマンド、文字、数字などを色分けして表示する「シンタックスハイライト」機能つきなのでコードがとっても見やすいです。</li>
                 <li><strong>🐾 リアルタイムプレビュー：</strong> 編集中の画面が隣のウィンドウに反映されるので快適にデザインの調整ができます。PC表示とスマホ表示の切り替えもワンクリック！</li>
             </ul>
-            <div class="alert-box" style="border-color: #bae6fd; background-color: #f8fafc;">
+            <div class="alert-box">
                 <strong>⚠️ ご注意</strong><br>
                 当ツールはPCでのご利用を想定して作成しています。モバイル端末からご利用の場合は正常に動作しない可能性があります。
             </div>
@@ -557,9 +557,9 @@ footer {
                 <h3><span class="step-number">3</span>プレビューを確認する（PC/スマホ切り替え）</h3>
                 <p>右側のプレビュー画面で実際の見栄えを確認します。ヘッダーの「📱 スマホ表示」ボタンを押すと、スマートフォンで開いた時の見え方もその場でチェックできます。</p>
             </div>
-            <div class="alert-box" style="border-color: #bae6fd; background-color: #f8fafc;">
+            <div class="alert-box">
                 <strong>⚠️ ご注意</strong><br>
-                「左寄せの文字にリンクを貼ったら中央寄せになっちゃった…」というときは、「左寄せ指定のタグごと書き換えてしまった」「CSSによる影響」などの可能性があります。そうなった場合は、<strong>タグを含めずテキストのみを選択して「リンク」ボタンを押してください。</strong>
+                「左寄せの文字にリンクを貼ったら中央寄せになっちゃった…」というときは、「左寄せ指定のタグごと書き換えてしまった」「CSSによる影響」などの可能性があります。そうなった場合は、<strong>タグを含めずテキストのみを選択して「リンク」ボタンを押すことで反映される場合があります。</strong>
             </div>
         </section>
 
@@ -574,7 +574,7 @@ footer {
                 <li><strong>📋 コードをコピー：</strong> コード全体をクリップボードにコピーします。</li>
             </ul>
 
-            <div class="alert-box" style="border-color: #bae6fd; background-color: #f8fafc;">
+            <div class="alert-box">
                 <strong>⚠️ ご注意</strong><br>
                 編集内容は自動保存機能によりお使いのブラウザに記憶されますが、ブラウザのキャッシュを削除したりシークレットモードを使用している場合は消去される場合があります。定期的に「💾 HTMLを保存」を押してファイルを保管することをおすすめします。
             </div>
@@ -589,13 +589,21 @@ footer {
                 <div class="qa-item">
                     <div class="qa-question">「背景色」や「文字の色・サイズ」を変更したのに反映されません</div>
                     <div class="qa-answer">
-                        テンプレート側（CSS）であらかじめ色や大きさが強く指定されていると、ボタンで追加したコード（HTML）よりもテンプレート側のルールが優先されてしまうことがあります。<br>
+                        テンプレート側（CSS）であらかじめ色や大きさが指定されていると、ボタンで追加したコード（HTML）よりもテンプレート側のルールが優先されることがあります。<br>
                         <strong>【対処法】</strong> 文字装飾が効かない場合は、タグを含めずに<strong>「変更したい文字だけ」をピンポイントで囲んでボタンを押す</strong>と反映されやすくなります。<br>
-                        また、CSSで背景色が指定されている場合は<code>&lt;style&gt;</code>～<code>&lt;/style&gt;</code>の間にある<code>--bg-color: #ffffff;</code>などのタグの<code>#ffffff</code>の部分を任意のカラーコードにすることで変更できます。
+                        また、CSSで背景色が指定されている場合は<code>&lt;style&gt;</code>～<code>&lt;/style&gt;</code>の間にある<code>--bg-color: #ffffff;</code>などのプロパティ（タグ）の<code>#ffffff</code>の部分を任意のカラーコードにすることで変更できます。
                     <div class="alert-box">
                     <strong>💡 それでも文字の装飾が反映されないときは？</strong><br>
-                    テンプレート内の文字が<code>&lt;h1&gt;</code>などのタグに挟まれている場合は、そのタグに文字の装飾の設定がされている可能性があります。その場合は、文字をタグの外に出す（タグを削除する）とHTMLでの指定が有効になる場合があります。
+                    テンプレート内の文字が<code>&lt;h1&gt;</code>などのタグに挟まれている場合は、そのタグに文字の装飾の設定がされている可能性があります。その場合は、タグを削除するとHTMLでの指定が有効になることがあります。
                 </div>
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">HTMLファイルのコードを編集画面にコピペしたら、プレビュー画面で白黒になりました</div>
+                    <div class="qa-answer">
+                        「HTMLファイル」と「CSSファイル」が別のファイルとして配布されているテンプレートの場合、<strong>色やフォントの指定がCSSファイルの中にあるので、HTMLファイルのコードのみをコピペするとプレビュー画面では装飾のないページになります。</strong><br>
+                        CSSファイルの情報をプレビューに反映させたい場合は、「<a href="merged.html">かんたんHTML統合ツール</a>」でファイルをひとまとめにし、そのコードを編集画面にコピペしてください。編集後に再びファイルを分けたい場合は「<a href="splitter.html">かんたんHTML分割ツール</a>」で分離できます。
                     </div>
                 </div>
 
