@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSSを編集してホームページを華やかに！ | Stoat Labo</title>
+    
+        <!-- ファビコンの設定 -->
+        <link href="images/icon.png" rel="icon" type="image/x-icon" />
+
+        <!-- Open Graph Protocol (OGP) の設定 -->
+        <meta content="Stoat Labo | Web創作支援サイト" property="og:title" />
+        <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description" />
+        <meta content="website" property="og:type" />
+        <meta content="https://stoatpolice2.github.io/labo/" property="og:url" />
+        <meta content="https://stoatpolice2.github.io/labo/images/ogp.jpg" property="og:image" />
+        <meta content="Stoat Labo" property="og:site_name" />
+        <meta content="ja_JP" property="og:locale" />
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+        scroll-behavior: smooth; /* スムーススクロール有効化 */
+    }
+
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        scroll-margin-top: 70px; /* 固定ナビゲーションによる見出し被り防止 */
+    }
+
+    .section:hover {
+        transform: translateY(-4px); 
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 16px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    .step-item {
+        margin-bottom: 22px;
+        background: #FAF5F2;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .step-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+
+    .step-number {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-size: 0.85rem;
+        margin-right: 8px;
+    }
+
+    /* TABLE STYLES */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 0.92rem;
+    }
+
+    .custom-table th, 
+    .custom-table td {
+        border: 1px solid var(--border);
+        padding: 12px 14px;
+        text-align: left;
+    }
+
+    .custom-table th {
+        background-color: #FFF6F3;
+        color: var(--primary);
+        font-weight: bold;
+    }
+
+    .custom-table tr:nth-child(even) {
+        background-color: #FAF5F2;
+    }
+
+    /* CODE BLOCK DISPLAY */
+    .code-wrapper {
+        margin: 16px 0;
+        background: #2D2726;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .code-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background: #241F1E;
+        padding: 6px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .copy-btn {
+        background: rgba(255, 255, 255, 0.15);
+        color: #F8F5F3;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+    }
+
+    pre {
+        background: #2D2726;
+        color: #F8F5F3;
+        padding: 16px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin: 0;
+        overflow-x: auto;
+    }
+
+    /* 全体コード用のコンパクト化設定 */
+    .compact-code pre {
+        max-height: 320px;
+        overflow-y: auto;
+    }
+
+    code {
+        background: #FFEFEA;
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        font-weight: bold;
+    }
+
+    pre code {
+        background: none;
+        color: inherit;
+        padding: 0;
+        font-weight: normal;
+    }
+
+    .comment { color: #8C7B75; }
+    .tag-name { color: #E06D53; }
+    .attr-name { color: #F4C463; }
+    .attr-val { color: #98C379; }
+
+    /* BROWSER FRAME FOR SCREENSHOT */
+    .preview-img-box {
+        max-width: 460px;
+        margin: 0 auto 16px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+        background: #EFE8E4;
+    }
+
+    .preview-img-box::before {
+        content: "•••";
+        display: block;
+        padding: 4px 12px;
+        font-size: 1.2rem;
+        color: #C5B8B1;
+        letter-spacing: 4px;
+        text-align: left;
+        line-height: 1;
+    }
+
+    .preview-img-box img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 460 / 540;
+        object-fit: cover;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.6rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+        .custom-table { font-size: 0.85rem; }
+        .custom-table th, .custom-table td { padding: 8px 10px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- ヘッダーエリア -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">CSSを編集してホームページを華やかに！</h1>
+            <p class="header-subtitle">Webページに彩りをプラスしよう</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="#preview">完成イメージ</a></li>
+            <li><a href="#rule">ファイル分割の基本</a></li>
+            <li><a href="#code">全体コード</a></li>
+            <li><a href="#explain">CSS解説</a></li>
+            <li><a href="#diff">タグとプロパティ</a></li>
+            <li><a href="#properties">基本プロパティ</a></li>
+            <li><a href="#trouble">困ったときは</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>「HTMLはおおむね理解できたので、そろそろCSSもいじってみたい！」</p>
+            <p style="margin-top: 10px;">そんな方に向けて、今回は<strong>CSSを使ったWebページのコード解説</strong>をお届けします！</p>
+        </section>
+
+        <!-- 完成イメージ -->
+        <section id="preview" class="section">
+            <h2 class="section-title">📸 今回つくるページの完成イメージ</h2>
+            <div class="preview-img-box">
+                <img src="../images/column11.JPG" alt="完成イメージのスクリーンショット" width="460" height="540">
+            </div>
+        </section>
+
+        <!-- ファイル分割の基本 -->
+        <section id="rule" class="section">
+            <h2 class="section-title">📁 始める前に：HTMLとCSSは「別のファイル」に分けるのが基本！</h2>
+            <p>今回の見本コードを見る前に、1つ大切な<strong>Web制作のルール</strong>をお伝えします。</p>
+            <p style="margin-top: 10px;">HTMLコードの中にCSSを直接書く（<code>&lt;style&gt;</code>タグで囲む）こともできますが、実際のサイト制作では<strong>「index.html」と「style.css」のようにファイルを2つに分けるのが望ましい</strong>です。</p>
+            
+            <h3 class="sub-title">なぜ分けるの？</h3>
+            <ul class="rule-list">
+                <li><strong>コードが見やすくなる：</strong> HTML（文章構造）とCSS（デザイン）が混ざらないので、修正したい場所がすぐにわかります。</li>
+                <li><strong>デザインの共通化ができる：</strong> ページが「Top」「Gallery」「Profile」と複数に増えても、1つのCSSファイルを読み込むだけで<strong>全ページの見た目を一括で変更</strong>できます。</li>
+            </ul>
+
+            <h3 class="sub-title">ファイルを分ける方法</h3>
+            <p>HTMLの <code>&lt;head&gt;</code> 〜 <code>&lt;/head&gt;</code> の間に、以下の1行を書き込めばCSSファイルと連携できます。</p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                </div>
+                <pre><code>&lt;<span class="tag-name">link</span> <span class="attr-name">rel</span>=<span class="attr-val">"stylesheet"</span> <span class="attr-name">href</span>=<span class="attr-val">"style.css"</span>&gt;</code></pre>
+            </div>
+
+            <div class="alert-box">
+                <strong>💡 本記事での解説について</strong><br>
+                この記事ではわかりやすく全体を見せるため、HTMLの中にCSSを埋め込んだコードで解説していきます🐾
+            </div>
+        </section>
+
+        <!-- 全体コード -->
+        <section id="code" class="section">
+            <h2 class="section-title">📄 全体コード（コピペOK！）</h2>
+            <p>まずは全体のコードです。手元で試したい方はメモ帳などに貼り付けて <code>index.html</code> として保存してみてください。</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">（※ <code>&lt;!-- ★ --&gt;</code> のコメントがある場所を自分の好きな文字に書き換えて使えます！）</p>
+            
+            <div class="code-wrapper compact-code">
+                <div class="code-header">
+                    <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                </div>
+<pre><code>&lt;!<span class="tag-name">DOCTYPE</span> <span class="attr-name">html</span>&gt;
+&lt;<span class="tag-name">html</span> <span class="attr-name">lang</span>=<span class="attr-val">"ja"</span>&gt;
+&lt;<span class="tag-name">head</span>&gt;
+    &lt;<span class="tag-name">meta</span> <span class="attr-name">charset</span>=<span class="attr-val">"UTF-8"</span>&gt;
+    &lt;<span class="tag-name">meta</span> <span class="attr-name">name</span>=<span class="attr-val">"viewport"</span> <span class="attr-name">content</span>=<span class="attr-val">"width=device-width, initial-scale=1.0"</span>&gt;
+    &lt;<span class="tag-name">title</span>&gt;<span class="comment">&lt;!-- ★サイトのタイトル --&gt;</span>Your Site Name&lt;/<span class="tag-name">title</span>&gt;
+    &lt;<span class="tag-name">style</span>&gt;
+        <span class="comment">/* --- 基本設定 --- */</span>
+        :<span class="tag-name">root</span> {
+            --main-color: #e0f2fe;    <span class="comment">/* 薄い水色（背景アクセント） */</span>
+            --accent-color: #0284c7;  <span class="comment">/* 主役の水色 */</span>
+            --text-color: #334155;    <span class="comment">/* 読みやすいダークグレー */</span>
+            --bg-color: #ffffff;      <span class="comment">/* ベースの白 */</span>
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        <span class="comment">/* --- レイアウト --- */</span>
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-transform: uppercase;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        section {
+            margin-top: 80px;
+            scroll-margin-top: 40px;
+        }
+
+        section h2 {
+            font-size: 1.4rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--main-color);
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        section h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        <span class="comment">/* --- コンテンツ装飾 --- */</span>
+        <span class="comment">/* Gallery */</span>
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .gallery-item {
+            background-color: var(--main-color);
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        <span class="comment">/* Profile */</span>
+        .profile-box {
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent-color);
+            padding: 24px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            border-top: 1px solid var(--main-color);
+        }
+    &lt;/<span class="tag-name">style</span>&gt;
+&lt;/<span class="tag-name">head</span>&gt;
+&lt;<span class="tag-name">body</span>&gt;
+
+    &lt;<span class="tag-name">header</span>&gt;
+        &lt;<span class="tag-name">h1</span>&gt;<span class="comment">&lt;!-- ★ヘッダーのサイト名 --&gt;</span>Site Title&lt;/<span class="tag-name">h1</span>&gt;
+        &lt;<span class="tag-name">nav</span>&gt;
+            &lt;<span class="tag-name">ul</span>&gt;
+                &lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#about"</span>&gt;About&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;
+                &lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#gallery"</span>&gt;Gallery&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;
+                &lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#novel"</span>&gt;Novel&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;
+                &lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#profile"</span>&gt;Profile&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;
+            &lt;/<span class="tag-name">ul</span>&gt;
+        &lt;/<span class="tag-name">nav</span>&gt;
+    &lt;/<span class="tag-name">header</span>&gt;
+
+    &lt;<span class="tag-name">main</span>&gt;
+        &lt;<span class="tag-name">section</span> <span class="attr-name">id</span>=<span class="attr-val">"about"</span>&gt;
+            &lt;<span class="tag-name">h2</span>&gt;About&lt;/<span class="tag-name">h2</span>&gt;
+            &lt;<span class="tag-name">p</span>&gt;<span class="comment">&lt;!-- ★サイト説明文 --&gt;</span>ここにはサイトのコンセプトや概要を記入します。&lt;/<span class="tag-name">p</span>&gt;
+        &lt;/<span class="tag-name">section</span>&gt;
+
+        &lt;<span class="tag-name">section</span> <span class="attr-name">id</span>=<span class="attr-val">"gallery"</span>&gt;
+            &lt;<span class="tag-name">h2</span>&gt;Gallery&lt;/<span class="tag-name">h2</span>&gt;
+            &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"gallery-grid"</span>&gt;
+                &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"gallery-item"</span>&gt;Image 01&lt;/<span class="tag-name">div</span>&gt;
+                &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"gallery-item"</span>&gt;Image 02&lt;/<span class="tag-name">div</span>&gt;
+                &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"gallery-item"</span>&gt;Image 03&lt;/<span class="tag-name">div</span>&gt;
+            &lt;/<span class="tag-name">div</span>&gt;
+        &lt;/<span class="tag-name">section</span>&gt;
+
+        &lt;<span class="tag-name">section</span> <span class="attr-name">id</span>=<span class="attr-val">"profile"</span>&gt;
+            &lt;<span class="tag-name">h2</span>&gt;Profile&lt;/<span class="tag-name">h2</span>&gt;
+            &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"profile-box"</span>&gt;
+                &lt;<span class="tag-name">p</span>&gt;&lt;<span class="tag-name">strong</span>&gt;名前：&lt;/<span class="tag-name">strong</span>&gt; <span class="comment">&lt;!-- ★お名前 --&gt;</span>Your Name&lt;/<span class="tag-name">p</span>&gt;
+                &lt;<span class="tag-name">p</span>&gt;&lt;<span class="tag-name">strong</span>&gt;一言：&lt;/<span class="tag-name">strong</span>&gt; <span class="comment">&lt;!-- ★一言メッセージ --&gt;</span>趣味でイラストや小説を制作しています。&lt;/<span class="tag-name">p</span>&gt;
+                &lt;<span class="tag-name">p</span>&gt;&lt;<span class="tag-name">strong</span>&gt;SNS：&lt;/<span class="tag-name">strong</span>&gt; &lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#"</span>&gt;X (Twitter)&lt;/<span class="tag-name">a</span>&gt; / &lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#"</span>&gt;Bluesky&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">p</span>&gt;
+            &lt;/<span class="tag-name">div</span>&gt;
+        &lt;/<span class="tag-name">section</span>&gt;
+    &lt;/<span class="tag-name">main</span>&gt;
+
+    &lt;<span class="tag-name">footer</span>&gt;
+        &lt;<span class="tag-name">p</span>&gt;&amp;copy; 2026 Your Name. All Rights Reserved.&lt;/<span class="tag-name">p</span>&gt;
+    &lt;/<span class="tag-name">footer</span>&gt;
+
+&lt;/<span class="tag-name">body</span>&gt;
+&lt;/<span class="tag-name">html</span>&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- CSS解説 -->
+        <section id="explain" class="section">
+            <h2 class="section-title">🎨 CSS解説：ここをいじればデザインが変わる！</h2>
+            <p>それでは、コードの重要ポイントをいくつかピックアップして解説します。</p>
+
+            <div class="step-item">
+                <h3><span class="step-number">1</span>サイトの色を一括管理する「CSS変数」</h3>
+                <p>コードの最初にある <code>:root { ... }</code> の部分は、サイト全体で使う<strong>テーマカラー</strong>を設定している場所です。</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                    </div>
+<pre><code>:<span class="tag-name">root</span> {
+    --main-color: #e0f2fe;    <span class="comment">/* 薄い水色 */</span>
+    --accent-color: #0284c7;  <span class="comment">/* 主役の水色 */</span>
+    --text-color: #334155;    <span class="comment">/* 読みやすい文字色 */</span>
+    --bg-color: #ffffff;      <span class="comment">/* 背景の白 */</span>
+}</code></pre>
+                </div>
+                <div class="alert-box">
+                    <strong>💡 アレンジ技</strong><br>
+                    例えば <code>--accent-color: #0284c7;</code>（<span style="color: #0284c7; font-weight: bold;">■ ブルー</span>）のカラーコードを <code>#ec4899</code>（<span style="color: #ec4899; font-weight: bold;">■ ピンク</span>）に変えるだけで、ボタンや見出しのアクセント色が<strong>一瞬で可愛いピンク色に切り替わります！</strong>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">2</span>読みやすさを決める「文字と背景」の設定</h3>
+                <p><code>body</code> 部分では、画面全体の基本ルールを定めています。</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                    </div>
+<pre><code>body {
+    background-color: var(--bg-color); <span class="comment">/* 背景色を白に指定 */</span>
+    color: var(--text-color);          <span class="comment">/* 文字色を暗いグレーに指定 */</span>
+    line-height: 1.8;                    <span class="comment">/* 行と行の間隔を少し広めに */</span>
+    letter-spacing: 0.05em;             <span class="comment">/* 文字同士の間隔を少し広めに */</span>
+}</code></pre>
+                </div>
+                <ul class="rule-list" style="margin-top: 12px;">
+                    <li><code>color: var(--text-color);</code>：真っ黒（<code>#000000</code>）ではなく、少し青みがかった暗いグレーを指定することで、目が疲れにくい優しい印象に仕上がります。</li>
+                    <li><code>line-height: 1.8;</code>：行間を広く取ると、長い文章でも一気に読みやすくなります。</li>
+                </ul>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">3</span>見出し（h2）をおしゃれにするワンポイント</h3>
+                <p><code>section h2</code> と <code>section h2::before</code> の指定で、見出しの左側に小さな「青い縦棒」を表示しています。</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                    </div>
+<pre><code>section h2::before {
+    content: "";
+    display: inline-block;
+    width: 8px;               <span class="comment">/* 縦棒の幅 */</span>
+    height: 18px;            <span class="comment">/* 縦棒の高さ */</span>
+    background-color: var(--accent-color); <span class="comment">/* 縦棒の色 */</span>
+    border-radius: 2px;      <span class="comment">/* 角を少し丸くする */</span>
+}</code></pre>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;"><code>::before</code> は「要素の直前に飾りを取り付ける」という特別な書き方です。これを使うと、HTML側にコードを書かずに見出しを装飾できます。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">4</span>ギャラリーを綺麗に並べる「Gridレイアウト」</h3>
+                <p>イラストや写真を綺麗に並べたいときに超絶便利なのが <code>display: grid;</code> です。</p>
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                    </div>
+<pre><code>.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; <span class="comment">/* 画像同士の間隔 */</span>
+}</code></pre>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.9rem;"><code>repeat(auto-fit, minmax(200px, 1fr))</code> はむずかしく見えますが、要するに<strong>「画面の幅に合わせて自動で列の数を調整してくれる魔法の1行」</strong>です！スマホで見てもパソコンで見ても、自動で綺麗に折り返して並んでくれます。</p>
+            </div>
+        </section>
+
+        <!-- HTMLタグとCSSプロパティの違い -->
+        <section id="diff" class="section">
+            <h2 class="section-title">💡 初心者向け補足：「HTMLタグ」と「CSSプロパティ」の違いって？</h2>
+            <p>コードを書いていると混乱しやすいのが、<strong>「HTMLタグ」</strong>と<strong>「CSSプロパティ」</strong>の違いです。この2つは役割がまったく異なります。</p>
+
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>分類</th>
+                        <th>役割</th>
+                        <th>例</th>
+                        <th>たとえるなら…</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HTMLタグ</strong></td>
+                        <td>ページに<strong>「何（要素）」</strong>を置くかを決める</td>
+                        <td><code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code></td>
+                        <td>家の「骨組み」や「家具」</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSSプロパティ</strong></td>
+                        <td>その要素を<strong>「どんな見た目」</strong>にするかを決める</td>
+                        <td><code>color</code>, <code>font-size</code>, <code>margin</code></td>
+                        <td>壁紙の「色」や家具の「配置」</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert-box">
+                <strong>覚えておこう！🐾</strong><br>
+                ・「<code>&lt;p&gt;</code> は文章を入れる<strong>タグ</strong>」<br>
+                ・「<code>color: red;</code> は文字を赤くする<strong>プロパティ（スタイルの設定）</strong>」<br><br>
+                この2つを区別できるようになると、コードの書き間違いや読みやすさがグッと上がります！
+            </div>
+        </section>
+
+        <!-- よく使われるプロパティ -->
+        <section id="properties" class="section">
+            <h2 class="section-title">🚀 まずはこれを覚えよう！よく使われるCSSプロパティ厳選リスト</h2>
+            <p>「CSSの単語が多すぎて覚えられない…」という方は、<strong>まずは以下のプロパティだけ押さえておけばOK</strong>です！今回の見本コードでも大活躍している基本のプロパティです。</p>
+
+            <h3 class="sub-title">1. 見た目・色に関するプロパティ</h3>
+            <ul class="rule-list">
+                <li><strong><code>color</code>（文字の色）：</strong> 文字の色を指定します。（例：<code>color: #333333;</code>）</li>
+                <li><strong><code>background-color</code>（背景の色）：</strong> 背景色を指定します。（例：<code>background-color: #ffffff;</code>）</li>
+            </ul>
+
+            <h3 class="sub-title">2. 文字の見た目に関するプロパティ</h3>
+            <ul class="rule-list">
+                <li><strong><code>font-size</code>（文字の大きさ）：</strong> 文字のサイズを指定します。（例：<code>font-size: 16px;</code> や <code>font-size: 1.2rem;</code>）</li>
+                <li><strong><code>font-weight</code>（文字の太さ）：</strong> 文字を太字にしたり標準にしたりします。（例：<code>font-weight: bold;</code>）</li>
+                <li><strong><code>text-align</code>（文字の位置）：</strong> 文字を中央揃えや右揃えにします。（例：<code>text-align: center;</code>）</li>
+            </ul>
+
+            <h3 class="sub-title">3. 余白・サイズに関するプロパティ</h3>
+            <ul class="rule-list">
+                <li><strong><code>margin</code>（外側の余白）：</strong> 要素の<strong>外側</strong>にすき間を作ります。要素同士を離したいときに使います。</li>
+                <li><strong><code>padding</code>（内側の余白）：</strong> 要素の<strong>内側</strong>にすき間を作ります。枠線や背景色の内側にゆとりを持たせたいときに使います。</li>
+                <li><strong><code>width</code> / <code>height</code>（幅と高さ）：</strong> 要素の幅（横幅）と高さ（縦幅）を指定します。（例：<code>width: 100%;</code>）</li>
+            </ul>
+        </section>
+
+        <!-- トラブルシューティング（困ったときは） -->
+        <section id="trouble" class="section">
+            <h2 class="section-title">🛠 困ったときは：「デザインが反映されない！」時のチェックリスト</h2>
+            <p>「CSSを書き換えたのに、見た目が変わらない…」という時は、以下の3つをチェックしてみてください🐾</p>
+            <ul class="rule-list" style="margin-top: 12px;">
+                <li><strong>コードの中に「全角スペース」が混ざっていないか：</strong> CSSは全角スペースが入ると動かなくなります。スペースは必ず「半角」にしましょう！</li>
+                <li><strong>文末の「<code>;</code>（セミコロン）」を消していないか：</strong> CSSの各ルールの最後には必ず <code>;</code> が必要です。</li>
+                <li><strong>ブラウザのキャッシュが残っていないか：</strong> 「<code>Ctrl + F5</code>」（Macは <code>Cmd + Shift + R</code>）を押して画面を強力再読み込みしてみてください。</li>
+            </ul>
+        </section>
+
+        <!-- おわりに -->
+        <section class="section">
+            <h2 class="section-title">📌 まとめ：まずは色や文字を変えることから挑戦しよう！</h2>
+            <p>最初からすべてのCSSプロパティを暗記する必要はありません。</p>
+            <ol style="margin: 16px 0 16px 24px; line-height: 2;">
+                <li><strong>まずはコピペして表示してみる</strong></li>
+                <li><strong>カラーコード（<code>#ffffff</code>など）を自分の好きな色に書き換えてみる</strong></li>
+                <li><strong><code>font-size</code> の数字を大きくしたり小さくしたりしてみる</strong></li>
+            </ol>
+            <p>この「数値をいじって変化を楽しむ」ことこそが、手書きHTML・CSSの上達への一番の近道です。ぜひ自分好みの素敵なサイトにカスタマイズしてみてくださいね🐾</p>
+        </section>
+
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- コピー用JavaScript -->
+    <script>
+    function copyCode(btn) {
+        const wrapper = btn.closest('.code-wrapper');
+        const code = wrapper.querySelector('code').innerText;
+        
+        navigator.clipboard.writeText(code).then(() => {
+            btn.innerText = 'コピー完了！';
+            btn.style.background = '#E8963E';
+            setTimeout(() => {
+                btn.innerText = 'コピー';
+                btn.style.background = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('コピーに失敗しました:', err);
+        });
+    }
+    </script>
+</body>
+</html>

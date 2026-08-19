@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScriptでホームページをもっとおしゃれに！ | Stoat Labo</title>
+
+        <!-- ファビコンの設定 -->
+        <link href="images/icon.png" rel="icon" type="image/x-icon" />
+
+        <!-- Open Graph Protocol (OGP) の設定 -->
+        <meta content="Stoat Labo | Web創作支援サイト" property="og:title" />
+        <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description" />
+        <meta content="website" property="og:type" />
+        <meta content="https://stoatpolice2.github.io/labo/" property="og:url" />
+        <meta content="https://stoatpolice2.github.io/labo/images/ogp.jpg" property="og:image" />
+        <meta content="Stoat Labo" property="og:site_name" />
+        <meta content="ja_JP" property="og:locale" />
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+    scroll-behavior: smooth;
+    }
+    
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.06em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.25;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    /* ----------------------------------
+        LAYOUT & SECTIONS
+    ---------------------------------- */
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .section:hover {
+        transform: translateY(-4px); 
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 16px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .rule-list li.rule-check::before {
+        content: "☑️";
+        font-size: 0.85rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    .step-item {
+        margin-bottom: 22px;
+        background: #FAF5F2;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .step-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+
+    .step-number {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-size: 0.85rem;
+        margin-right: 8px;
+    }
+
+    /* ----------------------------------
+        CODE BLOCK DISPLAY & COPY BUTTON
+    ---------------------------------- */
+    .code-block-wrapper {
+        position: relative;
+        margin: 12px 0;
+    }
+
+    pre {
+        background: #2D2726;
+        color: #F8F5F3;
+        padding: 16px;
+        padding-top: 40px; /* コピーボタンのための上部余白 */
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+    }
+
+    code {
+        background: #FFEFEA;
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        font-weight: bold;
+    }
+
+    pre code {
+        background: none;
+        color: inherit;
+        padding: 0;
+        font-weight: normal;
+    }
+
+    .copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #443C3A;
+        color: #D6C8C4;
+        border: 1px solid #5C524F;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 10;
+    }
+
+    .copy-btn:hover {
+        background: var(--primary);
+        color: #FFF;
+        border-color: var(--primary);
+    }
+
+    .copy-btn.copied {
+        background: #488A58;
+        color: #FFF;
+        border-color: #488A58;
+    }
+
+    .comment { color: #8C7B75; }
+    .tag-name { color: #E06D53; }
+    .attr-name { color: #F4C463; }
+    .attr-val { color: #98C379; }
+    .keyword { color: #E06D53; font-weight: bold; }
+
+    /* ----------------------------------
+        LIVE DEMO BOXES (実演エリア)
+    ---------------------------------- */
+    .demo-area {
+        background: #FFF;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 15px;
+        position: relative;
+    }
+    
+    .demo-label {
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 10px;
+        display: inline-block;
+        background: #E8DDD7;
+        padding: 2px 8px;
+        border-radius: 4px;
+    }
+
+    /* デモ用パーツ：ハンバーガー */
+    .demo-hamburger-btn {
+        width: 44px;
+        height: 44px;
+        background-color: var(--primary);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    .demo-hamburger-btn span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: #FFF;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    .demo-hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .demo-hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .demo-hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .demo-drawer {
+        margin-top: 10px;
+        max-height: 0;
+        overflow: hidden;
+        background: #FAF5F2;
+        border-radius: 8px;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        padding: 0 15px;
+    }
+    .demo-drawer.active {
+        max-height: 200px;
+        padding: 15px;
+    }
+    .demo-drawer ul { list-style: none; }
+    .demo-drawer li { padding: 6px 0; border-bottom: 1px dashed var(--border); }
+
+    /* デモ用パーツ：モーダル */
+    .demo-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 1000;
+    }
+    .demo-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .demo-modal-content {
+        background-color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* デモ用パーツ：アコーディオン */
+    .demo-accordion-item {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+    .demo-accordion-header {
+        width: 100%;
+        padding: 12px 16px;
+        background: #FAF5F2;
+        border: none;
+        text-align: left;
+        font-weight: bold;
+        color: var(--text-main);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+    }
+    .demo-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        padding: 0 16px;
+        background: #FFF;
+    }
+    .demo-accordion-content.active {
+        max-height: 120px;
+        padding: 12px 16px;
+    }
+
+    /* 汎用ボタン */
+    .btn-style {
+        display: inline-block;
+        padding: 10px 20px;
+        background: var(--grad-primary);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn-style:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+
+    /* ページのトップへ戻るボタン */
+    .page-top-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 48px;
+        height: 48px;
+        background: var(--grad-primary);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+        z-index: 99;
+    }
+    .page-top-btn.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .page-top-btn:hover {
+        transform: translateY(-4px);
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.8rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">JavaScriptでホームページをもっとおしゃれに！</h1>
+            <p class="header-subtitle">手書きWebサイトに動的な仕掛けを加えて、本格的なデザインを目指そう</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#about-js">1. JavaScriptとは</a></li>
+            <li><a href="#rule">2. 記述のルール</a></li>
+            <li><a href="#gimmick">3. 代表的なギミック</a></li>
+            <li><a href="#tips">4. 初心者向けTips</a></li>
+            <li><a href="#checklist">5. チェックリスト</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section class="section">
+            <h2 class="section-title">はじめに：サイトに「動き」をプラスしてみよう！</h2>
+            <p>スマートフォンやPCでWebサイトを見ているとき、右上にある「三本線のボタン」を押すと、すっとメニューが滑り出てきた経験はありませんか？</p>
+            <p style="margin-top: 10px;">あの滑らかな動きを実現しているのが<strong>「JavaScript（ジャバスクリプト）」</strong>というプログラミング言語です。</p>
+            <p style="margin-top: 10px;">
+                「HTMLやCSSでサイトを作れるようになったけれど、もう少しプロっぽい・おしゃれなサイトにしたい！」という方に向けて、今回はJavaScriptの基本と、Web制作でよく使われる人気のWebギミックをご紹介します🐾
+            </p>
+        </section>
+
+        <!-- 1. JavaScriptとは -->
+        <section id="about-js" class="section">
+            <h2 class="section-title">1. JavaScriptとは？ HTML・CSSとの役割の違い</h2>
+            <p>Webサイトは、主に3つの言語がチームを組んで作られています。</p>
+            
+            <ul class="rule-list" style="margin-top: 16px;">
+                <li><strong>HTML（骨組み）：</strong> テキストや画像など、ページの構造を作ります。</li>
+                <li><strong>CSS（見た目）：</strong> 色やフォント、レイアウトなど、デザインを整えます。</li>
+                <li><strong>JavaScript（動き）：</strong> クリック時の変化やアニメーションなど、「動的な仕掛け」を加えます。</li>
+            </ul>
+
+            <div class="alert-box">
+                <strong>💡 例えてみると…</strong><br>
+                HTMLが「家」、CSSが「インテリア」、JavaScriptが「自動ドアや照明スイッチ」のような役割を持っています🐾
+            </div>
+        </section>
+
+        <!-- 2. 記述のルール -->
+        <section id="rule" class="section">
+            <h2 class="section-title">2. 1つのファイルに記述する際の大切なルール</h2>
+            <p>外部ファイルとして呼び出す場合も、HTMLファイル内にコードを入れる場合も、<strong>JavaScript（<code>&lt;script&gt;</code>）を書き込むのは一番下</strong>（<code>&lt;/body&gt;</code> の直前）というルールがあります。</p>
+
+            <div class="code-block-wrapper">
+                <button class="copy-btn">コピー</button>
+                <pre><code>&lt;<span class="tag-name">!DOCTYPE</span> <span class="attr-name">html</span>&gt;
+&lt;<span class="tag-name">html</span> <span class="attr-name">lang</span>=<span class="attr-val">"ja"</span>&gt;
+&lt;<span class="tag-name">head</span>&gt;
+    &lt;<span class="tag-name">meta</span> <span class="attr-name">charset</span>=<span class="attr-val">"UTF-8"</span>&gt;
+    &lt;<span class="tag-name">title</span>&gt;タイトル&lt;/<span class="tag-name">title</span>&gt;
+    <span class="comment">&lt;!-- ① CSSは &lt;head&gt; 内に書く --&gt;</span>
+    &lt;<span class="tag-name">style</span>&gt;
+        <span class="comment">/* デザインの定義 */</span>
+    &lt;/<span class="tag-name">style</span>&gt;
+&lt;/<span class="tag-name">head</span>&gt;
+&lt;<span class="tag-name">body</span>&gt;
+
+    <span class="comment">&lt;!-- ページのコンテンツ --&gt;</span>
+
+    <span class="comment">&lt;!-- ② JavaScriptは &lt;/body&gt; の直前に書く --&gt;</span>
+    &lt;<span class="tag-name">script</span>&gt;
+        <span class="comment">// 動きの定義</span>
+    &lt;/<span class="tag-name">script</span>&gt;
+&lt;/<span class="tag-name">body</span>&gt;
+&lt;/<span class="tag-name">html</span>&gt;</code></pre>
+            </div>
+
+            <div class="alert-box">
+                <strong>❓ なぜJavaScriptは一番下（<code>&lt;/body&gt;</code> の直前）に書くの？</strong><br>
+                Webブラウザはコードを<strong>上から順番に読み込み</strong>ます。画面（ボタンや文字）が読み込まれる前にJavaScriptが動こうとすると、「動かす対象のボタンがまだ見つからない！」とエラーになってしまうためです🐾
+            </div>
+        </section>
+
+        <!-- 3. 代表的なUIギミック -->
+        <section id="gimmick" class="section">
+            <h2 class="section-title">3. これだけは押さえたい！代表的なUIギミック</h2>
+            <p>よく使われるパーツの仕組みとサンプルコードです。実際に動かせるプレビューも用意しました！</p>
+
+            <!-- 1. ハンバーガー -->
+            <div class="step-item">
+                <h3><span class="step-number">1</span>ハンバーガーメニュー ＆ ドロワー</h3>
+                <p>画面をすっきり見せつつ、クリックでメニューを引き出し（ドロワー）のように表示させる定番ギミックです。</p>
+
+                <!-- 動作デモ -->
+                <div class="demo-area">
+                    <span class="demo-label">Live Demo</span><br>
+                    <button class="demo-hamburger-btn" id="js-demo-hamburger">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <div class="demo-drawer" id="js-demo-drawer">
+                        <ul>
+                            <li><a href="#">HOME</a></li>
+                            <li><a href="#">ABOUT</a></li>
+                            <li><a href="#">GALLERY</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="sub-title">JavaScriptのコード例</h3>
+                <div class="code-block-wrapper">
+                    <button class="copy-btn">コピー</button>
+                    <pre><code><span class="comment">// ボタンとメニューを取得してクリックイベントを設定</span>
+<span class="keyword">const</span> hamburger = document.getElementById(<span class="attr-val">'js-hamburger'</span>);
+<span class="keyword">const</span> drawer = document.getElementById(<span class="attr-val">'js-drawer'</span>);
+
+hamburger.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
+    hamburger.classList.toggle(<span class="attr-val">'active'</span>);
+    drawer.classList.toggle(<span class="attr-val">'active'</span>);
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. モーダル -->
+            <div class="step-item">
+                <h3><span class="step-number">2</span>モーダルウィンドウ</h3>
+                <p>画像を大きく見せたいときや、重要なお知らせを画面中央にポップアップ表示させる機能です。</p>
+
+                <!-- 動作デモ -->
+                <div class="demo-area">
+                    <span class="demo-label">Live Demo</span><br>
+                    <button class="btn-style" id="js-demo-open-modal">お知らせを見る</button>
+                </div>
+
+                <h3 class="sub-title">JavaScriptのコード例</h3>
+                <div class="code-block-wrapper">
+                    <button class="copy-btn">コピー</button>
+                    <pre><code><span class="keyword">const</span> openBtn = document.getElementById(<span class="attr-val">'js-open-modal'</span>);
+<span class="keyword">const</span> closeBtn = document.getElementById(<span class="attr-val">'js-close-modal'</span>);
+<span class="keyword">const</span> modal = document.getElementById(<span class="attr-val">'js-modal'</span>);
+
+<span class="comment">// 開く・閉じるの処理</span>
+openBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; modal.classList.add(<span class="attr-val">'active'</span>));
+closeBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; modal.classList.remove(<span class="attr-val">'active'</span>));
+
+<span class="comment">// 背景クリックでも閉じられるようにする（UX向上のコツ！）</span>
+modal.addEventListener(<span class="attr-val">'click'</span>, (e) =&gt; {
+    <span class="keyword">if</span> (e.target === modal) modal.classList.remove(<span class="attr-val">'active'</span>);
+});</code></pre>
+                </div>
+
+                <div class="alert-box">
+                    <strong>⚠️ モーダル作成時の注意点！</strong><br>
+                    モーダル本体のHTML（背景の暗い枠など）は、カードやセクションの中に書かず、<strong><code>&lt;/body&gt;</code> の直前（外側）</strong>に配置するのが鉄則です。親要素にホバーアニメーションなどの `transform` プロパティがついていると、モーダルの表示位置がずれたり画面全体に広がらなくなってしまうためです🐾
+                </div>
+            </div>
+
+            <!-- 3. アコーディオン -->
+            <div class="step-item">
+                <h3><span class="step-number">3</span>アコーディオンメニュー</h3>
+                <p>FAQ（よくある質問）などで、クリックするとパタパタと開閉するメニューです。長くなりがちなページをコンパクトにまとめられます。</p>
+
+                <!-- 動作デモ -->
+                <div class="demo-area">
+                    <span class="demo-label">Live Demo</span>
+                    <div class="demo-accordion-item">
+                        <button class="demo-accordion-header js-demo-acc-header">Q. 未経験でも作れますか？ <span>＋</span></button>
+                        <div class="demo-accordion-content js-demo-acc-content">
+                            <p style="font-size: 0.88rem; padding-top: 8px;">はい！コピペから始めて少しずつ仕組みを理解していけば簡単に作れるようになります。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="sub-title">JavaScriptのコード例</h3>
+                <div class="code-block-wrapper">
+                    <button class="copy-btn">コピー</button>
+                    <pre><code><span class="comment">// 複数のヘッダーをまとめて取得して処理を設定</span>
+<span class="keyword">const</span> headers = document.querySelectorAll(<span class="attr-val">'.accordion-header'</span>);
+
+headers.forEach(header =&gt; {
+    header.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
+        <span class="keyword">const</span> content = header.nextElementSibling;
+        header.classList.toggle(<span class="attr-val">'active'</span>);
+        content.classList.toggle(<span class="attr-val">'active'</span>);
+    });
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. トップに戻る -->
+            <div class="step-item">
+                <h3><span class="step-number">4</span>トップに戻るボタン</h3>
+                <p>スクロール量を監視して、一定以上スクロールされたら画面右下にふわっと現れる便利なボタンです。（※このページの右下にも配置しています！）</p>
+
+                <h3 class="sub-title">JavaScriptのコード例</h3>
+                <div class="code-block-wrapper">
+                    <button class="copy-btn">コピー</button>
+                    <pre><code><span class="keyword">const</span> topBtn = document.getElementById(<span class="attr-val">'js-scroll-top'</span>);
+
+<span class="comment">// スクロール量を監視（300px以上で表示）</span>
+window.addEventListener(<span class="attr-val">'scroll'</span>, () =&gt; {
+    <span class="keyword">if</span> (window.scrollY &gt; 300) {
+        topBtn.classList.add(<span class="attr-val">'active'</span>);
+    } <span class="keyword">else</span> {
+        topBtn.classList.remove(<span class="attr-val">'active'</span>);
+    }
+});
+
+<span class="comment">// クリックしたらスムーズに上部へ移動</span>
+topBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
+    window.scrollTo({ top: 0, behavior: <span class="attr-val">'smooth'</span> });
+});</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 初心者向けTips -->
+        <section id="tips" class="section">
+            <h2 class="section-title">4. 💡 初心者の方が知っておくと役立つ補足ポイント</h2>
+            <p>ネットでJavaScriptのサンプルコードを検索する際、知っておくと迷わない重要ポイントがあります。</p>
+
+            <h3 class="sub-title">「jQuery（ジェイクエリ）」コードとの違いに注意しよう！</h3>
+            <p>Web上で書き方を調べると、以下のような <code>$</code> 記号を使ったコードがよく出てきます。</p>
+
+            <div class="code-block-wrapper">
+                <button class="copy-btn">コピー</button>
+                <pre><code><span class="comment">// これは「jQuery」というライブラリを使った書き方です</span>
+$(<span class="attr-val">'.menu-btn'</span>).click(<span class="keyword">function</span>() {
+    $(<span class="attr-val">'.nav-menu'</span>).toggleClass(<span class="attr-val">'active'</span>);
+});</code></pre>
+            </div>
+
+            <p>これは「jQuery」というJavaScriptを便利に使うための拡張ツールのコードです。これを動かすには別途読み込み設定が必要になります。</p>
+            <p style="margin-top: 10px;">
+                今回ご紹介したような、何も読み込まなくてもそのまま動く標準のJavaScriptは<strong>「生JavaScript」</strong>や<strong>「Vanilla JS（バニラ JavaScript）」</strong>と呼ばれます。検索する際は「JavaScript ハンバーガーメニュー VanillaJS」などで探すと、標準のコードが見つかりやすいですよ🐾
+            </p>
+        </section>
+
+        <!-- 5. チェックリスト -->
+        <section id="checklist" class="section">
+            <h2 class="section-title">5. 📝 自分で実装する際のチェックリスト</h2>
+            <p>コードを書き終えて「うまく動かないな？」と思った時は、以下をチェックしてみてください。</p>
+
+            <ul class="rule-list" style="margin-top: 16px;">
+                <li class="rule-check"><strong>HTMLの記述順：</strong> JavaScript（<code>&lt;script&gt;</code>）は <code>&lt;/body&gt;</code> の直前に書きましたか？</li>
+                <li class="rule-check"><strong>名前の一致：</strong> HTMLとJavaScriptで指定したID（<code>js-xxx</code>）やクラス名は完全に一致していますか？（大文字・小文字も区別されます）</li>
+                <li class="rule-check"><strong>モーダルの配置場所：</strong> モーダル本体は `.section` の中ではなく `&lt;/body&gt;` 直前に記述しましたか？</li>
+                <li class="rule-check"><strong>CSSの準備：</strong> 動きをつけるための <code>active</code> クラスに対するCSSスタイルは記述しましたか？</li>
+                <li class="rule-check"><strong>ブラウザの更新：</strong> コードを保存（Ctrl+S / Cmd+S）したあと、ブラウザを再読み込み（F5）しましたか？</li>
+            </ul>
+        </section>
+
+        <!-- まとめ -->
+        <section class="section">
+            <h2 class="section-title">おわりに</h2>
+            <p>JavaScriptを少し取り入れるだけで、いつものホームページがぐっとプロっぽく、使いやすくなります。</p>
+            <p style="margin-top: 10px;">
+                まずはサンプルコードのコピペから始めて、HTML・CSS・JavaScriptがどう連動して動くかを体験してみてくださいね！自分だけの素敵なWebサイト制作を応援しています🐾
+            </p>
+        </section>
+
+    </div>
+
+    <!-- モーダル本体 -->
+    <div class="demo-modal-overlay" id="js-demo-modal">
+        <div class="demo-modal-content">
+            <h3 style="margin-bottom: 10px;">お知らせ</h3>
+            <p style="font-size: 0.9rem;">これがモーダルウィンドウです！背景の暗い部分か「閉じる」ボタンを押すと消えます。</p>
+            <button class="btn-style" id="js-demo-close-modal" style="margin-top: 15px; padding: 6px 14px; font-size: 0.85rem;">閉じる</button>
+        </div>
+    </div>
+
+    <!-- ページトップへ戻るボタン -->
+    <button class="page-top-btn" id="js-page-top">↑</button>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- 本ページの動的ギミック用JavaScript -->
+    <script>
+        // イベント登録用ヘルパー関数
+        function setupEvent(element, event, callback) {
+            if (element) {
+                element.addEventListener(event, callback);
+            }
+        }
+
+        // 1. デモ用ハンバーガー
+        const demoHamb = document.getElementById('js-demo-hamburger');
+        const demoDrawer = document.getElementById('js-demo-drawer');
+        setupEvent(demoHamb, 'click', () => {
+            demoHamb.classList.toggle('active');
+            if (demoDrawer) demoDrawer.classList.toggle('active');
+        });
+
+        // 2. デモ用モーダル
+        const demoOpenModal = document.getElementById('js-demo-open-modal');
+        const demoCloseModal = document.getElementById('js-demo-close-modal');
+        const demoModal = document.getElementById('js-demo-modal');
+
+        setupEvent(demoOpenModal, 'click', () => {
+            if (demoModal) demoModal.classList.add('active');
+        });
+        setupEvent(demoCloseModal, 'click', () => {
+            if (demoModal) demoModal.classList.remove('active');
+        });
+        setupEvent(demoModal, 'click', (e) => {
+            if (e.target === demoModal) {
+                demoModal.classList.remove('active');
+            }
+        });
+
+        // 3. デモ用アコーディオン
+        const demoAccHeaders = document.querySelectorAll('.js-demo-acc-header');
+        if (demoAccHeaders.length > 0) {
+            demoAccHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    if (content) {
+                        content.classList.toggle('active');
+                    }
+                });
+            });
+        }
+
+        // 4. ページトップへ戻るボタン
+        const pageTopBtn = document.getElementById('js-page-top');
+        if (pageTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    pageTopBtn.classList.add('active');
+                } else {
+                    pageTopBtn.classList.remove('active');
+                }
+            });
+            pageTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // 5. コードブロックの「コピー」機能
+        const copyBtns = document.querySelectorAll('.copy-btn');
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const wrapper = btn.closest('.code-block-wrapper');
+                const code = wrapper.querySelector('code');
+                if (code) {
+                    navigator.clipboard.writeText(code.innerText).then(() => {
+                        btn.textContent = 'コピーしました！';
+                        btn.classList.add('copied');
+                        setTimeout(() => {
+                            btn.textContent = 'コピー';
+                            btn.classList.remove('copied');
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
