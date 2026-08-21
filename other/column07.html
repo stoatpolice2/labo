@@ -22,7 +22,7 @@
         CSS RESET & VARIABLES
     ---------------------------------- */
     html {
-    scroll-behavior: smooth;
+        scroll-behavior: smooth;
     }
     
     :root {
@@ -294,7 +294,7 @@
     }
 
     /* ----------------------------------
-        DEMO CODE COPY BOX STYLES
+        DEMO CODE COPY BOX & TAB STYLES
     ---------------------------------- */
     .code-box-wrapper {
         margin: 20px 0;
@@ -307,11 +307,13 @@
 
     .code-box-header {
         background: #3d3534;
-        padding: 10px 16px;
+        padding: 8px 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #4a403e;
+        flex-wrap: wrap;
+        gap: 8px;
     }
 
     .code-box-title {
@@ -321,6 +323,49 @@
         display: flex;
         align-items: center;
         gap: 6px;
+    }
+
+    /* タブ切り替えボタンのスタイル */
+    .tab-btn-group {
+        display: flex;
+        gap: 4px;
+    }
+
+    .tab-btn {
+        background: transparent;
+        color: #a89f9c;
+        border: none;
+        padding: 6px 14px;
+        font-size: 0.82rem;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tab-btn.active {
+        background: var(--grad-primary);
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(2px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .copy-btn {
@@ -336,6 +381,7 @@
         display: inline-flex;
         align-items: center;
         gap: 4px;
+        margin-left: auto;
     }
 
     .copy-btn:hover {
@@ -687,7 +733,7 @@
         <!-- 3. 代表的なUIギミック -->
         <section id="gimmick" class="section">
             <h2 class="section-title">3. これだけは押さえたい！代表的なUIギミック</h2>
-            <p>よく使われるパーツの仕組みとサンプルコードです。実際に動かせるプレビューも用意しました！</p>
+            <p>よく使われるパーツの仕組みとサンプルコードです。HTML・CSS・JavaScriptをセットで記述することで実際に動作します！</p>
 
             <!-- 1. ハンバーガー -->
             <div class="step-item">
@@ -709,21 +755,51 @@
                     </div>
                 </div>
 
-                <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-box-wrapper">
+                <h3 class="sub-title">実装に必要なコード（HTML / CSS / JS）</h3>
+                <div class="code-box-wrapper js-tab-group">
                     <div class="code-box-header">
-                        <span class="code-box-title">📋 ハンバーガーメニュー</span>
+                        <div class="tab-btn-group">
+                            <button class="tab-btn active" data-tab="html">HTML</button>
+                            <button class="tab-btn" data-tab="css">CSS</button>
+                            <button class="tab-btn" data-tab="js">JS</button>
+                        </div>
                         <button class="copy-btn">📋 コードをコピー</button>
                     </div>
                     <div class="code-box-body">
-                        <pre><code><span class="comment">// ボタンとメニューを取得してクリックイベントを設定</span>
-<span class="keyword">const</span> hamburger = document.getElementById(<span class="attr-val">'js-hamburger'</span>);
+                        <div class="tab-content active" data-tab-content="html">
+                            <pre><code>&lt;<span class="tag-name">button</span> <span class="attr-name">id</span>=<span class="attr-val">"js-hamburger"</span> <span class="attr-name">class</span>=<span class="attr-val">"hamburger-btn"</span>&gt;
+    &lt;<span class="tag-name">span</span>&gt;&lt;/<span class="tag-name">span</span>&gt;&lt;<span class="tag-name">span</span>&gt;&lt;/<span class="tag-name">span</span>&gt;&lt;<span class="tag-name">span</span>&gt;&lt;/<span class="tag-name">span</span>&gt;
+&lt;/<span class="tag-name">button</span>&gt;
+
+&lt;<span class="tag-name">nav</span> <span class="attr-name">id</span>=<span class="attr-val">"js-drawer"</span> <span class="attr-name">class</span>=<span class="attr-val">"drawer-menu"</span>&gt;
+    &lt;<span class="tag-name">ul</span>&gt;
+        &lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#"</span>&gt;HOME&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;
+        &lt;<span class="tag-name">li</span>&gt;&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"#"</span>&gt;ABOUT&lt;/<span class="tag-name">a</span>&gt;&lt;/<span class="tag-name">li</span>&gt;
+    &lt;/<span class="tag-name">ul</span>&gt;
+&lt;/<span class="tag-name">nav</span>&gt;</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="css">
+                            <pre><code><span class="comment">/* メニューの初期状態（非表示） */</span>
+<span class="keyword">.drawer-menu</span> {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+<span class="comment">/* JSで active クラスが付いた時の見た目（表示） */</span>
+<span class="keyword">.drawer-menu.active</span> {
+    max-height: 200px;
+}</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="js">
+                            <pre><code><span class="keyword">const</span> hamburger = document.getElementById(<span class="attr-val">'js-hamburger'</span>);
 <span class="keyword">const</span> drawer = document.getElementById(<span class="attr-val">'js-drawer'</span>);
 
 hamburger.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
     hamburger.classList.toggle(<span class="attr-val">'active'</span>);
     drawer.classList.toggle(<span class="attr-val">'active'</span>);
 });</code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -739,25 +815,60 @@ hamburger.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
                     <button class="btn-style" id="js-demo-open-modal">お知らせを見る</button>
                 </div>
 
-                <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-box-wrapper">
+                <h3 class="sub-title">実装に必要なコード（HTML / CSS / JS）</h3>
+                <div class="code-box-wrapper js-tab-group">
                     <div class="code-box-header">
-                        <span class="code-box-title">📋 モーダルウィンドウ</span>
+                        <div class="tab-btn-group">
+                            <button class="tab-btn active" data-tab="html">HTML</button>
+                            <button class="tab-btn" data-tab="css">CSS</button>
+                            <button class="tab-btn" data-tab="js">JS</button>
+                        </div>
                         <button class="copy-btn">📋 コードをコピー</button>
                     </div>
                     <div class="code-box-body">
-                        <pre><code><span class="keyword">const</span> openBtn = document.getElementById(<span class="attr-val">'js-open-modal'</span>);
+                        <div class="tab-content active" data-tab-content="html">
+                            <pre><code><span class="comment">&lt;!-- 開くボタン --&gt;</span>
+&lt;<span class="tag-name">button</span> <span class="attr-name">id</span>=<span class="attr-val">"js-open-modal"</span>&gt;お知らせを見る&lt;/<span class="tag-name">button</span>&gt;
+
+<span class="comment">&lt;!-- モーダル本体（※ &lt;/body&gt; の直前に記述するのが鉄則！） --&gt;</span>
+&lt;<span class="tag-name">div</span> <span class="attr-name">id</span>=<span class="attr-val">"js-modal"</span> <span class="attr-name">class</span>=<span class="attr-val">"modal-overlay"</span>&gt;
+    &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"modal-content"</span>&gt;
+        &lt;<span class="tag-name">p</span>&gt;お知らせの内容が入ります。&lt;/<span class="tag-name">p</span>&gt;
+        &lt;<span class="tag-name">button</span> <span class="attr-name">id</span>=<span class="attr-val">"js-close-modal"</span>&gt;閉じる&lt;/<span class="tag-name">button</span>&gt;
+    &lt;/<span class="tag-name">div</span>&gt;
+&lt;/<span class="tag-name">div</span>&gt;</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="css">
+                            <pre><code><span class="comment">/* モーダル全体（初期状態は非表示） */</span>
+<span class="keyword">.modal-overlay</span> {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden;
+    transition: 0.3s;
+}
+
+<span class="comment">/* active クラスが付いた時に表示 */</span>
+<span class="keyword">.modal-overlay.active</span> {
+    opacity: 1;
+    visibility: visible;
+}</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="js">
+                            <pre><code><span class="keyword">const</span> openBtn = document.getElementById(<span class="attr-val">'js-open-modal'</span>);
 <span class="keyword">const</span> closeBtn = document.getElementById(<span class="attr-val">'js-close-modal'</span>);
 <span class="keyword">const</span> modal = document.getElementById(<span class="attr-val">'js-modal'</span>);
 
-<span class="comment">// 開く・閉じるの処理</span>
 openBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; modal.classList.add(<span class="attr-val">'active'</span>));
 closeBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; modal.classList.remove(<span class="attr-val">'active'</span>));
 
-<span class="comment">// 背景クリックでも閉じられるようにする（UX向上のコツ！）</span>
+<span class="comment">// 背景クリックでも閉じる（UX向上のコツ！）</span>
 modal.addEventListener(<span class="attr-val">'click'</span>, (e) =&gt; {
     <span class="keyword">if</span> (e.target === modal) modal.classList.remove(<span class="attr-val">'active'</span>);
 });</code></pre>
+                        </div>
                     </div>
                 </div>
 
@@ -783,14 +894,42 @@ modal.addEventListener(<span class="attr-val">'click'</span>, (e) =&gt; {
                     </div>
                 </div>
 
-                <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-box-wrapper">
+                <h3 class="sub-title">実装に必要なコード（HTML / CSS / JS）</h3>
+                <div class="code-box-wrapper js-tab-group">
                     <div class="code-box-header">
-                        <span class="code-box-title">📋 アコーディオンメニュー</span>
+                        <div class="tab-btn-group">
+                            <button class="tab-btn active" data-tab="html">HTML</button>
+                            <button class="tab-btn" data-tab="css">CSS</button>
+                            <button class="tab-btn" data-tab="js">JS</button>
+                        </div>
                         <button class="copy-btn">📋 コードをコピー</button>
                     </div>
                     <div class="code-box-body">
-                        <pre><code><span class="comment">// 複数のヘッダーをまとめて取得して処理を設定</span>
+                        <div class="tab-content active" data-tab-content="html">
+                            <pre><code>&lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"accordion-item"</span>&gt;
+    &lt;<span class="tag-name">button</span> <span class="attr-name">class</span>=<span class="attr-val">"accordion-header"</span>&gt;Q. 質問タイトル&lt;/<span class="tag-name">button</span>&gt;
+    &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"accordion-content"</span>&gt;
+        &lt;<span class="tag-name">p</span>&gt;回答文がここに入ります。&lt;/<span class="tag-name">p</span>&gt;
+    &lt;/<span class="tag-name">div</span>&gt;
+&lt;/<span class="tag-name">div</span>&gt;</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="css">
+                            <pre><code><span class="comment">/* 中身の初期状態（非表示） */</span>
+<span class="keyword">.accordion-content</span> {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 16px;
+}
+
+<span class="comment">/* JSで active クラスが付いた時の表示設定 */</span>
+<span class="keyword">.accordion-content.active</span> {
+    max-height: 200px;
+    padding: 12px 16px;
+}</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="js">
+                            <pre><code><span class="comment">// 複数のヘッダーを取得して処理を設定</span>
 <span class="keyword">const</span> headers = document.querySelectorAll(<span class="attr-val">'.accordion-header'</span>);
 
 headers.forEach(header =&gt; {
@@ -800,6 +939,7 @@ headers.forEach(header =&gt; {
         content.classList.toggle(<span class="attr-val">'active'</span>);
     });
 });</code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -809,14 +949,39 @@ headers.forEach(header =&gt; {
                 <h3><span class="step-number">4</span>トップに戻るボタン</h3>
                 <p>スクロール量を監視して、一定以上スクロールされたら画面右下にふわっと現れる便利なボタンです。（※このページの右下にも配置しています！）</p>
 
-                <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-box-wrapper">
+                <h3 class="sub-title">実装に必要なコード（HTML / CSS / JS）</h3>
+                <div class="code-box-wrapper js-tab-group">
                     <div class="code-box-header">
-                        <span class="code-box-title">📋 トップに戻るボタン</span>
+                        <div class="tab-btn-group">
+                            <button class="tab-btn active" data-tab="html">HTML</button>
+                            <button class="tab-btn" data-tab="css">CSS</button>
+                            <button class="tab-btn" data-tab="js">JS</button>
+                        </div>
                         <button class="copy-btn">📋 コードをコピー</button>
                     </div>
                     <div class="code-box-body">
-                        <pre><code><span class="keyword">const</span> topBtn = document.getElementById(<span class="attr-val">'js-scroll-top'</span>);
+                        <div class="tab-content active" data-tab-content="html">
+                            <pre><code>&lt;<span class="tag-name">button</span> <span class="attr-name">id</span>=<span class="attr-val">"js-scroll-top"</span> <span class="attr-name">class</span>=<span class="attr-val">"page-top-btn"</span>&gt;↑&lt;/<span class="tag-name">button</span>&gt;</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="css">
+                            <pre><code><span class="comment">/* 画面右下に固定配置（初期状態は非表示） */</span>
+<span class="keyword">.page-top-btn</span> {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+<span class="comment">/* JSで active クラスが付いた時に表示 */</span>
+<span class="keyword">.page-top-btn.active</span> {
+    opacity: 1;
+    visibility: visible;
+}</code></pre>
+                        </div>
+                        <div class="tab-content" data-tab-content="js">
+                            <pre><code><span class="keyword">const</span> topBtn = document.getElementById(<span class="attr-val">'js-scroll-top'</span>);
 
 <span class="comment">// スクロール量を監視（300px以上で表示）</span>
 window.addEventListener(<span class="attr-val">'scroll'</span>, () =&gt; {
@@ -831,6 +996,7 @@ window.addEventListener(<span class="attr-val">'scroll'</span>, () =&gt; {
 topBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
     window.scrollTo({ top: 0, behavior: <span class="attr-val">'smooth'</span> });
 });</code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -966,14 +1132,39 @@ $(<span class="attr-val">'.menu-btn'</span>).click(<span class="keyword">functio
             });
         }
 
-        // 5. コードブロックの「コピー」機能
+        // 5. コードボックスのタブ切り替え機能
+        const tabGroups = document.querySelectorAll('.js-tab-group');
+        tabGroups.forEach(group => {
+            const tabBtns = group.querySelectorAll('.tab-btn');
+            const tabContents = group.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        if (content.getAttribute('data-tab-content') === targetTab) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+
+        // 6. コードブロックの「コピー」機能（アクティブなタブに対応）
         const copyBtns = document.querySelectorAll('.copy-btn');
         copyBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const wrapper = btn.closest('.code-box-wrapper');
-                const code = wrapper.querySelector('code');
-                if (code) {
-                    navigator.clipboard.writeText(code.innerText).then(() => {
+                const activeCode = wrapper.querySelector('.tab-content.active code') || wrapper.querySelector('code');
+                
+                if (activeCode) {
+                    navigator.clipboard.writeText(activeCode.innerText).then(() => {
                         btn.textContent = '✨ コピーしました！';
                         btn.classList.add('copied');
                         setTimeout(() => {
