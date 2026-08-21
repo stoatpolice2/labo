@@ -178,7 +178,7 @@
         margin-bottom: 40px;
         box-shadow: var(--shadow-sm);
         transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-        scroll-margin-top: 70px; /* 固定ナビゲーションによる見出し被り防止 */
+        scroll-margin-top: 70px;
     }
 
     .section:hover {
@@ -311,77 +311,111 @@
         background-color: #FAF5F2;
     }
 
-    /* CODE BLOCK DISPLAY */
-    .code-wrapper {
-        margin: 16px 0;
-        background: #2D2726;
-        border-radius: 10px;
+    /* ----------------------------------
+        DEMO CODE COPY BOX STYLES
+    ---------------------------------- */
+    .code-box-wrapper {
+        margin: 20px 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
         overflow: hidden;
+        background: #2d2726;
+        box-shadow: var(--shadow-sm);
     }
 
-    .code-header {
+    .code-box-header {
+        background: #3d3534;
+        padding: 10px 16px;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
-        background: #241F1E;
-        padding: 6px 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid #4a403e;
+    }
+
+    .code-box-title {
+        color: #e8ddd7;
+        font-size: 0.85rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
     .copy-btn {
-        background: rgba(255, 255, 255, 0.15);
-        color: #F8F5F3;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 4px 10px;
-        font-size: 0.75rem;
-        border-radius: 6px;
+        background: var(--grad-primary);
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
     }
 
     .copy-btn:hover {
-        background: var(--primary);
-        border-color: var(--primary);
+        opacity: 0.9;
+        transform: scale(1.03);
     }
 
-    pre {
-        background: #2D2726;
-        color: #F8F5F3;
+    .copy-btn.copied {
+        background: #4a90e2;
+    }
+
+    .code-box-body pre {
+        margin: 0;
         padding: 16px;
+        max-height: 320px;
+        overflow-y: auto;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    /* ----------------------------------
+        CODE BLOCK & INLINE CODE STYLES
+    ---------------------------------- */
+    pre {
+        background: #2d2726;
+        color: #f8f5f3;
+        padding: 16px;
+        border-radius: 10px;
+        overflow-x: auto;
         font-family: Consolas, Monaco, "Courier New", monospace;
         font-size: 0.88rem;
         line-height: 1.5;
-        margin: 0;
-        overflow-x: auto;
-    }
-
-    /* 全体コード用のコンパクト化設定 */
-    .compact-code pre {
-        max-height: 320px;
-        overflow-y: auto;
+        margin: 12px 0;
     }
 
     code {
-        background: #FFEFEA;
-        color: var(--primary);
-        padding: 2px 6px;
-        border-radius: 4px;
+        background: #ffe8e2;
+        color: #c84022;
+        border: 1px solid #f2c7bd;
+        padding: 2px 7px;
+        margin: 0 2px;
+        border-radius: 5px;
         font-family: Consolas, Monaco, "Courier New", monospace;
         font-size: 0.88rem;
-        font-weight: bold;
+        font-weight: 700;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     pre code {
         background: none;
         color: inherit;
+        border: none;
         padding: 0;
+        margin: 0;
         font-weight: normal;
+        box-shadow: none;
     }
 
-    .comment { color: #8C7B75; }
-    .tag-name { color: #E06D53; }
-    .attr-name { color: #F4C463; }
-    .attr-val { color: #98C379; }
+    .comment { color: #8c7b75; }
+    .tag-name { color: #e06d53; }
+    .attr-name { color: #f4c463; }
+    .attr-val { color: #98c379; }
 
     /* BROWSER FRAME FOR SCREENSHOT */
     .preview-img-box {
@@ -488,11 +522,15 @@
 
             <h3 class="sub-title">ファイルを分ける方法</h3>
             <p>HTMLの <code>&lt;head&gt;</code> 〜 <code>&lt;/head&gt;</code> の間に、以下の1行を書き込めばCSSファイルと連携できます。</p>
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+            
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 連携用コード</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
                 </div>
-                <pre><code>&lt;<span class="tag-name">link</span> <span class="attr-name">rel</span>=<span class="attr-val">"stylesheet"</span> <span class="attr-name">href</span>=<span class="attr-val">"style.css"</span>&gt;</code></pre>
+                <div class="code-box-body">
+                    <pre><code>&lt;<span class="tag-name">link</span> <span class="attr-name">rel</span>=<span class="attr-val">"stylesheet"</span> <span class="attr-name">href</span>=<span class="attr-val">"style.css"</span>&gt;</code></pre>
+                </div>
             </div>
 
             <div class="alert-box">
@@ -507,10 +545,12 @@
             <p>まずは全体のコードです。手元で試したい方はメモ帳などに貼り付けて <code>index.html</code> として保存してみてください。</p>
             <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">（※ <code>&lt;!-- ★ --&gt;</code> のコメントがある場所を自分の好きな文字に書き換えて使えます！）</p>
             
-            <div class="code-wrapper compact-code">
-                <div class="code-header">
-                    <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 index.html</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
                 </div>
+                <div class="code-box-body">
 <pre><code>&lt;!<span class="tag-name">DOCTYPE</span> <span class="attr-name">html</span>&gt;
 &lt;<span class="tag-name">html</span> <span class="attr-name">lang</span>=<span class="attr-val">"ja"</span>&gt;
 &lt;<span class="tag-name">head</span>&gt;
@@ -697,6 +737,7 @@
 
 &lt;/<span class="tag-name">body</span>&gt;
 &lt;/<span class="tag-name">html</span>&gt;</code></pre>
+                </div>
             </div>
         </section>
 
@@ -708,16 +749,20 @@
             <div class="step-item">
                 <h3><span class="step-number">1</span>サイトの色を一括管理する「CSS変数」</h3>
                 <p>コードの最初にある <code>:root { ... }</code> の部分は、サイト全体で使う<strong>テーマカラー</strong>を設定している場所です。</p>
-                <div class="code-wrapper">
-                    <div class="code-header">
-                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 CSS変数設定</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
                     </div>
+                    <div class="code-box-body">
 <pre><code>:<span class="tag-name">root</span> {
     --main-color: #e0f2fe;    <span class="comment">/* 薄い水色 */</span>
     --accent-color: #0284c7;  <span class="comment">/* 主役の水色 */</span>
     --text-color: #334155;    <span class="comment">/* 読みやすい文字色 */</span>
     --bg-color: #ffffff;      <span class="comment">/* 背景の白 */</span>
 }</code></pre>
+                    </div>
                 </div>
                 <div class="alert-box">
                     <strong>💡 アレンジ技</strong><br>
@@ -728,16 +773,20 @@
             <div class="step-item">
                 <h3><span class="step-number">2</span>読みやすさを決める「文字と背景」の設定</h3>
                 <p><code>body</code> 部分では、画面全体の基本ルールを定めています。</p>
-                <div class="code-wrapper">
-                    <div class="code-header">
-                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 bodyスタイル設定</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
                     </div>
+                    <div class="code-box-body">
 <pre><code>body {
     background-color: var(--bg-color); <span class="comment">/* 背景色を白に指定 */</span>
     color: var(--text-color);          <span class="comment">/* 文字色を暗いグレーに指定 */</span>
-    line-height: 1.8;                    <span class="comment">/* 行と行の間隔を少し広めに */</span>
+    line-height: 1.8;                  <span class="comment">/* 行と行の間隔を少し広めに */</span>
     letter-spacing: 0.05em;             <span class="comment">/* 文字同士の間隔を少し広めに */</span>
 }</code></pre>
+                    </div>
                 </div>
                 <ul class="rule-list" style="margin-top: 12px;">
                     <li><code>color: var(--text-color);</code>：真っ黒（<code>#000000</code>）ではなく、少し青みがかった暗いグレーを指定することで、目が疲れにくい優しい印象に仕上がります。</li>
@@ -748,10 +797,13 @@
             <div class="step-item">
                 <h3><span class="step-number">3</span>見出し（h2）をおしゃれにするワンポイント</h3>
                 <p><code>section h2</code> と <code>section h2::before</code> の指定で、見出しの左側に小さな「青い縦棒」を表示しています。</p>
-                <div class="code-wrapper">
-                    <div class="code-header">
-                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 見出し装飾スタイル</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
                     </div>
+                    <div class="code-box-body">
 <pre><code>section h2::before {
     content: "";
     display: inline-block;
@@ -760,6 +812,7 @@
     background-color: var(--accent-color); <span class="comment">/* 縦棒の色 */</span>
     border-radius: 2px;      <span class="comment">/* 角を少し丸くする */</span>
 }</code></pre>
+                    </div>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.9rem;"><code>::before</code> は「要素の直前に飾りを取り付ける」という特別な書き方です。これを使うと、HTML側にコードを書かずに見出しを装飾できます。</p>
             </div>
@@ -767,15 +820,19 @@
             <div class="step-item">
                 <h3><span class="step-number">4</span>ギャラリーを綺麗に並べる「Gridレイアウト」</h3>
                 <p>イラストや写真を綺麗に並べたいときに超絶便利なのが <code>display: grid;</code> です。</p>
-                <div class="code-wrapper">
-                    <div class="code-header">
-                        <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+                
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 Gridレイアウト設定</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
                     </div>
+                    <div class="code-box-body">
 <pre><code>.gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px; <span class="comment">/* 画像同士の間隔 */</span>
 }</code></pre>
+                    </div>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.9rem;"><code>repeat(auto-fit, minmax(200px, 1fr))</code> はむずかしく見えますが、要するに<strong>「画面の幅に合わせて自動で列の数を調整してくれる魔法の1行」</strong>です！スマホで見てもパソコンで見ても、自動で綺麗に折り返して並んでくれます。</p>
             </div>
@@ -878,15 +935,15 @@
     <!-- コピー用JavaScript -->
     <script>
     function copyCode(btn) {
-        const wrapper = btn.closest('.code-wrapper');
+        const wrapper = btn.closest('.code-box-wrapper');
         const code = wrapper.querySelector('code').innerText;
         
         navigator.clipboard.writeText(code).then(() => {
-            btn.innerText = 'コピー完了！';
-            btn.style.background = '#E8963E';
+            btn.textContent = '✨ コピーしました！';
+            btn.classList.add('copied');
             setTimeout(() => {
-                btn.innerText = 'コピー';
-                btn.style.background = '';
+                btn.textContent = '📋 コードをコピー';
+                btn.classList.remove('copied');
             }, 2000);
         }).catch(err => {
             console.error('コピーに失敗しました:', err);

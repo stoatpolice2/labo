@@ -294,75 +294,111 @@
     }
 
     /* ----------------------------------
-        CODE BLOCK DISPLAY & COPY BUTTON
+        DEMO CODE COPY BOX STYLES
     ---------------------------------- */
-    .code-block-wrapper {
-        position: relative;
-        margin: 12px 0;
+    .code-box-wrapper {
+        margin: 20px 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #2d2726;
+        box-shadow: var(--shadow-sm);
     }
 
-    pre {
-        background: #2D2726;
-        color: #F8F5F3;
+    .code-box-header {
+        background: #3d3534;
+        padding: 10px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #4a403e;
+    }
+
+    .code-box-title {
+        color: #e8ddd7;
+        font-size: 0.85rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .copy-btn {
+        background: var(--grad-primary);
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .copy-btn:hover {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+
+    .copy-btn.copied {
+        background: #4a90e2;
+    }
+
+    .code-box-body pre {
+        margin: 0;
         padding: 16px;
-        padding-top: 40px; /* コピーボタンのための上部余白 */
+        max-height: 320px;
+        overflow-y: auto;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    /* ----------------------------------
+        CODE BLOCK & INLINE CODE STYLES
+    ---------------------------------- */
+    pre {
+        background: #2d2726;
+        color: #f8f5f3;
+        padding: 16px;
         border-radius: 10px;
         overflow-x: auto;
         font-family: Consolas, Monaco, "Courier New", monospace;
         font-size: 0.88rem;
         line-height: 1.5;
+        margin: 12px 0;
     }
 
     code {
-        background: #FFEFEA;
-        color: var(--primary);
-        padding: 2px 6px;
-        border-radius: 4px;
+        background: #ffe8e2;
+        color: #c84022;
+        border: 1px solid #f2c7bd;
+        padding: 2px 7px;
+        margin: 0 2px;
+        border-radius: 5px;
         font-family: Consolas, Monaco, "Courier New", monospace;
         font-size: 0.88rem;
-        font-weight: bold;
+        font-weight: 700;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     pre code {
         background: none;
         color: inherit;
+        border: none;
         padding: 0;
+        margin: 0;
         font-weight: normal;
+        box-shadow: none;
     }
 
-    .copy-btn {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        background: #443C3A;
-        color: #D6C8C4;
-        border: 1px solid #5C524F;
-        border-radius: 6px;
-        padding: 4px 10px;
-        font-size: 0.75rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        z-index: 10;
-    }
-
-    .copy-btn:hover {
-        background: var(--primary);
-        color: #FFF;
-        border-color: var(--primary);
-    }
-
-    .copy-btn.copied {
-        background: #488A58;
-        color: #FFF;
-        border-color: #488A58;
-    }
-
-    .comment { color: #8C7B75; }
-    .tag-name { color: #E06D53; }
-    .attr-name { color: #F4C463; }
-    .attr-val { color: #98C379; }
-    .keyword { color: #E06D53; font-weight: bold; }
+    .comment { color: #8c7b75; }
+    .tag-name { color: #e06d53; }
+    .attr-name { color: #f4c463; }
+    .attr-val { color: #98c379; }
+    .keyword { color: #e06d53; font-weight: bold; }
 
     /* ----------------------------------
         LIVE DEMO BOXES (実演エリア)
@@ -613,9 +649,13 @@
             <h2 class="section-title">2. 1つのファイルに記述する際の大切なルール</h2>
             <p>外部ファイルとして呼び出す場合も、HTMLファイル内にコードを入れる場合も、<strong>JavaScript（<code>&lt;script&gt;</code>）を書き込むのは一番下</strong>（<code>&lt;/body&gt;</code> の直前）というルールがあります。</p>
 
-            <div class="code-block-wrapper">
-                <button class="copy-btn">コピー</button>
-                <pre><code>&lt;<span class="tag-name">!DOCTYPE</span> <span class="attr-name">html</span>&gt;
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 記述位置のルール</span>
+                    <button class="copy-btn">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+                    <pre><code>&lt;<span class="tag-name">!DOCTYPE</span> <span class="attr-name">html</span>&gt;
 &lt;<span class="tag-name">html</span> <span class="attr-name">lang</span>=<span class="attr-val">"ja"</span>&gt;
 &lt;<span class="tag-name">head</span>&gt;
     &lt;<span class="tag-name">meta</span> <span class="attr-name">charset</span>=<span class="attr-val">"UTF-8"</span>&gt;
@@ -635,6 +675,7 @@
     &lt;/<span class="tag-name">script</span>&gt;
 &lt;/<span class="tag-name">body</span>&gt;
 &lt;/<span class="tag-name">html</span>&gt;</code></pre>
+                </div>
             </div>
 
             <div class="alert-box">
@@ -669,9 +710,13 @@
                 </div>
 
                 <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-block-wrapper">
-                    <button class="copy-btn">コピー</button>
-                    <pre><code><span class="comment">// ボタンとメニューを取得してクリックイベントを設定</span>
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 ハンバーガーメニュー</span>
+                        <button class="copy-btn">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+                        <pre><code><span class="comment">// ボタンとメニューを取得してクリックイベントを設定</span>
 <span class="keyword">const</span> hamburger = document.getElementById(<span class="attr-val">'js-hamburger'</span>);
 <span class="keyword">const</span> drawer = document.getElementById(<span class="attr-val">'js-drawer'</span>);
 
@@ -679,6 +724,7 @@ hamburger.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
     hamburger.classList.toggle(<span class="attr-val">'active'</span>);
     drawer.classList.toggle(<span class="attr-val">'active'</span>);
 });</code></pre>
+                    </div>
                 </div>
             </div>
 
@@ -694,9 +740,13 @@ hamburger.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
                 </div>
 
                 <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-block-wrapper">
-                    <button class="copy-btn">コピー</button>
-                    <pre><code><span class="keyword">const</span> openBtn = document.getElementById(<span class="attr-val">'js-open-modal'</span>);
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 モーダルウィンドウ</span>
+                        <button class="copy-btn">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+                        <pre><code><span class="keyword">const</span> openBtn = document.getElementById(<span class="attr-val">'js-open-modal'</span>);
 <span class="keyword">const</span> closeBtn = document.getElementById(<span class="attr-val">'js-close-modal'</span>);
 <span class="keyword">const</span> modal = document.getElementById(<span class="attr-val">'js-modal'</span>);
 
@@ -708,6 +758,7 @@ closeBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; modal.
 modal.addEventListener(<span class="attr-val">'click'</span>, (e) =&gt; {
     <span class="keyword">if</span> (e.target === modal) modal.classList.remove(<span class="attr-val">'active'</span>);
 });</code></pre>
+                    </div>
                 </div>
 
                 <div class="alert-box">
@@ -733,9 +784,13 @@ modal.addEventListener(<span class="attr-val">'click'</span>, (e) =&gt; {
                 </div>
 
                 <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-block-wrapper">
-                    <button class="copy-btn">コピー</button>
-                    <pre><code><span class="comment">// 複数のヘッダーをまとめて取得して処理を設定</span>
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 アコーディオンメニュー</span>
+                        <button class="copy-btn">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+                        <pre><code><span class="comment">// 複数のヘッダーをまとめて取得して処理を設定</span>
 <span class="keyword">const</span> headers = document.querySelectorAll(<span class="attr-val">'.accordion-header'</span>);
 
 headers.forEach(header =&gt; {
@@ -745,6 +800,7 @@ headers.forEach(header =&gt; {
         content.classList.toggle(<span class="attr-val">'active'</span>);
     });
 });</code></pre>
+                    </div>
                 </div>
             </div>
 
@@ -754,9 +810,13 @@ headers.forEach(header =&gt; {
                 <p>スクロール量を監視して、一定以上スクロールされたら画面右下にふわっと現れる便利なボタンです。（※このページの右下にも配置しています！）</p>
 
                 <h3 class="sub-title">JavaScriptのコード例</h3>
-                <div class="code-block-wrapper">
-                    <button class="copy-btn">コピー</button>
-                    <pre><code><span class="keyword">const</span> topBtn = document.getElementById(<span class="attr-val">'js-scroll-top'</span>);
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 トップに戻るボタン</span>
+                        <button class="copy-btn">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+                        <pre><code><span class="keyword">const</span> topBtn = document.getElementById(<span class="attr-val">'js-scroll-top'</span>);
 
 <span class="comment">// スクロール量を監視（300px以上で表示）</span>
 window.addEventListener(<span class="attr-val">'scroll'</span>, () =&gt; {
@@ -771,6 +831,7 @@ window.addEventListener(<span class="attr-val">'scroll'</span>, () =&gt; {
 topBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
     window.scrollTo({ top: 0, behavior: <span class="attr-val">'smooth'</span> });
 });</code></pre>
+                    </div>
                 </div>
             </div>
         </section>
@@ -783,12 +844,17 @@ topBtn.addEventListener(<span class="attr-val">'click'</span>, () =&gt; {
             <h3 class="sub-title">「jQuery（ジェイクエリ）」コードとの違いに注意しよう！</h3>
             <p>Web上で書き方を調べると、以下のような <code>$</code> 記号を使ったコードがよく出てきます。</p>
 
-            <div class="code-block-wrapper">
-                <button class="copy-btn">コピー</button>
-                <pre><code><span class="comment">// これは「jQuery」というライブラリを使った書き方です</span>
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 jQueryの書き方例</span>
+                    <button class="copy-btn">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+                    <pre><code><span class="comment">// これは「jQuery」というライブラリを使った書き方です</span>
 $(<span class="attr-val">'.menu-btn'</span>).click(<span class="keyword">function</span>() {
     $(<span class="attr-val">'.nav-menu'</span>).toggleClass(<span class="attr-val">'active'</span>);
 });</code></pre>
+                </div>
             </div>
 
             <p>これは「jQuery」というJavaScriptを便利に使うための拡張ツールのコードです。これを動かすには別途読み込み設定が必要になります。</p>
@@ -826,7 +892,7 @@ $(<span class="attr-val">'.menu-btn'</span>).click(<span class="keyword">functio
     <div class="demo-modal-overlay" id="js-demo-modal">
         <div class="demo-modal-content">
             <h3 style="margin-bottom: 10px;">お知らせ</h3>
-            <p style="font-size: 0.9rem;">これがモーダルウィンドウです！背景の暗い部分か「閉じる」ボタンを押すと消えます。</p>
+            <p style="font-size: 0.9rem;">色が変わる・ポップアップするなどの動作を確認してみてください。</p>
             <button class="btn-style" id="js-demo-close-modal" style="margin-top: 15px; padding: 6px 14px; font-size: 0.85rem;">閉じる</button>
         </div>
     </div>
@@ -904,16 +970,18 @@ $(<span class="attr-val">'.menu-btn'</span>).click(<span class="keyword">functio
         const copyBtns = document.querySelectorAll('.copy-btn');
         copyBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                const wrapper = btn.closest('.code-block-wrapper');
+                const wrapper = btn.closest('.code-box-wrapper');
                 const code = wrapper.querySelector('code');
                 if (code) {
                     navigator.clipboard.writeText(code.innerText).then(() => {
-                        btn.textContent = 'コピーしました！';
+                        btn.textContent = '✨ コピーしました！';
                         btn.classList.add('copied');
                         setTimeout(() => {
-                            btn.textContent = 'コピー';
+                            btn.textContent = '📋 コードをコピー';
                             btn.classList.remove('copied');
                         }, 2000);
+                    }).catch(err => {
+                        console.error('コピーに失敗しました:', err);
                     });
                 }
             });
