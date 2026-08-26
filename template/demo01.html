@@ -18,12 +18,17 @@
   <meta property="og:locale" content="ja_JP">
     
   <style>
+    /* スムーススクロールの設定 */
+    html {
+      scroll-behavior: smooth;
+    }
+
     /* -------------------------------------- デザイン変数（カラー・フォント設定） -------------------------------------- */
     :root {
-      /* ★背景画像のパスを指定（お持ちの画像ファイル名に変更してください） */
+      /* 背景画像のパスを指定（お持ちの画像ファイル名に変更してください） */
       --bg-image: url('../images/picture02.jpg'); 
 
-      /* ★背景画像の上に重ねる半透明の白（フィルター） */
+      /* 背景画像の上に重ねる半透明の白（フィルター） */
       --bg-overlay: rgba(252, 252, 252, 0.2); 
 
       --bg-color: #fcfcfc;
@@ -86,7 +91,7 @@
       padding: 2rem 1.5rem;
     }
 
-    /* ★ヘッダー（タイトル・サブタイトル・ナビ）の背景をカード化 */
+    /* ヘッダー（タイトル・サブタイトル・ナビ）の背景をカード化 */
     header {
       text-align: center;
       padding: 2.5rem 1.5rem 2rem;
@@ -225,9 +230,39 @@
       font-size: 0.8rem;
       opacity: 0.6;
     }
+
+    /* -------------------------------------- ページの先頭に戻るボタン -------------------------------------- */
+    .pagetop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .pagetop:hover {
+      opacity: 0.9;
+      transform: translateY(-3px);
+    }
+
+    .pagetop svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
   </style>
 </head>
-<body>
+<body id="top">
   <div class="container">
     <!-- ヘッダー -->
     <header>
@@ -311,5 +346,12 @@
       <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank">Stoat Labo</a></p>
     </footer>
   </div>
+
+  <!-- ページの先頭に戻るボタン -->
+  <a href="#top" class="pagetop" aria-label="ページの先頭に戻る">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 4l-8 8h5v8h6v-8h5z"/>
+    </svg>
+  </a>
 </body>
 </html>
