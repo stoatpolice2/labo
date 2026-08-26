@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抜殻 | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* --- 基本設定 & カラー変数 --- */
+    :root {
+      --bg-base: #eaf2ea; /* 爽やかな新緑を思わせる薄緑 */
+      --text-main: #132219; /* 濁ったダークグリーン */
+      --accent-rose: #c81d31; /* 薔薇の赤 */
+      --accent-toxic: #607d3b; /* 複雑な心境を表す濁った緑 */
+      --dark-mud: #1a0f12; /* おどろおどろしい濁り黒 */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth; /* スムーススクロール有効化 */
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      line-height: 1.8;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 80% 20%, rgba(200, 29, 49, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(26, 15, 18, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(234,242,234,0.8) 100%);
+      background-attachment: fixed;
+    }
+
+    /* --- ナビゲーションバー (Header & Nav) --- */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      z-index: 100;
+      background: rgba(26, 15, 18, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(200, 29, 49, 0.4);
+    }
+
+    .nav-logo {
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      text-shadow: 0 0 8px var(--accent-rose);
+      transition: color 0.3s ease;
+    }
+
+    .nav-logo:hover {
+      color: var(--accent-rose);
+    }
+
+    /* PC用デスクトップメニュー */
+    .desktop-nav {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .desktop-nav a {
+      color: #eaf2ea;
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      position: relative;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--accent-rose);
+      box-shadow: 0 0 6px var(--accent-rose);
+      transition: width 0.3s ease;
+    }
+
+    .desktop-nav a:hover {
+      color: var(--accent-rose);
+    }
+
+    .desktop-nav a:hover::after {
+      width: 100%;
+    }
+
+    /* スマホ用ハンバーガーボタン */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 30px;
+      height: 24px;
+      position: relative;
+      z-index: 101;
+    }
+
+    .hamburger-bar {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      position: absolute;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 5px var(--accent-rose);
+    }
+
+    .hamburger-bar:nth-child(1) { top: 0; }
+    .hamburger-bar:nth-child(2) { top: 11px; }
+    .hamburger-bar:nth-child(3) { top: 22px; }
+
+    /* ハンバーガー開閉時のXアニメーション */
+    .hamburger-btn.active .hamburger-bar:nth-child(1) {
+      transform: translateY(11px) rotate(45deg);
+      background-color: var(--accent-rose);
+    }
+    .hamburger-btn.active .hamburger-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-btn.active .hamburger-bar:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+      background-color: var(--accent-rose);
+    }
+
+    /* スマホ用全画面オーバーレイメニュー */
+    .mobile-nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,15,18,0.98) 0%, rgba(10,5,7,0.95) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .mobile-nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      text-align: center;
+    }
+
+    .mobile-nav-list li {
+      margin: 25px 0;
+    }
+
+    .mobile-nav-list a {
+      color: #fff;
+      font-size: 1.5rem;
+      text-decoration: none;
+      letter-spacing: 0.2em;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .mobile-nav-list a:hover {
+      color: var(--accent-rose);
+      text-shadow: 0 0 10px var(--accent-rose);
+    }
+
+    /* --- メインビジュアル --- */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 75vh;
+      min-height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 2px solid var(--dark-mud);
+      padding-top: 70px;
+    }
+
+    .hero-image-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(234,242,234,0.2) 0%, rgba(26,15,18,0.7) 100%),
+                  url('../images/picture07.jpg') center/cover no-repeat;
+      filter: saturate(1.2) contrast(1.1);
+      animation: heatwave 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes heatwave {
+      0% { transform: scale(1) skew(0deg); filter: hue-rotate(0deg); }
+      50% { transform: scale(1.03) skew(0.5deg); filter: hue-rotate(10deg) saturate(1.5); }
+      100% { transform: scale(1) skew(-0.5deg); filter: hue-rotate(-5deg); }
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(200, 29, 49, 0.8), 2px 2px 0px var(--dark-mud);
+    }
+
+    .hero-title h1 {
+      font-size: 4rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title h1::before,
+    .hero-title h1::after {
+      content: "抜殻";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.7;
+    }
+    .hero-title h1::before {
+      color: var(--accent-rose);
+      animation: glitch 2s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    }
+    .hero-title h1::after {
+      color: var(--accent-toxic);
+      animation: glitch 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(-3px, -3px); }
+      60% { transform: translate(3px, 3px); }
+      80% { transform: translate(3px, -3px); }
+      100% { transform: translate(0); }
+    }
+
+    .hero-title p {
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      color: #eaf2ea;
+    }
+
+    /* --- メインコンテンツレイアウト --- */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    section {
+      margin-bottom: 100px;
+      scroll-margin-top: 100px; /* ヘッダーの高さを考慮したスクロール位置のオフセット */
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--text-main);
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-rose);
+      margin: 10px auto 0;
+      box-shadow: 0 0 8px var(--accent-rose);
+    }
+
+    /* --- Gallery --- */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .gallery-item {
+      position: relative;
+      height: 380px;
+      background-color: var(--dark-mud);
+      border: 1px solid rgba(200, 29, 49, 0.3);
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(200, 29, 49, 0.3);
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      filter: grayscale(30%) contrast(1.2);
+      transition: transform 0.6s ease, filter 0.6s ease, opacity 0.6s ease;
+    }
+
+    .gallery-item:hover .gallery-img {
+      opacity: 1;
+      filter: grayscale(0%) contrast(1.5) saturate(1.8) hue-rotate(-20deg);
+      transform: scale(1.15) rotate(2deg);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(26,15,18,0.95) 0%, rgba(26,15,18,0.2) 60%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+      color: #fff;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .gallery-overlay h3 {
+      font-size: 1.4rem;
+      color: var(--accent-rose);
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .gallery-overlay p {
+      font-size: 0.9rem;
+      color: #ddd;
+      line-height: 1.5;
+      transform: translateY(10px);
+      opacity: 0.8;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay p {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      background: radial-gradient(circle, rgba(200,29,49,0.4) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .gallery-item:hover::before {
+      opacity: 1;
+      animation: pulse-flash 1.5s infinite;
+    }
+
+    @keyframes pulse-flash {
+      0%, 100% { transform: scale(0.8); opacity: 0.2; }
+      50% { transform: scale(1.1); opacity: 0.6; }
+    }
+
+    /* --- モーダルウィンドウ --- */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(10, 5, 7, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      backdrop-filter: blur(5px);
+      padding: 20px;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content-wrapper {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.95);
+      transition: transform 0.4s ease;
+    }
+
+    .modal.active .modal-content-wrapper {
+      transform: scale(1);
+    }
+
+    .modal-img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border: 2px solid var(--accent-rose);
+      box-shadow: 0 0 30px rgba(200, 29, 49, 0.4);
+      filter: contrast(1.2) saturate(1.3);
+    }
+
+    .modal-caption {
+      margin-top: 15px;
+      color: #eaf2ea;
+      text-align: center;
+    }
+
+    .modal-caption h3 {
+      color: var(--accent-rose);
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .modal-caption p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-family: serif;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-rose);
+    }
+
+    /* --- Information --- */
+    .info-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border-left: 4px solid var(--accent-rose);
+      border-right: 1px solid rgba(19, 34, 25, 0.1);
+      border-top: 1px solid rgba(19, 34, 25, 0.1);
+      border-bottom: 1px solid rgba(19, 34, 25, 0.1);
+      padding: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: "抜殻";
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      font-size: 8rem;
+      color: var(--accent-toxic);
+      opacity: 0.08;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .info-card p {
+      margin-bottom: 20px;
+      color: var(--text-main);
+      text-align: justify;
+    }
+
+    .info-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-text {
+      color: var(--accent-rose);
+      font-weight: bold;
+    }
+
+    /* --- フッター --- */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: var(--dark-mud);
+      color: #8a9a86;
+      font-size: 0.85rem;
+      border-top: 1px solid var(--accent-rose);
+    }
+
+    /* --- レスポンシブ対応 --- */
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none; /* スマホ表示時はPCナビを非表示 */
+      }
+      
+      .hamburger-btn {
+        display: block; /* スマホ表示時にハンバーガーを表示 */
+      }
+
+      .hero-title h1 {
+        font-size: 2.8rem;
+      }
+      .hero-title p {
+        font-size: 1rem;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .info-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <header class="site-header">
+    <a href="#top" class="nav-logo">抜殻</a>
+    
+    <nav>
+      <ul class="desktop-nav">
+        <li><a href="#top">TOP</a></li>
+        <li><a href="#gallery">GALLERY</a></li>
+        <li><a href="#information">INFORMATION</a></li>
+      </ul>
+    </nav>
+
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="メニューを開く">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </header>
+
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <ul class="mobile-nav-list">
+      <li><a href="#top" class="mobile-link">TOP</a></li>
+      <li><a href="#gallery" class="mobile-link">GALLERY</a></li>
+      <li><a href="#information" class="mobile-link">INFORMATION</a></li>
+    </ul>
+  </div>
+
+  <div class="hero">
+    <div class="hero-image-container"></div>
+    <div class="hero-title">
+      <h1>抜殻</h1>
+      <p>Fan Inspired Visual</p>
+    </div>
+  </div>
+
+  <main>
+    
+    <section id="gallery">
+      <h2 class="section-title">Gallery</h2>
+      <div class="gallery-container">
+        
+        <div class="gallery-item" data-title="蒸気と陽炎" data-desc="白昼堂々の眩しさと、逃げ場のない夏の熱気。">
+          <img class="gallery-img" src="../images/picture08.jpg" alt="夏の眩しい光">
+          <div class="gallery-overlay">
+            <h3>蒸気と陽炎</h3>
+            <p>白昼堂々の眩しさと、逃げ場のない夏の熱気。</p>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-title="鮮血の記憶" data-desc="愛しさと苛立ちが混ざり合う、歪んだ情動。">
+          <img class="gallery-img" src="../images/picture09.jpg" alt="赤く爛れる薔薇">
+          <div class="gallery-overlay">
+            <h3>鮮血の記憶</h3>
+            <p>愛しさと苛立ちが混ざり合う、歪んだ情動。</p>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-title="残響と空虚" data-desc="狂おしい激情の渦の後に残された、静けさと空洞。">
+          <img class="gallery-img" src="../images/picture10.jpg" alt="暗い影と蠢く空気">
+          <div class="gallery-overlay">
+            <h3>残響と空虚</h3>
+            <p>狂おしい激情の渦の後に残された、静けさと空洞。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="information">
+      <h2 class="section-title">Information</h2>
+      <div class="info-card">
+        <p>
+          当Webサイトは一個人が運営する<span class="highlight-text">非公式</span> ファンサイトです。
+        </p>
+        <p>
+          <span class="highlight-text">※</span>こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="modal" id="imageModal">
+    <div class="modal-content-wrapper">
+      <button class="modal-close" id="modalClose">&times; CLOSE</button>
+      <img class="modal-img" id="modalImg" src="" alt="拡大画像">
+      <div class="modal-caption">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- 1. ハンバーガーメニュー制御 ---
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      const toggleMenu = () => {
+        const isOpen = hamburgerBtn.classList.toggle('active');
+        mobileNav.classList.toggle('active');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      };
+
+      hamburgerBtn.addEventListener('click', toggleMenu);
+
+      // スマホメニューのリンクをクリックしたら閉じる
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (mobileNav.classList.contains('active')) {
+            toggleMenu();
+          }
+        });
+      });
+
+      // --- 2. マウス追従による歪み演出 ---
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalClose = document.getElementById('modalClose');
+
+      galleryItems.forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+          const rect = item.getBoundingClientRect();
+          const x = e.clientX - rect.left - (rect.width / 2);
+          const y = e.clientY - rect.top - (rect.height / 2);
+          
+          const img = item.querySelector('.gallery-img');
+          img.style.transform = `scale(1.15) translate(${x * 0.05}px, ${y * 0.05}px) rotate(${x * 0.02}deg)`;
+        });
+
+        item.addEventListener('mouseleave', () => {
+          const img = item.querySelector('.gallery-img');
+          img.style.transform = '';
+        });
+
+        // --- 3. クリック時にモーダルを開く処理 ---
+        item.addEventListener('click', () => {
+          const img = item.querySelector('.gallery-img');
+          const title = item.getAttribute('data-title');
+          const desc = item.getAttribute('data-desc');
+
+          modalImg.src = img.src;
+          modalTitle.textContent = title;
+          modalDesc.textContent = desc;
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      // --- 4. モーダルを閉じる処理 ---
+      const closeModal = () => {
+        modal.classList.remove('active');
+        if (!mobileNav.classList.contains('active')) {
+          document.body.style.overflow = '';
+        }
+      };
+
+      modalClose.addEventListener('click', closeModal);
+      
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

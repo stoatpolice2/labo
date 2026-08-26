@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金魚の箱 | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* -----------------------------------------
+       ベース・グラデーション設定
+       水面（明るい青緑）から水底（暗い深海）へのグラデーション
+    ----------------------------------------- */
+    :root {
+      --bg-top: #1a3c40;
+      --bg-mid: #0d1f2d;
+      --bg-bottom: #050b14;
+      --text-main: #e0e6ed;
+      --goldfish-red: #ff3b3f;
+      --goldfish-orange: #ff7518;
+      --goldfish-yellow: #ffc107;
+      --goldfish-grad: linear-gradient(135deg, var(--goldfish-red), var(--goldfish-orange), var(--goldfish-yellow));
+      --glass-bg: rgba(10, 20, 30, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ページ内スクロールを滑らかにする */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+      color: var(--text-main);
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 40%, var(--bg-bottom) 100%);
+      background-attachment: fixed;
+      line-height: 1.8;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* -----------------------------------------
+       背景の泡（パーティクル Canvas）
+    ----------------------------------------- */
+    #bubbleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* -----------------------------------------
+       ハンバーガーボタン & ナビゲーション
+    ----------------------------------------- */
+    .nav-toggle {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      width: 44px;
+      height: 44px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .nav-toggle:hover {
+      border-color: var(--goldfish-orange);
+      box-shadow: 0 0 15px rgba(255, 117, 24, 0.3);
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 1px;
+      background-color: var(--text-main);
+      transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s;
+    }
+
+    /* MENUオープン時のボタンアニメーション (×印に変化) */
+    .nav-toggle.active span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+      background-color: var(--goldfish-red);
+    }
+    .nav-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.active span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+      background-color: var(--goldfish-red);
+    }
+
+    /* メニューオーバーレイ */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 11, 20, 0.92);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .nav-menu.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-list {
+      list-style: none;
+      text-align: center;
+    }
+
+    .nav-item {
+      margin: 25px 0;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .nav-menu.active .nav-item {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* メニュー項目の遅延表示（順番にふわりと浮かぶ） */
+    .nav-menu.active .nav-item:nth-child(1) { transition-delay: 0.1s; }
+    .nav-menu.active .nav-item:nth-child(2) { transition-delay: 0.2s; }
+    .nav-menu.active .nav-item:nth-child(3) { transition-delay: 0.3s; }
+    .nav-menu.active .nav-item:nth-child(4) { transition-delay: 0.4s; }
+
+    .nav-link {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.2rem;
+      letter-spacing: 0.25em;
+      position: relative;
+      padding: 5px 10px;
+      transition: color 0.3s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background: var(--goldfish-grad);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    /* -----------------------------------------
+       レイアウト & 装飾
+    ----------------------------------------- */
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      letter-spacing: 0.3em;
+      font-weight: 300;
+      background: var(--goldfish-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255, 59, 63, 0.3);
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: rgba(224, 230, 237, 0.6);
+      letter-spacing: 0.15em;
+    }
+
+    .main-container {
+      display: block;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      border-radius: 4px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      /* ヘッダー固定メニューのスクロール位置調整 */
+      scroll-margin-top: 40px;
+    }
+
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--goldfish-grad);
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+
+    h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--glass-border), transparent);
+      margin-left: 15px;
+    }
+
+    /* -----------------------------------------
+       1. このサイトについて
+    ----------------------------------------- */
+    .about-text {
+      font-size: 0.95rem;
+      color: rgba(224, 230, 237, 0.85);
+      text-align: justify;
+    }
+
+    /* -----------------------------------------
+       2. イラストギャラリー
+    ----------------------------------------- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--goldfish-orange);
+    }
+
+    .dummy-art {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.1em;
+      transition: scale 0.5s ease;
+    }
+
+    .gallery-item:hover .dummy-art {
+      scale: 1.05;
+    }
+
+    .art-1 { background: radial-gradient(circle, #2a080c 0%, #081018 100%); }
+    .art-2 { background: radial-gradient(circle, #2a1a08 0%, #050b14 100%); }
+    .art-3 { background: radial-gradient(circle, #1a082a 0%, #081018 100%); }
+
+    /* -----------------------------------------
+       モーダル（泡のように浮き上がるアニメーション）
+    ----------------------------------------- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(3, 8, 15, 0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 3000;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      width: 90%;
+      max-width: 500px;
+      background: #0a141d;
+      border: 1px solid var(--goldfish-orange);
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 0 30px rgba(255, 117, 24, 0.2);
+      transform: scale(0.6) translateY(100px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .modal-image-preview {
+      width: 100%;
+      height: 250px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .modal-caption {
+      font-size: 0.85rem;
+      color: rgba(224, 230, 237, 0.6);
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 59, 63, 0.1);
+      border-color: var(--goldfish-red);
+      color: #fff;
+    }
+
+    /* -----------------------------------------
+       3. 更新履歴
+    ----------------------------------------- */
+    .history-list {
+      list-style: none;
+    }
+
+    .history-item {
+      display: flex;
+      font-size: 0.85rem;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    }
+
+    .history-date {
+      width: 100px;
+      color: var(--goldfish-orange);
+      flex-shrink: 0;
+    }
+
+    .history-desc {
+      color: rgba(224, 230, 237, 0.8);
+    }
+
+    /* -----------------------------------------
+       4. 管理人
+    ----------------------------------------- */
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover; /* 画像の縦横比を崩さず円内に収める */
+      border: 1px solid var(--glass-border); /* 必要に応じて微調整 */
+      flex-shrink: 0;
+      box-shadow: 0 0 15px rgba(255, 117, 24, 0.4); /* 金魚色のぼんやりした発光は維持 */
+    }
+
+    .profile-info {
+      font-size: 0.9rem;
+    }
+
+    .profile-name {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.75rem;
+      color: rgba(224, 230, 237, 0.3);
+      letter-spacing: 0.1em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* レスポンシブ調整 */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      section {
+        padding: 20px;
+      }
+      .history-item {
+        flex-direction: column;
+      }
+      .history-date {
+        margin-bottom: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bubbleCanvas"></canvas>
+
+  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav class="nav-menu" id="navMenu">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#about" class="nav-link">このサイトについて</a></li>
+      <li class="nav-item"><a href="#gallery" class="nav-link">ギャラリー</a></li>
+      <li class="nav-item"><a href="#history" class="nav-link">更新履歴</a></li>
+      <li class="nav-item"><a href="#profile" class="nav-link">管理人</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>金魚の箱</h1>
+    <p>水底に揺らめく孤立と狂気の記憶</p>
+  </header>
+
+  <div class="main-container">
+    <section id="about">
+      <h2>このサイトについて</h2>
+      <p class="about-text">
+        ここはガラス一枚を隔てた歪んだ水底。外界の光を遠くに眺めながら、ただ閉じ込められた孤独と微かな狂気を描く非公式ファンサイトです。
+      </p><br>
+      <p class="about-text">
+        ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+    </section>
+
+    <section id="gallery">
+      <h2>ギャラリー</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openModal('赤い揺らめき', '水底の暗がりで静かに泳ぐ金魚。', '../images/picture09.jpg')">
+          <img src="../images/picture09.jpg" alt="作品1" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="gallery-item" onclick="openModal('閉じ込めた泡', '水面に届かない吐息の集まり。', '../images/picture08.jpg')">
+          <img src="../images/picture08.jpg" alt="作品2" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="gallery-item" onclick="openModal('歪む境界', 'ガラス越しの視線と狂気。', '../images/picture10.jpg')">
+          <img src="../images/picture10.jpg" alt="作品3" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+    </section>
+
+    <section id="history">
+      <h2>更新履歴</h2>
+      <ul class="history-list">
+        <li class="history-item">
+          <span class="history-date">2026.08.26</span>
+          <span class="history-desc">ギャラリーにイラストを1枚追加しました。</span>
+        </li>
+        <li class="history-item">
+          <span class="history-date">2026.08.25</span>
+          <span class="history-desc">サイト公開。イラストギャラリーを開設しました。</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="profile">
+      <h2>管理人</h2>
+      <div class="profile-card">
+        <img src="../images/icon.png" alt="管理人アイコン" class="profile-avatar">
+        <div class="profile-info">
+          <div class="profile-name">管理人: 名前（name）</div>
+          <p style="color: rgba(224, 230, 237, 0.6); font-size: 0.85rem;">
+            ここに自己紹介などを入力してください。
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+  </footer>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-image-preview dummy-art" id="modalImage"></div>
+      <div class="modal-title" id="modalTitle">タイトル</div>
+      <div class="modal-caption" id="modalCaption">説明文が入ります。</div>
+      <button class="close-btn" onclick="closeModalDirect()">水底へ戻る</button>
+    </div>
+  </div>
+
+  <script>
+    /* -----------------------------------------
+       ハンバーガーメニュー制御 Script
+    ----------------------------------------- */
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // ボタン開閉
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // リンククリック時にメニューを閉じる
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
+    /* -----------------------------------------
+       モーダル制御 Script
+    ----------------------------------------- */
+    const overlay = document.getElementById('modalOverlay');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCaption = document.getElementById('modalCaption');
+
+    function openModal(title, caption, imagePath) {
+      modalTitle.textContent = title;
+      modalCaption.textContent = caption;
+      
+      modalImage.style.backgroundImage = `url('${imagePath}')`;
+      modalImage.style.backgroundSize = 'cover';
+      modalImage.style.backgroundPosition = 'center';
+      modalImage.textContent = '';
+      
+      overlay.classList.add('active');
+    }
+
+    function closeModal(event) {
+      if (event.target === overlay) {
+        overlay.classList.remove('active');
+      }
+    }
+
+    function closeModalDirect() {
+      overlay.classList.remove('active');
+    }
+
+    /* -----------------------------------------
+       泡（Bubble）の背景パーティクル Script
+    ----------------------------------------- */
+    const canvas = document.getElementById('bubbleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const bubbleCount = 40;
+    const bubbles = [];
+
+    class Bubble {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = height + Math.random() * 100;
+        this.radius = Math.random() * 4 + 1;
+        this.speed = Math.random() * 0.8 + 0.3;
+        this.swingAmplitude = Math.random() * 1.5;
+        this.swingSpeed = Math.random() * 0.02 + 0.005;
+        this.angle = Math.random() * Math.PI * 2;
+        this.opacity = Math.random() * 0.4 + 0.1;
+      }
+
+      update() {
+        this.y -= this.speed;
+        this.angle += this.swingSpeed;
+        this.x += Math.sin(this.angle) * this.swingAmplitude;
+
+        if (this.y < -20) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity + 0.2})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < bubbleCount; i++) {
+      const b = new Bubble();
+      b.y = Math.random() * height;
+      bubbles.push(b);
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      bubbles.forEach(bubble => {
+        bubble.update();
+        bubble.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

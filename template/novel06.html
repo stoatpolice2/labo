@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAKURA Novel | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* -----------------------------------------
+       1. 基本設定・カラーパレット
+    ----------------------------------------- */
+    :root {
+      --bg-color: #fcf8f9;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --text-main: #4a3e3e;
+      --text-sub: #7d6b6d;
+      --pink-primary: #e8a7b8;
+      --pink-soft: #f4d0d8;
+      --pink-accent: #c97389;
+      --border-color: #f0dce1;
+      --font-serif: "Yu Mincho", "游明朝", "YuMincho", "Hiragino Mincho ProN", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      line-height: 2.1;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 背景に散る桜の花びら用キャンバス */
+    #sakura-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* -----------------------------------------
+       2. レイアウト & コンテナ
+    ----------------------------------------- */
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+
+    /* トップへ戻るパンくず風リンク */
+    .breadcrumb {
+      margin-bottom: 25px;
+    }
+
+    .breadcrumb a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      transition: color 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--pink-accent);
+    }
+
+    /* 小説タイトル */
+    .novel-header-title {
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--pink-accent);
+      margin-bottom: 8px;
+    }
+
+    .novel-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      letter-spacing: 0.08em;
+    }
+
+    /* -----------------------------------------
+       3. 本文表示部分
+    ----------------------------------------- */
+    article {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 50px 45px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 15px rgba(232, 167, 184, 0.08);
+    }
+
+    .novel-body p {
+      margin-bottom: 1.8em;
+      text-indent: 1em; /* 行頭一文字下げ */
+      font-size: 1.02rem;
+      letter-spacing: 0.05em;
+      word-break: break-all;
+    }
+
+    /* -----------------------------------------
+       4. ページネーション（前へ/次へ/トップへ）
+    ----------------------------------------- */
+    .novel-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 10px;
+      border-top: 1px dashed var(--border-color);
+      border-bottom: 1px dashed var(--border-color);
+      margin-bottom: 40px;
+    }
+
+    .novel-nav-item {
+      flex: 1;
+    }
+
+    .novel-nav-item.prev {
+      text-align: left;
+    }
+
+    .novel-nav-item.center {
+      text-align: center;
+    }
+
+    .novel-nav-item.next {
+      text-align: right;
+    }
+
+    .novel-nav a {
+      color: var(--pink-accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      transition: opacity 0.3s ease;
+    }
+
+    .novel-nav a:hover {
+      opacity: 0.7;
+    }
+
+    /* リンクがない場合のプレースホルダー */
+    .novel-nav-disabled {
+      color: var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 20px;
+    }
+
+    /* -----------------------------------------
+       5. レスポンシブ対応
+    ----------------------------------------- */
+    @media (max-width: 600px) {
+      header {
+        padding: 40px 10px 30px;
+      }
+      .novel-header-title {
+        font-size: 1.4rem;
+      }
+      article {
+        padding: 30px 20px;
+      }
+      .novel-body p {
+        font-size: 0.95rem;
+      }
+      .novel-nav {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      .novel-nav-item.prev,
+      .novel-nav-item.next {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 桜のアニメーションを表示するCanvas -->
+  <canvas id="sakura-canvas"></canvas>
+
+  <div class="wrapper">
+    <header>
+      <div class="breadcrumb">
+        <a href="#">&laquo; トップページに戻る</a>
+      </div>
+      <h1 class="novel-header-title">舞い落ちる文字のすき間で</h1>
+      <p class="novel-subtitle">第一話</p>
+    </header>
+
+    <main>
+      <!-- 本文エリア -->
+      <article>
+        <div class="novel-body">
+          <p>
+            改札を抜けると、ぬるい春の風が頬を撫でた。見上げれば、遠くに見える桜並木が薄紅色に揺れている。今年もまた、あの季節がやってきたのだ。
+          </p>
+          <p>
+            階段をのぼり、いつもの歩道橋の上に立つ。眼下を通り過ぎていく車の群れと、絶え間なく流れる街の喧騒。その中で、ただひとつ変わらないのは、風に舞う花びらの静けさだけだった。
+          </p>
+          <p>
+            誰に聴かせるでもなく呟いた言葉は、春の明かりの中にそっと溶けて消えていった。振り向いても、そこにはもう誰もいない。けれど胸の奥には、いつまでも鮮やかなあの日の温もりが残り続けている。
+          </p>
+        </div>
+      </article>
+
+      <!-- ページナビゲーション（前へ / トップへ / 次へ） -->
+      <nav class="novel-nav">
+        <div class="novel-nav-item prev">
+          <!-- 「前の話」のボタンを表示する場合は「<span class="novel-nav-disabled"></span>」を削除してリンクを挿入してください -->
+          <span class="novel-nav-disabled">&laquo; 前のお話</span>
+        </div>
+        <div class="novel-nav-item center">
+          <a href="#">目次へ戻る</a>
+        </div>
+        <div class="novel-nav-item next">
+          <a href="#">次のお話 &raquo;</a>
+        </div>
+      </nav>
+    </main>
+
+    <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+  </div>
+
+  <!-- -----------------------------------------
+       6. JavaScript (桜が舞い落ちる演出)
+  ----------------------------------------- -->
+  <script>
+    const canvas = document.getElementById('sakura-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const petals = [];
+    const petalCount = 30;
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -height;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 0.8 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.3;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 1 - 0.5;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.01) + this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.beginPath();
+        
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 3, 0, this.size);
+        ctx.bezierCurveTo(this.size, this.size / 3, this.size / 2, -this.size / 2, 0, 0);
+        
+        ctx.fillStyle = `rgba(232, 167, 184, ${this.opacity})`;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < petalCount; i++) {
+      petals.push(new Petal());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach(petal => {
+        petal.update();
+        petal.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

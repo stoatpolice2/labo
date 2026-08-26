@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KICK BACK | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- 無機質・硬質なフォントの読み込み -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- 基本設定 & 変数 --- */
+    :root {
+      --primary-red: #e60012;
+      --deep-red: #8b0000;
+      --bg-black: #0a0a0a;
+      --panel-black: #141414;
+      --text-white: #f0f0f0;
+      --text-gray: #888888;
+      --font-heading: 'Orbitron', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-base: 'Noto Sans JP', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      font-family: var(--font-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ノイズテイストの背景テクスチャ重ね合わせ */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 90%),
+                  linear-gradient(rgba(230, 0, 18, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 4px;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* --- メインビジュアル（HERO） --- */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 3px solid var(--primary-red);
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%) contrast(140%) brightness(0.6);
+      transform: scale(1.05);
+      animation: pulseBg 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseBg {
+      0% { transform: scale(1); filter: grayscale(40%) contrast(140%) brightness(0.6); }
+      100% { transform: scale(1.08); filter: grayscale(10%) contrast(160%) brightness(0.5); }
+    }
+
+    /* 赤いオーバーレイ */
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(230, 0, 18, 0.4) 0%, rgba(10, 10, 10, 0.85) 80%);
+    }
+
+    /* サイトタイトル (疾走感・斜体・グリッチ風) */
+    .hero-title-wrap {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      font-style: italic; /* 斜体で疾走感 */
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      text-shadow: 4px 4px 0px var(--primary-red), -2px -2px 0px #000;
+      line-height: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-mono);
+      font-size: clamp(0.9rem, 2vw, 1.5rem);
+      color: var(--primary-red);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.7);
+      display: inline-block;
+      padding: 4px 16px;
+      border: 1px solid var(--primary-red);
+      transform: skewX(-10deg);
+    }
+
+    /* --- ナビゲーション (MENU) --- */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(10, 10, 10, 0.95);
+      border-bottom: 1px solid rgba(230, 0, 18, 0.4);
+      backdrop-filter: blur(5px);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-white);
+      transition: all 0.2s ease;
+      position: relative;
+      padding: 5px 10px;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0%; height: 2px;
+      background-color: var(--primary-red);
+      transition: width 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-red);
+      text-shadow: 0 0 8px rgba(230, 0, 18, 0.8);
+    }
+
+    .nav-link:hover::before {
+      width: 100%;
+    }
+
+    /* --- セクション共通設定 --- */
+    section {
+      padding: 100px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-bottom: 1px dashed rgba(230, 0, 18, 0.2);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 2.5rem;
+      color: var(--primary-red);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-left: 5px solid var(--primary-red);
+      padding-left: 15px;
+    }
+
+    .section-title::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary-red), transparent);
+    }
+
+    /* --- UPLOAD (更新履歴) --- */
+    .upload-list {
+      list-style: none;
+      font-family: var(--font-mono);
+    }
+
+    .upload-item {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid #222;
+      transition: background 0.2s;
+    }
+
+    .upload-item:hover {
+      background: rgba(230, 0, 18, 0.05);
+    }
+
+    .upload-date {
+      color: var(--primary-red);
+      font-weight: bold;
+      min-width: 110px;
+    }
+
+    .upload-tag {
+      background-color: #222;
+      color: #fff;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      border: 1px solid #444;
+      transform: skewX(-10deg);
+    }
+
+    .upload-text {
+      color: var(--text-white);
+      flex: 1;
+      min-width: 250px;
+    }
+
+    /* --- GALLERY (イラスト展示) --- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background-color: var(--panel-black);
+      border: 1px solid #333;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 15px rgba(230, 0, 18, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+      filter: grayscale(0%);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #ccc;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
+
+    /* モーダル (画像拡大用) */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 85vh;
+      border: 2px solid var(--primary-red);
+      box-shadow: 0 0 30px rgba(230, 0, 18, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      color: #fff;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--primary-red);
+    }
+
+    /* --- ABOUT (概要) --- */
+    .about-card {
+      background-color: var(--panel-black);
+      border: 1px solid #222;
+      border-left: 4px solid var(--primary-red);
+      padding: 30px;
+      position: relative;
+    }
+
+    .about-text {
+      margin-bottom: 25px;
+      color: #ccc;
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+
+    .profile-box {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .profile-avatar {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          border: 2px solid var(--primary-red);
+          flex-shrink: 0;
+          overflow: hidden; /* 枠からはみ出た画像を隠す設定 */
+        }
+
+        /* 画像自体のサイズを枠に合わせる設定を追加 */
+        .profile-avatar img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* 縦横比を保ったまま枠いっぱいに表示 */
+        }
+
+    .profile-info h3 {
+      font-family: var(--font-heading);
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .profile-info p {
+      font-family: var(--font-mono);
+      color: var(--text-gray);
+      font-size: 0.85rem;
+    }
+
+    /* --- フッター --- */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      background-color: #050505;
+      border-top: 1px solid #222;
+    }
+
+    /* --- レスポンシブ対応 --- */
+    @media (max-width: 768px) {
+      .nav-menu {
+        gap: 15px;
+      }
+      .nav-link {
+        font-size: 0.9rem;
+      }
+      section {
+        padding: 60px 15px;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .profile-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- メインビジュアル -->
+  <div class="hero">
+    <img class="hero-bg" src="../images/picture05.jpg" alt="Decadent background">
+    <div class="hero-overlay"></div>
+    <div class="hero-title-wrap">
+      <h1 class="hero-title">KICK BACK</h1>
+      <div class="hero-subtitle">Restless & Decadent</div>
+    </div>
+  </div>
+
+  <!-- ナビゲーション (MENU) -->
+  <nav class="nav-bar" id="menu">
+    <div class="nav-container">
+      <ul class="nav-menu">
+        <li><a href="#upload" class="nav-link">UPLOAD</a></li>
+        <li><a href="#gallery" class="nav-link">GALLERY</a></li>
+        <li><a href="#about" class="nav-link">ABOUT</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- UPLOAD (更新履歴) -->
+  <section id="upload">
+    <h2 class="section-title">UPLOAD</h2>
+    <ul class="upload-list">
+      <li class="upload-item">
+        <span class="upload-date">2026.08.10</span>
+        <span class="upload-tag">GALLERY</span>
+        <span class="upload-text">イラスト作品「FOREST & DEVIL」を追加</span>
+      </li>
+      <li class="upload-item">
+        <span class="upload-date">2026.07.01</span>
+        <span class="upload-tag">SYSTEM</span>
+        <span class="upload-text">ファンサイトプレオープン</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- GALLERY (イラスト展示) -->
+  <section id="gallery">
+    <h2 class="section-title">GALLERY</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="../images/picture09.jpg">
+        <div class="gallery-caption">#01 RED CLOUD</div>
+      </div>
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="../images/picture05.jpg" alt="Illustration 02">
+        <div class="gallery-caption">#02 WHITE SLUM</div>
+      </div>
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="../images/picture08.jpg" alt="Illustration 03">
+        <div class="gallery-caption">#03 UNDER THE SKY</div>
+      </div>
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="../images/picture07.jpg" alt="Illustration 04">
+        <div class="gallery-caption">#04 FOREST & DEVIL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 拡大表示用モーダル -->
+  <div class="modal" id="imageModal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImg" src="" alt="Enlarged image">
+  </div>
+
+  <!-- ABOUT (サイトの説明＆プロフィール) -->
+  <section id="about">
+    <h2 class="section-title">ABOUT</h2>
+    <div class="about-card">
+      <p class="about-text">
+        当サイトは、衝動的かつ重厚な世界観にインスパイアされたファン制作のWebギャラリーです。<br>
+        ノイジーでどこか壊れた都市の質感、溢れ出るカオスと疾走感をテーマにイラスト作品を公開しています。<br><br>
+        ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+      <div class="profile-box">
+      <div class="profile-avatar">
+        <img src="../images/icon.png" alt="プロフィール画像">
+      </div>
+        <div class="profile-info">
+          <h3>CREATOR NAME</h3>
+          <p>ILLUSTRATOR / GRAPHIC DESIGNER</p>
+          <p style="margin-top: 5px; color: #aaa;">ここに自己紹介などを入力してください。
+</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // --- ギャラリー画像拡大（モーダル）処理 ---
+    function openModal(element) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const img = element.querySelector('img');
+      
+      modalImg.src = img.src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('active');
+    }
+
+    // ESCキーでもモーダルを閉じられるようにする
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
