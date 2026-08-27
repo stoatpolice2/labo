@@ -6,14 +6,14 @@
   <title>おしながきジェネレーター | Stoat Labo</title>
     
   <!-- ファビコンの設定 -->
-  <link rel="icon" href="../images/generator.png" type="image/x-icon">
+  <link rel="icon" href="../images/generator.webp" type="image/x-icon">
 
   <!-- Open Graph Protocol (OGP) の設定 -->
   <meta property="og:title" content="おしながきジェネレーター | Stoat Labo">
   <meta property="og:description" content="画像編集ソフトは不要！ブラウザ上でサクッと綺麗なお品書きを作ろう">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
-  <meta property="og:image" content="../images/tool01.JPG">
+  <meta property="og:image" content="../images/tool01.webp">
   <meta property="og:site_name" content="Stoat Labo">
   <meta property="og:locale" content="ja_JP">
     
@@ -1049,7 +1049,7 @@
       <img id="modal-result-image" style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 1.5px solid var(--border-color); object-fit: contain;" alt="おしながき画像">
       
       <div style="display: flex; gap: 10px; width: 100%; margin-top: 6px;">
-        <a id="modal-download-a" download="oshinagaki.png" style="flex: 1; background: var(--accent-green); color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; text-align: center;">💾 通常ダウンロード</a>
+        <a id="modal-download-a" download="oshinagaki.webp" style="flex: 1; background: var(--accent-green); color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; text-align: center;">💾 通常ダウンロード</a>
         <button onclick="closeImageModal()" style="flex: 1; background: #D1C7B7; color: var(--text-main); border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; font-family: var(--font-rounded);">閉じる</button>
       </div>
     </div>
@@ -1751,7 +1751,7 @@
           if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = 'oshinagaki.png';
+            link.download = 'oshinagaki.webp';
             link.click();
           }
 
