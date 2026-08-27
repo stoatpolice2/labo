@@ -1013,6 +1013,31 @@
       margin-top: 60px;
     }
 
+    /* ---------------------------------- BACK BUTTON ---------------------------------- */
+    .back-nav {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      background: var(--grad-primary);
+      color: #FFF;
+      padding: 12px 32px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      text-decoration: none;
+      color: #FFF;
+    }
+
     /* ---------------------------------- SMOOTH SCROLL ---------------------------------- */
     html {
       scroll-behavior: smooth;
