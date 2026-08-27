@@ -105,18 +105,29 @@
     // 4. アコーディオン内リンクへのスムーズスクロール対応
     // ==========================================
     function handleAccordionNav() {
-      const links = document.querySelectorAll('nav a, a[href^="#"]');
+      const links = document.querySelectorAll('a[href^="#"]');
       links.forEach(link => {
         link.addEventListener('click', (e) => {
           const targetId = link.getAttribute('href');
-          if (!targetId || !targetId.startsWith('#')) return;
+          if (!targetId || targetId === '#') return;
 
           const targetElem = document.querySelector(targetId);
           if (targetElem) {
-            // 対象要素が閉じているアコーディオンの中にある場合は開く
-            const parentDetails = targetElem.closest('details');
-            if (parentDetails && !parentDetails.open) {
-              parentDetails.open = true;
+            // 1. ターゲット自体が details の場合
+            if (targetElem.tagName.toLowerCase() === 'details') {
+              targetElem.open = true;
+            } 
+            // 2. ターゲットが section などで、その直下に details がある場合
+            else {
+              const childDetails = targetElem.querySelector('details');
+              if (childDetails) {
+                childDetails.open = true;
+              }
+              // 3. ターゲットが details の内側にある要素の場合（#rules など）
+              const parentDetails = targetElem.closest('details');
+              if (parentDetails) {
+                parentDetails.open = true;
+              }
             }
           }
         });
