@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebP一括画像変換ツール | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        /* ----------------------------------
+            Stoat Labo COLOR SYSTEM
+        ---------------------------------- */
+        :root {
+          --primary: #E06D53;
+          --primary-hover: #C8563C;
+          --accent: #E8963E;
+          --bg-main: #FAF7F5;
+          --bg-card: #FFFFFF;
+          --text-main: #332C2B;
+          --text-muted: #7A6E6B;
+          --border: #E6DAD3;
+          --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+          --grad-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            max-width: 720px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: var(--text-main);
+            line-height: 1.6;
+            background-color: var(--bg-main);
+            background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        h1 {
+            font-size: 24px;
+            background: var(--grad-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* 説明文エリア */
+        .intro-box {
+            background-color: var(--grad-bg);
+            border-left: 5px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro-box p {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+        }
+
+        .intro-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .features {
+            margin: 10px 0 0 0;
+            list-style: none;
+            padding-left: 0;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .features li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 4px;
+        }
+
+        .features li::before {
+            content: "🐾";
+            position: absolute;
+            left: 0;
+            font-size: 0.85rem;
+        }
+
+        /* ドロップエリア */
+        .drop-zone {
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background-color: #FFF6F3;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            background-color: #FFEFEA;
+            transform: translateY(-2px);
+        }
+
+        .drop-zone-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .drop-zone-subtext {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* 画質・設定エリア */
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .settings-row label {
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .quality-val {
+            color: var(--primary);
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        .quality-slider {
+            flex-grow: 1;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* 変換実行ボタンエリア */
+        .action-area {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .convert-btn {
+            background: var(--grad-primary);
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(224, 109, 83, 0.3);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .convert-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .convert-btn:disabled {
+            background: #CCC;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* 出力エリア */
+        #status {
+            margin-top: 25px;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 15px;
+        }
+
+        .download-list {
+            margin-top: 15px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .download-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            gap: 12px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .file-info img {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .filename {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--grad-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(224, 109, 83, 0.2);
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .download-btn:hover {
+            opacity: 0.88;
+            color: white;
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>WebP一括画像変換ツール</h1>
+
+    <!-- 説明文エリア -->
+    <div class="intro-box">
+        <p>✨ <strong>JPGやPNG画像をまとめてWebP形式へ高速変換！</strong></p>
+        <p>画像ファイルを読み込み、指定した画質で軽量な <code>WebP</code> 画像に一括変換します。Webサイトの表示速度向上やファイル容量の削減に役立ちます。</p>
+        <ul class="features">
+            <li><strong>安心安全:</strong> 画像データはサーバーに送信されず、お使いのブラウザ内で処理されるためプライバシーも安心です。</li>
+            <li><strong>一括対応:</strong> 複数の画像をドラッグ＆ドロップで一気に選択・変換できます。</li>
+        </ul>
+    </div>
+
+    <!-- ドロップエリア -->
+    <div class="drop-zone" id="dropZone">
+        <p class="drop-zone-text" id="dropZoneText">画像をここにまとめてドラッグ＆ドロップ！ 🐾</p>
+        <p class="drop-zone-subtext" id="dropZoneSubtext">（JPG / PNG ファイルを複数同時にドロップまたはクリックで選択できます）</p>
+        <input type="file" id="fileInput" class="file-input" accept="image/jpeg, image/png" multiple>
+    </div>
+
+    <!-- 画質設定フォーム -->
+    <div class="settings-card">
+        <div class="settings-row">
+            <label for="quality">変換画質 (品質): <span class="quality-val" id="qualityVal">0.8</span></label>
+            <input type="range" id="quality" class="quality-slider" min="0.1" max="1.0" step="0.05" value="0.8">
+        </div>
+    </div>
+
+    <div class="action-area">
+        <button class="convert-btn" id="convertBtn" disabled>WebPに変換する</button>
+    </div>
+
+    <div id="status"></div>
+    <ul id="downloadList" class="download-list"></ul>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const dropZoneText = document.getElementById('dropZoneText');
+        const dropZoneSubtext = document.getElementById('dropZoneSubtext');
+        const fileInput = document.getElementById('fileInput');
+        const qualityInput = document.getElementById('quality');
+        const qualityVal = document.getElementById('qualityVal');
+        const convertBtn = document.getElementById('convertBtn');
+        const status = document.getElementById('status');
+        const downloadList = document.getElementById('downloadList');
+
+        let selectedFiles = [];
+
+        // ドロップエリアクリック時
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        // ドラッグ＆ドロップ イベント処理
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                handleFiles(Array.from(e.dataTransfer.files));
+            }
+        });
+
+        // ファイルダイアログ選択時
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFiles(Array.from(e.target.files));
+            }
+        });
+
+        // スライダー連動
+        qualityInput.addEventListener('input', (e) => {
+            qualityVal.textContent = e.target.value;
+        });
+
+        // ファイル保持と表示更新
+        function handleFiles(files) {
+            const validFiles = files.filter(f => f.type.match('image/jpeg') || f.type.match('image/png'));
+            if (validFiles.length === 0) {
+                status.textContent = '⚠️ JPGまたはPNGファイルを選択してください。';
+                return;
+            }
+
+            selectedFiles = validFiles;
+            convertBtn.disabled = false;
+            status.textContent = '';
+            
+            dropZoneText.textContent = `✨ ${selectedFiles.length} 個のファイルが選択されています`;
+            dropZoneSubtext.textContent = '（クリックまたはドラッグ＆ドロップでファイルを変更できます）';
+        }
+
+        // 変換実行ボタンクリックイベント
+        convertBtn.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) return;
+
+            downloadList.innerHTML = '';
+            status.textContent = '🔄 画像を変換中...';
+            convertBtn.disabled = true;
+
+            const quality = parseFloat(qualityInput.value);
+            let count = 0;
+
+            for (const file of selectedFiles) {
+                try {
+                    const webpDataUrl = await convertToWebP(file, quality);
+                    const originalName = file.name.substring(0, file.name.lastIndexOf('.'));
+                    const outputName = `${originalName}.webp`;
+
+                    createDownloadItem(outputName, webpDataUrl);
+                    count++;
+                } catch (error) {
+                    console.error('変換エラー:', error);
+                }
+            }
+
+            status.textContent = `✨ ${count} 個のWebP画像に変換されました！`;
+            convertBtn.disabled = false;
+        });
+
+        // CanvasによるWebP変換処理
+        function convertToWebP(file, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+
+                        const dataUrl = canvas.toDataURL('image/webp', quality);
+                        resolve(dataUrl);
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ダウンロード項目の生成
+        function createDownloadItem(filename, dataUrl) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="file-info">
+                    <img src="${dataUrl}" alt="プレビュー">
+                    <span class="filename" title="${filename}">${filename}</span>
+                </div>
+                <a class="download-btn" href="${dataUrl}" download="${filename}">保存する</a>
+            `;
+            downloadList.appendChild(li);
+        }
+    </script>
+</body>
+</html>
