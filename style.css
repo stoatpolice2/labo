@@ -29,7 +29,7 @@
       color: var(--text-main);
       line-height: 1.8;
       padding-bottom: 60px;
-      overflow-x: hidden; /* スマホ表示時の横揺れ・ガタつき防止 */
+      overflow-x: hidden;
     }
 
     a {
@@ -152,7 +152,6 @@
       transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
 
-    /* ホバー時に少し浮き上がるような質感 */
     .section:hover,
     .news-section:hover {
       transform: translateY(-4px); 
@@ -190,6 +189,113 @@
       width: 100%;
       height: 2px;
       background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    .sub-section-title {
+      font-size: 1.15rem;
+      color: var(--text-main);
+      font-weight: 700;
+      margin: 32px 0 16px;
+      padding-bottom: 6px;
+      padding-left: 18px;
+      position: relative;
+      border-bottom: 2px dashed var(--accent); /* オレンジの点線 */
+    }
+
+    /* 先頭に小さく可愛いドットを配置 */
+    .sub-section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+
+    .sub-section-title:first-child {
+      margin-top: 0;
+    }
+
+    /* ---------------------------------- ACCORDION STYLES ---------------------------------- */
+    .accordion-section {
+      padding: 0; /* 内側の余白は details 内でコントロール */
+      overflow: hidden;
+    }
+
+    .accordion-item summary {
+      list-style: none;
+      padding: 28px 36px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background-color 0.2s;
+    }
+
+    .accordion-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .accordion-item summary:hover {
+      background-color: #FFF9F7;
+    }
+
+    .accordion-title {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      position: relative;
+      font-weight: 700;
+      padding-left: 14px;
+      margin-bottom: 0;
+    }
+
+    .accordion-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 80%;
+      background: var(--grad-primary);
+      border-radius: 4px;
+    }
+
+    .accordion-icon {
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: bold;
+      transition: transform 0.3s ease;
+      background: #FFEFEA;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .accordion-item[open] .accordion-icon {
+      transform: rotate(180deg);
+      background: var(--grad-primary);
+      color: #fff;
+    }
+
+    .accordion-content {
+      padding: 10px 36px 36px 36px;
+      border-top: 1px dashed var(--border);
+      animation: accordionFadeIn 0.35s ease;
+    }
+
+    @keyframes accordionFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ---------------------------------- NEWS / HISTORY ---------------------------------- */
@@ -354,7 +460,7 @@
     /* ---------------------------------- COLUMN ---------------------------------- */
     .column-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); /* ★1列から2列グリッドに変更 */
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 16px;
     }
 
@@ -367,10 +473,9 @@
       border-radius: 12px;
       border: 1px solid var(--border);
       transition: all 0.2s;
-      opacity: 0; /* ★フェードインアニメーション用 */
+      opacity: 0;
     }
 
-    /* アニメーション＆非表示用クラス（template-cardと共通の挙動） */
     .column-card.fade-in {
       animation: fadeInUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
@@ -417,10 +522,9 @@
       flex-shrink: 0;
     }
 
-    /* スマホ表示の調整 */
     @media (max-width: 600px) {
       .column-list {
-        grid-template-columns: 1fr; /* スマホでは1列に戻す */
+        grid-template-columns: 1fr;
       }
     }
 
@@ -601,99 +705,98 @@
       text-decoration: none;
     }
 
-/* ---------------------------------- UTILITY TOOLS LIST ---------------------------------- */
-.tool-sub-title {
-  font-size: 1.05rem;
-  font-weight: bold;
-  color: var(--text-main);
-  margin: 32px 0 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    /* ---------------------------------- UTILITY TOOLS LIST ---------------------------------- */
+    .tool-sub-title {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--text-main);
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.mini-tool-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 16px;
-}
+    .mini-tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+    }
 
-.mini-tool-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #FAF5F2;
-  padding: 16px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
+    .mini-tool-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAF5F2;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
 
-.mini-tool-card:hover {
-  background-color: #FFF5F1;
-  border-color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-}
+    .mini-tool-card:hover {
+      background-color: #FFF5F1;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+    }
 
-.mini-tool-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+    .mini-tool-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-.mini-tool-title {
-  font-size: 0.98rem;
-  font-weight: bold;
-  color: var(--text-main);
-  transition: color 0.2s;
-}
+    .mini-tool-title {
+      font-size: 0.98rem;
+      font-weight: bold;
+      color: var(--text-main);
+      transition: color 0.2s;
+    }
 
-.mini-tool-card:hover .mini-tool-title {
-  color: var(--primary);
-}
+    .mini-tool-card:hover .mini-tool-title {
+      color: var(--primary);
+    }
 
-.mini-tool-desc {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
+    .mini-tool-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
 
-.mini-tool-action {
-  flex-shrink: 0;
-  margin-left: 16px;
-}
+    .mini-tool-action {
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
 
-.btn-sm {
-  width: auto;
-  padding: 8px 16px;
-  font-size: 0.82rem;
-  white-space: nowrap;
-}
+    .btn-sm {
+      width: auto;
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
 
-@media (max-width: 600px) {
-  .mini-tool-grid {
-    grid-template-columns: 1fr;
-  }
-  .mini-tool-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .mini-tool-action {
-    margin-left: 0;
-    width: 100%;
-  }
-  /* スマホのときはボタンを横幅いっぱいに広げる */
-  .mini-tool-action .btn-sm {
-    width: 100%;
-  }
-}
+    @media (max-width: 600px) {
+      .mini-tool-grid {
+        grid-template-columns: 1fr;
+      }
+      .mini-tool-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .mini-tool-action {
+        margin-left: 0;
+        width: 100%;
+      }
+      .mini-tool-action .btn-sm {
+        width: 100%;
+      }
+    }
 
     /* ---------------------------------- PROFILE & CONTACT ---------------------------------- */
     .contact-list {
-      margin-top: 20px;
+      margin-top: 16px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -791,10 +894,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .link-sub-title:first-of-type {
-      margin-top: 0;
     }
 
     .banner-wrapper {
@@ -919,14 +1018,14 @@
       scroll-behavior: smooth;
     }
 
-    /* ---------------------------------- PAGE TOP BUTTON (🐾アイコン + 吹き出し) ---------------------------------- */
+    /* ---------------------------------- PAGE TOP BUTTON ---------------------------------- */
     .pagetop-btn {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: transparent; /* 背景を透明にする */
+      background: transparent;
       border: none;
-      font-size: 2.2rem;       /* 🐾 を大きめに表示 */
+      font-size: 2.2rem;
       line-height: 1;
       cursor: pointer;
       z-index: 999;
@@ -936,19 +1035,16 @@
       transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* スクロール時に表示 */
     .pagetop-btn.is-active {
       opacity: 1;
       visibility: visible;
     }
 
-    /* マウスホバーでぽよんと跳ねる演出 */
     .pagetop-btn:hover {
       transform: translateY(-6px) scale(1.15);
       filter: drop-shadow(0 8px 14px rgba(224, 109, 83, 0.5));
     }
 
-    /* ホバー時に「TOP」と小さく吹き出しを表示 */
     .pagetop-btn::before {
       content: "TOP";
       position: absolute;
@@ -971,7 +1067,6 @@
       opacity: 1;
     }
 
-    /* スマホ表示時のサイズ調整 */
     @media (max-width: 600px) {
       .pagetop-btn {
         bottom: 20px;
@@ -1016,9 +1111,17 @@
         border: 1px solid #E6DAD3;
       }
 
-      .section-title {
+      .accordion-item summary {
+        padding: 20px;
+      }
+
+      .accordion-content {
+        padding: 10px 20px 24px 20px;
+      }
+
+      .section-title,
+      .accordion-title {
         font-size: 1.25rem;
-        margin-bottom: 20px;
         padding-left: 14px;
       }
 
@@ -1030,7 +1133,6 @@
         padding: 16px;
       }
 
-      /* スマホ表示時の調整 */
       .banner-wrapper {
         flex-direction: column-reverse;
         align-items: stretch;
