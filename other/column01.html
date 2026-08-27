@@ -6,14 +6,14 @@
 <title>超！初心者向けHTML編集講座 | Stoat Labo</title>
 
   <!-- ファビコンの設定 -->
-  <link rel="icon" href="../images/icon.png" type="image/x-icon">
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
 
   <!-- Open Graph Protocol (OGP) の設定 -->
   <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
   <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
-  <meta property="og:image" content="../images/ogp.jpg">
+  <meta property="og:image" content="../images/ogp.webp">
   <meta property="og:site_name" content="Stoat Labo">
   <meta property="og:locale" content="ja_JP">
 
@@ -471,10 +471,10 @@ footer {
                 <h3><span class="step-number">3</span>画像を自分の写真や画像に差し替える（基本編）</h3>
                 <p>紹介文やバナーなど、ページ内の画像を表示・差し替えるときは <code>&lt;img&gt;</code> タグの <code>src</code> 属性のファイル名を書き換えます。</p>
                 <pre><code><span class="comment">&lt;!-- 変更前 --&gt;</span>
-&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/sample.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"サンプル画像"</span>&gt;
+&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/sample.webp"</span> <span class="attr-name">alt</span>=<span class="attr-val">"サンプル画像"</span>&gt;
 
 <span class="comment">&lt;!-- 変更後：自分の画像ファイル名にする --&gt;</span>
-&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/my-photo.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"私の写真"</span>&gt;</code></pre>
+&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/my-photo.webp"</span> <span class="attr-name">alt</span>=<span class="attr-val">"私の写真"</span>&gt;</code></pre>
             </div>
 
             <div class="step-item">
@@ -482,11 +482,11 @@ footer {
                 <p>当サイトで配布している「gallery & portfolio」などのテンプレートは、画像をクリックすると大きなサイズでパッと表示される仕組み（モーダルといいます）になっています。そのため、一覧用のサムネイル画像と拡大用画像の<strong>2ヶ所</strong>のファイル名を同じように書き換える必要があります。</p>
                 <pre><code>&lt;<span class="tag-name">article</span> <span class="attr-name">class</span>=<span class="attr-val">"gallery-item"</span> 
          <span class="attr-name">data-category-group</span>=<span class="attr-val">"illustration"</span> 
-         <span class="attr-name">data-fullsrc</span>=<span class="attr-val">"images/my-pic01.jpg"</span> <span class="comment">&lt;!-- 👈 ①大きく表示される画像 --&gt;</span>
+         <span class="attr-name">data-fullsrc</span>=<span class="attr-val">"images/my-pic01.webp"</span> <span class="comment">&lt;!-- 👈 ①大きく表示される画像 --&gt;</span>
          <span class="attr-name">data-title</span>=<span class="attr-val">"星空の街"</span> 
          <span class="attr-name">data-category</span>=<span class="attr-val">"イラスト / 2026年"</span>&gt;
     &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"thumbnail-wrapper"</span>&gt;
-        &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/my-pic01.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"星空の街"</span> <span class="attr-name">loading</span>=<span class="attr-val">"lazy"</span>&gt; <span class="comment">&lt;!-- 👈 ②一覧で並ぶ画像 --&gt;</span>
+        &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/my-pic01.webp"</span> <span class="attr-name">alt</span>=<span class="attr-val">"星空の街"</span> <span class="attr-name">loading</span>=<span class="attr-val">"lazy"</span>&gt; <span class="comment">&lt;!-- 👈 ②一覧で並ぶ画像 --&gt;</span>
     &lt;/<span class="tag-name">div</span>&gt;
     &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"caption-overlay"</span>&gt;
         &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"item-title"</span>&gt;星空の街&lt;/<span class="tag-name">span</span>&gt;
@@ -503,7 +503,7 @@ footer {
 
 <span class="comment">&lt;!-- 画像をクリックできるようにする場合（&lt;a&gt;の中に&lt;img&gt;を入れる） --&gt;</span>
 &lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://〇〇"</span>&gt;
-    &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/banner.png"</span> <span class="attr-name">alt</span>=<span class="attr-val">"home page"</span>&gt;
+    &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/banner.webp"</span> <span class="attr-name">alt</span>=<span class="attr-val">"home page"</span>&gt;
 &lt;/<span class="tag-name">a</span>&gt;</code></pre>
             </div>
         </section>
@@ -513,15 +513,15 @@ footer {
             <h2 class="section-title">3. 画像が表示されないときは</h2>
             <p>「書き換えたのに画像が出なくて画面が崩れちゃう…」という時は、この3つが原因のことが多いです🐾</p><br>
             <ul class="rule-list">
-                <li class="rule-ng"><strong>拡張子のうっかりミス：</strong> <code>.jpg</code> なのか <code>.png</code> なのか。大文字（<code>.JPG</code>）と小文字（<code>.jpg</code>）が違うだけでも表示されないことがあるので確認してみてください。</li>
+                <li class="rule-ng"><strong>拡張子のうっかりミス：</strong> <code>.jpg</code> なのか <code>.png</code> なのか。大文字（<code>.jpg</code>）と小文字（<code>.JPG</code>）が違うだけでも表示されないことがあるので確認してみてください。</li>
                 <li class="rule-ng"><strong>画像の場所（フォルダ）が違う：</strong> <code>&lt;img&gt;</code> タグの <code>src="images/〜"</code> という記述は、「HTMLファイルと同じ階層にある <code>images</code> という名前のフォルダの中を見る」というルール（<strong>相対パス</strong>）になっています。そのため、フォルダを作っていなかったり、画像が別の階層に保存されていると画像が表示されません。</li>
                 <li class="rule-ng"><strong>全角スペースが入っている：</strong> コードのすき間に「全角スペース」が混ざっていると上手く動かなくなります。スペースや記号は必ず「半角」で打ちましょう！</li>
             </ul>
 
             <div class="alert-box">
                 <strong>💡 補足：絶対パスについて</strong><br>
-              相対パスの指定が難しいと感じる場合は、完全なURL（例: <code>"https://example.com/images/photo.jpg"</code>）を指定する<strong>「絶対パス」</strong>という書き方でもOKです。<br>
-              ただし、自分のパソコン内で制作中（未公開）の場合はサーバーにアップロードするまでPC上で画像が反映されないため<strong>「相対パス（例:<code>"images/photo.jpg"</code>）」</strong>で管理するのが確実です！
+              相対パスの指定が難しいと感じる場合は、完全なURL（例: <code>"https://example.com/images/photo.webp"</code>）を指定する<strong>「絶対パス」</strong>という書き方でもOKです。<br>
+              ただし、自分のパソコン内で制作中（未公開）の場合はサーバーにアップロードするまでPC上で画像が反映されないため<strong>「相対パス（例:<code>"images/photo.webp"</code>）」</strong>で管理するのが確実です！
             </div>
         </section>
 
