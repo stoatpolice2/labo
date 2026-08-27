@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KICK BACK | Stoat Labo</title>
   
-  <!-- ファビコンの設定 -->
   <link rel="icon" href="../images/icon.png" type="image/x-icon">
 
-  <!-- Open Graph Protocol (OGP) の設定 -->
   <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
   <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
   <meta property="og:type" content="website">
@@ -17,7 +15,6 @@
   <meta property="og:site_name" content="Stoat Labo">
   <meta property="og:locale" content="ja_JP">
   
-  <!-- 無機質・硬質なフォントの読み込み -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -386,20 +383,20 @@
     }
 
     .profile-avatar {
-          width: 70px;
-          height: 70px;
-          border-radius: 50%;
-          border: 2px solid var(--primary-red);
-          flex-shrink: 0;
-          overflow: hidden; /* 枠からはみ出た画像を隠す設定 */
-        }
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-red);
+      flex-shrink: 0;
+      overflow: hidden; /* 枠からはみ出た画像を隠す設定 */
+    }
 
-        /* 画像自体のサイズを枠に合わせる設定を追加 */
-        .profile-avatar img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover; /* 縦横比を保ったまま枠いっぱいに表示 */
-        }
+    /* 画像自体のサイズを枠に合わせる設定を追加 */
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 縦横比を保ったまま枠いっぱいに表示 */
+    }
 
     .profile-info h3 {
       font-family: var(--font-heading);
@@ -442,12 +439,22 @@
         flex-direction: column;
         align-items: flex-start;
       }
+
+      /* モバイル閲覧時のサムネイル表示設定 */
+      .gallery-grid {
+        grid-template-columns: 1fr; /* 1列配置（幅100%） */
+      }
+      .gallery-item {
+        aspect-ratio: 2 / 1; /* 横長（比率2:1） */
+      }
+      .gallery-caption {
+        transform: translateY(0); /* モバイルではキャプションを常に表示 */
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- メインビジュアル -->
   <div class="hero">
     <img class="hero-bg" src="../images/picture05.jpg" alt="Decadent background">
     <div class="hero-overlay"></div>
@@ -457,7 +464,6 @@
     </div>
   </div>
 
-  <!-- ナビゲーション (MENU) -->
   <nav class="nav-bar" id="menu">
     <div class="nav-container">
       <ul class="nav-menu">
@@ -468,7 +474,6 @@
     </div>
   </nav>
 
-  <!-- UPLOAD (更新履歴) -->
   <section id="upload">
     <h2 class="section-title">UPLOAD</h2>
     <ul class="upload-list">
@@ -485,12 +490,11 @@
     </ul>
   </section>
 
-  <!-- GALLERY (イラスト展示) -->
   <section id="gallery">
     <h2 class="section-title">GALLERY</h2>
     <div class="gallery-grid">
       <div class="gallery-item" onclick="openModal(this)">
-        <img src="../images/picture09.jpg">
+        <img src="../images/picture09.jpg" alt="Illustration 01">
         <div class="gallery-caption">#01 RED CLOUD</div>
       </div>
       <div class="gallery-item" onclick="openModal(this)">
@@ -508,13 +512,11 @@
     </div>
   </section>
 
-  <!-- 拡大表示用モーダル -->
   <div class="modal" id="imageModal" onclick="closeModal()">
     <span class="modal-close">&times;</span>
     <img class="modal-content" id="modalImg" src="" alt="Enlarged image">
   </div>
 
-  <!-- ABOUT (サイトの説明＆プロフィール) -->
   <section id="about">
     <h2 class="section-title">ABOUT</h2>
     <div class="about-card">
@@ -524,25 +526,22 @@
         ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
       </p>
       <div class="profile-box">
-      <div class="profile-avatar">
-        <img src="../images/icon.png" alt="プロフィール画像">
-      </div>
+        <div class="profile-avatar">
+          <img src="../images/icon.png" alt="プロフィール画像">
+        </div>
         <div class="profile-info">
           <h3>CREATOR NAME</h3>
           <p>ILLUSTRATOR / GRAPHIC DESIGNER</p>
-          <p style="margin-top: 5px; color: #aaa;">ここに自己紹介などを入力してください。
-</p>
+          <p style="margin-top: 5px; color: #aaa;">ここに自己紹介などを入力してください。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- フッター -->
   <footer>
     <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
   </footer>
 
-  <!-- JavaScript -->
   <script>
     // --- ギャラリー画像拡大（モーダル）処理 ---
     function openModal(element) {
