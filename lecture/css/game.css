@@ -21,7 +21,7 @@
 #bg-layer {
     width: 100%;
     height: 100%;
-    background-image: url('../images/clubroom.jpg');
+    background-image: url('../images/clubroom.webp');
     background-size: cover;
     background-position: center;
     filter: brightness(0.95);

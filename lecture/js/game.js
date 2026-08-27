@@ -171,13 +171,13 @@ function showNextMessage() {
 
         let targetImg = data.img;
 
-        if (currentOutfit === 'school' && !data.img.includes('clear.jpg')) {
+        if (currentOutfit === 'school' && !data.img.includes('clear.webp')) {
             if (data.img.includes('susumu_smile')) {
-                targetImg = "images/susumu_smile_clear.png";
+                targetImg = "images/susumu_smile_clear.webp";
             } else if (data.img.includes('susumu_laugh')) {
-                targetImg = "images/susumu_laugh_clear.png";
+                targetImg = "images/susumu_laugh_clear.webp";
             } else if (data.img.includes('susumu_normal')) {
-                targetImg = "images/susumu_normal_clear.png";
+                targetImg = "images/susumu_normal_clear.webp";
             }
         }
 
