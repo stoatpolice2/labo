@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SAKURA | Stoat Labo</title>
   
-  <!-- ファビコンの設定 -->
   <link rel="icon" href="../images/icon.webp" type="image/x-icon">
 
-  <!-- Open Graph Protocol (OGP) の設定 -->
   <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
   <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
   <meta property="og:type" content="website">
@@ -282,6 +280,62 @@
     /* -----------------------------------------
        4. 各セクション詳細
     ----------------------------------------- */
+    /* Illust セクション */
+    .illust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .illust-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      aspect-ratio: 1 / 1;
+      background: #faf3f5;
+    }
+
+    .illust-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    .illust-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.92);
+    }
+
+    .illust-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(74, 62, 62, 0.25);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+
+    .illust-overlay span {
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      padding-bottom: 2px;
+    }
+
+    .illust-item:hover .illust-overlay {
+      opacity: 1;
+    }
+
     /* Novel セクション */
     .novel-list {
       list-style: none;
@@ -348,6 +402,98 @@
       opacity: 0.7;
     }
 
+    /* -----------------------------------------
+       5. 桜モーダル（儚い雰囲気に合わせたデザイン）
+    ----------------------------------------- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(74, 62, 62, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.5s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      background: rgba(252, 248, 249, 0.95);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-shadow: 0 15px 35px rgba(201, 115, 137, 0.15);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.96) translateY(10px);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-image-wrapper {
+      max-width: 100%;
+      max-height: calc(85vh - 70px);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-image-wrapper img {
+      max-width: 100%;
+      max-height: calc(85vh - 70px);
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal-caption {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      font-family: var(--font-serif);
+      font-weight: 300;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      line-height: 1;
+      padding: 5px;
+    }
+
+    .modal-close-btn:hover {
+      opacity: 0.7;
+      transform: rotate(90deg);
+    }
+
     /* フッター */
     footer {
       text-align: center;
@@ -357,7 +503,7 @@
     }
 
     /* -----------------------------------------
-       5. レスポンシブ対応
+       6. レスポンシブ対応
     ----------------------------------------- */
     @media (max-width: 650px) {
       .site-header {
@@ -378,28 +524,36 @@
       section {
         padding: 25px 20px;
       }
+      .illust-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+      }
+      .modal-overlay {
+        padding: 15px;
+      }
+      .modal-close-btn {
+        top: -40px;
+        right: -5px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- 桜のアニメーションを表示するCanvas -->
   <canvas id="sakura-canvas"></canvas>
 
-  <!-- 固定ヘッダー -->
   <header class="site-header">
     <a href="#" class="header-logo">SAKURA</a>
 
-    <!-- デスクトップ用ナビゲーション -->
     <nav class="desktop-nav">
       <ul>
         <li><a href="#about">About</a></li>
+        <li><a href="#illust">Illust</a></li>
         <li><a href="#novel">Novel</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
 
-    <!-- モバイル用ハンバーガーボタン -->
     <button class="hamburger-btn" id="hamburger-btn" aria-label="メニューを開く">
       <span></span>
       <span></span>
@@ -407,10 +561,10 @@
     </button>
   </header>
 
-  <!-- モバイル用オーバーレイメニュー -->
   <nav class="mobile-nav-overlay" id="mobile-nav">
     <ul>
       <li><a href="#about" class="mobile-nav-link">About</a></li>
+      <li><a href="#illust" class="mobile-nav-link">Illust</a></li>
       <li><a href="#novel" class="mobile-nav-link">Novel</a></li>
       <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
     </ul>
@@ -423,7 +577,6 @@
     </div>
 
     <main>
-      <!-- About セクション -->
       <section id="about">
         <h2 class="section-title">About</h2>
         <p>
@@ -432,7 +585,24 @@
         </p>
       </section>
 
-      <!-- Novel セクション -->
+      <section id="illust">
+        <h2 class="section-title">Illust</h2>
+        <div class="illust-grid">
+          <div class="illust-item" data-full="../images/picture11.webp" data-alt="薄紅の記憶">
+            <img src="../images/picture11.webp" alt="薄紅の記憶" loading="lazy">
+            <div class="illust-overlay"><span>View</span></div>
+          </div>
+          <div class="illust-item" data-full="../images/picture12.webp" data-alt="春霞">
+            <img src="../images/picture12.webp" alt="春霞" loading="lazy">
+            <div class="illust-overlay"><span>View</span></div>
+          </div>
+          <div class="illust-item" data-full="../images/picture13.webp" data-alt="桜雨の日に">
+            <img src="../images/picture13.webp" alt="桜雨の日に" loading="lazy">
+            <div class="illust-overlay"><span>View</span></div>
+          </div>
+        </div>
+      </section>
+
       <section id="novel">
         <h2 class="section-title">Novel</h2>
         <ul class="novel-list">
@@ -451,7 +621,6 @@
         </ul>
       </section>
 
-      <!-- Contact セクション -->
       <section id="contact">
         <h2 class="section-title">Contact</h2>
         <div class="contact-group">
@@ -475,9 +644,16 @@
     </footer>
   </div>
 
-  <!-- -----------------------------------------
-       6. JavaScript (メニュー開閉 & 桜のアニメーション)
-  ----------------------------------------- -->
+  <div class="modal-overlay" id="illust-modal" aria-hidden="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" id="modal-close" aria-label="閉じる">✕</button>
+      <div class="modal-image-wrapper">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-caption" id="modal-caption"></div>
+    </div>
+  </div>
+
   <script>
     /* ハンバーガーメニュー制御 */
     const hamburgerBtn = document.getElementById('hamburger-btn');
@@ -497,6 +673,50 @@
         mobileNav.classList.remove('active');
         document.body.style.overflow = '';
       });
+    });
+
+    /* モーダル表示機能 */
+    const modal = document.getElementById('illust-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalClose = document.getElementById('modal-close');
+    const illustItems = document.querySelectorAll('.illust-item');
+
+    illustItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const fullSrc = item.getAttribute('data-full');
+        const altText = item.getAttribute('data-alt');
+
+        modalImg.src = fullSrc;
+        modalImg.alt = altText;
+        modalCaption.textContent = altText;
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    modalClose.addEventListener('click', closeModal);
+    
+    // 背景（オーバーレイ）クリックで閉じる
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // ESCキーで閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
     });
 
     /* 桜の花びら Canvas アニメーション */
