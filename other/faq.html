@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | Stoat Labo</title>
+    
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <style>
+    /* ----------------------------------
+       CSS RESET & VARIABLES
+    ---------------------------------- */
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background-color: var(--bg-main);
+      background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: var(--text-main);
+      line-height: 1.8;
+      padding-bottom: 60px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    /* ----------------------------------
+       HERO AREA
+    ---------------------------------- */
+    .hero {
+      background: var(--grad-hero);
+      border-bottom: 2px dashed #E2D5CE;
+      padding: 50px 20px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      font-size: 3rem;
+      letter-spacing: 0.06em;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      line-height: 1.15;
+      display: inline-block;
+      filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+      font-size: 1.00rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+       LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+      background: var(--grad-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #FFF;
+      display: block;
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-4px); 
+      box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      position: relative;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      padding-left: 14px;
+    }
+
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 80%;
+      background: var(--grad-primary);
+      border-radius: 4px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+       ACCORDION (Q&A) STYLES
+    ---------------------------------- */
+    .qa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .qa-item {
+      background: #FAF5F2;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .qa-item[open] {
+      border-color: var(--primary);
+      background: #FFF;
+    }
+
+    .qa-summary {
+      padding: 16px 48px 16px 20px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+      position: relative;
+      list-style: none; /* 標準矢印を非表示 */
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-main);
+      user-select: none;
+      transition: background-color 0.2s;
+    }
+
+    .qa-summary::-webkit-details-marker {
+      display: none; /* Safari用矢印非表示 */
+    }
+
+    .qa-summary:hover {
+      background-color: #FFF5F1;
+    }
+
+    .qa-badge-q {
+      background: var(--grad-primary);
+      color: #FFF;
+      font-size: 0.85rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: bold;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    /* アコーディオン開閉用プラス・マイナスアイコン */
+    .qa-summary::after {
+      content: "+";
+      position: absolute;
+      right: 20px;
+      top: 16px;
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-weight: bold;
+      line-height: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .qa-item[open] .qa-summary::after {
+      content: "−";
+      transform: rotate(180deg);
+    }
+
+    .qa-content {
+      padding: 16px 20px 20px 20px;
+      border-top: 1px stroke var(--border);
+      background-color: #FFF;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      display: flex;
+      gap: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .qa-badge-a {
+      background: #E8DDD7;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: bold;
+      flex-shrink: 0;
+      height: fit-content;
+      line-height: 1.4;
+    }
+
+    .qa-body {
+      flex: 1;
+    }
+
+    .qa-body p {
+      margin-bottom: 10px;
+    }
+
+    .qa-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .qa-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ----------------------------------
+       BACK BUTTON
+    ---------------------------------- */
+    .back-nav {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      background: var(--grad-primary);
+      color: #FFF;
+      padding: 12px 32px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+
+    /* レスポンシブ設定 */
+    @media (max-width: 600px) {
+      .hero { padding: 35px 15px 25px; }
+      .header-title { font-size: 2.2rem; }
+      
+      nav ul {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px;
+      }
+      nav a { padding: 10px 14px; font-size: 0.88rem; }
+
+      .container { margin-top: 20px; padding: 0 12px; }
+      .section { padding: 22px 18px; }
+      .qa-summary { padding: 14px 40px 14px 14px; font-size: 0.92rem; }
+      .qa-summary::after { right: 14px; top: 14px; }
+      .qa-content { padding: 14px; font-size: 0.88rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-container">
+      <h1 class="header-title">FAQ</h1>
+      <p class="header-subtitle">テンプレートについてのよくある質問</p>
+    </div>
+  </header>
+    
+    <nav>
+    <ul>
+      <li><a href="../index.html#templates">テンプレート</a></li>
+      <li><a href="../index.html#tools">ツール</a></li>
+      <li><a href="../index.html#column">コラム</a></li>
+      <li><a href="../index.html#mystery">その他</a></li>
+      <li><a href="../index.html#guide">ガイド</a></li>
+      <li><a href="../index.html#info">インフォ</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <section id="usage" class="section">
+      <h2 class="section-title">テンプレートの利用について</h2>
+      
+      <div class="qa-list">
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>テンプレートの利用報告は必要ですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>いいえ、不要です。</p>
+              <p class="qa-note">ただし、Wavebox等で「使わせていただきます！」といった一言をいただけると、管理人が大変喜びます。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>二次創作サイトで利用してもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>はい、問題なくご利用いただけます。</p>
+              <p class="qa-note">ただし、原作公式のガイドラインにて二次創作や性的・暴力的表現が禁止されている場合があります。各公式の規約を遵守したうえで、自己責任にてご利用ください。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>成人向け（R-18 / R-18G）コンテンツのあるサイトで使ってもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>はい、問題なくご利用いただけます。</p>
+              <p class="qa-note">一次創作・二次創作を問わず、ジャンルや対象年齢による制限はありません。ただし、法令やご利用サーバーの規約を遵守し、必ず適切な年齢確認（ワンクッションページ等）を設置した上でご利用ください。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>商用サイトで利用してもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>商用利用を希望される場合は、事前にSNSやWaveboxからご連絡ください。</p>
+              <p class="qa-note">当サイトのテンプレートは個人サイトでの利用を主目的として制作しているため、商用でのご利用時はご一報をお願いしております。<br>なお、「同人誌を頒布している外部サイト（BOOTH、pictSPACE、とらのあな等）へのリンク掲載」程度であればご連絡は不要です。</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="modification" class="section">
+      <h2 class="section-title">テンプレートの改変について</h2>
+
+      <div class="qa-list">
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>「イラスト向け」のテンプレートを小説サイトで使ったり、本来の用途と異なる使い方をしてもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>はい、問題ありません。</p>
+              <p class="qa-note">カテゴリ分けはあくまで制作時の目安ですので、お好きな用途に合わせて自由にご活用ください。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>テンプレートのコードをAIに見せて編集（カスタマイズ）してもらってもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>はい、問題ありません。</p>
+              <p class="qa-note">AIツール等を利用して当サイトのコードを編集・調整していただいて構いません。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>フッターにある著作権表示（当サイトへのリンク）を削除してもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>はい、削除していただいて問題ありません。</p>
+              <p class="qa-note">配布テンプレートのフッターに含まれる当サイトへのリンクは自由に取り外していただけます。ただし、<strong>自作発言</strong>および<strong>二次配布</strong>は固く禁止しております。</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="others" class="section">
+      <h2 class="section-title">その他</h2>
+
+      <div class="qa-list">
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>テンプレートに使用されている背景などの画像を、そのまま利用してもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>いいえ、画像のお持ち帰りは禁止しております。</p>
+              <p class="qa-note">サンプルとして使用している画像の多くは、外部の素材サイト様からお借りしているものです。当サイトから直接ダウンロードして使用する行為は「素材の二次配布」にあたってしまうため、必ずご自身で用意された画像に差し替えてご利用ください。また、画像への直リンクもご遠慮ください。</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary class="qa-summary">
+            <span class="qa-badge-q">Q</span>
+            <span>当サイトをSNSやブログで紹介してもいいですか？</span>
+          </summary>
+          <div class="qa-content">
+            <span class="qa-badge-a">A</span>
+            <div class="qa-body">
+              <p>はい、大歓迎です！</p>
+              <p class="qa-note">トップページや各ページへのリンク・ご紹介に事前の許可は不要です。お知らせいただければ管理人がとても喜びます。</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <div class="back-nav">
+      <a href="../index.html" class="btn-back">← トップページに戻る</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
