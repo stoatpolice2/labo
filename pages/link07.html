@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strawberry Choco | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --------------------------------------------------
+       1. 全体・アポロカラー背景設定
+    -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      /* いちごチョコピンクからブラウンへの甘いグラデーション */
+      background: linear-gradient(135deg, #ffb3c6 0%, #ff85a1 50%, #5c3a21 100%);
+      color: #3b2314;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 50px 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 背景にアポロのドット（つぶつぶ）をイメージした水玉模様 */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.2) 3px, transparent 3px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    /* --------------------------------------------------
+       2. メインコンテナ
+    -------------------------------------------------- */
+    .apollo-container {
+      max-width: 520px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 4px solid #5c3a21; /* チョコ色のフレーム */
+      border-radius: 32px;
+      padding: 40px 24px;
+      box-shadow: 0 15px 35px rgba(92, 58, 33, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin-top: auto;
+      margin-bottom: auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* --------------------------------------------------
+       3. 【仕掛け】こっそり隠れる「ラッキースター」
+    -------------------------------------------------- */
+    .lucky-star {
+      position: absolute;
+      top: -15px;
+      right: 25px;
+      font-size: 2.2rem;
+      color: #ffd700; /* ゴールドの星 */
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      transform: rotate(15deg);
+      animation: starTwinkle 2s ease-in-out infinite alternate;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    @keyframes starTwinkle {
+      0% { transform: rotate(10deg) scale(1); }
+      100% { transform: rotate(20deg) scale(1.15); }
+    }
+
+    /* ツールチップ（星をホバーしたときのメッセージ） */
+    .lucky-star::after {
+      content: 'いいことあるかも？';
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      background: #5c3a21;
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lucky-star:hover::after {
+      opacity: 1;
+    }
+
+    /* --------------------------------------------------
+       4. プロフィールセクション（いちごチョコ風）
+    -------------------------------------------------- */
+    .profile-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .avatar-frame {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      padding: 4px;
+      background: #ff85a1; /* いちごピンク */
+      border: 3px solid #5c3a21;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+    }
+
+    .profile-name {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #5c3a21;
+      letter-spacing: 1px;
+    }
+
+    .profile-bio {
+      font-size: 0.88rem;
+      color: #6b4c35;
+      line-height: 1.7;
+    }
+
+    /* --------------------------------------------------
+       5. リンクボタン（アポロの段々チョコ風デザイン）
+    -------------------------------------------------- */
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .apollo-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: #5c3a21;
+      
+      /* 下半分がミルクチョコ、上半分がいちごチョコをイメージしたグラデーション */
+      background: linear-gradient(180deg, #ffccd5 0%, #ffccd5 49%, #f0d5be 50%, #e0c2a8 100%);
+      border: 2.5px solid #5c3a21;
+      border-radius: 50px;
+      
+      box-shadow: 0 4px 12px rgba(92, 58, 33, 0.15);
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .link-icon {
+      font-size: 1.1rem;
+    }
+
+    .link-arrow {
+      font-size: 1rem;
+      color: #ff85a1;
+      background: #5c3a21;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    /* ホバー時のぷにっとした浮き上がり＆色変化 */
+    .apollo-link:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(92, 58, 33, 0.25);
+      background: linear-gradient(180deg, #ffb3c6 0%, #ffb3c6 49%, #e6be9c 50%, #d4ab84 100%);
+    }
+
+    .apollo-link:hover .link-arrow {
+      transform: translateX(3px);
+    }
+
+    /* --------------------------------------------------
+       6. フッター
+    -------------------------------------------------- */
+    .apollo-footer {
+      font-size: 0.75rem;
+      color: #8c6a53;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* レスポンシブ調整 */
+    @media (max-width: 480px) {
+      .apollo-container {
+        padding: 30px 16px;
+      }
+      .apollo-link {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="apollo-container">
+    
+    <div class="lucky-star">⭐</div>
+
+    <header class="profile-box">
+      <div class="avatar-frame">
+        <img src="../images/icon.webp" alt="プロフィール画像">
+      </div>
+      <h1 class="profile-name">YourName</h1>
+      <p class="profile-bio">
+        ここに自己紹介などを入力してください🍫<br><br>
+        ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+    </header>
+
+    <nav class="link-list">
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">🌐</span><span>Web Site</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">𝕏</span><span>X (Twitter)</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">📷</span><span>Instagram</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">🎨</span><span>pixiv</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-link apollo-link" style="text-decoration: none;">
+        <div class="link-left"><span class="link-icon">🦋</span><span>BlueSky</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">🚀</span><span>Misskey</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">🐘</span><span>Mastodon</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="apollo-link">
+        <div class="link-left"><span class="link-icon">✉️</span><span>Mail  Form</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+    </nav>
+
+    <footer class="apollo-footer">
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a>
+    </footer>
+
+  </div>
+
+</body>
+</html>
