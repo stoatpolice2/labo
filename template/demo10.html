@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        /* Base Reset & Colors */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #2b2b2b;
+            --text-sub: #7a7a7a;
+            --gray-light: #f8f8f8;
+            --gray-border: #e0e0e0;
+            --accent-blood: #a31c1c; /* 血を連想させる深めの赤 */
+            --card-bg: #ffffff;
+            --code-bg: #f4f4f4;
+        }
+
+        /* ダークモード時のカラー変数 */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-main: #d1d1d1;
+            --text-sub: #888888;
+            --gray-light: #1c1c1c;
+            --gray-border: #2a2a2a;
+            --accent-blood: #c82828;
+            --card-bg: #181818;
+            --code-bg: #1f1f1f;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", meiryo, sans-serif;
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+            word-wrap: break-word;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Top Header Bar */
+        .header-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 10;
+        }
+
+        .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--gray-border);
+            color: #2b2b2b;
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            letter-spacing: 0.05em;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background: rgba(18, 18, 18, 0.85);
+            color: #d1d1d1;
+            border-color: #333333;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-blood);
+            color: var(--accent-blood);
+        }
+
+        /* Hero Image Area */
+        .hero-container {
+            width: 100vw;
+            height: 50vh;
+            overflow: hidden;
+            background-color: var(--gray-light);
+            border-bottom: 1px solid var(--gray-border);
+            position: relative;
+        }
+
+        .hero-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(80%) contrast(110%);
+            opacity: 0.85;
+            transition: opacity 0.5s ease;
+        }
+
+        body.dark-mode .hero-container img {
+            opacity: 0.65;
+            filter: grayscale(90%) contrast(120%);
+        }
+
+        .hero-title {
+            position: absolute;
+            bottom: 20px;
+            left: 5%;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            color: var(--text-main);
+            background: var(--bg-color);
+            padding: 4px 16px;
+            border-left: 2px solid var(--accent-blood);
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Container Layout */
+        .main-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--gray-border);
+            margin-bottom: 40px;
+            list-style: none;
+        }
+
+        .tab-nav li {
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-blood);
+        }
+
+        /* Tab Contents */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section & Card Styling */
+        .content-section {
+            margin-bottom: 48px;
+        }
+
+        .content-section h2 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--gray-border);
+            position: relative;
+        }
+
+        .content-section h2::before {
+            content: '―';
+            margin-right: 8px;
+            color: var(--accent-blood);
+        }
+
+        .content-section p {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+        }
+
+        /* カスタマイズ案内用のコード・テーブル スタイル */
+        .custom-note-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--gray-border);
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .custom-code-inline {
+            background-color: var(--code-bg);
+            border: 1px solid var(--gray-border);
+            padding: 2px 6px;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        .custom-table th, .custom-table td {
+            border: 1px solid var(--gray-border);
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background-color: var(--gray-light);
+            color: var(--text-main);
+            font-weight: 400;
+        }
+
+        .color-sample-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        /* 作品リスト（小説・考察共通） */
+        .work-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .work-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--gray-border);
+            padding: 24px;
+            transition: border-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .work-card:hover {
+            border-color: var(--accent-blood);
+            transform: translateY(-2px);
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .work-title {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-main);
+            letter-spacing: 0.08em;
+        }
+
+        .work-date {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .work-meta {
+            font-size: 0.75rem;
+            color: var(--accent-blood);
+            margin-bottom: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        .work-description {
+            font-size: 0.88rem;
+            color: var(--text-sub);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            border-top: 1px solid var(--gray-border);
+            margin-top: 60px;
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 600px) {
+            .hero-container {
+                height: 35vh;
+            }
+
+            .hero-title {
+                font-size: 1.3rem;
+                left: 20px;
+            }
+
+            .main-wrapper {
+                padding: 24px 16px 60px;
+            }
+
+            .tab-btn {
+                font-size: 0.85rem;
+                padding: 10px 0;
+            }
+
+            .work-card {
+                padding: 18px;
+            }
+
+            .work-title {
+                font-size: 1.0rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー（ダークモード切替ボタン） -->
+    <div class="header-bar">
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">Dark Mode</button>
+    </div>
+
+    <!-- 横長ヒーロー画像エリア (画面横幅100% × 縦幅50vh) -->
+    <div class="hero-container">
+        <img src="../images/picture02.webp" alt="Signal Main Visual">
+        <h1 class="hero-title">Signal</h1>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="main-wrapper">
+        
+    <!-- タブナビゲーション -->
+    <ul class="tab-nav">
+        <li><button class="tab-btn active" data-tab="top" onclick="openTab('top')">トップ</button></li>
+        <li><button class="tab-btn" data-tab="novel" onclick="openTab('novel')">小説</button></li>
+        <li><button class="tab-btn" data-tab="consideration" onclick="openTab('consideration')">考察</button></li>
+    </ul>
+
+        <!-- 「トップ」セクション -->
+        <div id="top" class="tab-content active">
+            <section class="content-section">
+                <h2>このサイトについて</h2>
+                <p>当サイトは非公式ファンサイトです。灰色の静寂の中に落とされた一滴の痕跡のように、ひっそりと更新を続けています。</p>
+                <p>※小説用の子ページのコードはこのテンプレートには含まれていません。「子ページ」カテゴリにあるテンプレートをなどを使用してください。</p>
+                <p>※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。</p>
+            </section>
+
+            <section class="content-section">
+                <h2>管理人について</h2>
+                <p>名前：管理人（your name）</p>
+                <p>ここに自己紹介などを入力してください。</p>
+            </section>
+
+            <section class="content-section">
+                <h2>当サイトへのリンクについて</h2>
+                <p>当サイトはリンクフリーです。報告等も不要ですが、設置していただける場合はトップページへお願いいたします。</p>
+            </section>
+
+            <!-- カスタマイズについてのセクション -->
+            <section class="content-section">
+                <h2>カスタマイズについて</h2>
+                <p>このテンプレートをご利用の際、アクセントの赤色を「青系の色」に変更することで、透明感のある爽やかな印象のデザインにアレンジできます。</p>
+                
+                <div class="custom-note-box">
+                    <p style="color: var(--text-main); font-weight: bold; margin-bottom: 8px;">【コード内の変更箇所】</p>
+                    <p>CSS冒頭の <span class="custom-code-inline">:root</span> および <span class="custom-code-inline">body.dark-mode</span> 内にある変数を書き換えてください。</p>
+                    <p><span class="custom-code-inline">--accent-blood</span> (通常時のアクセント色)</p>
+                    <p><span class="custom-code-inline">--accent-blood</span> (ダークモード時のアクセント色)</p>
+                    
+                    <p style="color: var(--text-main); font-weight: bold; margin-top: 16px; margin-bottom: 8px;">【青系カラーコードの変更例】</p>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>印象・スタイル</th>
+                                <th>通常時 (Light)</th>
+                                <th>ダークモード時 (Dark)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>澄んだコバルトブルー</td>
+                                <td><span class="color-sample-dot" style="background:#1e50a2;"></span><span class="custom-code-inline">#1e50a2</span></td>
+                                <td><span class="color-sample-dot" style="background:#4c88e8;"></span><span class="custom-code-inline">#4c88e8</span></td>
+                            </tr>
+                            <tr>
+                                <td>静かなインディゴ・紺色</td>
+                                <td><span class="color-sample-dot" style="background:#2b4b6f;"></span><span class="custom-code-inline">#2b4b6f</span></td>
+                                <td><span class="color-sample-dot" style="background:#5a84b5;"></span><span class="custom-code-inline">#5a84b5</span></td>
+                            </tr>
+                            <tr>
+                                <td>鮮やかなシアン・水色</td>
+                                <td><span class="color-sample-dot" style="background:#007bbb;"></span><span class="custom-code-inline">#007bbb</span></td>
+                                <td><span class="color-sample-dot" style="background:#00a3e0;"></span><span class="custom-code-inline">#00a3e0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- 「小説」セクション -->
+        <div id="novel" class="tab-content">
+            <section class="content-section">
+                <h2>小説一覧</h2>
+                <p style="margin-bottom: 24px;">愛情と憎悪の狭間での葛藤を描いた二次創作小説です。</p>
+                
+                <div class="work-list">
+                    <!-- 作品カード 1 -->
+                    <a href="novel10.html" class="work-card">
+                        <div class="work-header">
+                            <h3 class="work-title">静寂の破片</h3>
+                            <span class="work-date">2026.09.01</span>
+                        </div>
+                        <div class="work-meta">Short Story / 完結</div>
+                        <p class="work-description">
+                            白く塗り潰された視界の端で弾けた、途切れがちなシグナル。言葉を持たない二人と、指先から滲むかすかな赤の記録。
+                        </p>
+                    </a>
+
+                    <!-- 作品カード 2 -->
+                    <a href="novel10.html" class="work-card">
+                        <div class="work-header">
+                            <h3 class="work-title">灰色の残響</h3>
+                            <span class="work-date">2026.09.15</span>
+                        </div>
+                        <div class="work-meta">Long Story / 連載中</div>
+                        <p class="work-description">
+                            ノイズの中に消えたかすかな声を追いかける――作中で語られなかった、もしかしたらの物語。全3話の予定です。
+                        </p>
+                    </a>
+                </div>  
+            </section>
+        </div>
+
+        <!-- 「考察」セクション -->
+        <div id="consideration" class="tab-content">
+            <section class="content-section">
+                <h2>作品考察</h2>
+                <p style="margin-bottom: 24px;">作中設定や描写に関する私的な解釈とメモ。</p>
+
+                <div class="work-list">
+                    <!-- 考察カード 1 -->
+                    <a href="novel10.html" class="work-card">
+                        <div class="work-header">
+                            <h3 class="work-title">「届かないシグナル」の構造について</h3>
+                            <span class="work-date">2026.08.20</span>
+                        </div>
+                        <div class="work-meta">Essay / シナリオ考察</div>
+                        <p class="work-description">
+                            作中で描かれる「距離感」と「遮断」。疾走感あふれる展開の裏に隠された、徹底的な孤立感と静寂の対比を検証しています
+                            。
+                        </p>
+                    </a>
+
+                    <!-- 考察カード 2 -->
+                    <a href="novel10.html" class="work-card">
+                        <div class="work-header">
+                            <h3 class="work-title">白とノイズ ― 音像がもたらす視覚的効果</h3>
+                            <span class="work-date">2026.07.28</span>
+                        </div>
+                        <div class="work-meta">Essay / サウンド分析</div>
+                        <p class="work-description">
+                            高音域の鋭利なギターとベースラインの蠢きが、いかにして「白い世界の中の歪み」を表現しているかについての考察。
+                        </p>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+    <footer>
+        <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+    // タブ切り替え処理関数
+    function openTab(tabName) {
+        // すべてのコンテンツを非表示
+        const tabContents = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove("active");
+        }
+
+        // すべてのタブボタンのActiveクラスを解除
+        const tabButtons = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove("active");
+        }
+
+        // 指定されたコンテンツを表示
+        const targetContent = document.getElementById(tabName);
+        if (targetContent) {
+            targetContent.classList.add("active");
+        }
+
+        // 対応するタブボタンをアクティブ化
+        const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+        if (targetBtn) {
+            targetBtn.classList.add("active");
+        }
+    }
+
+    // ページ読み込み時の処理（URLのハッシュ判定）
+    document.addEventListener("DOMContentLoaded", function() {
+        // URLの末尾のハッシュ（例: "#novel"）を取得し、先頭の"#"を除去
+        const hash = window.location.hash.replace("#", "");
+
+        // ハッシュが存在し、対応するコンテンツがある場合はそのタブを開く
+        if (hash && document.getElementById(hash)) {
+            openTab(hash);
+        } else {
+            // ハッシュがない場合はデフォルトで「top」を開く
+            openTab("top");
+        }
+    });
+
+    // ダークモード切替処理
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById("themeToggleBtn");
+
+        body.classList.toggle("dark-mode");
+
+        if (body.classList.contains("dark-mode")) {
+            btn.textContent = "Light Mode";
+        } else {
+            btn.textContent = "Dark Mode";
+        }
+    }
+</script>
+</body>
+</html>
