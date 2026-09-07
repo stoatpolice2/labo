@@ -447,15 +447,16 @@ footer {
             </div>
 
             <div class="step-item">
-                <h3><span class="step-number">2</span>文章を書く・改行する（ABOUT・更新履歴）</h3>
-                <p>HTMLのちょっと不思議なところで、キーボードのEnterキーで改行しても画面では改行されません。改行したい場所には <code>&lt;br&gt;</code> や <code>&lt;p&gt;</code><code>&lt;/p&gt;</code> という記号を入れます。</p>
+                <h3><span class="step-number">2</span>文章を書く・改行する・リストを作る（ABOUT・更新履歴）</h3>
+                <p>HTMLのちょっと不思議なところで、キーボードのEnterキーで改行しても画面では改行されません。文章を一段落としてまとめる時は <code>&lt;p&gt;</code><code>&lt;/p&gt;</code>、段落の中で改行したい場所には <code>&lt;br&gt;</code> を使います。</p>
+                <p style="margin-top: 8px;">また、更新履歴や箇条書きで項目を並べたいときは <code>&lt;li&gt;</code><code>&lt;/li&gt;</code>（リストアイテム）というタグを使います。リストを増やしたい時は、この <code>&lt;li&gt;〜&lt;/li&gt;</code> をコピーして増やすのが基本です！</p>
                 <pre><code><span class="comment">&lt;!-- ABOUTの文章を自分用に変える --&gt;</span>
 &lt;<span class="tag-name">p</span> <span class="attr-name">class</span>=<span class="attr-val">"about-text"</span>&gt;
     はじめまして！〇〇です。&lt;<span class="tag-name">br</span>&gt;
     好きなものを自由に描いているイラストサイトです。
 &lt;/<span class="tag-name">p</span>&gt;
 
-<span class="comment">&lt;!-- 更新履歴（INFORMATION）を増やす --&gt;</span>
+<span class="comment">&lt;!-- 更新履歴（INFORMATION）の項目（&lt;li&gt;）を増やす --&gt;</span>
 &lt;<span class="tag-name">li</span> <span class="attr-name">class</span>=<span class="attr-val">"news-item"</span>&gt;
     &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"news-date"</span>&gt;2026.08.10&lt;/<span class="tag-name">span</span>&gt;
     &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"news-text"</span>&gt;ギャラリーにイラストを追加しました！&lt;/<span class="tag-name">span</span>&gt;
@@ -498,12 +499,20 @@ footer {
             <div class="step-item">
                 <h3><span class="step-number">5</span>文字や画像にリンクを貼る</h3>
                 <p>クリックしたときにほかのページやSNSなどに飛ばしたい時は <code>&lt;a href="URL"&gt;</code> を使います。</p>
-                <pre><code><span class="comment">&lt;!-- 文字にリンクを貼る場合 --&gt;</span>
-&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://twitter.com/〇〇"</span> <span class="attr-name">target</span>=<span class="attr-val">"_blank"</span>&gt;X（旧Twitter）はこちら&lt;/<span class="tag-name">a</span>&gt;
+                <p style="margin-top: 8px;">外部サイトへ移動させたい場合は、<code>target="_blank"</code> と <code>rel="noopener"</code> をセットで記述するのがおすすめです。</p>
+                <ul style="margin: 8px 0 12px 20px; font-size: 0.9rem;">
+                    <li><code>target="_blank"</code>：リンクを「新しいタブ」で開いてくれます。自身のサイトを閉じることなく見てもらえるようになります。</li>
+                    <li><code>rel="noopener"</code>：新しいタブで開いた際に、セキュリティ上のリスクを防ぐための「お守り」のような設定です。<code>target="_blank"</code> とセットで書くのがWeb制作の基本マナーになっています🐾</li>
+                </ul>
+                <pre><code><span class="comment">&lt;!-- 外部サイトへリンクする場合（新しいタブで開く） --&gt;</span>
+&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://x.com/〇〇"</span> <span class="attr-name">target</span>=<span class="attr-val">"_blank"</span> <span class="attr-name">rel</span>=<span class="attr-val">"noopener"</span>&gt;X（旧Twitter）はこちら&lt;/<span class="tag-name">a</span>&gt;
+
+<span class="comment">&lt;!-- サイト内の別ページに移動する場合（同じタブで開く） --&gt;</span>
+&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"about.html"</span>&gt;ABOUTページへ&lt;/<span class="tag-name">a</span>&gt;
 
 <span class="comment">&lt;!-- 画像をクリックできるようにする場合（&lt;a&gt;の中に&lt;img&gt;を入れる） --&gt;</span>
-&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://〇〇"</span>&gt;
-    &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/banner.webp"</span> <span class="attr-name">alt</span>=<span class="attr-val">"home page"</span>&gt;
+&lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"https://〇〇"</span> <span class="attr-name">target</span>=<span class="attr-val">"_blank"</span> <span class="attr-name">rel</span>=<span class="attr-val">"noopener"</span>&gt;
+    &lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"images/banner.webp"</span> <span class="attr-name">alt</span>=<span class="attr-val">"バナー画像"</span>&gt;
 &lt;/<span class="tag-name">a</span>&gt;</code></pre>
             </div>
         </section>
@@ -513,7 +522,7 @@ footer {
             <h2 class="section-title">3. 画像が表示されないときは</h2>
             <p>「書き換えたのに画像が出なくて画面が崩れちゃう…」という時は、この3つが原因のことが多いです🐾</p><br>
             <ul class="rule-list">
-                <li class="rule-ng"><strong>拡張子のうっかりミス：</strong> <code>.jpg</code> なのか <code>.png</code> なのか。大文字（<code>.jpg</code>）と小文字（<code>.JPG</code>）が違うだけでも表示されないことがあるので確認してみてください。</li>
+                <li class="rule-ng"><strong>拡張子のうっかりミス：</strong> <code>.jpg</code> なのか <code>.png</code> なのか。大文字（<code>.JPG</code>）と小文字（<code>.jpg</code>）が違うだけでも表示されないことがあるので確認してみてください。</li>
                 <li class="rule-ng"><strong>画像の場所（フォルダ）が違う：</strong> <code>&lt;img&gt;</code> タグの <code>src="images/〜"</code> という記述は、「HTMLファイルと同じ階層にある <code>images</code> という名前のフォルダの中を見る」というルール（<strong>相対パス</strong>）になっています。そのため、フォルダを作っていなかったり、画像が別の階層に保存されていると画像が表示されません。</li>
                 <li class="rule-ng"><strong>全角スペースが入っている：</strong> コードのすき間に「全角スペース」が混ざっていると上手く動かなくなります。スペースや記号は必ず「半角」で打ちましょう！</li>
             </ul>
