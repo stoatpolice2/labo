@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シェア率No.1のコードエディタ「VS Code」 | Stoat Labo</title>
+
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+        --primary: #E06D53;
+        --primary-hover: #C8563C;
+        --accent: #E8963E;
+        --bg-main: #FAF7F5;
+        --bg-card: #FFFFFF;
+        --text-main: #332C2B;
+        --text-muted: #7A6E6B;
+        --border: #E6DAD3;
+        --radius: 16px;
+        --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+        --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+        --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+        --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 36px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section:hover {
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+        margin-bottom: 15px;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 10px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    /* 目次ボックス */
+    .toc-box {
+        background: #FAF5F2;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 30px;
+    }
+
+    .toc-title {
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .toc-list li {
+        margin-bottom: 6px;
+        padding-left: 18px;
+        position: relative;
+    }
+
+    .toc-list li::before {
+        content: "・";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+    }
+
+    /* CTAボタン */
+    .cta-container {
+        text-align: center;
+        margin: 30px 0 10px;
+    }
+
+    .download-btn {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF !important;
+        padding: 14px 32px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        text-decoration: none;
+    }
+
+    /* インラインコード装飾 */
+    code {
+        background-color: #F3EAE6;
+        color: #C8563C;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: Consolas, Monaco, monospace;
+        font-size: 0.9em;
+    }
+
+    /* ----------------------------------
+        IMAGE STYLES & GRID
+    ---------------------------------- */
+    .image-container {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .image-frame {
+        position: relative;
+        width: 100%;
+        height: 180px; /* サムネイルの高さを統一 */
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 枠に合わせてトリミング表示 */
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .image-frame img:hover {
+        opacity: 0.88;
+        transform: scale(1.02);
+    }
+
+    /* 右下の拡大バッジ */
+    .image-frame::after {
+        content: "🔍 拡大表示";
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(51, 44, 43, 0.75);
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 20px;
+        pointer-events: none;
+        backdrop-filter: blur(2px);
+        transition: background 0.2s ease;
+    }
+
+    .image-frame:hover::after {
+        background: rgba(224, 109, 83, 0.9);
+    }
+
+    .image-caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 6px;
+    }
+
+    /* ----------------------------------
+        MODAL (LIGHTBOX) STYLES
+    ---------------------------------- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        color: #fff;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--accent);
+    }
+
+    /* ----------------------------------
+        TABLE STYLES
+    ---------------------------------- */
+    .table-wrapper {
+        overflow-x: auto;
+        margin: 20px 0;
+    }
+
+    table.compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.92rem;
+    }
+
+    table.compare-table th {
+        background: #FAF5F2;
+        color: var(--primary);
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    table.compare-table td {
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        background: #FFF;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.6rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">シェア率No.1のコードエディタ<br>「VS Code」</h1>
+            <p class="header-subtitle">豊富な拡張機能とAIが強力な世界トップシェアのコードエディタ</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#intro">はじめに</a></li>
+            <li><a href="#install">初期設定の壁</a></li>
+            <li><a href="#plugins">おすすめプラグイン</a></li>
+            <li><a href="#ai-assist">AIアシストの魅力</a></li>
+            <li><a href="#summary">まとめ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 簡易目次ボックス -->
+        <div class="toc-box">
+            <div class="toc-title">📌 目次</div>
+            <ul class="toc-list">
+                <li><a href="#intro">はじめに（VS Codeとは？）</a></li>
+                <li><a href="#install">インストールと初期設定の壁</a></li>
+                <li><a href="#plugins">Web制作に必須のおすすめプラグイン</a></li>
+                <li><a href="#ai-assist">初心者も安心！GitHub CopilotによるAIアシスト</a></li>
+                <li><a href="#summary">まとめ＆ダウンロード</a></li>
+            </ul>
+        </div>
+
+        <!-- はじめに -->
+        <section id="intro" class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p><strong>「VS Code（Visual Studio Code）」</strong>は、世界中のエンジニアやWebクリエイターに愛用されている高機能なコードエディタです。HTML/CSSやJavaScriptはもちろん、あらゆるプログラミング言語に対応しており、シンプルなWebページ制作から本格的なソフトウェア開発までこれひとつで完結します。</p>
+            
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 VS Codeのチュートリアル画面</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column10.webp" alt="VS Codeのチュートリアル画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+            
+            <p style="margin-top: 10px;">さらに、近年ではAIアシスタント<strong>「GitHub Copilot」</strong>との強力な連携によって、AIが編集のアドバイスをしてくれたり、コードを直接修正してくれたりと、開発効率が劇的に向上しています。</p>
+            
+            <div class="alert-box">
+                <strong>💡 自由度が高い反面、初心者はとっつきにくい</strong><br>
+                VS Codeは圧倒的な拡張性と自由度の高さが魅力ですが、それゆえにとっつきにくいという側面もあります。この記事では、Web制作の視点からVS Codeの長所と短所、そして導入時の壁をクリアして快適に使うためのステップを解説します。
+            </div>
+        </section>
+
+        <!-- インストールと初期設定 -->
+        <section id="install" class="section">
+            <h2 class="section-title">インストールと初期設定の壁</h2>
+            <p>VS Codeが初心者に少しハードルが高いと言われる最大の理由は、<strong>「インストールした直後は最低限の機能しかないため、自分の目的に適した環境を整える（初期設定する）必要がある」</strong>という点です。</p>
+            
+            <h3 class="sub-title">1. 日本語化の手間</h3>
+            <p>公式ページからVS Codeをダウンロードしてインストールした直後は、画面の表示がすべて英語です。</p>
+            <p>起動時に日本語化を促すポップアップが出ることもありますが、出ない場合は拡張機能（プラグイン）の検索画面で<strong>「Japanese Language Pack」</strong>を探してインストールする必要があります。</p>
+            <p>日本語化した後もエラーメッセージや詳細な設定項目の一部は英語のまま残るため、英語が苦手だと<strong>「何かエラーが起きているようだけど、何が原因かわからない」</strong>といった状況に陥りやすい点も注意が必要です。</p>
+
+            <h3 class="sub-title">2. Web制作に必要なプラグインの個別導入</h3>
+            <p>VS Codeはデフォルトだと非常にシンプルな機能に絞られています。「Brackets」や「Phoenix Code」のように、最初からWeb制作に必要な機能が揃っていてインストール後すぐに作業できるエディタに慣れていると、自分でプラグインを検索して揃える作業でかなり面食らうことになります。</p>
+        </section>
+
+        <!-- おすすめプラグイン -->
+        <section id="plugins" class="section">
+            <h2 class="section-title">Web制作で導入しておきたいおすすめプラグイン</h2>
+            <p>VS CodeをWebページ制作用エディタとして快適に使うために、まずは以下の基本プラグインを導入するのがおすすめです。</p>
+
+            <div class="table-wrapper">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>プラグイン名</th>
+                            <th>機能と特徴</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Live Server</strong></td>
+                            <td>ローカルサーバーを立ち上げ、コードを保存すると同時にブラウザへ自動反映してプレビューを表示する（必須級！）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prettier - Code formatter</strong></td>
+                            <td>HTML、CSS、JavaScriptのコードを自動で整形してくれる</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auto Rename Tag</strong></td>
+                            <td>HTMLの開始タグを書き換えると、閉じタグも自動で書き換えてくれる</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Error Lens</strong></td>
+                            <td>コードのエラーや警告をその場で表示してくれる</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AIアシストの魅力 -->
+        <section id="ai-assist" class="section">
+            <h2 class="section-title">初心者の救世主！GitHub CopilotによるAIアシスト</h2>
+            <p>「初期設定で何を入れていいか分からない…」と迷ったときに強力な助けとなるのが、VS Codeに連携できるAIアシスタント<strong>「GitHub Copilot」</strong>です。</p>
+            <p>GitHub Copilotと連携しておけば、サイドバーのチャットで<strong>「HTML/CSSでWebサイトを作りたいのでおすすめのプラグインを教えて」</strong>と質問するだけで、必要なプラグインや設定方法を丁寧に解説してくれます！</p>
+
+            <h3 class="sub-title">セットアップ手順</h3>
+            <ul class="rule-list">
+                <li>GitHubアカウントを作成する（無料＆メールアドレスのみで登録可能）</li>
+                <li>VS Codeの「拡張機能」タブから「GitHub Copilot」を検索してインストールする。</li>
+                <li>画面の指示に従い、自分のGitHubアカウントでログインして連携する。</li>
+            </ul>
+
+            <div class="alert-box">
+                <strong>💡 無料プラン（Copilot Free）も利用可能！</strong><br>
+                GitHub Copilotには月間の利用枠内で使える無料プランも用意されているため、まずは気軽にお試し感覚で導入できます🐾
+            </div>
+
+            <h3 class="sub-title">優秀すぎるAIアシスト機能の魅力</h3>
+            <p>個人的にVS Codeの最大の目玉機能だと思っているのが、この「GitHub Copilot」との連携による強力なアシスタント機能。文面によるアドバイスやコードの出力にとどまらず、AI自身がコードを編集することで作業効率を劇的に向上させてくれます。</p>
+
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 ツール制作のアドバイスもしてくれるGitHub Copilot</p>
+                <div class="image-frame" style="height: auto; max-height: 250px;">
+                    <img src="../images/column11.webp" alt="GitHub Copilotとのチャット画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+            
+            <h3 class="sub-title">1. エディタ上のコードを直接編集してくれる</h3>
+            <p>一般的なチャット型AIでもコード生成は可能ですが、その場合は「ブラウザで出力されたコードをコピペして使用する」という形になるため、貼り付けミスなどのヒューマンエラーが起こりがちです。<br>
+            一方、VS Code上のGitHub Copilotに<strong>「このコードをレスポンシブ対応にして」「ここにボタンを追加して」</strong>と依頼すると、エディタ内のコードを直接書き換えて差分を表示してくれます。ワンクリックで適用・拒否を選択できるため、作業効率が圧倒的に向上します。</p>
+
+            <h3 class="sub-title">2. 履歴の復元やアイデアの分岐（ブランチ）が容易</h3>
+            <p>AIに編集してもらった結果がイメージと違った場合でも、チャットの履歴を辿って以前の状態へ簡単に復元できます。<br>
+            チャットの会話内容を分岐（ブランチ）させることもできるため、「現在のコードはそのままキープしつつ、別案として新機能をテスト的に追加してみる」といった実験的な実装も、安全かつスムーズに行えます。</p>
+        </section>
+
+        <!-- まとめ -->
+        <section id="summary" class="section">
+            <h2 class="section-title">まとめ</h2>
+            <p>初期設定やプラグインの選定など、使い始めるまでに手間がかかるVS Codeですが、一度環境を整えてしまえば豊富な拡張性と強力なAIアシストによって抜群の快適さを提供してくれます。</p>
+            <p style="margin-top: 15px;">「これからWeb制作を本格的に始めたい」「AIの力を借りて効率よくコードを書きたい」と考えている方は、ぜひVS CodeとGitHub Copilotの組み合わせを試してみてくださいね！</p>
+
+            <!-- ダウンロードCTAボタン -->
+            <div class="cta-container">
+                <a href="https://code.visualstudio.com/" target="_blank" rel="noopener" class="download-btn">
+                    VS Code 公式サイトを見る ➔
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- モーダル表示用エリア -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // ESCキーでもモーダルを閉じられるように設定
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
