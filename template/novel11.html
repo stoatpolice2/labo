@@ -231,7 +231,6 @@
       <a href="#" class="back-btn">← 目次へ戻る</a>
 
       <div class="controls">
-        <button class="ctrl-btn" onclick="toggleWritingMode()">縦書き / 横書き</button>
         <button class="ctrl-btn" onclick="changeFontSize(1)">文字 大</button>
         <button class="ctrl-btn" onclick="changeFontSize(-1)">文字 小</button>
       </div>
@@ -275,17 +274,6 @@
   <script>
     let currentFontSize = 16;
     const novelArea = document.getElementById('novelArea');
-
-    // 縦書き・横書きの切り替え機能
-    function toggleWritingMode() {
-      if (novelArea.classList.contains('horizontal-mode')) {
-        novelArea.classList.remove('horizontal-mode');
-        novelArea.classList.add('vertical-mode');
-      } else {
-        novelArea.classList.remove('vertical-mode');
-        novelArea.classList.add('horizontal-mode');
-      }
-    }
 
     // 文字サイズの変更機能
     function changeFontSize(delta) {
