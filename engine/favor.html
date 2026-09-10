@@ -97,22 +97,22 @@
     .nav-btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      color: #ffffff !important;
-      font-size: 15px;
+      gap: 6px;
+      color: var(--accent-color);
+      font-size: 14px;
       font-weight: bold;
-      padding: 12px 28px;
-      border-radius: 30px;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-      transition: all 0.25s ease;
-      text-decoration: none !important;
+      text-decoration: none;
+      margin-bottom: 16px;
+      padding: 6px 16px;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
     }
 
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
-      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    .back-link:hover {
+      background-color: var(--accent-light);
+      transform: translateX(-3px);
     }
 
     /* コンテナ */
@@ -471,12 +471,11 @@
 <body id="top">
 
   <header>
+      <div class="btn-container">
+      <a href="manual.html" class="nav-btn">‹ マニュアルへ戻る</a>
+    </div>
     <h1>変数とシナリオ分岐の徹底解説</h1>
     <p>好感度やパラメータを使って物語を変化させよう！変数の仕組みと分岐パターンの使い方ガイド</p>
-    
-    <div class="btn-container">
-      <a href="manual.html" class="nav-btn">取扱説明書へ戻る</a>
-    </div>
   </header>
 
   <div class="container">
