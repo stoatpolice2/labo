@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My novel | Stoat Labo</title>
+  
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* --------------------------------------------------
+       基本設定・リセット
+    -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Georgia", "YuMincho", "Hiragino Mincho ProN", "MS 明朝", serif; /* 小説向けに明朝体に変更 */
+      background-color: #f4ede2;
+      color: #2b2b2b;
+      padding: 20px 10px;
+      line-height: 2.2;
+    }
+
+    /* --------------------------------------------------
+       全体コンテナ（ノート風デザイン）
+    -------------------------------------------------- */
+    .notebook-container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      border-left: 20px solid #8B4513; /* 背表紙 */
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* --------------------------------------------------
+       上部ナビゲーション＆コントロールバー（付箋風）
+    -------------------------------------------------- */
+    .control-header {
+      background-color: #f9f6ef;
+      border-bottom: 2px solid #ddd;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: sans-serif; /* 操作部はゴシック体 */
+    }
+
+    /* 「戻る」付箋ボタン */
+    .back-btn {
+      display: inline-block;
+      background-color: #ffadad;
+      color: #333;
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      background-color: #ff8585;
+    }
+
+    /* 表示設定コントロール群 */
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ctrl-btn {
+      background: #fdffb6;
+      border: 1px solid #e0e0a0;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      background: #fcf881;
+    }
+
+    /* --------------------------------------------------
+       作品本文エリア
+    -------------------------------------------------- */
+    .novel-area {
+      padding: 40px 35px;
+      min-height: 500px;
+      transition: font-size 0.2s;
+    }
+
+    /* 横書き時の罫線背景 */
+    .novel-area.horizontal-mode {
+      background-image: linear-gradient(to bottom, transparent 95%, #e8e3d9 95%);
+      background-size: 100% 2.2rem;
+      writing-mode: horizontal-tb;
+    }
+
+    /* 縦書きモード時のスタイル設定 */
+    .novel-area.vertical-mode {
+      writing-mode: vertical-rl;
+      -webkit-writing-mode: vertical-rl;
+      height: 550px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 30px;
+      background-image: linear-gradient(to left, transparent 95%, #e8e3d9 95%);
+      background-size: 2.2rem 100%;
+    }
+
+    .novel-header {
+      margin-bottom: 40px;
+      border-bottom: 2px dashed #8B4513;
+      padding-bottom: 15px;
+    }
+
+    .vertical-mode .novel-header {
+      border-bottom: none;
+      border-left: 2px dashed #8B4513;
+      padding-bottom: 0;
+      padding-left: 15px;
+      margin-bottom: 0;
+      margin-left: 40px;
+    }
+
+    .novel-title {
+      font-size: 1.8rem;
+      color: #4a3b32;
+      margin-bottom: 8px;
+    }
+
+    .novel-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    .novel-text p {
+      margin-bottom: 1.5rem;
+      text-indent: 1em; /* 行頭1文字下げる */
+    }
+
+    .vertical-mode .novel-text p {
+      margin-bottom: 0;
+      margin-left: 1.5rem;
+    }
+
+    /* --------------------------------------------------
+       ページフッター（前後の話・目次）
+    -------------------------------------------------- */
+    .novel-footer {
+      background-color: #f9f6ef;
+      border-top: 2px solid #ddd;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: sans-serif;
+    }
+
+    .nav-btn {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #333;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .prev-btn { background-color: #caffbf; }
+    .next-btn { background-color: #9bf6ff; }
+    .disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      box-shadow: none;
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 600px) {
+      .notebook-container {
+        border-left-width: 10px;
+      }
+
+      .novel-area {
+        padding: 25px 15px;
+      }
+
+      .vertical-mode {
+        height: 420px; /* スマホ画面の高さに合わせる */
+      }
+
+      .novel-title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="notebook-container">
+    
+    <!-- 操作バー（ヘッダー付箋） -->
+    <div class="control-header">
+      <a href="#" class="back-btn">← 目次へ戻る</a>
+
+      <div class="controls">
+        <button class="ctrl-btn" onclick="toggleWritingMode()">縦書き / 横書き</button>
+        <button class="ctrl-btn" onclick="changeFontSize(1)">文字 大</button>
+        <button class="ctrl-btn" onclick="changeFontSize(-1)">文字 小</button>
+      </div>
+    </div>
+
+    <!-- 小説本文エリア -->
+    <div id="novelArea" class="novel-area horizontal-mode" style="font-size: 16px;">
+      
+      <div class="novel-header">
+        <h1 class="novel-title">星空のノーツ</h1>
+        <div class="novel-subtitle">第1話：ガラス瓶と星屑</div>
+      </div>
+
+      <div class="novel-text">
+        <p>夜の静けさが街を包み込む頃、ルナは古い鞄を抱えて屋根の上に登る。</p>
+        <p>空を見上げると、今夜もひとつ、小さな星が尾を引いて落ちてきた。</p>
+        <p>「今日の星も、綺麗な青色をしているね」</p>
+        <p>ルナは手に持った小さなガラス瓶の蓋を開け、そっと夜空へとかざした。カチャリと心地よい音が響き、落ちてきた星の欠片が瓶の中に収まる。</p>
+        <p>これが、彼女の『星拾い』の仕事だった。</p>
+        <p>集められた星屑たちは、明日の朝には街の灯りとなり、人々の暮らしをほんの少しだけ明るく照らすのだ。</p>
+      </div>
+
+    </div>
+
+    <!-- 前後の話ナビゲーション -->
+    <div class="novel-footer">
+      <!-- 「前の話」のボタンを表示する場合は「disabled」を削除してください -->
+      <a href="#" class="nav-btn prev-btn disabled">← 前の話</a>
+      <a href="#" class="nav-btn" style="background:#ffd6a5;">作品TOP</a>
+      <a href="#" class="nav-btn next-btn">次の話 →</a>
+    </div>
+
+  </div>
+  <br>
+  
+    <footer>
+        <p style="text-align: center;">Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+  <!-- 操作用JavaScript -->
+  <script>
+    let currentFontSize = 16;
+    const novelArea = document.getElementById('novelArea');
+
+    // 縦書き・横書きの切り替え機能
+    function toggleWritingMode() {
+      if (novelArea.classList.contains('horizontal-mode')) {
+        novelArea.classList.remove('horizontal-mode');
+        novelArea.classList.add('vertical-mode');
+      } else {
+        novelArea.classList.remove('vertical-mode');
+        novelArea.classList.add('horizontal-mode');
+      }
+    }
+
+    // 文字サイズの変更機能
+    function changeFontSize(delta) {
+      currentFontSize += delta * 2;
+      // 最小12px、最大24pxまでに制限
+      if (currentFontSize < 12) currentFontSize = 12;
+      if (currentFontSize > 24) currentFontSize = 24;
+      
+      novelArea.style.fontSize = currentFontSize + 'px';
+    }
+  </script>
+
+</body>
+</html>
