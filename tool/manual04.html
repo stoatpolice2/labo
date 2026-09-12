@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スマホ向けプレビュー用Webエディタの使い方 | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/mobile_editor.webp" type="image/x-icon">
+  
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="プレビュー用Webエディタ | Stoat Labo">
+  <meta property="og:description" content="外出先からもWebページのレイアウトを確認したい！という方のためのスマホ向けプレビュー用エディタ">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/mobile_editor.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+    
+  <style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES (アクア・スカイブルーテーマ)
+    ---------------------------------- */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent: #38bdf8;
+      --bg-main: #f0f9ff;
+      --bg-card: #FFFFFF;
+      --text-main: #0c4a6e;
+      --text-muted: #0284c7;
+      --border: #bae6fd;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      --grad-hero: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+      --shadow-sm: 0 6px 18px rgba(2, 132, 199, 0.08);
+      --shadow-lg: 0 14px 32px rgba(2, 132, 199, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background-color: var(--bg-main);
+      background-image: radial-gradient(#bae6fd 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: var(--text-main);
+      line-height: 1.8;
+      padding-bottom: 60px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+      background: var(--grad-hero);
+      border-bottom: 2px dashed #bae6fd;
+      padding: 55px 20px 45px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(2, 132, 199, 0.15));
+      z-index: 0;
+    }
+
+    .hero::before {
+      width: 160px;
+      height: 160px;
+      top: -40px;
+      left: 5%;
+    }
+
+    .hero::after {
+      width: 110px;
+      height: 110px;
+      bottom: 10px;
+      right: 6%;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      font-size: 2.8rem;
+      letter-spacing: 0.06em;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      line-height: 1.25;
+      display: inline-block;
+    }
+
+    .header-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+      background: var(--grad-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #FFF;
+      display: block;
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      position: relative;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      padding-left: 14px;
+    }
+
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 80%;
+      background: var(--grad-primary);
+      border-radius: 4px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: repeating-linear-gradient(to right, #bae6fd, #bae6fd 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin: 24px 0 12px 0;
+      padding-bottom: 4px;
+      border-bottom: 1px dashed var(--border);
+      font-weight: bold;
+    }
+
+    .rule-list {
+      list-style: none;
+    }
+
+    .rule-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 12px;
+    }
+
+    .rule-list li::before {
+      content: "🐾";
+      position: absolute;
+      left: 0;
+      font-size: 0.9rem;
+    }
+
+    .alert-box {
+      background-color: #f0f9ff;
+      border: 1px dashed var(--primary);
+      padding: 18px;
+      margin-top: 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    /* テーブルデザイン */
+    .icon-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.93rem;
+    }
+
+    .icon-table th, .icon-table td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    .icon-table th {
+      background-color: #e0f2fe;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .icon-table td.icon-cell {
+      text-align: center;
+      font-size: 1.2rem;
+      width: 70px;
+    }
+
+    /* ----------------------------------
+        IMAGE STYLES
+    ---------------------------------- */
+    .image-container {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .image-frame {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background-color: #f8fafc;
+      display: block;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ratio-hero-sample {
+      aspect-ratio: 850 / 380;
+    }
+
+    /* ----------------------------------
+        TOOL LINK BUTTON
+    ---------------------------------- */
+    .tool-nav {
+      text-align: center;
+      margin-top: 0px;
+    }
+
+    .btn-tool {
+      display: inline-block;
+      background: var(--grad-primary);
+      color: #FFF;
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.05rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-tool:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 40px 15px 30px; }
+      .header-title { font-size: 2.0rem; }
+      .header-subtitle { font-size: 0.88rem; }
+      nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+      nav a { padding: 10px 14px; font-size: 0.88rem; }
+      .container { margin-top: 24px; padding: 0 12px; }
+      .section { padding: 22px 18px; margin-bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">プレビュー用Webエディタ</h1>
+            <p class="header-subtitle">外出先からもWebページのレイアウトをサクッと確認！</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">HOME</a></li>
+            <li><a href="#about">1. 概要と特徴</a></li>
+            <li><a href="#icons">2. アイコン解説</a></li>
+            <li><a href="#notice">3. ご利用時の注意事項</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 1. 概要と特徴 -->
+        <section id="about" class="section">
+            <h2 class="section-title">1. スマホ向けプレビュー用Webエディタとは？</h2>
+
+            <!-- サンプル画像スペース -->
+            <div class="image-container">
+                <div class="image-frame ratio-hero-sample">
+                    <img src="../images/tool04.webp" alt="プレビュー用Webエディタ サンプル画像" width="850" height="380">
+                </div>
+            </div>
+
+            <p>「移動中や外出先で、作成中のWebページがスマホでどう表示されるかサクッと確認したい！」と思ったことはありませんか？🐾</p>
+            <p style="margin-top: 10px;">「プレビュー用Webエディタ」は、スマートフォンでの閲覧・確認に特化した軽量なWebエディタです。入力したHTML / CSS / JavaScriptのコードを即座にブラウザ上でレンダリングし、実際の表示結果を素早く確認できます。</p>
+          
+            <div class="alert-box" style="margin-top: 20px;">
+                <strong>💡 どういうときに使うツールなの？</strong><br>
+                管理人が自分のサイトの「コードをコピー」機能がきちんと動作しているか確認するときなどに使用しています。<br>
+                自分用に制作したツールなのですが、もしかしたら他に必要な方がいるかも？と思って公開することにしました。
+            </div>
+
+            <h3 class="sub-title">主な特徴</h3>
+            <ul class="rule-list">
+                <li><strong>ワンタップで「編集」と「確認」を切り替え：</strong> 画面上部の「編集／確認」タブをタップするだけで、コード入力画面とLiveプレビュー画面をスムーズに行き来できます。</li>
+                <li><strong>ワンタップ貼り付け機能：</strong> ツールバーの 📋（貼り付け）ボタンを押すだけで、クリップボード内のコードを瞬時に読み込んでプレビュー表示できます。</li>
+                <li><strong>自動保存（LocalStorage）対応：</strong> 入力したコードや選択したテーマ、タブの状態はブラウザ内に自動保存されるため、誤ってページを閉じたり再読み込みしたりしても作業内容が失われません。</li>
+                <li><strong>ダークモード搭載：</strong> 🌙 / ☀️ ボタンで、周囲の明るさに合わせてライトモードとダークモードをいつでも切り替えられます。</li>
+                <li><strong>アンドゥ・リドゥ（やり直し）機能：</strong> 最大120履歴まで編集操作を遡ったりやり直したりできます。</li>
+            </ul>
+        </section>
+
+        <!-- 2. アイコン解説 -->
+        <section id="icons" class="section">
+            <h2 class="section-title">2. ツールバーの各種アイコン解説</h2>
+            <p>画面上部に配置されている便利なアクションボタンの機能一覧です。</p>
+
+            <table class="icon-table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">アイコン</th>
+                        <th style="width: 25%;">機能</th>
+                        <th>説明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="icon-cell">🔙</td>
+                        <td><strong>元に戻す</strong></td>
+                        <td>直前の編集状態に戻します。</td>
+                    </tr>
+                    <tr>
+                        <td class="icon-cell">🔜</td>
+                        <td><strong>やり直し</strong></td>
+                        <td>「元に戻す」で戻した操作をやり直します。</td>
+                    </tr>
+                    <tr>
+                        <td class="icon-cell">📋</td>
+                        <td><strong>貼り付け</strong></td>
+                        <td>クリップボードのテキストをエディタに一括貼り付けします。</td>
+                    </tr>
+                    <tr>
+                        <td class="icon-cell">✖</td>
+                        <td><strong>すべて削除</strong></td>
+                        <td>エディタ内のコードを全消去します。</td>
+                    </tr>
+                    <tr>
+                        <td class="icon-cell">🌙 / ☀️</td>
+                        <td><strong>テーマ切替</strong></td>
+                        <td>ライトモードとダークモードを切り替えます。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3. ご利用時の注意事項 -->
+        <section id="notice" class="section">
+            <h2 class="section-title">3. ご利用時の注意事項</h2>
+            <p>本ツールをご利用する際は以下のポイントをご確認ください。</p>
+
+            <div class="alert-box">
+                <strong>📝 外部ファイルの読み込みはできません</strong><br>
+                本ツールは複数ファイルの読み込みには対応していないため、HTMLファイルにCSSおよびJSファイルを読み込むことができません。プレビューを確認する場合はHTML / CSS / JavaScript が一体型したコードをご利用ください。
+            </div>
+          
+            <div class="alert-box" style="margin-top: 20px;">
+                <strong>💡 本格的なコード編集には不向きです</strong><br>
+                本ツールはあくまで<strong>「コードを貼り付けて表示結果をプレビュー確認すること」</strong>を目的としたエディタです。補完機能や構文ハイライトなど、コードの編集を快適にする機能はついていません。
+            </div>
+
+            <div class="alert-box">
+                <strong>⚠️ 「コード削除」ボタンの挙動にご注意ください</strong><br>
+                <strong>「✖（全削除）」ボタンをクリックすると、「削除していいですか？」などの確認警告が出ずにコードが即座に削除されます。</strong>間違えて押してしまった場合は、<strong>🔙（元に戻す）</strong> ボタンを押すことで元の状態に復元可能です。
+            </div>
+
+            <div class="alert-box">
+                <strong>📱 スマホ優先ですがPCでも問題なく使用可能です</strong><br>
+                スマホでの利便性や操作感を最優先して設計されたツールですが、レスポンシブデザインに対応しているため、パソコンのブラウザからでも問題なく快適にご利用いただけます。
+            </div>
+        </section>
+
+        <!-- ツールへのリンクボタン -->
+        <div class="tool-nav">
+            <a href="https://stoatpolice2.github.io/labo/tool/mobile_editor.html" rel="noopener" target="_blank" class="btn-tool">プレビュー用Webエディタを使う 🐾</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
