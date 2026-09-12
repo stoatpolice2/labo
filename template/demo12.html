@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INITIAL MODEL | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Google Fonts: SF/メカ感のある角張ったフォント (Orbitron & Rajdhani) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           1. 変数・基本設定
+           ========================================== */
+        :root {
+            --eva-purple-dark: #1b0a2a;
+            --eva-purple-base: #4a154b;
+            --eva-purple-bright: #701c74;
+            --eva-green-neon: #00ff66;
+            --eva-green-glow: rgba(0, 255, 102, 0.4);
+            --eva-black: #0c0d10;
+            --eva-dark-gray: #181a20;
+            --eva-orange: #ff6600;
+            --eva-text-white: #e6e6e6;
+            
+            --font-head: 'Orbitron', sans-serif;
+            --font-sub: 'Rajdhani', sans-serif;
+            --font-body: 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--eva-black);
+            color: var(--eva-text-white);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* ハニカム/グリッド風背景パターン */
+            background-image: 
+                linear-gradient(rgba(0, 255, 102, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 102, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        a {
+            color: var(--eva-green-neon);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        /* ==========================================
+           2. ヘッダー＆ナビゲーション
+           ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(12, 13, 16, 0.9);
+            border-bottom: 2px solid var(--eva-green-neon);
+            box-shadow: 0 0 15px var(--eva-green-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 8px var(--eva-green-neon);
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--eva-green-neon);
+        }
+
+        /* PCナビゲーション */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            font-family: var(--font-head);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--eva-text-white);
+            padding: 8px 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            background: rgba(74, 21, 75, 0.3);
+            border: 1px solid var(--eva-purple-bright);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .nav-links a:hover {
+            color: var(--eva-black);
+            background: var(--eva-green-neon);
+            border-color: var(--eva-green-neon);
+            box-shadow: 0 0 10px var(--eva-green-neon);
+        }
+
+        /* ハンバーガーボタン (SP) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--eva-green-neon);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px var(--eva-green-neon);
+        }
+
+        /* ==========================================
+           3. セクション共有スタイル
+           ========================================== */
+        section {
+            padding: 100px 5% 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: 2.2rem;
+            color: var(--eva-green-neon);
+            text-shadow: 0 0 10px var(--eva-green-glow);
+            margin-bottom: 40px;
+            border-left: 5px solid var(--eva-purple-bright);
+            padding-left: 15px;
+            position: relative;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, var(--eva-green-neon), transparent);
+        }
+
+        /* メカニカルカード枠デザイン */
+        .mech-box {
+            background: rgba(24, 26, 32, 0.8);
+            border: 1px solid var(--eva-purple-bright);
+            border-left: 4px solid var(--eva-purple-base);
+            padding: 25px;
+            position: relative;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        /* ==========================================
+           4. TOP (メインビジュアル)
+           ========================================== */
+        #top {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 70px;
+            position: relative;
+            background: 
+                radial-gradient(circle at center, rgba(112, 28, 116, 0.3) 0%, rgba(12, 13, 16, 0.95) 70%),
+                url('../images/picture09.webp') center/cover no-repeat;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-sub);
+            font-size: 1.2rem;
+            color: var(--eva-orange);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-title {
+            font-family: var(--font-head);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 20px var(--eva-purple-bright), 0 0 10px var(--eva-green-neon);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: #aaa;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            font-family: var(--font-head);
+            font-size: 1rem;
+            padding: 12px 30px;
+            color: var(--eva-black);
+            background-color: var(--eva-green-neon);
+            font-weight: 700;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--eva-green-glow);
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background-color: #fff;
+            box-shadow: 0 0 25px #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================
+           5. NEW (更新履歴)
+           ========================================== */
+        .news-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            border-bottom: 1px dashed rgba(0, 255, 102, 0.2);
+            padding-bottom: 12px;
+        }
+
+        .news-date {
+            font-family: var(--font-sub);
+            font-size: 1.1rem;
+            color: var(--eva-green-neon);
+            font-weight: 700;
+            min-width: 100px;
+        }
+
+        .news-tag {
+            font-family: var(--font-head);
+            font-size: 0.75rem;
+            background: var(--eva-purple-base);
+            color: #fff;
+            padding: 2px 8px;
+            border: 1px solid var(--eva-purple-bright);
+        }
+
+        .news-text {
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================
+           6. GALLERY (横スクロールギャラリー)
+           ========================================== */
+        .gallery-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--eva-green-neon) var(--eva-dark-gray);
+        }
+
+        .gallery-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .gallery-slider::-webkit-scrollbar-track {
+            background: var(--eva-dark-gray);
+        }
+
+        .gallery-slider::-webkit-scrollbar-thumb {
+            background: var(--eva-green-neon);
+            box-shadow: 0 0 5px var(--eva-green-neon);
+        }
+
+        .gallery-card {
+            flex: 0 0 300px;
+            background: var(--eva-dark-gray);
+            border: 1px solid var(--eva-purple-bright);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer; /* マウスオーバー時に指マークを表示 */
+        }
+
+        .gallery-card:hover {
+            border-color: var(--eva-green-neon);
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(30%) contrast(110%);
+            transition: filter 0.3s ease;
+        }
+
+        .gallery-card:hover img {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        .gallery-info {
+            padding: 15px;
+        }
+
+        .gallery-title {
+            font-family: var(--font-head);
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .gallery-caption {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .gallery-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .gallery-btn {
+            background: var(--eva-purple-base);
+            border: 1px solid var(--eva-green-neon);
+            color: var(--eva-green-neon);
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-family: var(--font-head);
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .gallery-btn:hover {
+            background: var(--eva-green-neon);
+            color: var(--eva-black);
+        }
+
+        /* ==========================================
+           6-B. モーダル表示機能
+           ========================================== */
+        .modal {
+            display: none; /* 初期状態は非表示 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(12, 13, 16, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.is-open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            background: var(--eva-dark-gray);
+            border: 2px solid var(--eva-green-neon);
+            box-shadow: 0 0 30px var(--eva-green-glow);
+            padding: 20px;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: var(--eva-purple-base);
+            border: 1px solid var(--eva-green-neon);
+            color: var(--eva-green-neon);
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--eva-green-neon);
+            color: var(--eva-black);
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            border: 1px solid var(--eva-purple-bright);
+            margin-bottom: 15px;
+        }
+
+        .modal-caption {
+            text-align: center;
+        }
+
+        .modal-title {
+            font-family: var(--font-head);
+            font-size: 1.4rem;
+            color: var(--eva-green-neon);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .modal-desc {
+            font-size: 0.95rem;
+            color: var(--eva-text-white);
+        }
+
+        /* ==========================================
+           7. ABOUT & PROFILE
+           ========================================== */
+        .about-text, .profile-content {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .profile-label {
+            font-family: var(--font-sub);
+            font-weight: 700;
+            color: var(--eva-green-neon);
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================
+           8. フッター
+           ========================================== */
+        footer {
+            background: var(--eva-black);
+            border-top: 1px solid var(--eva-purple-bright);
+            text-align: center;
+            padding: 30px 0;
+            font-family: var(--font-sub);
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+
+        footer p span {
+            color: var(--eva-green-neon);
+        }
+
+        /* ==========================================
+           9. レスポンシブ対応 (スマホ向けスタイル)
+           ========================================== */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(12, 13, 16, 0.95);
+                border-left: 2px solid var(--eva-green-neon);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .news-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .gallery-card {
+                flex: 0 0 240px;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .profile-label {
+                margin-top: 10px;
+                border-bottom: 1px solid var(--eva-purple-bright);
+            }
+
+            .modal-container {
+                padding: 15px;
+            }
+
+            .modal-title {
+                font-size: 1.1rem;
+            }
+
+            .modal-desc {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー / ナビゲーション -->
+    <header>
+        <div class="logo">MY SITE<span>.LOG</span></div>
+        
+        <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#top">TOP</a></li>
+            <li><a href="#new">NEW</a></li>
+            <li><a href="#gallery">GALLERY</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#profile">PROFILE</a></li>
+        </ul>
+    </header>
+
+    <!-- TOP (メインビジュアル) -->
+    <section id="top">
+        <div class="hero-content">
+            <div class="hero-subtitle">SCIENCE // FICTION</div>
+            <h1 class="hero-title">MY SITE<br>INITIAL MODEL</h1>
+            <p class="hero-desc">― 創作SFイラストサイト ―</p>
+            <a href="#gallery" class="hero-btn">LAUNCH GALLERY</a>
+        </div>
+    </section>
+
+    <!-- NEW (更新履歴) -->
+    <section id="new">
+        <h2 class="section-title">NEW UPDATES</h2>
+        <div class="mech-box">
+            <ul class="news-list">
+                <li class="news-item">
+                    <span class="news-date">2026.08.30</span>
+                    <span class="news-tag">GALLERY</span>
+                    <span class="news-text">ギャラリーに新規コンセプトアート（3点）を追加しました。</span>
+                </li>
+                <li class="news-item">
+                    <span class="news-date">2026.08.15</span>
+                    <span class="news-tag">INFO</span>
+                    <span class="news-text">「ABOUT」および「PROFILE」セクションの情報を更新しました。</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- GALLERY (横スクロールギャラリー) -->
+    <section id="gallery">
+        <h2 class="section-title">GALLERY</h2>
+        
+        <div class="gallery-nav">
+            <button class="gallery-btn" id="slide-left">&lt;</button>
+            <button class="gallery-btn" id="slide-right">&gt;</button>
+        </div>
+
+        <div class="gallery-wrapper">
+            <div class="gallery-slider" id="gallery-slider">
+                
+                <div class="gallery-card">
+                    <img src="../images/picture04.webp" alt="FORTRESS CITY">
+                    <div class="gallery-info">
+                        <div class="gallery-title">FORTRESS CITY</div>
+                        <div class="gallery-caption">要塞都市の夜景と防衛システム</div>
+                    </div>
+                </div>
+
+                <div class="gallery-card">
+                    <img src="../images/picture05.webp" alt="A RUINED TOWN">
+                    <div class="gallery-info">
+                        <div class="gallery-title">RUINED TOWN</div>
+                        <div class="gallery-caption">起動テスト時における高エネルギー波によって崩壊した町</div>
+                    </div>
+                </div>
+
+                <div class="gallery-card">
+                    <img src="../images/picture09.webp" alt="MAGI SYSTEM">
+                    <div class="gallery-info">
+                        <div class="gallery-title">RED SKY</div>
+                        <div class="gallery-caption">高エネルギー波の影響で赤く染まった空</div>
+                    </div>
+                </div>
+
+                <div class="gallery-card">
+                    <img src="../images/picture01.webp" alt="ARMOR SUIT">
+                    <div class="gallery-info">
+                        <div class="gallery-title">THE OLD  TOWN</div>
+                        <div class="gallery-caption">崩壊前の平和な町の様子</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT (このサイトについて) -->
+    <section id="about">
+        <h2 class="section-title">ABOUT THIS SITE</h2>
+        <div class="mech-box">
+            <div class="about-text">
+                <p>当サイトは創作SF作品を公開している個人サイトです。世界観の設定イラストやイメージビジュアルを掲載しています。</p><br>
+                <p>※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFILE (管理人のプロフィール) -->
+    <section id="profile">
+        <h2 class="section-title">ADMIN PROFILE</h2>
+        <div class="mech-box">
+            <div class="profile-content">
+                <p>当サイトの管理・制作を行っている開発者の情報です。</p>
+                <div class="profile-grid">
+                    <div class="profile-label">NAME</div>
+                    <div>Your Name</div>
+                    
+                    <div class="profile-label">ROLE</div>
+                    <div>Web Designer / Front-End Developer</div>
+                    
+                    <div class="profile-label">FAVORITE</div>
+                    <div>Cyberpunk Design, Dark Synthwave</div>
+                    
+                    <div class="profile-label">MEMO</div>
+                    <div>ここに自己紹介などを入力してください。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- モーダルウィンドウ本体 -->
+    <div class="modal" id="image-modal" aria-hidden="true">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close" aria-label="Close Modal">&times;</button>
+            <img class="modal-img" id="modal-img" src="" alt="">
+            <div class="modal-caption">
+                <div class="modal-title" id="modal-title"></div>
+                <div class="modal-desc" id="modal-desc"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --------------------------------------------------
+            // 1. ハンバーガーメニューの開閉処理
+            // --------------------------------------------------
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+            const navItems = document.querySelectorAll('.nav-links a');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // --------------------------------------------------
+            // 2. GALLERY 横スクロールボタンの処理
+            // --------------------------------------------------
+            const slider = document.getElementById('gallery-slider');
+            const btnLeft = document.getElementById('slide-left');
+            const btnRight = document.getElementById('slide-right');
+            const scrollAmount = 320;
+
+            btnLeft.addEventListener('click', () => {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+
+            btnRight.addEventListener('click', () => {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+
+            // --------------------------------------------------
+            // 3. モーダル表示機能
+            // --------------------------------------------------
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+            const modalClose = document.getElementById('modal-close');
+            const galleryCards = document.querySelectorAll('.gallery-card');
+
+            // カードをクリックした時の処理
+            galleryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const imgTarget = card.querySelector('img');
+                    const titleTarget = card.querySelector('.gallery-title');
+                    const captionTarget = card.querySelector('.gallery-caption');
+
+                    // モーダル要素にデータをセット
+                    modalImg.src = imgTarget.src;
+                    modalImg.alt = imgTarget.alt;
+                    modalTitle.textContent = titleTarget.textContent;
+                    modalDesc.textContent = captionTarget.textContent;
+
+                    // モーダル表示
+                    modal.classList.add('is-open');
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden'; // 背後の背景スクロールを固定
+                });
+            });
+
+            // モーダルを閉じる関数
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = ''; // スクロール固定を解除
+            };
+
+            // ×ボタンをクリックして閉じる
+            modalClose.addEventListener('click', closeModal);
+
+            // 背景（黒枠エリア外）をクリックして閉じる
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // ESCキーを押して閉じる
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
