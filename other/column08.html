@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>便利ツールと小技でゲーム制作を快適に！ | Stoat Labo</title>
+
+        <!-- ファビコンの設定 -->
+        <link href="images/icon.webp" rel="icon" type="image/x-icon" />
+
+        <!-- Open Graph Protocol (OGP) の設定 -->
+        <meta content="Stoat Labo | Web創作支援サイト" property="og:title" />
+        <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description" />
+        <meta content="website" property="og:type" />
+        <meta content="https://stoatpolice2.github.io/labo/" property="og:url" />
+        <meta content="https://stoatpolice2.github.io/labo/images/ogp.webp" property="og:image" />
+        <meta content="Stoat Labo" property="og:site_name" />
+        <meta content="ja_JP" property="og:locale" />
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+    scroll-behavior: smooth;
+    }
+    
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    /* ----------------------------------
+    LAYOUT & NAV
+    ---------------------------------- */
+    .section,
+    .news-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 36px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* ホバー時に少し浮き上がるような質感 */
+    .section:hover,
+    .news-section:hover {
+      transform: translateY(-4px); 
+      box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--bg-main);
+    background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    color: var(--text-main);
+    line-height: 1.8;
+    padding-bottom: 60px;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ----------------------------------
+    HERO AREA
+---------------------------------- */
+.hero {
+    background: var(--grad-hero);
+    border-bottom: 2px dashed #E2D5CE;
+    padding: 55px 20px 45px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+    z-index: 0;
+}
+
+.hero::before {
+    width: 160px;
+    height: 160px;
+    top: -40px;
+    left: 5%;
+}
+
+.hero::after {
+    width: 110px;
+    height: 110px;
+    bottom: 10px;
+    right: 6%;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header-title {
+    font-size: 2.4rem;
+    letter-spacing: 0.04em;
+    background: var(--grad-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    line-height: 1.3;
+    display: inline-block;
+    filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* ----------------------------------
+    LAYOUT & NAV
+---------------------------------- */
+nav {
+    background: var(--grad-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #FFF;
+    display: block;
+    padding: 14px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+}
+
+.section {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 36px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+    font-size: 1.35rem;
+    color: var(--text-main);
+    position: relative;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    padding-left: 14px;
+}
+
+.section-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 80%;
+    background: var(--grad-primary);
+    border-radius: 4px;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+}
+
+/* ----------------------------------
+    ARTICLE SPECIFIC STYLES
+---------------------------------- */
+h3.sub-title {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin: 24px 0 12px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--border);
+    font-weight: bold;
+}
+
+.rule-list {
+    list-style: none;
+}
+
+.rule-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 16px;
+}
+
+.rule-list li::before {
+    content: "🐾";
+    position: absolute;
+    left: 0;
+    font-size: 0.9rem;
+}
+
+.rule-list li.rule-ng::before {
+    content: "⚠️";
+    font-size: 0.85rem;
+}
+
+.alert-box {
+    background-color: #FFF6F3;
+    border: 1px dashed var(--primary);
+    padding: 18px;
+    margin-top: 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #5A443E;
+}
+
+.step-item {
+    margin-bottom: 22px;
+    background: #FAF5F2;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.step-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.step-number {
+    display: inline-block;
+    background: var(--grad-primary);
+    color: #FFF;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+/* CODE BLOCK DISPLAY */
+pre {
+    background: #2D2726;
+    color: #F8F5F3;
+    padding: 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 12px 0;
+}
+code {
+    background: #ffe8e2;
+    color: #c84022;
+    border: 1px solid #f2c7bd;
+    padding: 2px 7px;
+    margin: 0 2px;
+    border-radius: 5px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.88rem;
+    font-weight: 700;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+pre code {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    box-shadow: none;
+}
+
+.comment { color: #8C7B75; }
+.tag-name { color: #E06D53; }
+.attr-name { color: #F4C463; }
+.attr-val { color: #98C379; }
+
+footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 60px;
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 40px 15px 30px; }
+    .header-title { font-size: 1.8rem; }
+    .header-subtitle { font-size: 0.88rem; }
+    nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+    nav a { padding: 10px 14px; font-size: 0.88rem; }
+    .container { margin-top: 24px; padding: 0 12px; }
+    .section { padding: 22px 18px; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">便利ツールと小技でゲーム制作を快適に！</h1>
+            <p class="header-subtitle">おすすめフリー素材サイト・便利ツール・軽量化の小技まとめ</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#materials">1. 素材サイト</a></li>
+            <li><a href="#tools">2. 便利ツール</a></li>
+            <li><a href="#display">3. 画面比率・立ち絵</a></li>
+            <li><a href="#optimize">4. 軽量化の小技</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section class="section">
+            <h2 class="section-title">はじめに：ブラウザゲーム制作のお悩みを解決！</h2>
+            <p>「ゲームを作りたいけれど素材はどこで探せばいい？」「出来上がったゲームの読み込みが遅い…」といったお悩みは、ブラウザゲーム制作においてよくある壁です。</p>
+            <p style="margin-top: 10px;">
+                この記事では、ゲーム制作をスムーズに進めるための<strong>おすすめフリー素材サイト</strong>、<strong>作業効率が上がる便利ツール</strong>、そして<strong>動作を軽快にするデータ軽量化・画面設定の小技</strong>をまとめてご紹介します🐾
+            </p>
+        </section>
+
+        <!-- 1. おすすめフリー素材サイト -->
+        <section id="materials" class="section">
+            <h2 class="section-title">1. おすすめフリー素材サイト（敬称略）</h2>
+            <p>ゲームの雰囲気を大きく左右するのが「画像」や「BGM・効果音」です。まずは初心者にも使いやすい代表的なフリー素材サイトをご紹介します。</p>
+            
+            <h3 class="sub-title">🎨 画像素材</h3>
+            <ul class="rule-list">
+                <li>
+                    <strong><a href="https://www.pixiv.net/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">pixiv</a></strong><br>
+                    プロからアマチュアまで多数のクリエイターがイラストを投稿している国内最大の投稿サイト。画像を素材として配布している方も多く、クオリティの高い立ち絵や背景素材が投稿されています。
+                </li>
+            </ul>
+            <div class="alert-box">
+                <strong>⚠️ 注意点</strong><br>
+                pixivを利用するにはアカウントの作成（要メールアドレス）が必要です！また、「pixiv内でのみ使用可」など独自の利用規約が設定されている場合もあるため、ダウンロード時は必ず利用規約を確認しましょう🐾
+            </div>
+
+            <h3 class="sub-title">🔊 音楽・効果音素材</h3>
+            <ul class="rule-list">
+                <li>
+                    <strong><a href="https://maou.audio/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">魔王魂</a></strong><br>
+                    膨大かつ多彩な音楽素材を扱う定番サイトです。BGMはもちろん、「決定音」「キャンセル音」といったゲームシステム用の効果音カテゴリも充実しています。
+                </li>
+                <li>
+                    <strong><a href="https://opentracks.com/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">OpenTracks（旧 DOVA-SYNDROME）</a></strong><br>
+                    多数のクリエイターが作品を投稿している「音楽版pixiv」のようなサイト。曲の雰囲気や長さ、制作者名などで細かく絞り込み検索ができるため、イメージ通りの一曲がすぐに見つかります。
+                </li>
+            </ul>
+
+            <h3 class="sub-title">⚙️ システム・UI素材</h3>
+            <ul class="rule-list">
+                <li>
+                    <strong><a href="https://kopacurve.blog.fc2.com/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">空想曲線</a></strong><br>
+                    メッセージウィンドウなどのUI素材を豊富に配布しています。ノベルゲーム制作エンジン「ティラノスクリプト」向けのUI一括変換ツールなども用意されており非常に便利です。
+                </li>
+            </ul>
+        </section>
+
+        <!-- 2. 作業効率がアップするおすすめ無料ツール -->
+        <section id="tools" class="section">
+            <h2 class="section-title">2. 作業効率がアップするおすすめ無料ツール</h2>
+            <p>制作作業をサポートしてくれるツールを導入しておくと、作業スピードやクオリティが格段に向上します。</p>
+            
+            <h3 class="sub-title">✏️ コードエディタ（Phoenix Code / VS Code など）</h3>
+            <p>Web制作でおなじみのコードエディタは、ゲーム制作でも大活躍します。ゲームエンジン独自のスクリプトには対応していない機能もありますが、「プロジェクト全体の文字一括置換」「高度なファイル検索」「仮想ブラウザでのプレビュー」といった機能が強力です。</p>
+            <p style="margin-top: 10px;">それぞれの紹介記事はこちらをご覧ください🐾</p>
+            <ul style="margin: 8px 0 12px 24px; font-size: 0.95rem;">
+                <li><a href="column03.html">Phoenix Codeの紹介記事はこちら</a></li>
+                <li><a href="column04.html">VS Codeの紹介記事はこちら</a></li>
+            </ul>
+
+            <h3 class="sub-title">🎨 ペイントソフト（FireAlpaca / MediBang Paint など）</h3>
+            <p>配布されている立ち絵素材の中には、背景が透過処理されていないものもあります。サクッと背景の切り抜きや透過処理を行うために、ペイントソフトを1つ導入しておきましょう。テキストツールを使えばタイトルロゴの作成にも活用できます。</p>
+            
+            <ul style="margin: 8px 0 12px 24px; font-size: 0.95rem;">
+                <li><a href="https://firealpaca.com/ja" rel="noopener" target="_blank">FireAlpacaの公式サイトはこちら</a></li>
+                <li><a href="https://medibangpaint.com/medibangpaint/" rel="noopener" target="_blank">MediBang Paintの公式サイトはこちら</a></li>
+            </ul>
+
+            <div class="alert-box">
+                <strong>💡 タイトルロゴ作成のワンポイントアドバイス</strong><br>
+                タイトルロゴはプログラム上のテキストとして描画することも可能ですが、閲覧者の環境によっては「フォントが適用されない」「レイアウトが崩れる」といったトラブルが起こる場合があります。ペイントソフトで画像として描画すればそういったトラブルを防ぐことができます🐾
+            </div>
+
+            <h3 class="sub-title">💻 Windows11の標準搭載ツール</h3>
+            <p>Windows11に最初からインストールされているツールもゲーム制作に役立ちます🐾</p><br>
+            <ul class="rule-list">
+                <li><strong>ペイント：</strong> 軽くて動作が早いので、画像のトリミングやサイズ変更など、ちょっとした編集に最適です。</li>
+                <li><strong>Snipping Tool：</strong> 指定した範囲を素早くキャプチャし、自動的に「スクリーンショット」フォルダに保存します。「画面全体を保存してから画像ソフトで切り抜く」という手間を短縮できます。</li>
+            </ul>
+        </section>
+
+        <!-- 3. 画面比率と立ち絵サイズ -->
+        <section id="display" class="section">
+            <h2 class="section-title">3. ゲーム画面の見栄えを整える「画面比率」と「立ち絵サイズ」</h2>
+            <p>制作を始めるときに悩みがちなのが、ゲームの画面サイズとイラストの大きさのバランスです。</p>
+            <p>ここでは標準的とされる画像比率と、最適な立ち絵の大きさをご案内します。</p><br>
+
+            <div class="step-item">
+                <h3><span class="step-number">1</span>おすすめの画面比率は「16:9」</h3>
+                <p>現在のPCモニターやスマートフォンの多くは「16:9」の横長画面が標準的です。特別理由がなければ、画面比率は <strong>16:9</strong> をベースに制作するのがおすすめです。</p>
+                <ul style="margin: 8px 0 0 20px; font-size: 0.9rem;">
+                    <li><strong>フルHD（1920×1080 px）：</strong> 高画質で綺麗なグラフィックを見せたい場合</li>
+                    <li><strong>HD（1280×720 px）：</strong> 画質とデータ容量の軽さを両立させたい場合</li>
+                </ul>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">2</span>立ち絵サイズの目安（ピクセル一覧）</h3>
+                <p>キャラクターの立ち絵を表示する際、画面の縦幅に対して大きすぎると圧迫感が出やすくなり、小さすぎると表情が見えづらくなります。表示したいスタイル（画面解像度とトリミング範囲）に合わせて以下のピクセル数を参考に調整しましょう。</p>
+                
+                <ul style="margin: 12px 0 12px 20px; font-size: 0.9rem;">
+                    <li><strong>全身を表示：</strong> HDなら高さ <code>600〜680 px</code> ／ フルHDなら高さ <code>900〜1000 px</code></li>
+                    <li><strong>膝から上側：</strong> HDなら高さ <code>500〜580 px</code> ／ フルHDなら高さ <code>750〜880 px</code></li>
+                    <li><strong>腰から上側：</strong> HDなら高さ <code>400〜480 px</code> ／ フルHDなら高さ <code>600〜720 px</code></li>
+                    <li><strong>胸から上側：</strong> HDなら高さ <code>300〜380 px</code> ／ フルHDなら高さ <code>450〜580 px</code></li>
+                </ul>
+                <p style="font-size: 0.88rem; color: var(--text-muted);">※横幅は画像の縦横比（アスペクト比）を維持して自動調整するのが基本ですが、おおむね高さの0.4〜0.6倍程度におさまります。</p>
+            </div>
+
+            <div class="alert-box">
+                <strong>💡 立ち絵を綺麗に配置するための実務的なポイント</strong>
+                <ul class="rule-list" style="margin-top: 10px;">
+                    <li>
+                        <strong>素材は1.5倍〜2倍の大きめサイズで作成しておく：</strong><br>
+                        ゲーム内の表示サイズが「高さ900px」でも、元の画像ファイル（PSD等）は「高さ1800〜2000px程度」で作成・保持しておくと、演出等で顔周りにズームインした際も画質が荒れません。
+                    </li>
+                    <li>
+                        <strong>画面下部（足元）との接地感を意識する：</strong><br>
+                        全身や膝上の立ち絵を表示する場合は、画像の下端をゲーム画面の下端にぴったり合わせるか、メッセージウィンドウの裏に少し隠す位置に配置すると足元が浮いて見えず安定します。
+                    </li>
+                    <li>
+                        <strong>複数キャラを並べる際の位置合わせ：</strong><br>
+                        キャラクター同士の「身長差」を正しく見せたい場合は、画像のピクセル数を一律で揃えるのではなく、「頭頂部のY座標（縦位置）」を合わせるか、各キャラクター身長比率に合わせて高さを微調整するのがコツです🐾
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 4. 軽量化の小技 -->
+        <section id="optimize" class="section">
+            <h2 class="section-title">4. ゲームの動作を軽快にする「軽量化」の小技</h2>
+            <p>ブラウザゲーム制作で多くの人がぶつかるのが<strong>「立ち絵の表情差分が多すぎて読み込みが遅い…」「音楽データが重くてサーバーのアップロード上限にひっかかる…」</strong>などの<strong>「データ重すぎ問題」</strong>。<br>
+            この項目では読み込み速度を格段に向上させる小技とツールをご紹介します。</p>
+
+            <h3 class="sub-title">💡 画像データは「WebP（ウェッブピー）」形式に変換する！</h3>
+            <p>「画像が多すぎて容量が圧迫される」という悩みを解決するのがWebP形式です。</p><br>
+            
+            <ul class="rule-list">
+                <li><strong>画質を保ったまま超軽量化：</strong> JPEGやPNGからWebPに変換するだけで、高画質なままファイルサイズを6～9割ほど軽量化できます。</li>
+                <li><strong>透過情報の維持：</strong> 透過PNGの背景透過を維持したまま圧縮できるため、立ち絵の表情差分をたくさん用意したい場合にも最適です。</li>
+            </ul>
+            <p>当サイトの <a href="../tool/wedp.html">WebP一括画像変換ツール</a> でも簡単に変換できますので、ぜひご活用ください🐾</p>
+            
+            <div class="alert-box">
+                <strong>⚠️ WebP形式を扱う際の注意点</strong><br>
+                WebP画像は一部の画像編集ソフトで直接開けない場合があります。編集を行う可能性のある元データ（JPEG/PNG）は手元に保管しておき、<strong>WebP画像はアップロード用</strong>として使い分けるのがおすすめです。
+            </div>
+
+            <h3 class="sub-title">💡 音声データの形式と「重すぎ問題」の解決策</h3>
+            <p>BGMや効果音などの音声ファイルは、ゲームが重くなる最大の原因になりがちです。適切なフォーマット選びと軽量化を意識しましょう。</p><br>
+
+            <div class="step-item">
+                <h3>音声フォーマットの選び方</h3>
+                <ul style="margin-left: 20px; font-size: 0.9rem;">
+                    <li><strong>MP3（.mp3）：</strong> 最も汎用性が高く、どのブラウザや端末でも安定して再生できます。迷ったらまずはMP3がおすすめです。</li>
+                    <li><strong>OGG（.ogg）：</strong> ループ処理に強く音質あたりの容量も軽いため、ゲーム制作用として非常に優秀です。ただし一部の環境（iOS Safariなど）で再生できない場合があるため、ゲームエンジン側が自動対応しているか確認しましょう。</li>
+                </ul>
+            </div>
+
+            <div class="step-item">
+                <h3>容量を抑える2つの対策</h3>
+                <ul style="margin-left: 20px; font-size: 0.9rem;">
+                    <li><strong>① 必要な部分だけトリミングする：</strong><a href="https://audiotrimmer.com/jp/" rel="noopener" target="_blank"> AudioTrimmer </a> などの無料Webツールを使い、使用しない余白や長すぎるパートをカットします。</li>
+                    <li><strong>② ビットレート（音質）を少し下げる：</strong> 128kbps〜160kbps程度まで音質を調整すると、聴き心地を保ちつつファイルサイズを大幅に削減できます。<a href="https://images.videolan.org/vlc/index.ja.html" rel="noopener" target="_blank">VLC media player </a>や各種オンライン変換ツールで調整可能です。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- まとめ -->
+        <section class="section">
+            <h2 class="section-title">まとめ：便利ツールと小技を活用してゲームを完成させよう！</h2>
+            <p>ゲーム制作は、素材選びや画面レイアウト、動作を軽快にする工夫も含めて楽しさの醍醐味です。</p>
+            <p style="margin-top: 10px;">
+                便利なフリー素材サイトや軽量化のテクニックをうまく取り入れて、素敵なブラウザゲームを作り上げてくださいね！🐾
+            </p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
