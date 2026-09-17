@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RED ANGELS | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. RESET & BASE STYLES
+           ========================================================================== */
+        :root {
+            --primary-red: #D31027;
+            --dark-red: #8B0000;
+            --accent-blue: #0A2540;
+            --bright-blue: #0056B3;
+            --pure-white: #FFFFFF;
+            --off-white: #F4F6F8;
+            --dark-gray: #121212;
+            --light-gray: rgba(229, 231, 235, 0.5);
+            --font-primary: 'Montserrat', sans-serif;
+            --font-display: 'Teko', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================================================
+           セクションごとの背景・オーバーレイ設定
+           ========================================================================== */
+
+        /* 1. bodyは素の背景画像のみ固定で表示 */
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--dark-gray);
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            line-height: 1.5;
+
+            background-image: url('../images/picture14.webp'); /* ← 背景画像の指定 */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* 2. 「Latest News」セクションの背景オーバーレイ */
+        #news {
+            background: linear-gradient(rgba(244, 246, 248, 0.70), rgba(244, 246, 248, 0.70));
+            backdrop-filter: blur(3px); /* すりガラス効果 */
+            width: 100%;
+            max-width: 100%; /* 横幅いっぱいに背景を敷く場合 */
+        }
+
+        /* ニュースカードの幅や余白を調整するための内側コンテナ */
+        #news .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        /* 3. 「Featured Players」セクションの背景オーバーレイ */
+        .players-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.90), rgba(244, 246, 248, 0.96));
+            backdrop-filter: blur(5px);
+            padding: 5rem 0;
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        /* ==========================================================================
+           2. NAVIGATION BAR
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+            background: rgba(139, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--accent-blue);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.6rem 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--pure-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-style: italic;
+            text-shadow: 2px 2px 0px var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+            -webkit-text-stroke: 1px var(--pure-white);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--pure-white);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background-color: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Language Switcher Style */
+        .lang-switcher {
+            position: relative;
+        }
+
+        .lang-select {
+            background-color: var(--accent-blue);
+            color: var(--pure-white);
+            border: 2px solid var(--pure-white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .lang-select:hover {
+            background-color: var(--primary-red);
+        }
+
+        /* ==========================================================================
+           3. HERO SECTION (DYNAMIC & ANIMATED)
+           ========================================================================== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 5.9) 0%, rgba(151, 16, 39, 0.85) 50%, rgba(10, 37, 64, 5.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--pure-white);
+            text-align: center;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: moveBg 20s linear infinite;
+        }
+
+        @keyframes moveBg {
+            0% { background-position: 0 0; }
+            100% { background-position: 300px 300px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--pure-white);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: var(--accent-blue);
+            display: inline-block;
+            padding: 2px 20px;
+            transform: skewX(-15deg);
+            margin-bottom: 1rem;
+            box-shadow: 3px 3px 0 var(--pure-white);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 7rem;
+            line-height: 0.85;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 5px 5px 0px var(--accent-blue), 10px 10px 20px rgba(0,0,0,0.5);
+            margin-bottom: 1.5rem;
+            animation: zoomIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hero-title span {
+            color: var(--pure-white);
+            display: block;
+            -webkit-text-stroke: 2px var(--accent-blue);
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--dark-red);
+            background-color: var(--pure-white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-blue);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .hero-btn:hover {
+            color: var(--pure-white);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+        }
+
+        .hero-btn:hover::before {
+            left: 0;
+        }
+
+        /* ==========================================================================
+           4. LATEST MATCH BANNER (TICKER)
+           ========================================================================== */
+        .match-ticker {
+            background-color: var(--accent-blue);
+            color: var(--pure-white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 3rem;
+            border-bottom: 4px solid var(--primary-red);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .ticker-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #FFD700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ticker-score {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .team-score {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .score-number {
+            background-color: var(--primary-red);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+        }
+
+        /* ==========================================================================
+           5. SECTION GENERAL STYLES & ANIMATIONS
+           ========================================================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            text-transform: uppercase;
+            font-style: italic;
+            color: var(--dark-red);
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background-color: var(--accent-blue);
+            margin: 10px auto 0;
+            transform: skewX(-20deg);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           6. NEWS SECTION
+           ========================================================================== */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-top: 4px solid var(--primary-red);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(211, 16, 39, 0.2);
+        }
+
+        .news-img {
+            height: 200px;
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent-blue), var(--primary-red));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-style: italic;
+            opacity: 0.9;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-img-placeholder {
+            transform: scale(1.1);
+        }
+
+        .news-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary-red);
+            color: var(--pure-white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 2px;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            color: var(--dark-gray);
+        }
+
+        .news-link {
+            margin-top: auto;
+            color: var(--bright-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+
+        .news-card:hover .news-link {
+            gap: 10px;
+            color: var(--primary-red);
+        }
+
+        /* ==========================================================================
+           7. FEATURED PLAYERS SECTION
+           ========================================================================== */
+        .players-section {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(244, 246, 248, 0.85) 100%);
+            backdrop-filter: blur(5px);
+            padding: 5rem 0;
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .player-card {
+            background-color: rgba(10, 37, 64, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--pure-white);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+        }
+
+        .player-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(10, 37, 64, 0.3);
+        }
+
+        .player-number {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.15);
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .player-card:hover .player-number {
+            color: var(--primary-red);
+        }
+
+        .player-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pure-white), var(--light-gray));
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--primary-red);
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        .player-name {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+
+        .player-position {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #A0AEC0;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .player-stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #FFD700;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* ==========================================================================
+           8. FOOTER
+           ========================================================================== */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--pure-white);
+            padding: 4rem 2rem 2rem;
+            border-top: 6px solid var(--primary-red);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand .logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #A0AEC0;
+            font-size: 0.9rem;
+        }
+
+        .footer-column h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            color: var(--pure-white);
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary-red);
+            display: inline-block;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-column ul li a {
+            color: #A0AEC0;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--pure-white);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #718096;
+            font-size: 0.85rem;
+        }
+
+        /* ==========================================================================
+           9. KEYFRAMES FOR HERO ANIMATIONS
+           ========================================================================== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) skewX(-15deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) skewX(-15deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-title {
+                font-size: 4rem;
+            }
+            .match-ticker {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            Red <span>Angels</span>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#home" data-en="Home" data-ja="ホーム">Home</a></li>
+                <li><a href="#news" data-en="News" data-ja="ニュース">News</a></li>
+                <li><a href="#roster" data-en="Roster" data-ja="選手一覧">Roster</a></li>
+                <li><a href="#schedule" data-en="Schedule" data-ja="日程・結果">Schedule</a></li>
+                <li><a href="#stats" data-en="Stats" data-ja="成績">Stats</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <select id="langSelect" class="lang-select" onchange="switchLanguage(this.value)">
+                    <option value="en" selected>English</option>
+                    <option value="ja">日本語</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero" id="home">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-content">
+            <div class="hero-subtitle" data-en="Victory Belongs To Us" data-ja="勝利は我らの手に">Victory Belongs Us</div>
+            <h1 class="hero-title">RED ANGELS <span>BASEBALL</span></h1>
+            <button class="hero-btn" onclick="scrollToNews()" data-en="Latest Updates" data-ja="最新情報">Latest Updates</button>
+        </div>
+    </header>
+
+    <!-- MATCH TICKER -->
+    <div class="match-ticker">
+        <div class="ticker-title">
+            <span>&#9654;</span> <span data-en="LAST GAME RESULT" data-ja="前回の試合結果">LAST GAME RESULT</span>
+        </div>
+        <div class="ticker-score">
+            <div class="team-score">
+                <span>ANGELS</span>
+                <span class="score-number">8</span>
+            </div>
+            <span>VS</span>
+            <div class="team-score">
+                <span class="score-number">3</span>
+                <span>COSMOS</span>
+            </div>
+        </div>
+        <div style="font-size: 0.85rem; opacity: 0.8;" data-en="FINAL - SEP 16" data-ja="試合終了 - 9月16日">FINAL - SEP 16</div>
+    </div>
+
+    <!-- NEWS SECTION -->
+    <section class="container" id="news">
+        <div class="section-title reveal">
+            <h2 data-en="Latest News" data-ja="最新ニュース">Latest News</h2>
+        </div>
+        <div class="news-grid">
+            <!-- News Item 1 -->
+            <article class="news-card reveal">
+                <div class="news-img">
+                    <div class="news-img-placeholder" data-en="GAME RECAP" data-ja="試合ハイライト">GAME RECAP</div>
+                    <span class="news-tag" data-en="Game Recap" data-ja="試合結果">Game Recap</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date" data-en="SEPTEMBER 16, 2026" data-ja="2026年9月16日">SEPTEMBER 16, 2026</div>
+                    <h3 class="news-title" data-en="Angels Secure Playoff Spot With Dominant 8-3 Victory" data-ja="エンゼルス、8-3の快勝でプレーオフ進出を決定">Angels Secure Playoff Spot With Dominant 8-3 Victory</h3>
+                    <a href="#" class="news-link"><span data-en="Read Full Story" data-ja="記事を読む">Read Full Story</span> &rarr;</a>
+                </div>
+            </article>
+
+            <!-- News Item 2 -->
+            <article class="news-card reveal">
+                <div class="news-img">
+                    <div class="news-img-placeholder" data-en="HIGHLIGHTS" data-ja="ハイライト">HIGHLIGHTS</div>
+                    <span class="news-tag" data-en="Roster Update" data-ja="選手情報">Roster Update</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date" data-en="SEPTEMBER 14, 2026" data-ja="2026年9月14日">SEPTEMBER 14, 2026</div>
+                    <h3 class="news-title" data-en="Mileman Returns To Rotation For Upcoming Series" data-ja="マイルマンが次戦カードで先発ローテーションに復帰">Mileman Returns To Rotation For Upcoming Series</h3>
+                    <a href="#" class="news-link"><span data-en="Read Full Story" data-ja="記事を読む">Read Full Story</span> &rarr;</a>
+                </div>
+            </article>
+
+            <!-- News Item 3 -->
+            <article class="news-card reveal">
+                <div class="news-img">
+                    <div class="news-img-placeholder" data-en="COMMUNITY" data-ja="地域貢献">COMMUNITY</div>
+                    <span class="news-tag" data-en="Events" data-ja="イベント">Events</span>
+                </div>
+                <div class="news-content">
+                    <div class="news-date" data-en="SEPTEMBER 10, 2026" data-ja="2026年9月10日">SEPTEMBER 10, 2026</div>
+                    <h3 class="news-title" data-en="Red Angels Host Annual Youth Baseball Clinic This Weekend" data-ja="レッドエンゼルスが今週末に少年野球教室を開催">Red Angels Host Annual Youth Baseball Clinic This Weekend</h3>
+                    <a href="#" class="news-link"><span data-en="Read Full Story" data-ja="記事を読む">Read Full Story</span> &rarr;</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- FEATURED PLAYERS SECTION -->
+    <section class="players-section" id="roster">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2 data-en="Featured Players" data-ja="注目選手">Featured Players</h2>
+            </div>
+            <div class="player-grid">
+                <!-- Player 1: T. Mileman -->
+                <div class="player-card reveal">
+                    <div class="player-number">1</div>
+                    <div class="player-avatar">RA</div>
+                    <div class="player-name" data-en="T. MILEMAN" data-ja="テリー・マイルマン">T. MILEMAN</div>
+                    <div class="player-position" data-en="Starting Pitcher" data-ja="先発投手">Starting Pitcher</div>
+                    <div class="player-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">14</span>
+                            <span class="stat-label" data-en="WINS" data-ja="勝利">WINS</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">2.65</span>
+                            <span class="stat-label" data-en="ERA" data-ja="防御率">ERA</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">225</span>
+                            <span class="stat-label" data-en="SO" data-ja="奪三振">SO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player 2: Y. Shindo -->
+                <div class="player-card reveal">
+                    <div class="player-number">16</div>
+                    <div class="player-avatar">RA</div>
+                    <div class="player-name" data-en="Y. SHINDO" data-ja="神童 裕二郎">Y. SHINDO</div>
+                    <div class="player-position" data-en="Starting Pitcher" data-ja="先発投手">Starting Pitcher</div>
+                    <div class="player-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">18</span>
+                            <span class="stat-label" data-en="WINS" data-ja="勝利">WINS</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">1.95
+                            </span>
+                            <span class="stat-label" data-en="ERA" data-ja="防御率">ERA</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">240</span>
+                            <span class="stat-label" data-en="SO" data-ja="奪三振">SO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player 3: S. Ikari -->
+                <div class="player-card reveal">
+                    <div class="player-number">27</div>
+                    <div class="player-avatar">RA</div>
+                    <div class="player-name" data-en="S. IKARI" data-ja="猪狩 進">S. IKARI</div>
+                    <div class="player-position" data-en="Catcher" data-ja="捕手">Catcher</div>
+                    <div class="player-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">.318</span>
+                            <span class="stat-label" data-en="AVG" data-ja="打率">AVG</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">18</span>
+                            <span class="stat-label" data-en="HR" data-ja="本塁打">HR</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">82</span>
+                            <span class="stat-label" data-en="RBI" data-ja="打点">RBI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player 4: B. Vanguard -->
+                <div class="player-card reveal">
+                    <div class="player-number">3</div>
+                    <div class="player-avatar">RA</div>
+                    <div class="player-name" data-en="B. VANGUARD" data-ja="ボーマン・バンガード">B. VANGUARD</div>
+                    <div class="player-position" data-en="Outfielder" data-ja="外野手">Outfielder</div>
+                    <div class="player-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">.325</span>
+                            <span class="stat-label" data-en="AVG" data-ja="打率">AVG</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">42</span>
+                            <span class="stat-label" data-en="HR" data-ja="本塁打">HR</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">118</span>
+                            <span class="stat-label" data-en="RBI" data-ja="打点">RBI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">Red <span>Angels</span></div>
+                <p data-en="The Regular League Baseball team representing speed, power, and glory." data-ja="スピード、パワー、そして栄光を体現するレギュラーリーグ球団。">The Regular League Baseball team representing speed, power, and glory.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-en="Team" data-ja="チーム">Team</h4>
+                <ul>
+                    <li><a href="#" data-en="Roster" data-ja="選手一覧">Roster</a></li>
+                    <li><a href="#" data-en="Coaching Staff" data-ja="コーチ陣">Coaching Staff</a></li>
+                    <li><a href="#" data-en="Injury Report" data-ja="故障者情報">Injury Report</a></li>
+                    <li><a href="#" data-en="Transactions" data-ja="移籍・契約">Transactions</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-en="Tickets & Ballpark" data-ja="チケット・球場">Tickets & Ballpark</h4>
+                <ul>
+                    <li><a href="#" data-en="Single Game Tickets" data-ja="シングルチケット">Single Game Tickets</a></li>
+                    <li><a href="#" data-en="Season Passes" data-ja="年間パス">Season Passes</a></li>
+                    <li><a href="#" data-en="Ballpark Guide" data-ja="球場案内">Ballpark Guide</a></li>
+                    <li><a href="#" data-en="Parking Info" data-ja="駐車場情報">Parking Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-en="Connect" data-ja="ファンコーナー">Connect</h4>
+                <ul>
+                    <li><a href="#" data-en="Social Media" data-ja="球団SNS">Social Media</a></li>
+                    <li><a href="#" data-en="Fan Club" data-ja="ファンクラブ">Fan Club</a></li>
+                    <li><a href="#" data-en="Community News" data-ja="地域ニュース">Community News</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Smooth scroll to News section
+        function scrollToNews() {
+            document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal Animation (Intersection Observer)
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+
+        // Language Switcher Function
+        function switchLanguage(lang) {
+            document.documentElement.lang = lang;
+            const translatableElements = document.querySelectorAll('[data-en][data-ja]');
+            
+            translatableElements.forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) {
+                    el.textContent = text;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
