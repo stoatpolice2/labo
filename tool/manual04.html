@@ -19,26 +19,26 @@
     
   <style>
     /* ----------------------------------
-        CSS RESET & VARIABLES (アクア・スカイブルーテーマ)
+        CSS RESET & VARIABLES (暖色系テーマ)
     ---------------------------------- */
     html {
       scroll-behavior: smooth;
     }
     
     :root {
-      --primary: #0284c7;
-      --primary-hover: #0369a1;
-      --accent: #38bdf8;
-      --bg-main: #f0f9ff;
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
       --bg-card: #FFFFFF;
-      --text-main: #0c4a6e;
-      --text-muted: #0284c7;
-      --border: #bae6fd;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
       --radius: 16px;
-      --grad-primary: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-      --grad-hero: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
-      --shadow-sm: 0 6px 18px rgba(2, 132, 199, 0.08);
-      --shadow-lg: 0 14px 32px rgba(2, 132, 199, 0.18);
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
     }
 
     * {
@@ -50,7 +50,7 @@
     body {
       font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
       background-color: var(--bg-main);
-      background-image: radial-gradient(#bae6fd 1.5px, transparent 1.5px);
+      background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
       background-size: 24px 24px;
       color: var(--text-main);
       line-height: 1.8;
@@ -73,7 +73,7 @@
     ---------------------------------- */
     .hero {
       background: var(--grad-hero);
-      border-bottom: 2px dashed #bae6fd;
+      border-bottom: 2px dashed #E2D5CE;
       padding: 55px 20px 45px;
       text-align: center;
       position: relative;
@@ -85,7 +85,7 @@
       content: "";
       position: absolute;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(2, 132, 199, 0.15));
+      background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
       z-index: 0;
     }
 
@@ -119,6 +119,7 @@
       font-weight: 900;
       line-height: 1.25;
       display: inline-block;
+      filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
     }
 
     .header-subtitle {
@@ -137,7 +138,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
+      box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
     }
 
     nav ul {
@@ -181,7 +182,7 @@
 
     .section:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.15);
+      box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
     }
 
     .section-title {
@@ -214,7 +215,7 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: repeating-linear-gradient(to right, #bae6fd, #bae6fd 6px, transparent 6px, transparent 12px);
+      background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
     }
 
     /* ----------------------------------
@@ -247,13 +248,13 @@
     }
 
     .alert-box {
-      background-color: #f0f9ff;
+      background-color: #FFF6F3;
       border: 1px dashed var(--primary);
       padding: 18px;
       margin-top: 18px;
       border-radius: 12px;
       font-size: 0.9rem;
-      color: var(--text-main);
+      color: #5A443E;
     }
 
     /* テーブルデザイン */
@@ -271,7 +272,7 @@
     }
 
     .icon-table th {
-      background-color: #e0f2fe;
+      background-color: #FAF5F2;
       color: var(--primary);
       font-weight: bold;
     }
@@ -295,7 +296,7 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
-      background-color: #f8fafc;
+      background-color: #F8F5F3;
       display: block;
     }
 
@@ -465,12 +466,12 @@
                 本ツールはあくまで<strong>「コードを貼り付けて表示結果をプレビュー確認すること」</strong>を目的としたエディタです。補完機能や構文ハイライトなど、コードの編集を快適にする機能はついていません。
             </div>
 
-            <div class="alert-box">
+            <div class="alert-box" style="margin-top: 20px;">
                 <strong>⚠️ 「コード削除」ボタンの挙動にご注意ください</strong><br>
                 <strong>「❌（全削除）」ボタンをクリックすると、「削除していいですか？」などの確認警告が出ずにコードが即座に削除されます。</strong>間違えて押してしまった場合は、<strong>🔙（元に戻す）</strong> ボタンを押すことで元の状態に復元可能です。
             </div>
 
-            <div class="alert-box">
+            <div class="alert-box" style="margin-top: 20px;">
                 <strong>📱 スマホ優先ですがPCでも問題なく使用可能です</strong><br>
                 スマホでの利便性や操作感を最優先して設計されたツールですが、レスポンシブデザインに対応しているため、パソコンのブラウザからでも問題なく快適にご利用いただけます。
             </div>
