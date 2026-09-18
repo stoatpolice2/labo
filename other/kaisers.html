@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKARI KAISERS | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700;800;900&family=Teko:wght@600;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kaisers: {
+                            navy: '#050c1e',
+                            darkblue: '#0a1936',
+                            blue: '#13387d',
+                            royal: '#1e52be',
+                            gold: '#f3c642',
+                            silver: '#e2e8f0',
+                        }
+                    },
+                    fontFamily: {
+                        mincho: ['"Shippori Mincho"', 'serif'],
+                        teko: ['"Teko"', 'sans-serif'],
+                        sans: ['"Zen Kaku Gothic New"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* カスタムスタイル＆アニメーション定義 */
+        body {
+            background-color: #050c1e;
+            color: #ffffff;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* テキストグラデーション */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #fff7ad 0%, #ffa900 50%, #e28200 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-silver-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #64748b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-gold-gradient {
+            background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+        }
+
+        /* 光の走るボタン */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.6) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.6s ease;
+        }
+        .btn-shine:hover::after {
+            left: 120%;
+        }
+
+        /* スライドインアニメーション用クラス */
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-120px) skewX(-6deg);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(120px) skewX(-6deg);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .is-visible {
+            opacity: 1 !important;
+            transform: translateX(0) translateY(0) skewX(0deg) !important;
+        }
+
+        /* 斜めカットバナーのデザイン */
+        .slant-box {
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        }
+        
+        .card-slant {
+            clip-path: polygon(0 0, 100% 0, 100% 88%, 88% 100%, 0 100%);
+        }
+
+        /* スモーキーバックグラウンド */
+        .hero-bg {
+            background: radial-gradient(circle at 50% 30%, #1a3a78 0%, #0a1936 60%, #050c1e 100%);
+        }
+
+        /* ネオンビーム効果 */
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(30, 82, 190, 0.5), inset 0 0 15px rgba(243, 198, 66, 0.3);
+        }
+        
+        .player-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 枠に合わせて綺麗にトリミング表示 */
+        object-position: center top; /* 画像の上部（顔付近）を優先して表示 */
+        display: block;
+    }
+        
+    </style>
+</head>
+<body class="min-h-screen relative">
+
+    <!-- 背景粒子のキャンバス -->
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-60"></canvas>
+
+    <!-- ナビゲーションヘッダー -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-kaisers-navy/90 backdrop-blur-md border-b border-kaisers-blue/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- エンブレムロゴ -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 bg-gradient-to-br from-kaisers-royal to-kaisers-darkblue border-2 border-kaisers-gold rounded-full flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                    <span class="font-teko text-2xl font-bold text-kaisers-gold tracking-tighter">IK</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-teko text-2xl font-bold leading-none tracking-widest text-white group-hover:text-kaisers-gold transition-colors">IKARI KAISERS</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider">猪狩カイザース</span>
+                </div>
+            </a>
+
+            <!-- ナビリンク -->
+            <nav class="hidden md:flex items-center space-x-8 font-bold text-sm tracking-wider">
+                <a href="#hero" class="hover:text-kaisers-gold transition-colors">TOP</a>
+                <a href="#players" class="hover:text-kaisers-gold transition-colors">MAIN PLAYERS</a>
+                <a href="#schedule" class="hover:text-kaisers-gold transition-colors">SCHEDULE</a>
+                <a href="#news" class="hover:text-kaisers-gold transition-colors">NEWS</a>
+            </nav>
+
+            <!-- チケットボタン -->
+            <a href="#schedule" class="btn-shine bg-gold-gradient text-kaisers-navy font-black px-6 py-2.5 rounded-sm shadow-md hover:brightness-110 transition-all flex items-center gap-2 transform skew-x-[-10deg]">
+                <span class="inline-block transform skew-x-[10deg]"><i class="fa-solid font-black fa-ticket mr-1"></i> チケット購入</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ヒーロー・メインポスターセクション -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden hero-bg">
+        <!-- バックグラウンド装飾グラフィック -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none">
+            <span class="font-teko font-extrabold text-[28vw] leading-none text-white tracking-tighter">KAISERS</span>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 py-16 text-center flex flex-col items-center justify-center">
+            
+            <!-- サブキャッチ -->
+            <div class="inline-block border-y-2 border-kaisers-gold py-1 px-8 mb-6 fade-in-up">
+                <span class="text-kaisers-gold font-bold tracking-[0.3em] text-sm md:text-xl">2026 CLIMAX SERIES - FINAL STAGE</span>
+            </div>
+
+            <!-- メイン煽り文句 -->
+            <h1 class="font-mincho font-black text-4xl sm:text-6xl md:text-8xl tracking-wider leading-tight mb-4 text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] fade-in-up">
+                激闘のクライマックス。<br>
+                <span class="text-gold-gradient">頂点へ、牙を剥け。</span>
+            </h1>
+
+            <!-- 補足テキスト -->
+            <p class="text-slate-300 max-w-2xl text-base md:text-lg mb-10 tracking-widest font-medium fade-in-up">
+                絶対王者・猪狩カイザース。伝統と覚悟を背負った男たちが、日本一の座を賭けて今立ち上がる。歴史に刻む覇道の瞬間を目撃せよ。
+            </p>
+
+            <!-- カウントダウン ＆ CTA -->
+            <div class="flex flex-col sm:flex-row gap-4 items-center fade-in-up">
+                <a href="#players" class="btn-shine bg-kaisers-royal hover:bg-blue-600 text-white font-extrabold text-lg px-8 py-4 border-2 border-white/20 rounded shadow-xl tracking-wider transition-all transform hover:-translate-y-1">
+                    主要選手を見る <i class="fa-solid fa-chevron-down ml-2"></i>
+                </a>
+                <a href="#schedule" class="btn-shine bg-gold-gradient text-kaisers-navy font-black text-lg px-8 py-4 rounded shadow-xl tracking-wider transition-all transform hover:-translate-y-1">
+                    決戦の日程・チケット <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        <br>
+            
+            <!-- スクロール誘導 -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 animate-bounce">
+                <span class="text-xs tracking-widest text-kaisers-gold">SCROLL</span>
+                <i class="fa-solid fa-angle-down text-kaisers-gold"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要選手紹介セクション -->
+    <section id="players" class="py-24 bg-kaisers-darkblue relative z-10 border-t border-kaisers-blue/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- セクションタイトル -->
+            <div class="text-center mb-20 fade-in-up">
+                <span class="text-kaisers-gold font-teko text-3xl tracking-widest block">KEY PLAYERS</span>
+                <h2 class="font-mincho text-4xl sm:text-5xl font-black tracking-widest text-white">カイザースを護る主砲とエース</h2>
+                <div class="w-24 h-1 bg-kaisers-gold mx-auto mt-4"></div>
+            </div>
+
+            <!-- 選手カードコンテナ -->
+            <div class="space-y-24">
+
+                <!-- 1. 猪狩 守 (投手) - 左側からスライドイン -->
+                <div class="slide-in-left flex flex-col lg:flex-row items-center gap-8 bg-gradient-to-r from-kaisers-navy via-kaisers-darkblue to-kaisers-navy p-6 lg:p-10 rounded-xl border border-kaisers-royal/40 glow-effect">
+                    <!-- SVG選手グラフィックプレースホルダー -->
+                    <div class="w-full lg:w-1/2 h-80 sm:h-96 relative flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-slate-900/80 rounded-lg overflow-hidden border border-kaisers-gold/30">
+                        <!-- 野球選手イラスト(投手) -->
+                        <img src="../images/k_mamoru.webp" alt="猪狩 守" class="player-img">
+                        <div class="absolute top-4 right-4 bg-kaisers-gold text-kaisers-navy font-black text-xs px-3 py-1 rounded">PITCHER</div>
+                    </div>
+
+                    <!-- 選手情報 -->
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <div class="flex items-center gap-4 mb-2">
+                            <span class="text-3xl font-teko font-bold text-kaisers-gold">#18</span>
+                            <span class="text-sm font-bold bg-kaisers-blue/60 text-slate-200 px-3 py-1 rounded-full">投打：左投左打</span>
+                        </div>
+                        <h3 class="font-mincho text-4xl sm:text-5xl font-black text-white mb-3">
+                            猪狩 守 <span class="text-lg font-normal text-slate-400 font-sans block sm:inline sm:ml-2">Mamoru Ikari</span>
+                        </h3>
+                        <p class="text-kaisers-gold font-bold text-xl mb-4 tracking-wider">
+                            「絶対的エース」
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-6">
+                            カイザースを束ねる絶対的エース。驚異的な伸びを誇る直球「ライジングショット」と精密無比なコントロールでバッターを翻弄する。
+                        </p>
+                        <!-- パラメータ指標 -->
+                        <div class="grid grid-cols-3 gap-4 text-center border-t border-slate-700/60 pt-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block">最高球速</span>
+                                <span class="font-teko text-2xl font-bold text-white">149 km/h</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">奪三振</span>
+                                <span class="font-teko text-2xl font-bold text-white">223</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">防御率</span>
+                                <span class="font-teko text-2xl font-bold text-kaisers-gold">2.24</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 猪狩 進 (捕手) - 右側からスライドイン -->
+                <div class="slide-in-right flex flex-col lg:flex-row-reverse items-center gap-8 bg-gradient-to-r from-kaisers-navy via-kaisers-darkblue to-kaisers-navy p-6 lg:p-10 rounded-xl border border-kaisers-royal/40 glow-effect">
+                    <!-- SVG選手グラフィックプレースホルダー -->
+                    <div class="w-full lg:w-1/2 h-80 sm:h-96 relative flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-slate-900/80 rounded-lg overflow-hidden border border-kaisers-gold/30">
+                        <!-- 野球選手イラスト(捕手) -->
+                        <img src="../images/k_susumu.webp" alt="猪狩 守" class="player-img">
+                        <div class="absolute top-4 right-4 bg-kaisers-silver text-kaisers-navy font-black text-xs px-3 py-1 rounded">CATCHER</div>
+                    </div>
+
+                    <!-- 選手情報 -->
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <div class="flex items-center gap-4 mb-2">
+                            <span class="text-3xl font-teko font-bold text-kaisers-gold">#27</span>
+                            <span class="text-sm font-bold bg-kaisers-blue/60 text-slate-200 px-3 py-1 rounded-full">投打：右投左打</span>
+                        </div>
+                        <h3 class="font-mincho text-4xl sm:text-5xl font-black text-white mb-3">
+                            猪狩 進 <span class="text-lg font-normal text-slate-400 font-sans block sm:inline sm:ml-2">Susumu Ikari</span>
+                        </h3>
+                        <p class="text-kaisers-gold font-bold text-xl mb-4 tracking-wider">
+                            「カイザースの頭脳」
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-6">
+                            攻守ともに揃ったグラウンドの司令塔。相手打者の心理を見抜く配球術と高度なフレーミング、巧みな広角打法でチームを勝利へと導く。
+                        </p>
+                        <!-- パラメータ指標 -->
+                        <div class="grid grid-cols-3 gap-4 text-center border-t border-slate-700/60 pt-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block">打率</span>
+                                <span class="font-teko text-2xl font-bold text-white">.312</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">打点</span>
+                                <span class="font-teko text-2xl font-bold text-white">76</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">盗塁阻止率</span>
+                                <span class="font-teko text-2xl font-bold text-kaisers-gold">.451</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 友沢 亮 (遊撃手) - 左側からスライドイン -->
+                <div class="slide-in-left flex flex-col lg:flex-row items-center gap-8 bg-gradient-to-r from-kaisers-navy via-kaisers-darkblue to-kaisers-navy p-6 lg:p-10 rounded-xl border border-kaisers-royal/40 glow-effect">
+                    <!-- SVG選手グラフィックプレースホルダー -->
+                    <div class="w-full lg:w-1/2 h-80 sm:h-96 relative flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-slate-900/80 rounded-lg overflow-hidden border border-kaisers-gold/30">
+                        <!-- 野球選手イラスト(バッター) -->
+                        <img src="../images/k_tomozawa.webp" alt="友沢 亮" class="player-img">
+                        <div class="absolute top-4 right-4 bg-kaisers-gold text-kaisers-navy font-black text-xs px-3 py-1 rounded">SHORTSTOP</div>
+                    </div>
+
+                    <!-- 選手情報 -->
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center">
+                        <div class="flex items-center gap-4 mb-2">
+                            <span class="text-3xl font-teko font-bold text-kaisers-gold">#7</span>
+                            <span class="text-sm font-bold bg-kaisers-blue/60 text-slate-200 px-3 py-1 rounded-full">投打：右投両打</span>
+                        </div>
+                        <h3 class="font-mincho text-4xl sm:text-5xl font-black text-white mb-3">
+                            友沢 亮 <span class="text-lg font-normal text-slate-400 font-sans block sm:inline sm:ml-2">Ryo Tomozawa</span>
+                        </h3>
+                        <p class="text-kaisers-gold font-bold text-xl mb-4 tracking-wider">
+                            「不屈の天才」
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-6">
+                            走・攻・守の全てにおいて高い能力を誇るショートストップ。不屈の精神と絶えまない努力で磨き上げた技術で勝負どころの1本を確実に仕留める。
+                        </p>
+                        <!-- パラメータ指標 -->
+                        <div class="grid grid-cols-3 gap-4 text-center border-t border-slate-700/60 pt-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block">打率</span>
+                                <span class="font-teko text-2xl font-bold text-white">.338</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">本塁打</span>
+                                <span class="font-teko text-2xl font-bold text-white">32 本</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">打点</span>
+                                <span class="font-teko text-2xl font-bold text-kaisers-gold">104 打点</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 試合日程・チケット購入セクション -->
+    <section id="schedule" class="py-24 bg-kaisers-navy relative z-10 border-t border-kaisers-blue/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-up">
+                <span class="text-kaisers-gold font-teko text-3xl tracking-widest block">MATCH SCHEDULE</span>
+                <h2 class="font-mincho text-4xl sm:text-5xl font-black text-white">クライマックスシリーズ 決戦日程</h2>
+                <p class="text-slate-400 mt-2">会場：猪狩ドーム（ホーム）</p>
+                <div class="w-24 h-1 bg-kaisers-gold mx-auto mt-4"></div>
+            </div>
+
+            <!-- カード一覧 -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 第1戦 -->
+                <div class="fade-in-up bg-kaisers-darkblue rounded-lg p-6 border border-slate-700 hover:border-kaisers-gold transition-all relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-kaisers-royal text-white text-xs font-bold px-4 py-1 rounded-bl">GAME 1</div>
+                    <div class="text-sm text-kaisers-gold font-bold mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> 10.18 (FRI) 18:00 PLAY BALL</div>
+                    <div class="text-xl font-bold text-white mb-4">猪狩カイザース vs 頑張パワフルズ</div>
+                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                        <span class="text-xs text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 指定席残りわずか</span>
+                        <button class="btn-shine bg-gold-gradient text-kaisers-navy text-xs font-black px-4 py-2 rounded">チケット購入</button>
+                    </div>
+                </div>
+
+                <!-- 第2戦 -->
+                <div class="fade-in-up bg-kaisers-darkblue rounded-lg p-6 border border-slate-700 hover:border-kaisers-gold transition-all relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-kaisers-royal text-white text-xs font-bold px-4 py-1 rounded-bl">GAME 2</div>
+                    <div class="text-sm text-kaisers-gold font-bold mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> 10.19 (SAT) 14:00 PLAY BALL</div>
+                    <div class="text-xl font-bold text-white mb-4">猪狩カイザース vs 頑張パワフルズ</div>
+                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                        <span class="text-xs text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 販売中</span>
+                        <button class="btn-shine bg-gold-gradient text-kaisers-navy text-xs font-black px-4 py-2 rounded">チケット購入</button>
+                    </div>
+                </div>
+
+                <!-- 第3戦 -->
+                <div class="fade-in-up bg-kaisers-darkblue rounded-lg p-6 border border-slate-700 hover:border-kaisers-gold transition-all relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-kaisers-royal text-white text-xs font-bold px-4 py-1 rounded-bl">GAME 3</div>
+                    <div class="text-sm text-kaisers-gold font-bold mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> 10.20 (SUN) 14:00 PLAY BALL</div>
+                    <div class="text-xl font-bold text-white mb-4">猪狩カイザース vs 頑張パワフルズ</div>
+                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                        <span class="text-xs text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 販売中</span>
+                        <button class="btn-shine bg-gold-gradient text-kaisers-navy text-xs font-black px-4 py-2 rounded">チケット購入</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ニュース＆トピックス -->
+    <section id="news" class="py-20 bg-kaisers-darkblue border-t border-kaisers-blue/30 relative z-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10 fade-in-up">
+                <div>
+                    <span class="text-kaisers-gold font-teko text-2xl tracking-widest block">TOPICS</span>
+                    <h2 class="font-mincho text-3xl font-black text-white">最新ニュース</h2>
+                </div>
+                <a href="#" class="text-xs text-kaisers-gold hover:underline">ニュース一覧を見る <i class="fa-solid fa-angle-right"></i></a>
+            </div>
+
+            <div class="space-y-4 fade-in-up">
+                <a href="#" class="block bg-kaisers-navy p-4 rounded border border-slate-800 hover:border-kaisers-royal transition-all flex flex-col md:flex-row md:items-center justify-between gap-2">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs text-slate-400">2026.10.12</span>
+                        <span class="bg-kaisers-royal text-[10px] font-bold px-2 py-0.5 rounded text-white">チーム情報</span>
+                        <span class="text-sm text-white font-medium hover:text-kaisers-gold transition-colors">CS直前！猪狩守投手の公開調整登板動画を公式YouTubeにて公開中</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-xs text-slate-500 hidden md:block"></i>
+                </a>
+
+                <a href="#" class="block bg-kaisers-navy p-4 rounded border border-slate-800 hover:border-kaisers-royal transition-all flex flex-col md:flex-row md:items-center justify-between gap-2">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs text-slate-400">2026.10.10</span>
+                        <span class="bg-kaisers-gold text-kaisers-navy font-bold text-[10px] px-2 py-0.5 rounded">グッズ</span>
+                        <span class="text-sm text-white font-medium hover:text-kaisers-gold transition-colors">クライマックスシリーズ限定「カイザース勝利祈願Vタオル」本日発売開始</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-xs text-slate-500 hidden md:block"></i>
+                </a>
+
+                <a href="#" class="block bg-kaisers-navy p-4 rounded border border-slate-800 hover:border-kaisers-royal transition-all flex flex-col md:flex-row md:items-center justify-between gap-2">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs text-slate-400">2026.10.05</span>
+                        <span class="bg-kaisers-royal text-[10px] font-bold px-2 py-0.5 rounded text-white">イベント</span>
+                        <span class="text-sm text-white font-medium hover:text-kaisers-gold transition-colors">友沢亮選手シーズン100打点達成記念 トークショー開催決定のお知らせ</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-xs text-slate-500 hidden md:block"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-kaisers-navy border-t border-slate-800 py-12 relative z-10 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-kaisers-gold rounded-full flex items-center justify-center text-kaisers-navy font-teko font-bold text-lg">IK</div>
+                <span class="font-teko text-xl font-bold tracking-widest text-white">IKARI KAISERS</span>
+            </div>
+
+            <div class="flex gap-6 text-xs">
+                <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
+                <a href="#" class="hover:text-white transition-colors">利用規約</a>
+                <a href="#" class="hover:text-white transition-colors">球団概要</a>
+                <a href="#" class="hover:text-white transition-colors">お問い合わせ</a>
+            </div>
+
+            <div class="text-xs text-slate-500">
+                <p>&copy; Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScriptインタラクション & エフェクト -->
+    <script>
+        // --- 1. スクロールスライドインアニメーション (IntersectionObserver) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            // 対象エレメントを登録
+            const targets = document.querySelectorAll('.slide-in-left, .slide-in-right, .fade-in-up');
+            targets.forEach(el => observer.observe(el));
+        });
+
+        // --- 2. バックグラウンド光粒子エフェクト (Canvas API) ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 40;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = -Math.random() * 1.2 - 0.2; // 上に向かって上昇
+                this.opacity = Math.random() * 0.7 + 0.3;
+                this.color = Math.random() > 0.4 ? '#f3c642' : '#1e52be'; // ゴールドかブルー
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // 画面外に出たらリセット
+                if (this.y < 0 || this.x < 0 || this.x > canvas.width) {
+                    this.reset();
+                    this.y = canvas.height + 10;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // 初期粒子生成
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // アニメーションループ
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.onload = function() {
+            animateParticles();
+        };
+    </script>
+</body>
+</html>
