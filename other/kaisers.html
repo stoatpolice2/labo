@@ -150,6 +150,30 @@
             object-fit: cover; /* 枠に合わせて綺麗にトリミング表示 */
             object-position: center top; /* 画像の上部（顔付近）を優先して表示 */
             display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .player-img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            header .ticket-nav-link {
+                max-width: 46vw;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+
+            header .ticket-nav-link span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            #schedule .ticket-row {
+                flex-wrap: wrap;
+                row-gap: 0.75rem;
+            }
         }
         
     </style>
@@ -182,7 +206,7 @@
             </nav>
 
             <!-- チケットボタン -->
-            <a href="#schedule" class="btn-shine bg-gold-gradient text-kaisers-navy font-black px-3 py-1.5 sm:px-6 sm:py-2.5 text-xs sm:text-base rounded-sm shadow-md hover:brightness-110 transition-all flex items-center gap-1 sm:gap-2 transform skew-x-[-10deg] shrink-0">
+            <a href="#schedule" class="ticket-nav-link btn-shine bg-gold-gradient text-kaisers-navy font-black px-3 py-1.5 sm:px-6 sm:py-2.5 text-xs sm:text-base rounded-sm shadow-md hover:brightness-110 transition-all flex items-center gap-1 sm:gap-2 transform skew-x-[-10deg] shrink-0">
                 <span class="inline-block transform skew-x-[10deg] whitespace-nowrap"><i class="fa-solid font-black fa-ticket mr-1"></i> チケット購入</span>
             </a>
         </div>
@@ -225,7 +249,7 @@
         <br>
             
             <!-- スクロール誘導 -->
-            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 animate-bounce">
+            <div class="absolute bottom-6 inset-x-0 flex w-full flex-col items-center gap-2 opacity-70 animate-bounce">
                 <span class="text-xs tracking-widest text-kaisers-gold">SCROLL</span>
                 <i class="fa-solid fa-angle-down text-kaisers-gold"></i>
             </div>
@@ -248,11 +272,11 @@
 
                 <!-- 1. 猪狩 守 (投手) - 左側からスライドイン -->
                 <div class="slide-in-left flex flex-col lg:flex-row items-center gap-8 bg-gradient-to-r from-kaisers-navy via-kaisers-darkblue to-kaisers-navy p-6 lg:p-10 rounded-xl border border-kaisers-royal/40 glow-effect">
-                    <!-- SVG選手グラフィックプレースホルダー -->
+                    <!-- 選手グラフィックプレースホルダー -->
                     <div class="w-full lg:w-1/2 h-80 sm:h-96 relative flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-slate-900/80 rounded-lg overflow-hidden border border-kaisers-gold/30">
                         <!-- 野球選手イラスト(投手) -->
                         <img src="../images/k_mamoru.webp" alt="猪狩 守" class="player-img">
-                        <div class="absolute top-4 right-4 bg-kaisers-gold text-kaisers-navy font-black text-xs px-3 py-1 rounded">PITCHER</div>
+                        <div class="absolute top-4 right-4 bg-kaisers-gold text-kaisers-navy font-black text-xs px-3 py-1 rounded pointer-events-none">PITCHER</div>
                     </div>
 
                     <!-- 選手情報 -->
@@ -290,11 +314,11 @@
 
                 <!-- 2. 猪狩 進 (捕手) - 右側からスライドイン -->
                 <div class="slide-in-right flex flex-col lg:flex-row-reverse items-center gap-8 bg-gradient-to-r from-kaisers-navy via-kaisers-darkblue to-kaisers-navy p-6 lg:p-10 rounded-xl border border-kaisers-royal/40 glow-effect">
-                    <!-- SVG選手グラフィックプレースホルダー -->
+                    <!-- 選手グラフィックプレースホルダー -->
                     <div class="w-full lg:w-1/2 h-80 sm:h-96 relative flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-slate-900/80 rounded-lg overflow-hidden border border-kaisers-gold/30">
                         <!-- 野球選手イラスト(捕手) -->
-                        <img src="../images/k_susumu.webp" alt="猪狩 守" class="player-img">
-                        <div class="absolute top-4 right-4 bg-kaisers-silver text-kaisers-navy font-black text-xs px-3 py-1 rounded">CATCHER</div>
+                        <img src="../images/k_susumu.webp" alt="猪狩 進" class="player-img">
+                        <div class="absolute top-4 right-4 bg-kaisers-silver text-kaisers-navy font-black text-xs px-3 py-1 rounded pointer-events-none">CATCHER</div>
                     </div>
 
                     <!-- 選手情報 -->
@@ -332,11 +356,11 @@
 
                 <!-- 3. 友沢 亮 (遊撃手) - 左側からスライドイン -->
                 <div class="slide-in-left flex flex-col lg:flex-row items-center gap-8 bg-gradient-to-r from-kaisers-navy via-kaisers-darkblue to-kaisers-navy p-6 lg:p-10 rounded-xl border border-kaisers-royal/40 glow-effect">
-                    <!-- SVG選手グラフィックプレースホルダー -->
+                    <!-- 選手グラフィックプレースホルダー -->
                     <div class="w-full lg:w-1/2 h-80 sm:h-96 relative flex items-center justify-center bg-gradient-to-br from-blue-900/50 to-slate-900/80 rounded-lg overflow-hidden border border-kaisers-gold/30">
                         <!-- 野球選手イラスト(バッター) -->
                         <img src="../images/k_tomozawa.webp" alt="友沢 亮" class="player-img">
-                        <div class="absolute top-4 right-4 bg-kaisers-gold text-kaisers-navy font-black text-xs px-3 py-1 rounded">SHORTSTOP</div>
+                        <div class="absolute top-4 right-4 bg-kaisers-gold text-kaisers-navy font-black text-xs px-3 py-1 rounded pointer-events-none">SHORTSTOP</div>
                     </div>
 
                     <!-- 選手情報 -->
@@ -393,7 +417,7 @@
                     <div class="absolute top-0 right-0 bg-kaisers-royal text-white text-xs font-bold px-4 py-1 rounded-bl">GAME 1</div>
                     <div class="text-sm text-kaisers-gold font-bold mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> 10.18 (FRI) 18:00 PLAY BALL</div>
                     <div class="text-xl font-bold text-white mb-4">猪狩カイザース vs 頑張パワフルズ</div>
-                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                    <div class="ticket-row flex items-center justify-between border-t border-slate-800 pt-4">
                         <span class="text-xs text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 指定席残りわずか</span>
                         <button class="btn-shine bg-gold-gradient text-kaisers-navy text-xs font-black px-4 py-2 rounded">チケット購入</button>
                     </div>
@@ -404,7 +428,7 @@
                     <div class="absolute top-0 right-0 bg-kaisers-royal text-white text-xs font-bold px-4 py-1 rounded-bl">GAME 2</div>
                     <div class="text-sm text-kaisers-gold font-bold mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> 10.19 (SAT) 14:00 PLAY BALL</div>
                     <div class="text-xl font-bold text-white mb-4">猪狩カイザース vs 頑張パワフルズ</div>
-                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                    <div class="ticket-row flex items-center justify-between border-t border-slate-800 pt-4">
                         <span class="text-xs text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 販売中</span>
                         <button class="btn-shine bg-gold-gradient text-kaisers-navy text-xs font-black px-4 py-2 rounded">チケット購入</button>
                     </div>
@@ -415,7 +439,7 @@
                     <div class="absolute top-0 right-0 bg-kaisers-royal text-white text-xs font-bold px-4 py-1 rounded-bl">GAME 3</div>
                     <div class="text-sm text-kaisers-gold font-bold mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> 10.20 (SUN) 14:00 PLAY BALL</div>
                     <div class="text-xl font-bold text-white mb-4">猪狩カイザース vs 頑張パワフルズ</div>
-                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                    <div class="ticket-row flex items-center justify-between border-t border-slate-800 pt-4">
                         <span class="text-xs text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 販売中</span>
                         <button class="btn-shine bg-gold-gradient text-kaisers-navy text-xs font-black px-4 py-2 rounded">チケット購入</button>
                     </div>
@@ -486,6 +510,18 @@
             </div>
         </div>
     </footer>
+
+    <!-- 画像拡大表示モーダル -->
+    <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative max-w-4xl max-h-[90vh] p-2 sm:p-4">
+            <!-- 閉じるボタン -->
+            <button id="closeModal" class="absolute -top-10 right-2 sm:right-0 text-white text-3xl hover:text-kaisers-gold transition-colors z-10 focus:outline-none" aria-label="閉じる">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <!-- 拡大画像 -->
+            <img id="modalImg" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-lg border-2 border-kaisers-gold/50 shadow-2xl">
+        </div>
+    </div>
 
     <!-- JavaScriptインタラクション & エフェクト -->
     <script>
@@ -582,6 +618,53 @@
         window.onload = function() {
             animateParticles();
         };
+
+        // --- 3. 選手カード画像拡大モーダル処理 ---
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeModalBtn = document.getElementById('closeModal');
+        const playerImages = document.querySelectorAll('.player-img');
+
+        // モーダルを開く関数
+        function openModal(src, alt) {
+            modalImg.src = src;
+            modalImg.alt = alt;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        // モーダルを閉じる関数
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('overflow-hidden');
+            setTimeout(() => {
+                modalImg.src = '';
+            }, 300);
+        }
+
+        // 選手画像クリック時にモーダルオープン
+        playerImages.forEach(img => {
+            img.addEventListener('click', () => {
+                openModal(img.src, img.alt);
+            });
+        });
+
+        // 閉じるボタンクリック時
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // モーダル外側の背景クリック時
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // ESCキー押下時に閉じる
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
