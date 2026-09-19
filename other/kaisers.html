@@ -178,7 +178,7 @@
         
     </style>
 </head>
-<body class="min-h-screen relative overflow-x-hidden">
+<body class="min-h-screen relative">
 
     <!-- 背景粒子のキャンバス -->
     <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-60"></canvas>
@@ -187,7 +187,7 @@
     <header class="fixed top-0 left-0 w-full z-50 bg-kaisers-navy/90 backdrop-blur-md border-b border-kaisers-blue/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- エンブレムロゴ -->
-            <a href="#" class="flex items-center gap-3 group shrink-0">
+            <a href="#" class="flex items-center gap-3 group">
                 <div class="w-12 h-12 bg-gradient-to-br from-kaisers-royal to-kaisers-darkblue border-2 border-kaisers-gold rounded-full flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
                     <span class="font-teko text-2xl font-bold text-kaisers-gold tracking-tighter">IK</span>
                 </div>
@@ -197,7 +197,7 @@
                 </div>
             </a>
 
-            <!-- デスクトップ用ナビリンク -->
+            <!-- ナビリンク -->
             <nav class="hidden md:flex items-center space-x-8 font-bold text-sm tracking-wider">
                 <a href="#hero" class="hover:text-kaisers-gold transition-colors">TOP</a>
                 <a href="#players" class="hover:text-kaisers-gold transition-colors">MAIN PLAYERS</a>
@@ -205,30 +205,10 @@
                 <a href="#news" class="hover:text-kaisers-gold transition-colors">NEWS</a>
             </nav>
 
-            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <!-- チケットボタン（スマホ表示時は非表示: hidden sm:flex を指定） -->
-                <a href="#schedule" class="ticket-nav-link btn-shine bg-gold-gradient text-kaisers-navy font-black px-3 py-1.5 sm:px-6 sm:py-2.5 text-xs sm:text-base rounded-sm shadow-md hover:brightness-110 transition-all hidden sm:flex items-center gap-1 sm:gap-2 transform skew-x-[-10deg] shrink-0">
-                    <span class="inline-block transform skew-x-[10deg] whitespace-nowrap"><i class="fa-solid font-black fa-ticket mr-1"></i> チケット購入</span>
-                </a>
-
-                <!-- スマホ用ハンバーガーボタン -->
-                <button id="menuBtn" class="md:hidden text-white hover:text-kaisers-gold text-2xl p-2 w-10 h-10 flex items-center justify-center focus:outline-none transition-colors" aria-label="メニューを開く">
-                    <i id="menuIcon" class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- スマホ用ドロワーメニュー -->
-        <div id="mobileMenu" class="hidden md:hidden bg-kaisers-navy/95 border-b border-kaisers-blue/40 px-6 py-6 transition-all">
-            <nav class="flex flex-col gap-4 font-bold text-base tracking-wider text-center">
-                <a href="#hero" class="mobile-nav-link py-2 border-b border-slate-800 hover:text-kaisers-gold transition-colors">TOP</a>
-                <a href="#players" class="mobile-nav-link py-2 border-b border-slate-800 hover:text-kaisers-gold transition-colors">MAIN PLAYERS</a>
-                <a href="#schedule" class="mobile-nav-link py-2 border-b border-slate-800 hover:text-kaisers-gold transition-colors">SCHEDULE</a>
-                <a href="#news" class="mobile-nav-link py-2 border-b border-slate-800 hover:text-kaisers-gold transition-colors">NEWS</a>
-                <a href="#schedule" class="mobile-nav-link btn-shine bg-gold-gradient text-kaisers-navy font-black py-3 mt-2 rounded text-center shadow-md">
-                    <i class="fa-solid fa-ticket mr-1"></i> チケット購入
-                </a>
-            </nav>
+            <!-- チケットボタン（スマホ表示時は非表示: hidden sm:flex を指定） -->
+            <a href="#schedule" class="ticket-nav-link btn-shine bg-gold-gradient text-kaisers-navy font-black px-3 py-1.5 sm:px-6 sm:py-2.5 text-xs sm:text-base rounded-sm shadow-md hover:brightness-110 transition-all hidden sm:flex items-center gap-1 sm:gap-2 transform skew-x-[-10deg] shrink-0">
+                <span class="inline-block transform skew-x-[10deg] whitespace-nowrap"><i class="fa-solid font-black fa-ticket mr-1"></i> チケット購入</span>
+            </a>
         </div>
     </header>
 
@@ -545,32 +525,6 @@
 
     <!-- JavaScriptインタラクション & エフェクト -->
     <script>
-        // --- スマホ用ハンバーガーメニューの開閉制御 ---
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuIcon = document.getElementById('menuIcon');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            if (mobileMenu.classList.contains('hidden')) {
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars');
-            } else {
-                menuIcon.classList.remove('fa-bars');
-                menuIcon.classList.add('fa-xmark');
-            }
-        });
-
-        // スマホ用メニューのリンクをタップしたら自動でメニューを閉じる
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars');
-            });
-        });
-
         // --- 1. スクロールスライドインアニメーション (IntersectionObserver) ---
         document.addEventListener('DOMContentLoaded', () => {
             const observerOptions = {
@@ -587,8 +541,8 @@
                 });
             }, observerOptions);
 
-            // 対象エレメントを登録（メインコンテンツ配下のみ指定）
-            const targets = document.querySelectorAll('section .slide-in-left, section .slide-in-right, section .fade-in-up');
+            // 対象エレメントを登録
+            const targets = document.querySelectorAll('.slide-in-left, .slide-in-right, .fade-in-up');
             targets.forEach(el => observer.observe(el));
         });
 
