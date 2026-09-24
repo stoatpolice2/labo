@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>個人サイトをより個性的にする小技3選！ | Stoat Labo</title>
-    
+
         <!-- ファビコンの設定 -->
         <link href="images/icon.webp" rel="icon" type="image/x-icon" />
 
@@ -38,7 +38,6 @@
       --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
       --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
       --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
-      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
     }
 
     * {
@@ -231,23 +230,6 @@
         font-weight: bold;
     }
 
-    .rule-list {
-        list-style: none;
-    }
-
-    .rule-list li {
-        position: relative;
-        padding-left: 28px;
-        margin-bottom: 16px;
-    }
-
-    .rule-list li::before {
-        content: "🐾";
-        position: absolute;
-        left: 0;
-        font-size: 0.9rem;
-    }
-
     .alert-box {
         background-color: #FFF6F3;
         border: 1px dashed var(--primary);
@@ -418,113 +400,29 @@
     .attr-val { color: #98c379; }
 
     /* ----------------------------------
-        IMAGE STYLES & GRID
+        IMAGE STYLES
     ---------------------------------- */
     .image-container {
-        margin: 20px 0;
-        text-align: center;
+      margin-bottom: 24px;
+      text-align: center;
     }
 
     .image-frame {
-        position: relative;
-        width: 100%;
-        height: 180px; /* サムネイルの高さを統一 */
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        background-color: #F8F5F3;
-        display: block;
+      width: 100%;
+      max-height: 480px;
+      height: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background-color: #F8F5F3;
+      display: block;
     }
 
     .image-frame img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* 枠に合わせてトリミング表示 */
-        display: block;
-        cursor: pointer;
-        transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .image-frame img:hover {
-        opacity: 0.88;
-        transform: scale(1.02);
-    }
-
-    /* 右下の拡大バッジ */
-    .image-frame::after {
-        content: "🔍 拡大表示";
-        position: absolute;
-        bottom: 8px;
-        right: 8px;
-        background: rgba(51, 44, 43, 0.75);
-        color: #ffffff;
-        font-size: 0.75rem;
-        font-weight: bold;
-        padding: 4px 10px;
-        border-radius: 20px;
-        pointer-events: none;
-        backdrop-filter: blur(2px);
-        transition: background 0.2s ease;
-    }
-
-    .image-frame:hover::after {
-        background: rgba(224, 109, 83, 0.9);
-    }
-
-    .image-caption {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-top: 6px;
-    }
-
-    /* ----------------------------------
-        MODAL (LIGHTBOX) STYLES
-    ---------------------------------- */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(4px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-        padding: 20px;
-    }
-
-    .modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .modal-content {
-        max-width: 90%;
-        max-height: 85vh;
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        object-fit: contain;
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 20px;
-        right: 25px;
-        color: #fff;
-        font-size: 35px;
-        font-weight: bold;
-        cursor: pointer;
-        line-height: 1;
-        transition: color 0.2s;
-    }
-
-    .modal-close:hover {
-        color: var(--accent);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     footer {
@@ -574,7 +472,7 @@
         <section class="section">
             <h2 class="section-title">はじめに</h2>
             <p>自分の個人サイトを作っていると、「もう少し個性的にしたいな…」と思うことはありませんか？</p>
-            <p style="margin-top: 10px;">今回は、HTMLを少し書き加えるだけで自分のサイトをぐっとおしゃれ＆個性的（そして親切！）にできる小技を3つご紹介します！</p>
+            <p style="margin-top: 10px;">今回は、HTMLを少し書き加えるだけで自分のサイトをぐっとおしゃれ＆個性的（満足感アップ！）にできる小技を3つご紹介します！</p>
         </section>
 
         <!-- 1. ファビコン設定 -->
@@ -650,8 +548,8 @@
             <p style="margin-top: 16px; margin-bottom: 12px;">ちなみに、当サイトの404エラーページはこんなデザインにしています🐾</p>
 
             <div class="image-container">
-                <div class="image-frame" style="height: auto; max-height: 480px;">
-                    <img src="../images/column13.webp" alt="404エラーページのプレビュー画面" onclick="openModal(this.src)">
+                <div class="image-frame">
+                    <img src="../images/column13.webp" alt="404エラーページのプレビュー画面">
                 </div>
             </div>
 
@@ -703,8 +601,8 @@
             <p>すぐに使えるシンプルなテンプレートをご用意しました！コピペして自由にカスタマイズしてご活用ください。</p>
 
             <div class="image-container">
-                <div class="image-frame" style="height: auto; max-height: 480px;">
-                    <img src="../images/column14.webp" alt="サンプルコードのプレビュー画面" onclick="openModal(this.src)">
+                <div class="image-frame">
+                    <img src="../images/column14.webp" alt="サンプルコードのプレビュー画面">
                 </div>
             </div>
 
@@ -799,12 +697,6 @@
         <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
     </footer>
 
-    <!-- モーダル表示用エリア（コード②準拠） -->
-    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
-        <span class="modal-close">&times;</span>
-        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
-    </div>
-
     <!-- JavaScript -->
     <script>
     /* コピー機能 */
@@ -823,26 +715,6 @@
             console.error('コピーに失敗しました:', err);
         });
     }
-
-    /* モーダル表示機能（コード②準拠） */
-    function openModal(imageSrc) {
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImg');
-        modalImg.src = imageSrc;
-        modal.classList.add('active');
-    }
-
-    function closeModal() {
-        const modal = document.getElementById('imageModal');
-        modal.classList.remove('active');
-    }
-
-    // ESCキーでもモーダルを閉じられるように設定
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            closeModal();
-        }
-    });
     </script>
 </body>
 </html>
