@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個人サイトをより個性的にする小技3選！ | Stoat Labo</title>
+    
+        <!-- ファビコンの設定 -->
+        <link href="images/icon.webp" rel="icon" type="image/x-icon" />
+
+        <!-- Open Graph Protocol (OGP) の設定 -->
+        <meta content="Stoat Labo | Web創作支援サイト" property="og:title" />
+        <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description" />
+        <meta content="website" property="og:type" />
+        <meta content="https://stoatpolice2.github.io/labo/" property="og:url" />
+        <meta content="https://stoatpolice2.github.io/labo/images/ogp.webp" property="og:image" />
+        <meta content="Stoat Labo" property="og:site_name" />
+        <meta content="ja_JP" property="og:locale" />
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        scroll-margin-top: 70px;
+    }
+
+    .section:hover {
+        transform: translateY(-4px); 
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 16px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    .step-item {
+        margin-bottom: 22px;
+        background: #FAF5F2;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .step-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+
+    .step-number {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-size: 0.85rem;
+        margin-right: 8px;
+    }
+
+    /* TABLE STYLES */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 0.92rem;
+    }
+
+    .custom-table th, 
+    .custom-table td {
+        border: 1px solid var(--border);
+        padding: 12px 14px;
+        text-align: left;
+    }
+
+    .custom-table th {
+        background-color: #FFF6F3;
+        color: var(--primary);
+        font-weight: bold;
+    }
+
+    .custom-table tr:nth-child(even) {
+        background-color: #FAF5F2;
+    }
+
+    /* ----------------------------------
+        DEMO CODE COPY BOX STYLES
+    ---------------------------------- */
+    .code-box-wrapper {
+        margin: 20px 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #2d2726;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .code-box-header {
+        background: #3d3534;
+        padding: 10px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #4a403e;
+    }
+
+    .code-box-title {
+        color: #e8ddd7;
+        font-size: 0.85rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .copy-btn {
+        background: var(--grad-primary);
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .copy-btn:hover {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+
+    .copy-btn.copied {
+        background: #4a90e2;
+    }
+
+    .code-box-body pre {
+        margin: 0;
+        padding: 16px;
+        max-height: 380px;
+        overflow-y: auto;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    /* ----------------------------------
+        CODE BLOCK & INLINE CODE STYLES
+    ---------------------------------- */
+    pre {
+        background: #2d2726;
+        color: #f8f5f3;
+        padding: 16px;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin: 12px 0;
+    }
+
+    code {
+        background: #ffe8e2;
+        color: #c84022;
+        border: 1px solid #f2c7bd;
+        padding: 2px 7px;
+        margin: 0 2px;
+        border-radius: 5px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        font-weight: 700;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    pre code {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+        box-shadow: none;
+    }
+
+    .comment { color: #8c7b75; }
+    .tag-name { color: #e06d53; }
+    .attr-name { color: #f4c463; }
+    .attr-val { color: #98c379; }
+
+    /* ----------------------------------
+        IMAGE STYLES & GRID
+    ---------------------------------- */
+    .image-container {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .image-frame {
+        position: relative;
+        width: 100%;
+        height: 180px; /* サムネイルの高さを統一 */
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 枠に合わせてトリミング表示 */
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .image-frame img:hover {
+        opacity: 0.88;
+        transform: scale(1.02);
+    }
+
+    /* 右下の拡大バッジ */
+    .image-frame::after {
+        content: "🔍 拡大表示";
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(51, 44, 43, 0.75);
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 20px;
+        pointer-events: none;
+        backdrop-filter: blur(2px);
+        transition: background 0.2s ease;
+    }
+
+    .image-frame:hover::after {
+        background: rgba(224, 109, 83, 0.9);
+    }
+
+    .image-caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 6px;
+    }
+
+    /* ----------------------------------
+        MODAL (LIGHTBOX) STYLES
+    ---------------------------------- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        color: #fff;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--accent);
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.6rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+        .custom-table { font-size: 0.85rem; }
+        .custom-table th, .custom-table td { padding: 8px 10px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- ヘッダーエリア -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">個人サイトをより個性的にする小技3選！</h1>
+            <p class="header-subtitle">HTMLをちょっと書き加えてデザイン＆使いやすさUP</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#favicon">1. ファビコン設定</a></li>
+            <li><a href="#ogp">2. OGP設定</a></li>
+            <li><a href="#error404">3. 404エラーページ</a></li>
+            <li><a href="#sample">サンプルコード</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>自分の個人サイトを作っていると、「もう少し個性的にしたいな…」と思うことはありませんか？</p>
+            <p style="margin-top: 10px;">今回は、HTMLを少し書き加えるだけで自分のサイトをぐっとおしゃれ＆個性的（そして親切！）にできる小技を3つご紹介します！</p>
+        </section>
+
+        <!-- 1. ファビコン設定 -->
+        <section id="favicon" class="section">
+            <h2 class="section-title">1. ファビコン（Favicon）を設定しよう！</h2>
+            <p>PCのブラウザでタブを開いているときや、スマートフォンのホーム画面にWebページのショートカットを作成したとき、表示されるアイコンが初期設定のままで物足りないと感じたことはありませんか？</p>
+            <p style="margin-top: 10px;">あの小さなアイコンは<strong>「ファビコン（Favicon）」</strong>と呼ばれるもので、HTMLに数行書き加えるだけでオリジナルの画像に変更できちゃうんです！</p>
+
+            <div class="alert-box">
+                <strong>💡 補足・注意点</strong><br>
+                一部の無料サーバーでは、仕様によりファビコンを設定しても反映されない場合があります！
+            </div>
+
+            <h3 class="sub-title">設定コード</h3>
+            <p>以下のコードの画像のパス（<code>href</code> の部分）を自分の画像ファイル名に書き換えて、<code>&lt;head&gt;</code> 〜 <code>&lt;/head&gt;</code> 内（<code>&lt;title&gt;</code> タグのすぐ下あたり）に貼り付けましょう！</p>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 ファビコン設定コード</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code><span class="comment">&lt;!-- PNG画像（推奨）を使う場合 --&gt;</span>
+&lt;<span class="tag-name">link</span> <span class="attr-name">rel</span>=<span class="attr-val">"icon"</span> <span class="attr-name">href</span>=<span class="attr-val">"favicon.png"</span> <span class="attr-name">type</span>=<span class="attr-val">"image/png"</span>&gt;
+
+<span class="comment">&lt;!-- ICO形式を使う場合 --&gt;</span>
+&lt;<span class="tag-name">link</span> <span class="attr-name">rel</span>=<span class="attr-val">"icon"</span> <span class="attr-name">href</span>=<span class="attr-val">"favicon.ico"</span> <span class="attr-name">type</span>=<span class="attr-val">"image/x-icon"</span>&gt;</code></pre>
+                </div>
+            </div>
+
+            <p style="margin-top: 10px;">自作のイラストやサイトのロゴマークを設定しておくと、たくさんのタブを開いているときでも自分のサイトが一目でわかるようになりますよ！</p>
+        </section>
+
+        <!-- 2. OGP設定 -->
+        <section id="ogp" class="section">
+            <h2 class="section-title">2. OGPを設定してSNS共有時のカードをおしゃれにしよう！</h2>
+            <p>SNSでWebサイトのリンクを共有した際、大きな画像やタイトル、説明文がまとめられた「リンクカード」を見たことがあるのではないでしょうか。</p>
+            <p style="margin-top: 10px;">あれは <strong>OGP（Open Graph Protocol）</strong> という仕組みで設定されており、個人サイトでも簡単に導入できるんです！</p>
+
+            <h3 class="sub-title">設定コード</h3>
+            <p>以下のコードを <code>&lt;head&gt;</code> 〜 <code>&lt;/head&gt;</code> 内（<code>&lt;title&gt;</code> のすぐ下あたり）に貼り付け、各項目を自分のサイトに合わせて書き換えます。</p>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 OGP設定コード</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code>&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:title"</span> <span class="attr-name">content</span>=<span class="attr-val">"ページのタイトル"</span>&gt;
+&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:description"</span> <span class="attr-name">content</span>=<span class="attr-val">"ページの説明文（100文字程度）"</span>&gt;
+&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:type"</span> <span class="attr-name">content</span>=<span class="attr-val">"website"</span>&gt;
+&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:url"</span> <span class="attr-name">content</span>=<span class="attr-val">"https://example.com/"</span>&gt;
+&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:image"</span> <span class="attr-name">content</span>=<span class="attr-val">"https://example.com/images/ogp.png"</span>&gt;
+&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:site_name"</span> <span class="attr-name">content</span>=<span class="attr-val">"サイト名"</span>&gt;
+&lt;<span class="tag-name">meta</span> <span class="attr-name">property</span>=<span class="attr-val">"og:locale"</span> <span class="attr-name">content</span>=<span class="attr-val">"ja_JP"</span>&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <strong>💡 ここがポイント！</strong><br>
+                <code>og:image</code>（画像）や <code>og:url</code>（ページのURL）に指定するパスは、<code>https://</code> から始まる<strong>絶対パス（完全なURL）</strong>で記述してください。相対パス（<code>images/ogp.png</code> など）だと、SNS上で画像が読み込まれない原因になります。
+            </div>
+
+            <p style="margin-top: 14px;">SNSで自分のサイトを紹介・宣伝するときにとても目立ちやすくなるので、ぜひ設定しておきましょう！</p>
+        </section>
+
+        <!-- 3. 404エラーページ -->
+        <section id="error404" class="section">
+            <h2 class="section-title">3. オリジナルの「404エラーページ」を作ろう！</h2>
+            <p>Webサイトを観覧しているとき「404 Not Found（ページが見つかりません）」という画面が表示されたことはありませんか？</p>
+            <p style="margin-top: 10px;">この <strong>404エラーページ</strong> も、自分でデザインしたオリジナルのページに差し替えることができます！</p>
+
+            <p style="margin-top: 16px; margin-bottom: 12px;">ちなみに、当サイトの404エラーページはこんなデザインにしています🐾</p>
+
+            <div class="image-container">
+                <div class="image-frame" style="height: auto; max-height: 480px;">
+                    <img src="../images/column13.webp" alt="404エラーページのプレビュー画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <p style="margin-top: 16px;">404エラーページの設定方法は、ご利用のサーバー環境によって少し異なります。</p>
+
+            <div class="step-item" style="margin-top: 20px;">
+                <h3><span class="step-number">A</span>静的サイトホスティング（GitHub Pages、Netlify、Vercelなど）の場合</h3>
+                
+                <h4 style="font-size: 0.95rem; margin-top: 10px; color: var(--primary);">手順①：エラーページを作成する</h4>
+                <p>普段Webページを作成するときと同じようにHTMLでデザインを作成し、ファイル名を <code>404.html</code> にして保存します。</p>
+
+                <h4 style="font-size: 0.95rem; margin-top: 12px; color: var(--primary);">手順②：ルートディレクトリにアップロードする</h4>
+                <p>「ルートディレクトリ」＝ <code>index.html</code> が置いてある最も上の階層のことです。ここに <code>404.html</code> をアップロードしておくだけで、存在しないURLにアクセスがあった際、サーバーが自動的にこのページを表示してくれます。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">B</span>Apacheサーバーを採用しているホスティング（FC2ホームページ、ロリポップ！、さくらのレンタルサーバなど）の場合</h3>
+
+                <h4 style="font-size: 0.95rem; margin-top: 10px; color: var(--primary);">手順①：エラーページを作成する</h4>
+                <p>上記と同様にHTMLでページを作成し、<code>404.html</code> という名前で保存します。</p>
+
+                <h4 style="font-size: 0.95rem; margin-top: 12px; color: var(--primary);">手順②：.htaccess ファイルを作成する</h4>
+                <p>テキストエディタで以下の1行だけを記述したファイルを作成し、ファイル名を <code>.htaccess</code>（ドットから始まるファイル名）にして保存します。</p>
+
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 .htaccess 記述コード</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+<pre><code>ErrorDocument 404 /404.html</code></pre>
+                    </div>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-muted);">※この記述は、サーバーに「404エラーが起きたら <code>/404.html</code> を表示してね」と指示を出す命令です。</p>
+
+                <h4 style="font-size: 0.95rem; margin-top: 12px; color: var(--primary);">手順③：サーバーにアップロードする</h4>
+                <p>作成した <code>.htaccess</code> を <code>404.html</code> と同じルートディレクトリにアップロードします。</p>
+
+                <div class="alert-box">
+                    <strong>⚠️ 注意</strong><br>
+                    「FC2ホームページ」などの一部サーバーでは、最初から <code>.htaccess</code> が存在している場合があります。その場合は既存の <code>.htaccess</code> を上書き消去せず、<strong>元のコードの最下行に上記の1行を追加</strong>してください。もしもに備えて作業前にバックアップを取っておくことをおすすめします。
+                </div>
+            </div>
+        </section>
+
+        <!-- 404エラーページのサンプルコード -->
+        <section id="sample" class="section">
+            <h2 class="section-title">📄 404エラーページのサンプルコード</h2>
+            <p>すぐに使えるシンプルなテンプレートをご用意しました！コピペして自由にカスタマイズしてご活用ください。</p>
+
+            <div class="image-container">
+                <div class="image-frame" style="height: auto; max-height: 480px;">
+                    <img src="../images/column14.webp" alt="サンプルコードのプレビュー画面" onclick="openModal(this.src)">
+                </div>
+            </div>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 404.html サンプル</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code>&lt;!<span class="tag-name">DOCTYPE</span> <span class="attr-name">html</span>&gt;
+&lt;<span class="tag-name">html</span> <span class="attr-name">lang</span>=<span class="attr-val">"ja"</span>&gt;
+&lt;<span class="tag-name">head</span>&gt;
+  &lt;<span class="tag-name">meta</span> <span class="attr-name">charset</span>=<span class="attr-val">"UTF-8"</span>&gt;
+  &lt;<span class="tag-name">meta</span> <span class="attr-name">name</span>=<span class="attr-val">"viewport"</span> <span class="attr-name">content</span>=<span class="attr-val">"width=device-width, initial-scale=1.0"</span>&gt;
+  &lt;<span class="tag-name">title</span>&gt;ページが見つかりません (404) | サイト名&lt;/<span class="tag-name">title</span>&gt;
+  &lt;<span class="tag-name">style</span>&gt;
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 72px;
+      margin: 0;
+      color: #e74c3c;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 20px 0;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #3498db;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    a:hover {
+      background-color: #2980b9;
+    }
+  &lt;/<span class="tag-name">style</span>&gt;
+&lt;/<span class="tag-name">head</span>&gt;
+&lt;<span class="tag-name">body</span>&gt;
+
+  &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"container"</span>&gt;
+    &lt;<span class="tag-name">h1</span>&gt;404&lt;/<span class="tag-name">h1</span>&gt;
+    &lt;<span class="tag-name">h2</span>&gt;お探しのページは見つかりませんでした&lt;/<span class="tag-name">h2</span>&gt;
+    &lt;<span class="tag-name">p</span>&gt;
+      アクセスしようとしたページは削除されたか、URLが変更された可能性があります。&lt;<span class="tag-name">br</span>&gt;
+      入力したアドレスが正しいか再度ご確認ください。
+    &lt;/<span class="tag-name">p</span>&gt;
+    &lt;<span class="tag-name">p</span>&gt;
+      &lt;<span class="tag-name">a</span> <span class="attr-name">href</span>=<span class="attr-val">"/"</span>&gt;トップページへ戻る&lt;/<span class="tag-name">a</span>&gt;
+    &lt;/<span class="tag-name">p</span>&gt;
+  &lt;/<span class="tag-name">div</span>&gt;
+
+&lt;/<span class="tag-name">body</span>&gt;
+&lt;/<span class="tag-name">html</span>&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- おわりに -->
+        <section class="section">
+            <h2 class="section-title">📌 おわりに</h2>
+            <p>個人サイトをより魅力的＆便利にする小技3選、いかがでしたでしょうか？</p>
+            <p style="margin-top: 10px;">どれも数分の作業で簡単に導入できるものばかりです。細かな部分までこだわりを詰め込んで、世界にひとつだけのオリジナルサイト作りを楽しんでみてくださいね🐾</p>
+        </section>
+
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- モーダル表示用エリア（コード②準拠） -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+    /* コピー機能 */
+    function copyCode(btn) {
+        const wrapper = btn.closest('.code-box-wrapper');
+        const code = wrapper.querySelector('code').innerText;
+        
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✨ コピーしました！';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 コードをコピー';
+                btn.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('コピーに失敗しました:', err);
+        });
+    }
+
+    /* モーダル表示機能（コード②準拠） */
+    function openModal(imageSrc) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        modalImg.src = imageSrc;
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('active');
+    }
+
+    // ESCキーでもモーダルを閉じられるように設定
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+    </script>
+</body>
+</html>
