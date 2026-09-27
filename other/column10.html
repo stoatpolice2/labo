@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIを使ってらくらく個人サイト制作！ | Stoat Labo</title>
+
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+      --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 36px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .section:hover {
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+        margin-bottom: 15px;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 10px;
+    }
+
+    .rule-list li::before {
+        content: "🐾";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        margin-bottom: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    /* ----------------------------------
+        IMAGE STYLES & GRID
+    ---------------------------------- */
+    .image-container {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .image-frame {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .image-frame img:hover {
+        opacity: 0.88;
+        transform: scale(1.02);
+    }
+
+    .image-frame::after {
+        content: "🔍 拡大表示";
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(51, 44, 43, 0.75);
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 20px;
+        pointer-events: none;
+        backdrop-filter: blur(2px);
+        transition: background 0.2s ease;
+    }
+
+    .image-frame:hover::after {
+        background: rgba(224, 109, 83, 0.9);
+    }
+
+    .image-caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 6px;
+    }
+
+    .img-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 16px 0;
+    }
+
+    /* ----------------------------------
+        MODAL (LIGHTBOX) STYLES
+    ---------------------------------- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        color: #fff;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+        color: var(--accent);
+    }
+
+    /* ----------------------------------
+        BLOCKQUOTE & PROMPT BOX
+    ---------------------------------- */
+    blockquote {
+        background: #FAF5F2;
+        border-left: 4px solid var(--primary);
+        padding: 18px 20px;
+        border-radius: 0 12px 12px 0;
+        margin: 18px 0;
+        font-size: 0.93rem;
+    }
+
+    blockquote strong {
+        color: var(--primary);
+    }
+
+    .prompt-box {
+        background: #FDFBFA;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin: 16px 0;
+        font-size: 0.92rem;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.6rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+        .img-grid { grid-template-columns: 1fr; }
+        .image-frame { height: 180px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">AIを使ってらくらく個人サイト制作！</h1>
+            <p class="header-subtitle">コードが書けなくても理想のWebサイトは作れる！AIを活用したサイト制作のコツとテクニック</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#intro">はじめに</a></li>
+            <li><a href="#prompt">指示の出し方</a></li>
+            <li><a href="#editing">細部の調整</a></li>
+            <li><a href="#simple">プロンプト例</a></li>
+            <li><a href="#extra">スクリプト活用</a></li>
+            <li><a href="#summary">おわりに</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section id="intro" class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>「理想のサイトのイメージはあるけれど、自分でコードを書く技術がない…」と諦めていませんか？</p>
+            <p>そんな方におすすめしたいのが、<strong>「AIにコードを出力してもらう」</strong>という方法です。</p>
+
+            <div class="image-container">
+                <div class="img-grid">
+                    <div>
+                        <div class="image-frame">
+                            <img src="../images/column15.webp" alt="スライドギャラリーのあるWebページのスクリーンショット" onclick="openModal(this.src)">
+                        </div>
+                        <p class="image-caption">スライドギャラリーを設置したトップページ</p>
+                    </div>
+                    <div>
+                        <div class="image-frame">
+                            <img src="../images/column16.webp" alt="画像の上にDLボタンを配置した素材配布ページのスクリーンショット" onclick="openModal(this.src)">
+                        </div>
+                        <p class="image-caption">画像の上にDLボタンを配置した素材配布ページ</p>
+                    </div>
+                </div>
+            </div>
+
+            <p>こちらの画像は、私が実際に公開している個人サイトのスクリーンショットです。洗練されたおしゃれなデザインのサイトですが、<strong>実は9割以上をAIに作ってもらいました。</strong></p>
+            <p>この記事では、このサイトを実際にどのように制作したのか、そして<strong>「理想通りのサイトをAIに作ってもらうためのちょっとしたコツ」</strong>をご紹介します！</p>
+        </section>
+
+        <!-- AIにイメージを伝えよう -->
+        <section id="prompt" class="section">
+            <h2 class="section-title">AIに制作したいWebページのイメージを伝えよう！</h2>
+            <p>AIにWebサイトのコードを書いてもらう際、一番大切なのは<strong>「具体的なイメージを伝えること」</strong>です。細かく希望を伝えるほど、理想通りのページが一瞬で完成します。</p>
+            <p>以下は、私がAI（Gemini）に提出した実際の指示文（プロンプト）です。</p>
+
+            <div class="prompt-box">
+                <p style="font-weight: bold; color: var(--primary); margin-bottom: 8px;">💬 実際に使用したプロンプト</p>
+                <p>Webサイトを制作し、コードを出力してください。Webサイトのイメージやデザインについての希望は以下の通りです。</p>
+                <br>
+                <p><strong>【サイトの目的】</strong><br>AI生成による二次創作イラストの展示、および画像素材の配布</p>
+                <br>
+                <p><strong>【サイト名/管理人名】</strong><br>Glis Studio / okojo</p>
+                <br>
+                <p><strong>【全体的なデザインのイメージ】</strong><br>「AIらしさ」をイメージした、近未来的でシャープな雰囲気。カラーリングは黒・青を多めに使用してください。ボタンやアイコンなどにメタリックな効果を入れてください。レスポンシブ対応にしてください。</p>
+                <br>
+                <p><strong>【構成/レイアウトの希望】</strong></p>
+                <ul class="rule-list" style="margin-left: 10px;">
+                    <li><strong>全体のレイアウト：</strong> 縦長スクロール形式ではなく、「ナビゲーションバー内にあるリンクを選択すると、そのセクションのみが表示される」という構成にしてください。</li>
+                    <li><strong>ヘッダー/ナビゲーションバー：</strong> サイト名（Glis Studio）と各セクションへのリンクを配置。スマホ閲覧時はハンバーガーメニューに切り替わるようにしてください。</li>
+                    <li><strong>ヒーローセクション（トップページ）：</strong> スライドギャラリーを設置し、「特に見せたいイラスト」3点を配置できるようにしてください。スライドは一定間隔（ゆっくり）で自動切り替えさせてください。</li>
+                    <li><strong>このサイトについて：</strong> 「AI生成イラストの展示および素材配布サイトであること」「二次創作であること」「プロンプト抽出には自作イラストを使用していること」を記述してください。</li>
+                    <li><strong>ギャラリー：</strong> 画像のサムネイルを並べて配置し、クリックするとモーダルで拡大表示できるようにしてください。縦長画像（2:3比率）の展示を前提とし、スマホ閲覧時は縦2列表示にしてください。</li>
+                    <li><strong>利用規約：</strong> サイト内で配布している「ゲーム用イラスト素材」についての規約（詳細は後述）</li>
+                    <li><strong>素材配布：</strong> キャラクターごとに項目を分け、手動操作のスライドギャラリー（3:5比率の縦長）で表示。スマホでも縦長を維持してください。</li>
+                </ul>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">※以下、キャラ配置イメージや詳細な利用規約、管理人のプロフィール項目などを記述</p>
+                <hr style="border: none; border-top: 1px dashed var(--border); margin: 12px 0;">
+                <p><strong>【その他の希望】</strong><br>上記の要望に対して「実現が難しい点」「デザイン面でおすすめできない点」「画像展示のより良い工夫」などがあれば、ぜひアドバイスや指摘も教えてください。</p>
+            </div>
+
+            <h3 class="sub-title">プロンプト作成のちょっとしたコツ＆体験談</h3>
+            <p>AIはテキストだけでなく視覚的な指示も認識してくれるため、テキストでレイアウトを図形のように表現したり、手書きのラフ画像を添付したりしても理解してくれます。</p>
+            
+            <div class="alert-box">
+                <strong>💡 ここが驚きポイント！</strong><br>
+                実際に試して特に感動したのが、<strong>「指示していないのに、素材配布ページに自動でダウンロードボタンを設置してくれたこと」</strong>でした。<br>
+                単にデザインの指示を出すだけでなく、<strong>「そのサイトやページを何の目的で使うのか」</strong>まで伝えておくと、AIが「なら、この機能もあった方が便利だな」と気を利かせて提案・実装してくれます！
+            </div>
+        </section>
+
+        <!-- 細部の編集もAIにおまかせ -->
+        <section id="editing" class="section">
+            <h2 class="section-title">細部のこだわりや調整もAIにおまかせ！</h2>
+            <p>ベースを作った後は、気になるところを対話形式で修正していきます。実際に私が追加で行ったやり取りをご紹介します。</p>
+
+            <h3 class="sub-title">① 後から気づいた機能の追加やページの統合</h3>
+            <blockquote>
+                『「HOME」タブに更新履歴を追加してください。また、「TERMS OF USE（利用規約）」は「ABOUT」タブ内に統合し、現在のABOUT文章の下に移動させてください』
+            </blockquote>
+            <p>実際に出来上がった画面を見ると、「あ、これも必要だった」「文章量が少ないから1ページにまとめよう」という点が見えてきます。後からの変更も一言伝えるだけでOKです。</p>
+
+            <h3 class="sub-title">② 表示の違和感を調整する</h3>
+            <blockquote>
+                『ヒーローセクションのスライドギャラリーで、縦長画像を表示する際に「中央」ではなく「やや上寄り（キャラクターの顔が映りやすい位置）」を表示するように調整できますか？』
+            </blockquote>
+            <p>最初は画像の中央がトリミングされてキャラクターの顔が切れてしまっていたのですが、このように伝えることでCSSをスマートに修正してくれました。</p>
+
+            <h3 class="sub-title">③ コードの差し替えパーツを作ってもらう</h3>
+            <blockquote>
+                『素材配布用のダウンロードボタンを「PNG用」「WebP用」の2つ並べたいです。現在のボタン横にもう一つ追加するための差し替え用コードを教えてください』
+            </blockquote>
+            <p>一部だけ変更したい時も、該当箇所のコードだけを出力してもらえるので修正がラクラクです。</p>
+
+            <h3 class="sub-title">④ デザインや仕様に迷った時は相談してみる！</h3>
+            <blockquote>
+                『「GALLERY」内の画像をカテゴリ分けしたいです。「1つのタブ内で切り替える」のと「新しくタブを増やす」のでは、デザイン的にどちらがおすすめですか？』<br><br>
+                『ネタバレやセンシティブな画像を「ALL」一覧には表示せず、該当カテゴリを選んだ時だけ表示させる構造は可能ですか？』
+            </blockquote>
+            <p>デザインに迷った時や、「こんな技術的に難しそうなことできるのかな？」と思うような仕様も、とりあえずAIに相談してみるのがおすすめです。メリット・デメリットを踏まえた最適な提案をしてくれます。</p>
+        </section>
+
+        <!-- シンプルな指示例 -->
+        <section id="simple" class="section">
+            <h2 class="section-title">ここまで具体的に書かなくても大丈夫！</h2>
+            <p>「こんなに長いプロンプトを書くのは大変そう…」と思った方もご安心ください。ここまで細かく指示しなくても、AIはおしゃれなWebページを作ってくれます。</p>
+            <p>たとえば、当サイトで配布しているテンプレート<a class="btn btn-demo" href="../template/demo09.html" target="_blank">「KICK BACK」</a>は、以下のようなシンプルな指示から生まれました。</p>
+
+            <div class="prompt-box">
+                <p style="font-weight: bold; color: var(--primary); margin-bottom: 8px;">💬 シンプルなプロンプト例</p>
+                <p>「KICK BACK」という楽曲をイメージしたWebページのHTML/CSS/JavaScriptコードを作成してください。</p>
+                <br>
+                <p><strong>【デザインの方向性】</strong></p>
+                <ul class="rule-list" style="margin-left: 10px;">
+                    <li><strong>雰囲気：</strong> 退廃的、疾走感</li>
+                    <li><strong>カラー：</strong> 赤をメイン、アクセントに黒。機械的で無機質なフォント。サイトタイトルは斜体で疾走感を出す。</li>
+                    <li><strong>構成：</strong> 大きく表示したメイン画像の上にサイトタイトルを配置。</li>
+                    <li><strong>コンテンツ：</strong> MENU / UPLOAD（更新履歴） / GALLERY（イラスト展示） / ABOUT</li>
+                </ul>
+                <p><strong>【技術的条件】</strong></p>
+                <ul class="rule-list" style="margin-left: 10px;">
+                    <li>ページ内スクロールは滑らかに動かす</li>
+                    <li>GALLERYのサムネイルをクリックでモーダル拡大表示</li>
+                    <li>レスポンシブ対応（スマホ・PC両対応）</li>
+                </ul>
+            </div>
+            <p>これだけの指示でも、雰囲気をしっかり汲み取ったクオリティの高いページを出力してくれます！</p>
+        </section>
+
+        <!-- 番外編：スクリプト活用 -->
+        <section id="extra" class="section">
+            <h2 class="section-title">【番外編】AIにスクリプトを作ってもらって作業効率アップ！</h2>
+            <p>Webサイトのデザインだけでなく、サイト制作にまつわる<strong>「面倒な裏方作業」</strong>もAIに助けてもらっています。</p>
+            <p>特に重宝しているのが、画像処理用の<strong>「Python（パイソン）スクリプト」</strong>の作成です。</p>
+
+            <div class="alert-box">
+                <strong>💡 ワンポイント解説</strong><br>
+                ・<strong>Pythonとは？</strong>：初心者にも扱いやすいシンプルなプログラミング言語。<br>
+                ・<strong>バッチファイル（.bat）とは？</strong>：Windowsで複数の命令をまとめて一瞬で自動実行してくれるファイルのこと。
+            </div>
+
+            <p>私が日々のサイト更新で頻繁に使っているのは、以下の2つの自動処理スクリプトです。</p>
+            <ul class="rule-list" style="margin-top: 10px;">
+                <li><strong>画像の中央部分を指定サイズに一括トリミングして保存するスクリプト</strong></li>
+                <li><strong>画像を任意サイズに縮小し、Web表示に最適なWebP形式に変換して保存するスクリプト</strong></li>
+            </ul>
+
+            <p>どちらも元のファイルを上書きしないよう「出力用フォルダ」に別保存される仕組みになっています。</p>
+            <p>使い方も超簡単で、<strong>画像の入ったフォルダを「バッチファイルのアイコン」にドラッグ＆ドロップするだけ！</strong> これだけでフォルダ内の画像が一括処理されます。</p>
+            <p>サイト内に大量にある「サムネイル画像」や「ギャラリー用画像」を一瞬で最適なサイズや軽さに加工できるため、作業時間が大幅に短縮できました。</p>
+
+            <blockquote>
+                <strong>知識ゼロでも大丈夫！💡</strong><br>
+                実は私自身、<strong>プログラミングの知識はほぼゼロ</strong>です。専門知識がなくても、AIに「こういう処理をするスクリプトと、簡単に動かせるバッチファイルを作って！」と頼むだけで、強力な便利ツールが手に入ります。
+            </blockquote>
+            <p>「難しそう…」と感じる方は無理に試す必要はありませんが、作業を少しでも効率化したい方はぜひ挑戦してみてください！</p>
+        </section>
+
+        <!-- おわりに -->
+        <section id="summary" class="section">
+            <h2 class="section-title">おわりに</h2>
+            <p>ハードルが高く思えるWebサイト制作ですが、AI技術を活用すれば驚くほど手軽に、そして楽しく形にすることができます。</p>
+            <p>同じプロンプトを使っても、使用するAI（GeminiやChatGPTなど）によってデザインの個性が変わるのも面白いところです。ぜひあなたに合った「相棒AI」を見つけて、理想の個人サイトを作ってみてくださいね！</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
+    </footer>
+
+    <!-- モーダル表示用エリア -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // ESCキーでもモーダルを閉じられるように設定
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
