@@ -58,6 +58,10 @@
         <ul class="news-list">
           
           <li class="news-item">
+            <span class="news-date">2026.10.01</span>
+            <span class="news-text">創作支援ツールに「アスペクト比計算ツール」をアップしました</span>
+          </li>
+          <li class="news-item">
             <span class="news-date">2026.09.28</span>
             <span class="news-text">コラムに「AIを使ってらくらく個人サイト制作！」をアップしました</span>
           </li>
@@ -713,7 +717,7 @@
             <p class="template-desc">同人誌やお品書きをWeb上で直感的に編集し、そのまま画像ファイルとして出力・保存できるツールです。SNSでの宣伝などにご利用ください。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="tool/manual01.html">使い方・説明</a>
-              <a class="btn btn-code" href="tool/generator.html" rel="noopener" target="_blank">ツールを使う</a>
+              <a class="btn btn-code" href="tool/generator.html" target="_blank">ツールを使う</a>
             </div>
           </div>
         </div>
@@ -733,7 +737,7 @@
             <p class="template-desc">「どうせ書くなら、かわいいほう」がテーマの小説エディタです。縦書き・横書きの切り替え、文字数カウント、自動校正機能などがあります。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="tool/manual02.html">使い方・説明</a>
-              <a class="btn btn-code" href="tool/editor.html" rel="noopener" target="_blank">ツールを使う</a>
+              <a class="btn btn-code" href="tool/editor.html" target="_blank">ツールを使う</a>
             </div>
           </div>
         </div>
@@ -753,7 +757,7 @@
             <p class="template-desc">ボタンを押すだけでコードが挿入できる初心者向けのWebエディタです。文字の装飾や画像の挿入に加えて、コードの色分けや整形機能もついています。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="tool/manual03.html">使い方・説明</a>
-              <a class="btn btn-code" href="tool/easycode.html" rel="noopener" target="_blank">ツールを使う</a>
+              <a class="btn btn-code" href="tool/easycode.html" target="_blank">ツールを使う</a>
             </div>
           </div>
         </div>
@@ -773,7 +777,7 @@
             <p class="template-desc">機能を最小限にして制作をできるだけ簡単にしたノベルゲーム制作エンジンです。※サンプルゲームを再生すると音楽が流れます。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="engine/manual.html">使い方・説明</a>
-              <a class="btn btn-code" href="engine/index.html" rel="noopener" target="_blank">サンプルゲーム</a>
+              <a class="btn btn-code" href="engine/index.html" target="_blank">サンプルゲーム</a>
             </div>
           </div>
         </div>
@@ -792,7 +796,7 @@
             <p class="template-desc">作成中のWebページがどう表示されるかをサクッと確認するためのシンプルなエディタです。PCでも動作しますが、スマホでの利用に特化しています。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="tool/manual04.html">使い方・説明</a>
-              <a class="btn btn-code" href="tool/mobile_editor.html" rel="noopener" target="_blank">ツールを使う</a>
+              <a class="btn btn-code" href="tool/mobile_editor.html" target="_blank">ツールを使う</a>
             </div>
           </div>
         </div>
@@ -802,6 +806,7 @@
       <!-- ユーティリティツール群 -->
       <h3 class="tool-sub-title">🛠️ ユーティリティ・単機能ツール</h3>
       <div class="mini-tool-grid">
+        
         <!-- 画像一括リサイズ＆切り抜きツール -->
         <div class="mini-tool-card">
           <div class="mini-tool-info">
@@ -809,18 +814,18 @@
             <span class="mini-tool-desc">複数の画像を一括で指定サイズにトリミングできるツール。サイト掲載用のサムネイル作成などに。</span>
           </div>
           <div class="mini-tool-action">
-            <a class="btn btn-code btn-sm" href="tool/croptool.html" rel="noopener" target="_blank">ツールを使う</a>
+            <a class="btn btn-code btn-sm" href="tool/croptool.html" target="_blank">ツールを使う</a>
           </div>
         </div>
 
-        <!-- かんたんコード整形＆クリーナー -->
+        <!-- コード整形＆クリーナー -->
         <div class="mini-tool-card">
           <div class="mini-tool-info">
             <span class="mini-tool-title">コード整形＆クリーナー</span>
             <span class="mini-tool-desc">インデントが崩れたコードや、不要な空タグ・無駄なスペースが含まれたコードを修正するツールです。</span>
           </div>
           <div class="mini-tool-action">
-            <a class="btn btn-code btn-sm" href="tool/cleaner.html" rel="noopener" target="_blank">ツールを使う</a>
+            <a class="btn btn-code btn-sm" href="tool/cleaner.html" target="_blank">ツールを使う</a>
           </div>
         </div>
 
@@ -831,7 +836,7 @@
             <span class="mini-tool-desc">HTML内の <code>&lt;style&gt;</code> や <code>&lt;script&gt;</code> を自動抽出し、index.html / style.css / script.js に分割するツールです。</span>
           </div>
           <div class="mini-tool-action">
-            <a class="btn btn-code btn-sm" href="tool/splitter.html" rel="noopener" target="_blank">ツールを使う</a>
+            <a class="btn btn-code btn-sm" href="tool/splitter.html" target="_blank">ツールを使う</a>
           </div>
         </div>
 
@@ -842,18 +847,29 @@
             <span class="mini-tool-desc">バラバラになっている HTML / CSS / JS ファイルを読み込み、1本のHTMLファイルにするツールです。</span>
           </div>
           <div class="mini-tool-action">
-            <a class="btn btn-code btn-sm" href="tool/merged.html" rel="noopener" target="_blank">ツールを使う</a>
+            <a class="btn btn-code btn-sm" href="tool/merged.html" target="_blank">ツールを使う</a>
           </div>
         </div>
         
-        <!-- かんたんHTML統合ツール -->
+        <!-- WebP一括画像変換ツール -->
         <div class="mini-tool-card">
           <div class="mini-tool-info">
             <span class="mini-tool-title">WebP一括画像変換ツール</span>
             <span class="mini-tool-desc">JPGやPNG画像を軽量な <code>WebP</code> 画像に一括変換するツールです。</span>
           </div>
           <div class="mini-tool-action">
-            <a class="btn btn-code btn-sm" href="tool/wedp.html" rel="noopener" target="_blank">ツールを使う</a>
+            <a class="btn btn-code btn-sm" href="tool/wedp.html" target="_blank">ツールを使う</a>
+          </div>
+        </div>
+        
+        <!-- アスペクト比計算ツール -->
+        <div class="mini-tool-card">
+          <div class="mini-tool-info">
+            <span class="mini-tool-title">アスペクト比計算ツール</span>
+            <span class="mini-tool-desc">画像の幅とアスペクト比を入力すると、もう片方のピクセル数を自動で計算するツールです。</span>
+          </div>
+          <div class="mini-tool-action">
+            <a class="btn btn-code btn-sm" href="tool/aspect.html" target="_blank">ツールを使う</a>
           </div>
         </div>
         
@@ -991,8 +1007,8 @@
             </div>
             <p class="template-desc">某有名野球ゲームの名物キャッチャー、猪狩進くんと一緒にHTML/CSSの基礎を身につけるノベルゲーム風のWebサイト講座です。</p>
             <div class="template-links">
-              <a class="btn btn-demo" href="lecture/manual.html" rel="noopener" target="_blank">説明・遊び方</a>
-              <a class="btn btn-code" href="lecture/portal.html" rel="noopener" target="_blank">プレイする！</a>
+              <a class="btn btn-demo" href="lecture/manual.html" target="_blank">説明・遊び方</a>
+              <a class="btn btn-code" href="lecture/portal.html" target="_blank">プレイする！</a>
             </div>
           </div>
         </div>
@@ -1285,7 +1301,7 @@
         フッター
   ========================================== -->
   <footer>
-    <p>© Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
+    <p>&copy; Stoat Labo / okojo All Rights Reserved. / ⓒKonami Digital Entertainment</p>
   </footer>
 
   <!-- ページトップへ戻るボタン -->
