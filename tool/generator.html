@@ -1049,7 +1049,7 @@
       <img id="modal-result-image" style="max-width: 100%; max-height: 55vh; border-radius: 12px; border: 1.5px solid var(--border-color); object-fit: contain;" alt="おしながき画像">
       
       <div style="display: flex; gap: 10px; width: 100%; margin-top: 6px;">
-        <a id="modal-download-a" download="oshinagaki.webp" style="flex: 1; background: var(--accent-green); color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; text-align: center;">💾 通常ダウンロード</a>
+        <a id="modal-download-a" download="oshinagaki.png" style="flex: 1; background: var(--accent-green); color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; text-align: center;">💾 通常ダウンロード</a>
         <button onclick="closeImageModal()" style="flex: 1; background: #D1C7B7; color: var(--text-main); border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; font-family: var(--font-rounded);">閉じる</button>
       </div>
     </div>
@@ -1751,7 +1751,7 @@
           if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = 'oshinagaki.webp';
+            link.download = 'oshinagaki.png';
             link.click();
           }
 
