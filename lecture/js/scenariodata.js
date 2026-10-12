@@ -154,7 +154,7 @@ const scenariodata = {
     c2_end: [
         {
             speaker: "猪狩進",
-            text: "あと、よく勘違いされるのが『改行（<br>）』なんだ。見た目の余白を開けたいからといって <br> を連打するのはNGだよ！余白はCSSで整えるんだ。",
+            text: "あと、やりがちなミスが『改行（<br>）』なんだ。見た目の余白を開けたいからといって <br> を連打するのはNGだよ！余白はCSSで整えるんだ。",
             img: "images/susumu_normal.webp"
         },
         {
@@ -201,13 +201,13 @@ const scenariodata = {
         },
         {
             speaker: "猪狩進",
-            text: "ここでクイズ！HTMLと同じフォルダの中にある『images』というフォルダ内の『hero.webp』を表示したい時、src属性（パス）はどう書くのが正解だと思う？",
-            hint: "ヒント：『フォルダ名』と『ファイル名』をスラッシュ『/』でつないで道順を教えてあげるんだ！『imagesフォルダの中にある hero.webp』という順番で書いてみよう！",
+            text: "ここでクイズ！HTMLと同じフォルダの中にある『images』というフォルダ内の『hero.png』を表示したい時、src属性（パス）はどう書くのが正解だと思う？",
+            hint: "ヒント：『フォルダ名』と『ファイル名』をスラッシュ『/』でつないで道順を教えてあげるんだ！『imagesフォルダの中にある hero.png』という順番で書いてみよう！",
             img: "images/susumu_normal.webp",
             choices: [
-                { text: "A: src=\"images/hero.webp\"", targetIndex: "c3_correct" },
-                { text: "B: src=\"hero.webp\"", targetIndex: "c3_wrong" },
-                { text: "C: src=\"folder/images/hero.webp\"", targetIndex: "c3_wrong" }
+                { text: "A: src=\"images/hero.png\"", targetIndex: "c3_correct" },
+                { text: "B: src=\"hero.png\"", targetIndex: "c3_wrong" },
+                { text: "C: src=\"folder/images/hero.png\"", targetIndex: "c3_wrong" }
             ]
         }
     ],
@@ -223,7 +223,7 @@ const scenariodata = {
     c3_wrong: [
         {
             speaker: "猪狩進",
-            text: "う〜ん、惜しい！正解は『A: src=\"images/hero.webp\"』なんだ。『フォルダ名/ファイル名』の順番で道順を教えてあげるんだよ。",
+            text: "う〜ん、惜しい！正解は『A: src=\"images/hero.png\"』なんだ。『フォルダ名/ファイル名』の順番で道順を教えてあげるんだよ。",
             img: "images/susumu_laugh.webp",
             nextChapter: "c3_end"
         }
