@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINE風小説テンプレートの使い方 | Stoat Labo</title>
+
+  <!-- ファビコンの設定 -->
+  <link href="../images/line.webp" rel="icon" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta content="LINE風小説テンプレート | Stoat Labo" property="og:title">
+  <meta content="HTMLで簡単に作れる！LINE風小説テンプレート" property="og:description">
+  <meta content="website" property="og:type">
+  <meta content="https://stoatpolice2.github.io/labo/" property="og:url">
+  <meta content="../images/tool05.webp" property="og:image">
+  <meta content="Stoat Labo" property="og:site_name">
+  <meta content="ja_JP" property="og:locale">
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES (LINE Color Theme)
+    ---------------------------------- */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+        --primary: #25d366;           /* グリーン */
+        --primary-hover: #1eb857;     /* ホバー用ダークグリーン */
+        --accent: #85e249;            /* 吹き出し風の黄緑 */
+        --bg-main: #f7f9fa;            /* 清潔感のある薄グレー白背景 */
+        --bg-card: #ffffff;           /* カード背景 */
+        --text-main: #2b2b2b;          /* メインテキスト */
+        --text-muted: #666666;        /* サブテキスト */
+        --border: #e2e8f0;            /* ボーダーカラー */
+        --radius: 16px;
+        --grad-primary: linear-gradient(135deg, #25d366 0%, #12b04b 100%);
+        --grad-hero: linear-gradient(180deg, #e8fadf 0%, #f7f9fa 100%);
+        --shadow-sm: 0 6px 18px rgba(37, 211, 102, 0.1);
+        --shadow-lg: 0 14px 32px rgba(37, 211, 102, 0.18);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#d5e0da 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #cce7d3;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.12), rgba(133, 226, 73, 0.15));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.05em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.25;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.15));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 20px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 36px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #cce7d3, #cce7d3 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: #12b04b;
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .rule-list {
+        list-style: none;
+    }
+
+    .rule-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 12px;
+    }
+
+    .rule-list li::before {
+        content: "💬";
+        position: absolute;
+        left: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-box {
+        background-color: #f0fbf3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #245233;
+    }
+
+    .step-item {
+        margin-bottom: 22px;
+        background: #fafcfb;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .step-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+
+    .step-number {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-size: 0.85rem;
+        margin-right: 8px;
+    }
+
+    /* CODE BLOCK DISPLAY */
+    pre {
+        background: #1e293b;
+        color: #f8fafc;
+        padding: 16px;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin: 12px 0;
+    }
+
+    code {
+        background: #e8fadf;
+        color: #12b04b;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        font-weight: bold;
+    }
+
+    pre code {
+        background: none;
+        color: inherit;
+        padding: 0;
+        font-weight: normal;
+    }
+
+    .comment { color: #94a3b8; }
+    .tag-name { color: #38bdf8; }
+    .attr-name { color: #facc15; }
+    .attr-val { color: #4ade80; }
+    .prop-name { color: #f472b6; }
+    
+    /* ----------------------------------
+    IMAGE STYLES
+    ---------------------------------- */
+    .image-container {
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .image-frame {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #F8F5F3;
+        display: block;
+    }
+
+    .image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* 850x380 (約 85:38) 用のアスペクト比保持 */
+    .ratio-hero-sample {
+        aspect-ratio: 850 / 380;
+    }
+
+    /* 460x750 (約 46:75) 用のアスペクト比保持 */
+    .ratio-complete-sample {
+        aspect-ratio: 460 / 750;
+        max-width: 460px;
+        margin: 0 auto;
+    }
+
+    /* ----------------------------------
+        TOOL LINK BUTTON
+    ---------------------------------- */
+    .tool-nav {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .btn-tool {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF;
+        padding: 16px 40px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1.05rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+        border: none;       /* ボタンのデフォルト枠線を消す */
+        cursor: pointer;    /* カーソルをポインターにする */
+        outline: none;      /* フォーカス時の枠線を調整 */
+    }
+
+    .btn-tool:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        text-decoration: none;
+        color: #FFF;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.9rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 12px; font-size: 0.85rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">LINE風小説テンプレート</h1>
+            <p class="header-subtitle">手書きHTMLで簡単作成！タップでメッセージが進むチャット小説用コード</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#about">1. LINE風小説って？</a></li>
+            <li><a href="#basic">2. 会話の書き方</a></li>
+            <li><a href="#assets">3. 設定の変更</a></li>
+            <li><a href="#choice">4. 分岐の作成</a></li>
+            <li><a href="#note">5. 入力時の注意点</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        
+        <!-- 1. LINE風小説って？ -->
+        <section id="about" class="section">
+            <h2 class="section-title">1. LINE風小説って？</h2>
+            
+            <!-- サンプル画像スペース -->
+            <div class="image-container">
+                <div class="image-frame ratio-hero-sample">
+                    <img src="../images/tool05.webp" alt="LINE風小説テンプレート サンプル画像" width="850" height="370">
+                </div>
+            </div>
+            
+            <p>「pixiv」「テラーノベル」「カクヨム」といった小説投稿サイトや、「フォレストページ＋」で作成されたサイトなどで見かける<strong>「LINE風小説」</strong>。その名の通り、アプリの「LINE」でチャットをしているような画面でキャラクターの会話を進行させるという独特の文章形態です。</p>           
+            <p><strong>それをHTMLで作成した個人サイトでも楽しめるようにしよう！</strong> というのがこのテンプレートです。</p>
+            
+            <!-- リンクボタン -->
+            <div class="tool-nav">
+                <a href="line.html" rel="noopener" target="_blank" button type="button" class="btn-tool"  style="margin-top: 10px;">デモページを見る 💬</a>
+            </div>
+            
+            <h3 class="sub-title">このテンプレートの特徴</h3>
+            <ul class="rule-list">
+                <li><strong>動きのある画面：</strong> 画面をタップ（クリック）することで次の文章が表示されるため、チャットっぽい会話劇を楽しめます。</li>
+                <li><strong>さまざまな機能：</strong> 名前変換機能や、会話の途中で背景を変更する機能、選択肢を表示してルートを分岐させる機能などがあります。</li>
+                <li><strong>レスポンシブ対応：</strong> サーバーにアップロードしたページはPCからでもスマホからでも観覧できます。</li>
+            </ul>
+            <div class="alert-box">
+                    <strong>💡 デモ画面が動かないときは</strong><br>
+                    名前を入力したあと、背景のみの画面からサンプルページが動かないときは、画面の上側をタップするとメッセージが表示されます🐾
+                </div>
+            </section>
+
+        <!-- 2. 会話の書き方 -->
+        <section id="basic" class="section">
+            <h2 class="section-title">2. 基本的な会話の書き方</h2>
+            <p>まずはこのページの最下部にある「コードをコピーする」ボタンからコードを取得し、ご利用のエディタの編集画面に貼り付けてください。</p>
+            <p>その後、コードを編集して <code>&lt;script&gt;</code> タグ内にある <code>scenarios</code> のデータ部分を書き換えることで会話を作成できます。</p>
+            
+            <h3 class="sub-title">メッセージデータの書き方</h3>
+            <p>1つのメッセージは <code>{ }</code>（波かっこ）で囲んで記述し、カンマで繋ぎます。</p>
+
+<pre><code><span class="prop-name">const</span> scenarios = {
+<span class="comment">// 最初の共通ルート</span>
+  <span class="prop-name">start</span>: [
+<span class="comment">// 相手のメッセージ（左側表示）</span>
+{ 
+  <span class="prop-name">type</span>: <span class="attr-val">'left'</span>, 
+  <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>, 
+  <span class="prop-name">icon</span>: <span class="attr-val">'../images/icon.webp'</span>, 
+  <span class="prop-name">text</span>: <span class="attr-val">'やあ、{{surname}}さん！'</span>, 
+  <span class="prop-name">time</span>: <span class="attr-val">'18:30'</span> 
+},
+
+<span class="comment">// 自分のメッセージ（右側表示）</span>
+{ 
+  <span class="prop-name">type</span>: <span class="attr-val">'right'</span>, 
+  <span class="prop-name">name</span>: <span class="attr-val">'自分'</span>, 
+  <span class="prop-name">text</span>: <span class="attr-val">'もう、{{surname}}はやめてって言ったよね？'</span>, 
+  <span class="prop-name">time</span>: <span class="attr-val">'18:31'</span> 
+},
+
+<span class="comment">// 相手のメッセージ（左側表示）</span>
+{ 
+  <span class="prop-name">type</span>: <span class="attr-val">'left'</span>, 
+  <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>, 
+  <span class="prop-name">icon</span>: <span class="attr-val">'../images/icon.webp'</span>, 
+  <span class="prop-name">text</span>: <span class="attr-val">'ごめんごめん、{{name}}さん'</span>, 
+  <span class="prop-name">time</span>: <span class="attr-val">'18:32'</span> 
+},
+</code></pre>
+
+            <h3 class="sub-title">設定項目一覧</h3>
+            <ul class="rule-list">
+                <li><strong>type：</strong> <code>'left'</code>（左側・相手）または <code>'right'</code>（右側・自分）を指定します。</li>
+                <li><strong>name：</strong> キャラクター名を入力します。</li>
+                <li><strong>icon：</strong> アイコン画像のパス（URL）を指定します（左側のみ）。</li>
+                <li><strong>text：</strong> メッセージ本文です。<code>{{name}}</code> と書くと読者が入力した名前に、<code>{{surname}}</code> と書くと苗字に自動変換されます。</li>
+                <li><strong>time：</strong> メッセージの横に表示する送信時刻（例: '12:00'）を設定します。</li>
+            </ul>
+        </section>
+
+        <!-- 3. 各設定の変更方法 -->
+        <section id="assets" class="section">
+            <h2 class="section-title">3. 各設定の変更方法</h2>
+            
+            <div class="step-item">
+                <h3><span class="step-number">1</span>アイコン画像を変更する</h3>
+                <p>各メッセージの <code>icon: '画像パス'</code> の部分（デフォルトでは <code>'../images/icon.webp'</code>）をご自身の画像ファイルに書き換えてください。</p>
+            </div>
+            
+            <div class="step-item">
+                <h3><span class="step-number">2</span>デフォルト名を変更する</h3>
+                <p>文章内に表示されるデフォルトの名前は <code>script</code> のいちばん上にある、下記の部分を書き換えることで変更できます。</p>
+
+<pre><code><span class="tag-name">body</span> {
+  <span class="prop-name">const defaultSurname</span> = <span class="attr-val">'山田'</span>;
+  <span class="prop-name">const defaultName</span> = <span class="attr-val">'花子'</span>;
+ }</code></pre>
+                
+                <p>名前の入力画面に表示される文字を変更するときは、 コード内の<code>名前の設定</code> 部分の文字を書き換えてください。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">3</span>初期背景画像を設定する</h3>
+                <p>CSSの <code>body</code> スタイル部分に背景画像を指定できます。 <code>../images/picture08.webp</code> の部分をご自身の画像ファイルに書き換えてください。</p>
+
+<pre><code><span class="tag-name">body</span> {
+  <span class="prop-name">background-color</span>: <span class="attr-val">#7494c0</span>; <span class="comment">/* 背景画像を使わない・読み込み前のデフォルト色 */</span>
+  <span class="prop-name">background-image</span>: <span class="attr-val">url("../images/picture08.webp")</span>; <span class="comment">/* ★背景画像のパスを指定 */</span>
+  <span class="prop-name">background-size</span>: <span class="attr-val">cover</span>;
+  <span class="prop-name">background-position</span>: <span class="attr-val">center</span>;
+  <span class="prop-name">background-attachment</span>: <span class="attr-val">fixed</span>;
+}</code></pre>
+            </div>
+
+                <div class="alert-box">
+                    <strong>💡 背景画像を使用しない場合</strong><br>
+                    <code>background-image</code> の行を削除しておくと、デフォルトの青い背景が適用されます。
+                </div><br>
+
+            <div class="step-item">
+               <h3><span class="step-number">4</span>会話の途中で背景画像を変更する</h3>
+            <p>時間の経過や場所の移動を表現したい時は、メッセージデータに <code>type: 'system'</code> と <code>bg: '画像パス'</code> を指定します。 <code>../images/picture12.webp</code> の部分をご自身の画像ファイルに書き換えてください。 <code>text</code> に入力した文字は、中央寄りのシステム通知風デザインで表示されます。</p>
+
+<pre><code><span class="comment">// 画面タップで背景が切り替わり、システムメッセージが表示されます</span>
+{
+  <span class="prop-name">type</span>: <span class="attr-val">'system'</span>,
+  <span class="prop-name">bg</span>: <span class="attr-val">'../images/picture12.webp'</span>, <span class="comment">// ★変更したい背景画像パス</span>
+  <span class="prop-name">text</span>: <span class="attr-val">'（公園に移動しました）'</span>
+}</code></pre>
+
+            <p style="margin-top: 10px;">このメッセージが表示されるタイミングで背景画像がふわっと切り替わります。</p>
+            </div>
+        </section>
+
+        <!-- 4. 選択肢を出して展開を変える方法 -->
+        <section id="choice" class="section">
+            <h2 class="section-title">4. 選択肢を出して展開を変える（ルート分岐）</h2>
+            <p>シナリオ（<code>scenarios</code>）の中に選択肢データと、分岐先のルートを作成することでゲームのように分岐する会話を作成できます。</p>
+
+            <h3 class="sub-title">実装コードの例</h3>
+<pre><code>   {
+    <span class="prop-name">type</span>: <span class="attr-val">'left'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'暑くなってきたね。喉が渇かない？何が良い？'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:46'</span>
+    },
+    
+    <span class="comment">// 選択肢の表示</span>
+    {
+      <span class="prop-name">type</span>: <span class="attr-val">'choice'</span>,
+      <span class="prop-name">choices</span>: [
+        { <span class="prop-name">label</span>: <span class="attr-val">'温かいコーヒーが飲みたい'</span>, <span class="prop-name">nextRoute</span>: <span class="attr-val">'route_coffee'</span> },
+        { <span class="prop-name">label</span>: <span class="attr-val">'冷たいジュースがいいな'</span>, <span class="prop-name">nextRoute</span>: <span class="attr-val">'route_juice'</span> }
+      ]
+    }
+  ],
+
+  <span class="comment">// 分岐ルートA：コーヒーを選んだ場合</span>
+  <span class="prop-name">route_coffee</span>: [
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'right'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'自分'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'温かいコーヒーが飲みたいかも！'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:47'</span> },
+    
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'left'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'いいね、{{name}}さんはブラック派だっけ。じゃあ近くのカフェに行こう！'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:48'</span>
+    }
+  ],
+
+  <span class="comment">// 分岐ルートB：ジュースを選んだ場合</span>
+  <span class="prop-name">route_juice</span>: [
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'right'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'自分'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'冷たいジュースがいいな！'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:47'</span> },
+    
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'left'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'了解！自販機で冷たいジュース買ってくるね！'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:48'</span>
+    },
+</code></pre>
+
+            <div class="alert-box">
+                <strong>💡 選択肢のポイント</strong><br>
+                <code>nextRoute</code> で指定した名前（例: <code>route_coffee</code>）と、次に読み込ませたいメッセージ配列の名前を一致させることで、指定したメッセージを表示できます。選択肢は何個でも増やせます。
+            </div><br>
+            
+            <p>ルート分岐の後に共通ルートへ進ませたい場合は <strong>「シナリオデータに新しいルートを追加する」</strong> ことと、<strong> 「各分岐ルートの最後に分岐処理を入れる」</strong> ことが必要になります。</p>
+
+            <h3 class="sub-title">実装コードの例</h3>
+<pre><code><span class="prop-name">const</span> scenarios = {
+  <span class="comment">// 分岐ルートB：ジュースを選んだ場合</span>
+  <span class="prop-name">route_juice</span>: [
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'right'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'自分'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'冷たいジュースがいいな！'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:47'</span> },
+    
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'left'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'了解！自販機で冷たいジュース買ってくるね！'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'18:48'</span>
+    },
+    
+    <span class="comment">// 合流ルートへ進むためのボタン（両方のルートの最後に設置します）</span> 
+    {
+      <span class="prop-name">type</span>: <span class="attr-val">'choice'</span>,
+      <span class="prop-name">choices</span>: [
+        { <span class="prop-name">label</span>: <span class="attr-val">'ベンチで待つ'</span>, <span class="prop-name">nextRoute</span>: <span class="attr-val">'route_common_after'</span> },
+      ]
+    }
+  ],
+
+   <span class="comment">// 合流ルート（分岐後に合流する共通の会話）</span>
+    <span class="prop-name">route_common_after</span>: [
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'left'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'キャラA'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'ふぅ、一息ついたら次はどこへ行こうか？'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'19:01'</span>
+    },
+    
+    {
+    <span class="prop-name">type</span>: <span class="attr-val">'right'</span>,
+    <span class="prop-name">name</span>: <span class="attr-val">'自分'</span>,
+    <span class="prop-name">text</span>: <span class="attr-val">'そうだね、夕方になってきたしそろそろ帰ろうか。'</span>,
+    <span class="prop-name">time</span>: <span class="attr-val">'19:02'</span>
+    }
+  ]
+};
+</code></pre>    
+            
+        </section>
+        
+        <!-- 5. 入力時の注意点 -->
+        <section id="note" class="section">
+            <h2 class="section-title">5. 入力時の注意点</h2>
+            <p>シナリオを書く際は、 <strong>記号のつけ忘れ・外し忘れによるエラー</strong> にご注意ください。</p><br>
+            
+            <div class="step-item">
+                <h3><span class="step-number">1</span>カンマ（ , ）の付け忘れ・付けすぎ</h3>
+                <p>要素と要素の区切りには必ずカンマ（ , ）が必要です。</p>
+            <ul class="rule-list" style="margin-top: 10px;">
+                <li>ルート全体（<code>route_coffee: [ ... ], </code> の末尾など）</li>
+                <li>配列内のメッセージ要素（<code> { ... },</code> の末尾など）</li>
+            </ul>
+            <p>最後の要素の末尾カンマは省略可能ですが、直後に新しい項目を追加した時にカンマを付け忘れてエラーになるパターンが非常に多いです。新しい会話を追加した時は、直前の行の末尾にカンマがあるかを確認してください。</p>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">2</span>カッコの閉じ忘れと対応（ { } と [ ] ）</h3>
+                <p>カッコの種類によって意味が異なります。</p>
+            <ul class="rule-list" style="margin-top: 10px;">
+                <li><strong>{}（波カッコ）:</strong> 1つのメッセージ情報やルート定義（オブジェクト）を括る</li>
+                <li><strong>[]（角カッコ）:</strong> メッセージの並び（配列）を括る</li>
+            </ul>
+                <p>「ルートの名前（<code>route_common_after:</code>など）は <code>[</code> で開いて <code>]</code> で閉じているか」、「1つのメッセージは <code>{</code> で開いて <code>}</code> で閉じているか」をセットで確認してください。</p>
+            </div>
+            
+            <div class="step-item">
+                <h3><span class="step-number">3</span>ダブルクォーテーション（ " ）やシングルクォーテーション（ ' ）の閉じ忘れ</h3>
+                <p>文字列を囲む引用符が閉じていなかったり、文章内でうっかり使ってしまうとエラーになります。</p>
+            <ul class="rule-list" style="margin-top: 10px;">
+                <li>例：<code>text: 'じゃあ、行こう！'</code> （前後に ' があるかを確認）</li>
+            </ul>
+            </div>
+
+            <h3 class="sub-title">ブラウザでエラー箇所を確認する方法</h3>
+            <p>コードを変更した後に画面が真っ白になったり、タップしても進まなくなった場合は、ブラウザで <strong>F12キー</strong> を押し、<strong>「コンソール（Console）」</strong>タブを開いてみてください。赤文字で<strong>「SyntaxError: Unexpected token...」</strong>などのエラーが出ている場合、記号（カンマやカッコ）の位置がずれている場所を教えてくれます。</p>
+            
+            <div class="alert-box">
+                <strong>💡 まずは会話をさせてみよう！</strong><br>
+                ルート分岐を入れようと思うとややこしくなりますが、会話をさせるだけであればコピペで気軽に作成することができます。まずはアイコンやメッセージの内容から編集してみて、チャットのような会話劇を楽しんでくださいね！
+            </div>
+        </section>
+
+        <!-- コピーボタン -->
+            <div class="tool-nav">
+                <button type="button" class="btn-tool" id="copyCodeBtn">コードをコピーする 💬</button>
+            </div>
+
+        <script>
+        document.getElementById('copyCodeBtn').addEventListener('click', async function() {
+            const btn = this;
+            const originalText = btn.textContent;
+            const targetUrl = 'line.html'; // コピー対象のWebページURL
+
+            try {
+                // 指定したWebページのソースコードを取得
+                const response = await fetch(targetUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const codeText = await response.text();
+
+                // クリップボードにコピー
+                await navigator.clipboard.writeText(codeText);
+
+                // コピー完了時のフィードバック表示
+                btn.textContent = 'コピーしました！ ✨';
+                btn.style.opacity = '0.8';
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.opacity = '1';
+                }, 2000);
+
+            } catch (error) {
+                console.error('コードの取得・コピーに失敗しました:', error);
+                alert('コードのコピーに失敗しました。ファイルが存在するか確認してください。');
+            }
+        });
+        </script>
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

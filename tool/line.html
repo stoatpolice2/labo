@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE風小説テンプレート | Stoat Labo</title>
+
+  <!-- ファビコンの設定 -->
+  <link href="../images/line.webp" rel="icon" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta content="LINE風小説テンプレート | Stoat Labo" property="og:title">
+  <meta content="HTMLで簡単に作れる！LINE風小説テンプレート" property="og:description">
+  <meta content="website" property="og:type">
+  <meta content="https://stoatpolice2.github.io/labo/" property="og:url">
+  <meta content="../images/tool05.webp" property="og:image">
+  <meta content="Stoat Labo" property="og:site_name">
+  <meta content="ja_JP" property="og:locale">
+
+  <style>
+    body {
+      background-color: #7494c0; /* 背景画像を使わない・読み込み前のデフォルト色 */
+      background-image: url("../images/picture08.webp"); /* ★背景画像のパスを指定 */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* --- 名前入力画面 --- */
+    .name-form-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .form-card {
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      width: 85%;
+      max-width: 360px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .form-card h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .start-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* --- チャット画面 --- */
+    .chat-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 15px 120px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .message {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .message.left {
+      align-self: flex-start;
+    }
+
+    .message.right {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .bubble {
+      max-width: 260px;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-break: break-word;
+      position: relative;
+    }
+
+    .left .bubble {
+      background-color: #ffffff;
+      color: #000000;
+      border-top-left-radius: 4px;
+    }
+
+    .right .bubble {
+      background-color: #85e249;
+      color: #000000;
+      border-top-right-radius: 4px;
+    }
+
+    .time {
+      font-size: 10px;
+      color: #ffffff;
+      margin-bottom: 2px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* --- システム通知・背景変更メッセージ風スタイル --- */
+    .system-message {
+      align-self: center;
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      margin: 5px 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .system-message.show {
+      opacity: 1;
+    }
+
+    /* --- 選択肢表示エリア --- */
+    .choice-container {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .choice-btn {
+      background-color: #ffffff;
+      color: #333333;
+      border: 2px solid #25d366;
+      padding: 12px 15px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .choice-btn:active {
+      transform: scale(0.98);
+      background-color: #e8fadf;
+    }
+
+    .guide-text {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      pointer-events: none;
+    }
+    
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+      padding: 8px 0;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 名前入力モーダル -->
+  <div class="name-form-modal" id="nameModal">
+    <div class="form-card">
+      <h2>名前の設定</h2>
+      <div class="input-group">
+        <label for="inputSurname">苗字</label>
+        <input type="text" id="inputSurname" placeholder="未入力時は「山田」と表示されます">
+      </div>
+      <div class="input-group">
+        <label for="inputName">名前</label>
+        <input type="text" id="inputName" placeholder="未入力時は「花子」と表示されます">
+      </div>
+      <button class="start-btn" id="startBtn">会話をはじめる</button>
+    </div>
+  </div>
+
+  <div class="chat-container" id="chatContainer"></div>
+  <div class="choice-container" id="choiceContainer"></div>
+  <div class="guide-text" id="guideText">画面をタップして進む</div>
+  
+    <footer>
+        <p style="text-align: center;">Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+  <script>
+    const defaultSurname = '山田';
+    const defaultName = '花子';
+
+    let userSurname = defaultSurname;
+    let userName = defaultName;
+
+    // --- シナリオデータ ---
+    const scenarios = {
+      // 1. 最初の共通ルート
+      start: [
+      // 相手のメッセージ（左側表示）  
+        { 
+          type: 'left', 
+          name: 'キャラA', 
+          icon: '../images/icon.webp', 
+          text: 'やあ、{{surname}}さん！', 
+          time: '18:30' 
+        },
+        
+      // 自分のメッセージ（右側表示）  
+        { 
+          type: 'right', 
+          name: '自分', 
+          text: 'もう、{{surname}}はやめてって言ったよね？', 
+          time: '18:31' 
+        },
+        
+      // 相手のメッセージ（左側表示）
+        { 
+          type: 'left', 
+          name: 'キャラA', 
+          icon: '../images/icon.webp', 
+          text: 'ごめんごめん、{{name}}さん', 
+          time: '18:32' 
+        },
+        
+        { 
+          type: 'left', 
+          name: 'キャラA', 
+          icon: '../images/icon.webp', 
+          text: 'じゃあ、さっそく行こうか！', 
+          time: '18:33' 
+        },
+        
+        // 途中で背景変更イベントを入れる例
+        {
+          type: 'system',
+          bg: '../images/picture12.webp',// ★変更したい背景画像パス
+          text: '（公園に移動しました）'
+        },
+        
+        { 
+          type: 'left', 
+          name: 'キャラA', 
+          icon: '../images/icon.webp', 
+          text: '暑くなってきたね。喉が渇かない？何が良い？', 
+          time: '18:46' 
+        },
+        
+        // 選択肢分岐
+        {
+          type: 'choice',
+          choices: [
+            { label: '温かいコーヒーが飲みたい', nextRoute: 'route_coffee' },
+            { label: '冷たいジュースがいいな', nextRoute: 'route_juice' }
+          ]
+        }
+      ],
+
+      // 2. 分岐ルートA：コーヒーを選んだ場合
+      route_coffee: [
+        { 
+          type: 'right', 
+          name: '自分', 
+          text: '温かいコーヒーが飲みたいかも！', 
+          time: '18:47' 
+        },
+        
+        { 
+          type: 'left', 
+          name: 'キャラA', 
+          icon: '../images/icon.webp', 
+          text: 'いいね、{{name}}さんはブラック派だっけ。じゃあ近くのカフェに行こう！', 
+          time: '18:48' 
+        },
+        
+        // 合流ルートへ進むためのボタン
+        {
+          type: 'choice',
+          choices: [
+            { label: 'お店に向かう', nextRoute: 'route_common_after' }
+          ]
+        }
+      ],
+
+      // 3. 分岐ルートB：ジュースを選んだ場合
+      route_juice: [
+        { 
+          type: 'right', 
+          name: '自分', 
+          text: '冷たいジュースがいいな！', 
+          time: '18:47' 
+        },
+        
+        { 
+          type: 'left', 
+          name: 'キャラA', 
+          icon: '../images/icon.webp', 
+          text: '了解！自販機で冷たいジュース買ってくるね！', 
+          time: '18:48' 
+        },
+        
+        // 合流ルートへ進むためのボタン
+        {
+          type: 'choice',
+          choices: [
+            { label: 'ベンチで待つ', nextRoute: 'route_common_after' }
+          ]
+        }
+      ],
+
+      // 4. 合流ルート（分岐後に合流する共通の会話）
+      route_common_after: [
+        {
+          type: 'system',
+          bg: '../images/picture09.webp',
+          text: '（夕方になりました）'
+        },
+        
+        {
+          type: 'left',
+          name: 'キャラA',
+          icon: '../images/icon.webp',
+          text: 'ふぅ、一息ついたら次はどこへ行こうか？',
+          time: '19:00'
+        },
+        
+        {
+          type: 'right',
+          name: '自分',
+          text: 'そうだね、夕方になってきたしそろそろ帰ろうか。',
+          time: '19:01'
+        }
+      ]
+    };
+
+    let currentRoute = 'start'; // 現在進行中のルート名
+    let currentIndex = 0;       // 現在のメッセージ位置
+    let isStarted = false;
+    let isWaitingForChoice = false; // 選択肢表示中フラグ（クリック進行の防止）
+
+    const nameModal = document.getElementById('nameModal');
+    const startBtn = document.getElementById('startBtn');
+    const chatContainer = document.getElementById('chatContainer');
+    const choiceContainer = document.getElementById('choiceContainer');
+    const guideText = document.getElementById('guideText');
+
+    startBtn.addEventListener('click', () => {
+      const inputS = document.getElementById('inputSurname').value.trim();
+      const inputN = document.getElementById('inputName').value.trim();
+
+      userSurname = inputS !== '' ? inputS : defaultSurname;
+      userName = inputN !== '' ? inputN : defaultName;
+
+      nameModal.style.display = 'none';
+      isStarted = true;
+    });
+
+    function convertName(text) {
+      return text
+        .replaceAll('{{surname}}', userSurname)
+        .replaceAll('{{name}}', userName);
+    }
+
+    // 選択肢を表示する関数
+    function showChoices(choiceList) {
+      isWaitingForChoice = true;
+      guideText.textContent = '選択肢を選んでください';
+
+      choiceList.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.classList.add('choice-btn');
+        btn.textContent = convertName(choice.label);
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation(); // 画面全体のクリックイベントに波及させない
+
+          // 選択肢コンテナをクリア
+          choiceContainer.innerHTML = '';
+          isWaitingForChoice = false;
+          guideText.textContent = '画面をタップして進む';
+
+          // 新しいルートに切り替え
+          currentRoute = choice.nextRoute;
+          currentIndex = 0;
+
+          // 選択後の次のメッセージを表示
+          advanceMessage();
+        });
+
+        choiceContainer.appendChild(btn);
+      });
+    }
+
+    // メッセージを1歩進める関数
+    function advanceMessage() {
+      const activeMessages = scenarios[currentRoute];
+
+      if (currentIndex < activeMessages.length) {
+        const data = activeMessages[currentIndex];
+
+        // --- 1. 背景切り替え処理 ---
+        if (data.bg) {
+          document.body.style.backgroundImage = `url("${data.bg}")`;
+        }
+
+        // --- 2. 選択肢表示処理 ---
+        if (data.type === 'choice') {
+          showChoices(data.choices);
+          currentIndex++;
+          return;
+        }
+
+        // --- 3. システムメッセージ表示処理 ---
+        if (data.type === 'system') {
+          const sysEl = document.createElement('div');
+          sysEl.classList.add('system-message');
+          sysEl.textContent = convertName(data.text);
+          chatContainer.appendChild(sysEl);
+
+          setTimeout(() => sysEl.classList.add('show'), 10);
+        } else {
+          // --- 4. 通常会話メッセージ処理 ---
+          const messageEl = document.createElement('div');
+          messageEl.classList.add('message', data.type);
+
+          let iconHtml = '';
+          if (data.type === 'left' && data.icon) {
+            iconHtml = `<img src="${data.icon}" alt="${data.name}" class="icon">`;
+          }
+
+          const convertedText = convertName(data.text);
+
+          messageEl.innerHTML = `
+            ${iconHtml}
+            <div class="bubble">${convertedText}</div>
+            <div class="time">${data.time}</div>
+          `;
+
+          chatContainer.appendChild(messageEl);
+
+          setTimeout(() => messageEl.classList.add('show'), 10);
+        }
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+
+        currentIndex++;
+
+        // ルートの最後まで到達した場合
+        if (currentIndex === activeMessages.length) {
+          guideText.textContent = '最後まで読みました';
+        }
+      }
+    }
+
+    // 画面タップイベント
+    document.body.addEventListener('click', (e) => {
+      if (!isStarted || isWaitingForChoice || nameModal.contains(e.target)) return;
+      advanceMessage();
+    });
+  </script>
+</body>
+</html>
