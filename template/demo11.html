@@ -208,11 +208,11 @@
   <div class="notebook-container">
     <!-- 付箋風タブナビゲーション -->
     <ul class="tab-nav">
-      <li><button class="tab-button active" onclick="openTab(event, 'top')">トップ</button></li>
-      <li><button class="tab-button" onclick="openTab(event, 'about')">はじめに</button></li>
-      <li><button class="tab-button" onclick="openTab(event, 'works')">読みもの</button></li>
-      <li><button class="tab-button" onclick="openTab(event, 'offline')">オフライン</button></li>
-      <li><button class="tab-button" onclick="openTab(event, 'link')">リンク</button></li>
+      <li><button class="tab-button active" data-tab="top" onclick="openTab('top')">トップ</button></li>
+      <li><button class="tab-button" data-tab="about" onclick="openTab('about')">はじめに</button></li>
+      <li><button class="tab-button" data-tab="works" onclick="openTab('works')">読みもの</button></li>
+      <li><button class="tab-button" data-tab="offline" onclick="openTab('offline')">オフライン</button></li>
+      <li><button class="tab-button" data-tab="link" onclick="openTab('link')">リンク</button></li>
     </ul>
 
     <!-- メインコンテンツエリア -->
@@ -319,7 +319,10 @@
 
   <!-- タブ切り替えJavaScript -->
   <script>
-    function openTab(event, tabId) {
+    function openTab(tabId) {
+      const targetContent = document.getElementById(tabId);
+      if (!targetContent) return;
+
       // すべてのコンテンツを非表示
       const contents = document.querySelectorAll('.tab-content');
       contents.forEach(content => {
@@ -332,10 +335,24 @@
         button.classList.remove('active');
       });
 
-      // 指定されたコンテンツとボタンをアクティブ化
-      document.getElementById(tabId).classList.add('active');
-      event.currentTarget.classList.add('active');
+      // 指定されたコンテンツと対応するボタンをアクティブ化
+      targetContent.classList.add('active');
+      const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+      if (activeButton) {
+        activeButton.classList.add('active');
+      }
     }
+
+    // ページ読み込み時およびハッシュ変更時にURLのハッシュをチェックしてタブを開く
+    function checkHashAndOpenTab() {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        openTab(hash);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', checkHashAndOpenTab);
+    window.addEventListener('hashchange', checkHashAndOpenTab);
   </script>
 </body>
 </html>
