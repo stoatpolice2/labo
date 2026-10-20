@@ -33,7 +33,6 @@
             --gray-border: #e0e0e0;
             --accent-blood: #a31c1c; /* 血を連想させる深めの赤 */
             --card-bg: #ffffff;
-            --code-bg: #f4f4f4;
         }
 
         /* ダークモード時のカラー変数 */
@@ -45,7 +44,6 @@
             --gray-border: #2a2a2a;
             --accent-blood: #c82828;
             --card-bg: #181818;
-            --code-bg: #1f1f1f;
         }
 
         body {
@@ -226,51 +224,6 @@
             margin-bottom: 12px;
         }
 
-        /* カスタマイズ案内用のコード・テーブル スタイル */
-        .custom-note-box {
-            background-color: var(--card-bg);
-            border: 1px solid var(--gray-border);
-            padding: 20px;
-            margin-top: 16px;
-        }
-
-        .custom-code-inline {
-            background-color: var(--code-bg);
-            border: 1px solid var(--gray-border);
-            padding: 2px 6px;
-            font-family: Consolas, Monaco, monospace;
-            font-size: 0.85rem;
-            color: var(--text-main);
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.85rem;
-        }
-
-        .custom-table th, .custom-table td {
-            border: 1px solid var(--gray-border);
-            padding: 8px 12px;
-            text-align: left;
-        }
-
-        .custom-table th {
-            background-color: var(--gray-light);
-            color: var(--text-main);
-            font-weight: 400;
-        }
-
-        .color-sample-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
-
         /* 作品リスト（小説・考察共通） */
         .work-list {
             display: flex;
@@ -409,47 +362,6 @@
             <section class="content-section">
                 <h2>当サイトへのリンクについて</h2>
                 <p>当サイトはリンクフリーです。報告等も不要ですが、設置していただける場合はトップページへお願いいたします。</p>
-            </section>
-
-            <!-- カスタマイズについてのセクション -->
-            <section class="content-section">
-                <h2>カスタマイズについて</h2>
-                <p>このテンプレートをご利用の際、アクセントの赤色を「青系の色」に変更することで、透明感のある爽やかな印象のデザインにアレンジできます。</p>
-                
-                <div class="custom-note-box">
-                    <p style="color: var(--text-main); font-weight: bold; margin-bottom: 8px;">【コード内の変更箇所】</p>
-                    <p>CSS冒頭の <span class="custom-code-inline">:root</span> および <span class="custom-code-inline">body.dark-mode</span> 内にある変数を書き換えてください。</p>
-                    <p><span class="custom-code-inline">--accent-blood</span> (通常時のアクセント色)</p>
-                    <p><span class="custom-code-inline">--accent-blood</span> (ダークモード時のアクセント色)</p>
-                    
-                    <p style="color: var(--text-main); font-weight: bold; margin-top: 16px; margin-bottom: 8px;">【青系カラーコードの変更例】</p>
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>印象・スタイル</th>
-                                <th>通常時 (Light)</th>
-                                <th>ダークモード時 (Dark)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>澄んだコバルトブルー</td>
-                                <td><span class="color-sample-dot" style="background:#1e50a2;"></span><span class="custom-code-inline">#1e50a2</span></td>
-                                <td><span class="color-sample-dot" style="background:#4c88e8;"></span><span class="custom-code-inline">#4c88e8</span></td>
-                            </tr>
-                            <tr>
-                                <td>静かなインディゴ・紺色</td>
-                                <td><span class="color-sample-dot" style="background:#2b4b6f;"></span><span class="custom-code-inline">#2b4b6f</span></td>
-                                <td><span class="color-sample-dot" style="background:#5a84b5;"></span><span class="custom-code-inline">#5a84b5</span></td>
-                            </tr>
-                            <tr>
-                                <td>鮮やかなシアン・水色</td>
-                                <td><span class="color-sample-dot" style="background:#007bbb;"></span><span class="custom-code-inline">#007bbb</span></td>
-                                <td><span class="color-sample-dot" style="background:#00a3e0;"></span><span class="custom-code-inline">#00a3e0</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </section>
         </div>
 
