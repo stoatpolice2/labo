@@ -1183,10 +1183,14 @@
       }
     }
 
-    /* ---------------------------------- MORE BUTTON ---------------------------------- */
+    /* ---------------------------------- MORE & CLOSE BUTTONS ---------------------------------- */
     .more-btn-container {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
       margin-top: 28px;
+      flex-wrap: wrap;
     }
 
     .btn-more {
@@ -1211,4 +1215,27 @@
       border-color: var(--primary);
       transform: translateY(-2px);
       box-shadow: var(--shadow-sm);
+    }
+
+    .btn-close-more {
+      background: #F4ECE7;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 24px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: auto;
+    }
+
+    .btn-close-more:hover {
+      background-color: #E6DAD3;
+      color: var(--text-main);
+      transform: translateY(-2px);
     }

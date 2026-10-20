@@ -1,16 +1,15 @@
 // ==========================================
-// 1. テンプレートカテゴリ切り替え & 最新10件表示制御
+// 1. テンプレートカテゴリ切り替え & 10件ずつ増分表示制御
 // ==========================================
-let isTemplatesExpanded = false; // 「もっと見る」が開かれているかどうかの状態
+let templatesDisplayLimit = 10; // 現在表示を許可する件数上限
 
 function filterTemplates(category, btnElement) {
-  // タブボタンの切り替え（引数で渡された場合）
+  // タブボタンがクリックされた場合、上限を10件にリセット
   if (btnElement) {
     const buttons = document.querySelectorAll('#templates .tab-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
-    // タブ変更時は展開状態をリセット
-    isTemplatesExpanded = false;
+    templatesDisplayLimit = 10;
   }
 
   const cards = document.querySelectorAll('#templates .template-card');
@@ -20,37 +19,54 @@ function filterTemplates(category, btnElement) {
     const cardCategories = card.getAttribute('data-category') || '';
     const categoryArray = cardCategories.split(' ');
 
-    card.classList.remove('fade-in');
-    card.style.animationDelay = '0s';
-
     if (category === 'all' || categoryArray.includes(category)) {
       matchCount++;
 
-      // 10件以内、または全開モード(isTemplatesExpanded === true)のときに表示
-      if (matchCount <= 10 || isTemplatesExpanded) {
-        card.classList.remove('is-hidden');
-        const delay = (matchCount <= 10 ? matchCount - 1 : (matchCount - 1) % 10) * 0.04;
-        card.style.animationDelay = `${delay}s`;
+      // 現在の制限件数以内であれば表示
+      if (matchCount <= templatesDisplayLimit) {
+        // ★修正ポイント: 非表示(is-hidden)または透明(fade-inがない)状態なら再描画して表示させる
+        if (card.classList.contains('is-hidden') || !card.classList.contains('fade-in')) {
+          card.classList.remove('is-hidden');
+          card.classList.remove('fade-in');
+          const delay = ((matchCount - 1) % 10) * 0.04;
+          card.style.animationDelay = `${delay}s`;
 
-        requestAnimationFrame(() => {
-          card.classList.add('fade-in');
-        });
+          requestAnimationFrame(() => {
+            card.classList.add('fade-in');
+          });
+        }
       } else {
         card.classList.add('is-hidden');
+        card.classList.remove('fade-in');
       }
     } else {
       card.classList.add('is-hidden');
+      card.classList.remove('fade-in');
     }
   });
 
-  // 「もっと見る」ボタンの表示・テキスト制御
+  // ボタンエリアの表示制御
   const moreContainer = document.getElementById('templates-more-container');
+  const moreBtn = document.getElementById('templates-more-btn');
+  const closeBtn = document.getElementById('templates-close-btn');
+
   if (moreContainer) {
-    const moreBtn = moreContainer.querySelector('.btn-more');
+    // 全体で11件以上ある場合のみボタンエリアを表示
     if (matchCount > 10) {
-      moreContainer.style.display = 'block';
-      if (moreBtn) {
-        moreBtn.textContent = isTemplatesExpanded ? '閉じる 🐾' : 'もっと見る 🐾';
+      moreContainer.style.display = 'flex';
+
+      // まだ下に隠れているコンテンツがあるか確認
+      if (matchCount > templatesDisplayLimit) {
+        moreBtn.style.display = 'inline-flex';
+      } else {
+        moreBtn.style.display = 'none'; // 全件表示しきったら「もっと見る」を隠す
+      }
+
+      // 10件より多く表示されている状態なら「閉じる」ボタンを表示
+      if (templatesDisplayLimit > 10) {
+        closeBtn.style.display = 'inline-flex';
+      } else {
+        closeBtn.style.display = 'none';
       }
     } else {
       moreContainer.style.display = 'none';
@@ -58,40 +74,46 @@ function filterTemplates(category, btnElement) {
   }
 }
 
-// テンプレートの「もっと見る / 閉じる」トグル処理
-function toggleMoreTemplates(btnElement) {
-  isTemplatesExpanded = !isTemplatesExpanded;
+// テンプレート「もっと見る」ボタンの処理（＋10件追加表示）
+function showMoreTemplates() {
+  templatesDisplayLimit += 10;
+  const activeTab = document.querySelector('#templates .tab-btn.active');
+  const currentCategory = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+
+  filterTemplates(currentCategory, null);
+}
+
+// テンプレート「閉じる」ボタンの処理（初期10件表示に戻す）
+function closeTemplates() {
+  templatesDisplayLimit = 10;
   const activeTab = document.querySelector('#templates .tab-btn.active');
   const currentCategory = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
 
   filterTemplates(currentCategory, null);
 
-  // 閉じるときはテンプレートセクションのトップへスムーズにスクロール
-  if (!isTemplatesExpanded) {
-    const section = document.getElementById('templates');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
+  // セクションの先頭へスクロール
+  const section = document.getElementById('templates');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
 
 // ==========================================
-// 2. コラムカテゴリ切り替え & 最新10件表示制御
+// 2. コラムカテゴリ切り替え & 10件ずつ増分表示制御
 // ==========================================
-let isColumnsExpanded = false; // 「もっと見る」が開かれているかどうかの状態
+let columnDisplayLimit = 10; // 現在表示を許可する件数上限
 
 function filterColumns(category, btnElement) {
   const columnSection = document.getElementById('column');
   if (!columnSection) return;
 
-  // タブボタンの切り替え（引数で渡された場合）
+  // タブボタンがクリックされた場合、上限を10件にリセット
   if (btnElement) {
     const buttons = columnSection.querySelectorAll('.tab-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
-    // タブ変更時は展開状態をリセット
-    isColumnsExpanded = false;
+    columnDisplayLimit = 10;
   }
 
   const cards = columnSection.querySelectorAll('.column-card');
@@ -101,21 +123,21 @@ function filterColumns(category, btnElement) {
     const cardCategories = card.getAttribute('data-category') || '';
     const categoryArray = cardCategories.split(' ');
 
-    card.classList.remove('fade-in');
-    card.style.animationDelay = '0s';
-
     if (category === 'all' || categoryArray.includes(category)) {
       matchCount++;
 
-      // 10件以内、または全開モード(isColumnsExpanded === true)のときに表示
-      if (matchCount <= 10 || isColumnsExpanded) {
-        card.classList.remove('is-hidden');
-        const delay = (matchCount <= 10 ? matchCount - 1 : (matchCount - 1) % 10) * 0.04;
-        card.style.animationDelay = `${delay}s`;
+      // 現在の制限件数以内であれば表示
+      if (matchCount <= columnDisplayLimit) {
+        if (card.classList.contains('is-hidden')) {
+          card.classList.remove('is-hidden');
+          card.classList.remove('fade-in');
+          const delay = ((matchCount - 1) % 10) * 0.04;
+          card.style.animationDelay = `${delay}s`;
 
-        requestAnimationFrame(() => {
-          card.classList.add('fade-in');
-        });
+          requestAnimationFrame(() => {
+            card.classList.add('fade-in');
+          });
+        }
       } else {
         card.classList.add('is-hidden');
       }
@@ -124,14 +146,25 @@ function filterColumns(category, btnElement) {
     }
   });
 
-  // 「もっと見る」ボタンの表示・テキスト制御
+  // ボタンエリアの表示制御
   const moreContainer = document.getElementById('column-more-container');
+  const moreBtn = document.getElementById('column-more-btn');
+  const closeBtn = document.getElementById('column-close-btn');
+
   if (moreContainer) {
-    const moreBtn = moreContainer.querySelector('.btn-more');
     if (matchCount > 10) {
-      moreContainer.style.display = 'block';
-      if (moreBtn) {
-        moreBtn.textContent = isColumnsExpanded ? '閉じる 🐾' : 'もっと見る 🐾';
+      moreContainer.style.display = 'flex';
+
+      if (matchCount > columnDisplayLimit) {
+        moreBtn.style.display = 'inline-flex';
+      } else {
+        moreBtn.style.display = 'none';
+      }
+
+      if (columnDisplayLimit > 10) {
+        closeBtn.style.display = 'inline-flex';
+      } else {
+        closeBtn.style.display = 'none';
       }
     } else {
       moreContainer.style.display = 'none';
@@ -139,20 +172,27 @@ function filterColumns(category, btnElement) {
   }
 }
 
-// コラムの「もっと見る / 閉じる」トグル処理
-function toggleMoreColumns(btnElement) {
-  isColumnsExpanded = !isColumnsExpanded;
+// コラム「もっと見る」ボタンの処理（＋10件追加表示）
+function showMoreColumns() {
+  columnDisplayLimit += 10;
+  const activeTab = document.querySelector('#column .tab-btn.active');
+  const currentCategory = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+
+  filterColumns(currentCategory, null);
+}
+
+// コラム「閉じる」ボタンの処理（初期10件表示に戻す）
+function closeColumns() {
+  columnDisplayLimit = 10;
   const activeTab = document.querySelector('#column .tab-btn.active');
   const currentCategory = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
 
   filterColumns(currentCategory, null);
 
-  // 閉じるときはコラムセクションのトップへスムーズにスクロール
-  if (!isColumnsExpanded) {
-    const section = document.getElementById('column');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
+  // セクションの先頭へスクロール
+  const section = document.getElementById('column');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
@@ -202,17 +242,14 @@ function handleAccordionNav() {
 
       const targetElem = document.querySelector(targetId);
       if (targetElem) {
-        // 1. ターゲット自体が details の場合
         if (targetElem.tagName.toLowerCase() === 'details') {
           targetElem.open = true;
         } 
-        // 2. ターゲットが section などで、その直下に details がある場合
         else {
           const childDetails = targetElem.querySelector('details');
           if (childDetails) {
             childDetails.open = true;
           }
-          // 3. ターゲットが details の内側にある要素の場合（#rules など）
           const parentDetails = targetElem.closest('details');
           if (parentDetails) {
             parentDetails.open = true;

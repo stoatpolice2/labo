@@ -739,9 +739,10 @@
         </div>
 
       </div>
-      <!-- もっと見るボタン -->
+      <!-- もっと見る / 閉じるボタンエリア -->
       <div class="more-btn-container" id="templates-more-container" style="display: none;">
-        <button type="button" class="btn btn-more" onclick="toggleMoreTemplates(this)">もっと見る 🐾</button>
+        <button type="button" class="btn btn-more" id="templates-more-btn" onclick="showMoreTemplates()">もっと見る 🐾</button>
+        <button type="button" class="btn btn-close-more" id="templates-close-btn" onclick="closeTemplates()" style="display: none;">閉じる 🐾</button>
       </div>
     </section>
 
@@ -1053,9 +1054,10 @@
         </a>
         
       </div>
-      <!-- もっと見るボタン -->
+      <!-- もっと見る / 閉じるボタンエリア -->
       <div class="more-btn-container" id="column-more-container" style="display: none;">
-        <button type="button" class="btn btn-more" onclick="toggleMoreColumns(this)">もっと見る 🐾</button>
+        <button type="button" class="btn btn-more" id="column-more-btn" onclick="showMoreColumns()">もっと見る 🐾</button>
+        <button type="button" class="btn btn-close-more" id="column-close-btn" onclick="closeColumns()" style="display: none;">閉じる 🐾</button>
       </div>
     </section>
 
