@@ -282,7 +282,7 @@
               <span class="tag">カラフル</span>
               <span class="tag">レトロ</span>
             </div>
-            <p class="template-desc">小説用の子ページです。「My note」とお揃いのデザインで、文字の表示サイズが選べるようになっています。</p>
+            <p class="template-desc">小説用の子ページです。「My note」とセットで使うことで、トップページに戻った際に自動的に「移動前に開いていたタブ」を開くようにすることができます。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="template/novel11.html" target="_blank">Demo</a>
               <button class="btn btn-code" data-file="template/novel11.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
@@ -711,7 +711,7 @@
               <span class="tag">ダークモード</span>
               <span class="tag">縦書き対応</span>
             </div>
-            <p class="template-desc">小説用の子ページです。デフォルトは横書きですが、縦書きにも変更できます。</p>
+            <p class="template-desc">小説用の子ページです。「Simple Page」とお揃いのデザインです。デフォルトは横書きですが、縦書きにも変更できます。</p>
             <div class="template-links">
               <a class="btn btn-demo" href="template/novel01.html" target="_blank">Demo</a>
               <button class="btn btn-code" data-file="template/novel01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
@@ -738,6 +738,10 @@
           </div>
         </div>
 
+      </div>
+      <!-- もっと見るボタン -->
+      <div class="more-btn-container" id="templates-more-container" style="display: none;">
+        <button type="button" class="btn btn-more" onclick="toggleMoreTemplates(this)">もっと見る 🐾</button>
       </div>
     </section>
 
@@ -1048,6 +1052,10 @@
           <div class="column-arrow">→</div>
         </a>
         
+      </div>
+      <!-- もっと見るボタン -->
+      <div class="more-btn-container" id="column-more-container" style="display: none;">
+        <button type="button" class="btn btn-more" onclick="toggleMoreColumns(this)">もっと見る 🐾</button>
       </div>
     </section>
 
