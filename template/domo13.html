@@ -18,6 +18,10 @@
     <meta property="og:locale" content="ja_JP">
     
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         :root {
             --main-color: #e0f2fe;
             --accent-color: #0284c7;
@@ -221,6 +225,39 @@
             border-top: 1px solid var(--main-color);
         }
 
+        /* --- ページのトップに戻るボタン --- */
+        .page-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.2s, background-color 0.2s;
+            z-index: 900;
+        }
+
+        .page-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page-top:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+            color: #ffffff;
+        }
+
         /* --- 画像拡大モーダル --- */
         .modal {
             display: none;
@@ -340,8 +377,8 @@
         <section id="history">
             <h2>History</h2>
             <ul class="history-list">
-                <li class="history-item">2026/10/21　小説を1点追加しました</li>
-                <li class="history-item">2026/10/20　サイト開設</li>
+                <li class="history-item">2026/10/21 小説を1点追加しました</li>
+                <li class="history-item">2026/10/20 サイト開設</li>
             </ul>
         </section>
 
@@ -386,6 +423,9 @@
     <footer>
         <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
     </footer>
+
+    <!-- ページのトップに戻るボタン -->
+    <a href="#" class="page-top" id="pageTop" aria-label="ページトップへ戻る">⇧</a>
 
     <!-- 画像拡大表示用モーダル構造 -->
     <div class="modal" id="imageModal">
@@ -437,6 +477,17 @@
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.remove('show');
+                }
+            });
+
+            // --- ページのトップに戻るボタン制御 ---
+            const pageTopBtn = document.getElementById('pageTop');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    pageTopBtn.classList.add('show');
+                } else {
+                    pageTopBtn.classList.remove('show');
                 }
             });
         });
