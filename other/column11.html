@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二次創作・夢小説サイト向けの小技集！ | Stoat Labo</title>
+
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+
+<style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    :root {
+      --primary: #E06D53;
+      --primary-hover: #C8563C;
+      --accent: #E8963E;
+      --bg-main: #FAF7F5;
+      --bg-card: #FFFFFF;
+      --text-main: #332C2B;
+      --text-muted: #7A6E6B;
+      --border: #E6DAD3;
+      --radius: 16px;
+      --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+      --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+      --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-main);
+        background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        color: var(--text-main);
+        line-height: 1.8;
+        padding-bottom: 60px;
+    }
+
+    a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+    .hero {
+        background: var(--grad-hero);
+        border-bottom: 2px dashed #E2D5CE;
+        padding: 55px 20px 45px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+        z-index: 0;
+    }
+
+    .hero::before {
+        width: 160px;
+        height: 160px;
+        top: -40px;
+        left: 5%;
+    }
+
+    .hero::after {
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 6%;
+    }
+
+    .hero-container {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        font-size: 2rem;
+        letter-spacing: 0.04em;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+        line-height: 1.3;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+    nav {
+        background: var(--grad-primary);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: #FFF;
+        display: block;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px;
+    }
+
+    .section {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 36px;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        scroll-margin-top: 70px;
+    }
+
+    .section:hover {
+        transform: translateY(-4px); 
+        box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+        color: var(--text-main);
+        position: relative;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        padding-left: 14px;
+    }
+
+    .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 80%;
+        background: var(--grad-primary);
+        border-radius: 4px;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+    }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+    h3.sub-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+        font-weight: bold;
+    }
+
+    .alert-box {
+        background-color: #FFF6F3;
+        border: 1px dashed var(--primary);
+        padding: 18px;
+        margin-top: 18px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #5A443E;
+    }
+
+    .step-item {
+        margin-bottom: 22px;
+        background: #FAF5F2;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .step-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+    
+    .step-number {
+        display: inline-block;
+        background: var(--grad-primary);
+        color: #FFF;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-size: 0.85rem;
+        margin-right: 8px;
+    }
+
+    .checklist {
+        list-style: none;
+        padding: 0;
+        margin-top: 12px;
+    }
+
+    .checklist li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+    }
+
+    .checklist li::before {
+        content: "✔";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--primary);
+        font-weight: bold;
+    }
+
+    /* ----------------------------------
+        DEMO CODE COPY BOX STYLES
+    ---------------------------------- */
+    .code-box-wrapper {
+        margin: 20px 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #2d2726;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .code-box-header {
+        background: #3d3534;
+        padding: 10px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #4a403e;
+    }
+
+    .code-box-title {
+        color: #e8ddd7;
+        font-size: 0.85rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .copy-btn {
+        background: var(--grad-primary);
+        color: #fff;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .copy-btn:hover {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+
+    .copy-btn.copied {
+        background: #4a90e2;
+    }
+
+    .code-box-body pre {
+        margin: 0;
+        padding: 16px;
+        max-height: 380px;
+        overflow-y: auto;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    /* ----------------------------------
+        CODE BLOCK & INLINE CODE STYLES
+    ---------------------------------- */
+    pre {
+        background: #2d2726;
+        color: #f8f5f3;
+        padding: 16px;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin: 12px 0;
+    }
+
+    code {
+        background: #ffe8e2;
+        color: #c84022;
+        border: 1px solid #f2c7bd;
+        padding: 2px 7px;
+        margin: 0 2px;
+        border-radius: 5px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.88rem;
+        font-weight: 700;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    pre code {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+        box-shadow: none;
+    }
+
+    .comment { color: #8c7b75; }
+    .tag-name { color: #e06d53; }
+    .attr-name { color: #f4c463; }
+    .attr-val { color: #98c379; }
+
+    /* ----------------------------------
+        IMAGE STYLES
+    ---------------------------------- */
+    .image-container {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .image-frame {
+      width: 60%;
+      max-height: 480px;
+      height: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background-color: #F8F5F3;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+        .hero { padding: 40px 15px 30px; }
+        .header-title { font-size: 1.5rem; }
+        .header-subtitle { font-size: 0.88rem; }
+        nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+        nav a { padding: 10px 14px; font-size: 0.88rem; }
+        .container { margin-top: 24px; padding: 0 12px; }
+        .section { padding: 22px 18px; margin-bottom: 20px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- ヘッダーエリア -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">二次創作・夢小説サイト向けの小技集！</h1>
+            <p class="header-subtitle">検索よけ・パスワード・名前変換機能の導入方法</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#seo">検索よけ設定</a></li>
+            <li><a href="#password">パスワード設置</a></li>
+            <li><a href="#name-convert">名前変換機能</a></li>
+            <li><a href="#form-css">デザインの編集</a></li>
+            <li><a href="#checklist">チェックリスト</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入 -->
+        <section class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>「二次創作や夢小説を自分のサイトで公開したい！」<br>
+            「でも、名前変換やパスワード制限、検索よけってどうやればいいの？」</p>
+            <p style="margin-top: 10px;">そんな方向けに、<strong>HTMLサイトに「検索よけ」や「パスワード」を設定する方法</strong>と、<strong>「夢小説機能」の導入方法</strong>をわかりやすく解説します！</p>
+        </section>
+
+        <!-- 検索よけ設定 -->
+        <section id="seo" class="section">
+            <h2 class="section-title">二次創作サイトで必須の「検索よけ（SEO対策）」</h2>
+            <p>二次創作サイトを運営する上で重要なのが、<strong>Googleなどの検索エンジンにサイトを載せない設定</strong>です。関係者や二次創作が苦手な人の目に触れないよう、検索よけを設定しておきましょう。</p>
+            
+            <div class="alert-box">
+                <strong>❓ 検索よけは絶対にするべき？</strong><br>
+                <p>版権元が二次創作を許可している場合もあるため、「二次創作サイトであれば必ずしも検索よけをしなければならない」というわけではありません。</p>
+                <p>ただし、センシティブなコンテンツを含む場合は二次創作以前のマナーとして設定しておきましょう！</p>
+            </div>
+
+            <h3 class="sub-title">メタタグによる検索除外（noindex）</h3>
+            <p>検索よけをしたいHTMLファイルの <code>&lt;head&gt;</code> 〜 <code>&lt;/head&gt;</code> の間（<code>&lt;title&gt;</code> のすぐ下など）に、以下のコードを記述します。</p>
+            <p>すべてのページに設定する方法のほか、「注意書きが記述してあるトップページだけ設定しない」という方法もあります。</p>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 検索よけメタタグ</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code><span class="comment">&lt;!-- 検索エンジンからのインデックス（登録）と巡回を拒否するタグ --&gt;</span>
+  &lt;<span class="tag-name">meta</span> <span class="attr-name">name</span>=<span class="attr-val">"robots"</span> <span class="attr-name">content</span>=<span class="attr-val">"noindex,nofollow"</span>&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <strong>💡 設定値の意味</strong><br>
+                ・<strong>noindex</strong>：検索結果にこのページを表示させない指示<br>
+                ・<strong>nofollow</strong>：検索エンジンのロボットがページ内のリンクを辿らないようにする指示<br>
+                この1行を入れておくことで、大半の検索エンジンからのアクセスを防ぐことができます。
+            </div>
+        </section>
+        
+        <!-- パスワード設置 -->
+        <section id="password" class="section">
+            <h2 class="section-title">簡易パスワードを設置する方法</h2>
+            <p>サイトの入口や子ページに閲覧制限を設けたい場合、JavaScriptを使った簡易パスワード制限が手軽です。</p>
+            <p>これを設置しておくことで、ページを開いたときにパスワード入力用のダイアログが表示されます。</p>
+
+            <!-- 画像掲載エリア ③ -->
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 実際に表示されるダイアログ</p>
+                <div class="image-frame">
+                    <img src="../images/column17.webp" alt="パスワード入力ダイアログのプレビュー画像">
+                </div>
+            </div>
+
+            <h3 class="sub-title">ページ読み込み時にパスワードを求めるコード</h3>
+            <p>制限をかけたいページの <code>&lt;head&gt;</code> 直下に以下のコードを記述します。</p>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 簡易パスワード制限コード</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code>&lt;<span class="tag-name">script</span>&gt;
+  <span class="comment">// 正しいパスワードを設定（例：1234）</span>
+  <span class="tag-name">const</span> CORRECT_PASS = <span class="attr-val">"1234"</span>;
+
+  <span class="comment">// パスワード入力画面を出す</span>
+  <span class="tag-name">const</span> userInput = prompt(<span class="attr-val">"パスワードを入力してください（ヒント：公式発売日4桁）"</span>);
+
+  <span class="comment">// 入力値の判定</span>
+  <span class="tag-name">if</span> (userInput !== CORRECT_PASS) {
+    alert(<span class="attr-val">"パスワードが違います。トップページに戻ります。"</span>);
+    window.location.href = <span class="attr-val">"index.html"</span>; <span class="comment">// 正しくない場合の移動先</span>
+  }
+&lt;/<span class="tag-name">script</span>&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <strong>⚠️ 注意点（ワンポイント解説）</strong><br>
+                JavaScriptのパスワード制限は、ブラウザの「ページのソースを表示」で見破ることができる簡易的な仕組みです。強固なパスワードを設けたい場合は、サーバー側の設定（.htaccessなどによるBasic認証）を検討するのがおすすめです。
+            </div>
+        </section>
+
+        <!-- 名前変換機能 -->
+        <section id="name-convert" class="section">
+            <h2 class="section-title">コピペで使える！名前変換機能</h2>
+            <p>名前の入力フォームを設置し、読者が入力した名前を本文に反映させる機能です。入力した名前はブラウザに保存されるため、ページを移動しても名前が保持されます。</p>
+
+            <!-- 画像掲載エリア ① -->
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 当サイトで配布している小説用ページ「Blue Novel」のカード内に入力フォームを設置した例</p>
+                <div class="image-frame">
+                    <img src="../images/column18.webp" alt="名前変換機能のプレビュー画像">
+                </div>
+            </div>
+
+            <h3 class="sub-title">1. スクリプトを配置する</h3>
+            <p>まず、以下のスクリプトを <code>script.js</code> というファイル名で保存します。その後、すべてのHTMLファイルの <code>&lt;/body&gt;</code> 直前に <code>&lt;script src="script.js"&gt;&lt;/script&gt;</code> のタグを挿入して読み込ませます。</p>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 script.js</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code><span class="comment">// 名前をローカルストレージに保存する関数</span>
+<span class="tag-name">function</span> saveName() {
+  <span class="tag-name">const</span> lastName = document.getElementById(<span class="attr-val">'input-lastname'</span>).value;
+  <span class="tag-name">const</span> firstName = document.getElementById(<span class="attr-val">'input-firstname'</span>).value;
+
+  localStorage.setItem(<span class="attr-val">'dream_lastname'</span>, lastName);
+  localStorage.setItem(<span class="attr-val">'dream_firstname'</span>, firstName);
+
+  alert(<span class="attr-val">'名前を保存しました！'</span>);
+}
+
+<span class="comment">// ページ読み込み時に本文中の名前を置換し、フォーム値も復元する処理</span>
+window.addEventListener(<span class="attr-val">'DOMContentLoaded'</span>, () => {
+  <span class="tag-name">const</span> savedLast = localStorage.getItem(<span class="attr-val">'dream_lastname'</span>) || <span class="attr-val">'デフォルト苗字'</span>;
+  <span class="tag-name">const</span> savedFirst = localStorage.getItem(<span class="attr-val">'dream_firstname'</span>) || <span class="attr-val">'デフォルト名前'</span>;
+
+  <span class="comment">// 本文中の苗字・名前を置換</span>
+  document.querySelectorAll(<span class="attr-val">'.dream-last'</span>).forEach(el => el.textContent = savedLast);
+  document.querySelectorAll(<span class="attr-val">'.dream-first'</span>).forEach(el => el.textContent = savedFirst);
+
+  <span class="comment">// ページ内に入力フォームがあれば、現在の設定値を自動セット</span>
+  <span class="tag-name">const</span> inputLast = document.getElementById(<span class="attr-val">'input-lastname'</span>);
+  <span class="tag-name">const</span> inputFirst = document.getElementById(<span class="attr-val">'input-firstname'</span>);
+  <span class="tag-name">if</span> (inputLast) inputLast.value = savedLast;
+  <span class="tag-name">if</span> (inputFirst) inputFirst.value = savedFirst;
+});</code></pre>
+                </div>
+            </div>
+            
+            <div class="alert-box">
+                <strong>💡 一体型のコードの場合</strong><br>
+                HTML/CSS/JavaScript が一体化したコード内に上記のコードを追加したい場合は、上記のコードを <code>&lt;script&gt;</code> <code>&lt;/script&gt;</code> で挟んで、本体のコードの最下部にある <code>&lt;/body&gt;</code> の直前に張り付けてください🐾
+            </div>
+            
+            <h3 class="sub-title">2. 名前入力フォームを設置する</h3>
+            <p>名前入力フォームは、設置したい場所（小説一覧ページや、本文の上部など）に合わせて下記のコードを設置します。</p>
+
+            <div class="step-item" style="margin-top: 24px;">
+                <h3><span class="step-number">A</span>作品一覧ページに入力フォームを設置する場合</h3>
+                <p>作品一覧ページで名前を設定してもらい、すべての小説に反映させるパターンです。</p>
+
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 名前入力フォーム</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+<pre><code><span class="comment">&lt;!-- 名前入力フォーム --&gt;</span>
+&lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"name-form"</span>&gt;
+  &lt;<span class="tag-name">h3</span>&gt;名前設定&lt;/<span class="tag-name">h3</span>&gt;
+  &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"form-group"</span>&gt;
+    &lt;<span class="tag-name">label</span>&gt;苗字: &lt;<span class="tag-name">input</span> <span class="attr-name">type</span>=<span class="attr-val">"text"</span> <span class="attr-name">id</span>=<span class="attr-val">"input-lastname"</span> <span class="attr-name">value</span>=<span class="attr-val">"デフォルト苗字"</span>&gt;&lt;/<span class="tag-name">label</span>&gt;
+  &lt;/<span class="tag-name">div</span>&gt;
+  &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"form-group"</span>&gt;
+    &lt;<span class="tag-name">label</span>&gt;名前: &lt;<span class="tag-name">input</span> <span class="attr-name">type</span>=<span class="attr-val">"text"</span> <span class="attr-name">id</span>=<span class="attr-val">"input-firstname"</span> <span class="attr-name">value</span>=<span class="attr-val">"デフォルト名前"</span>&gt;&lt;/<span class="tag-name">label</span>&gt;
+  &lt;/<span class="tag-name">div</span>&gt;
+  &lt;<span class="tag-name">button</span> <span class="attr-name">onclick</span>=<span class="attr-val">"saveName()"</span> <span class="attr-name">class</span>=<span class="attr-val">"save-btn"</span>&gt;この名前で保存する&lt;/<span class="tag-name">button</span>&gt;
+&lt;/<span class="tag-name">div</span>&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <h3><span class="step-number">B</span>小説内（各ページ）に入力フォームを設置する場合</h3>
+                <p>小説の冒頭や途中に入力フォームを置きたい場合のパターンです。本文とフォームを同一ページに設置し、保存ボタンを押した瞬間に再読み込みして置き換えます。</p>
+                
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 名前入力フォーム</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+<pre><code><span class="comment"><span class="comment">&lt;!-- 名前入力フォーム --&gt;</span>
+&lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"name-form"</span>&gt;
+  &lt;<span class="tag-name">p</span> <span class="attr-name">class</span>=<span class="attr-val">"form-title"</span>&gt;名前設定&lt;/<span class="tag-name">p</span>&gt;
+  &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"form-group"</span>&gt;
+    &lt;<span class="tag-name">label</span>&gt;苗字: &lt;<span class="tag-name">input</span> <span class="attr-name">type</span>=<span class="attr-val">"text"</span> <span class="attr-name">id</span>=<span class="attr-val">"input-lastname"</span> <span class="attr-name">value</span>=<span class="attr-val">"デフォルト苗字"</span>&gt;&lt;/<span class="tag-name">label</span>&gt;
+  &lt;/<span class="tag-name">div</span>&gt;
+  &lt;<span class="tag-name">div</span> <span class="attr-name">class</span>=<span class="attr-val">"form-group"</span>&gt;
+    &lt;<span class="tag-name">label</span>&gt;名前: &lt;<span class="tag-name">input</span> <span class="attr-name">type</span>=<span class="attr-val">"text"</span> <span class="attr-name">id</span>=<span class="attr-val">"input-firstname"</span> <span class="attr-name">value</span>=<span class="attr-val">"デフォルト名前"</span>&gt;&lt;/<span class="tag-name">label</span>&gt;
+  &lt;/<span class="tag-name">div</span>&gt;
+  &lt;<span class="tag-name">button</span> <span class="attr-name">onclick</span>=<span class="attr-val">"saveName(); location.reload();"</span> <span class="attr-name">class</span>=<span class="attr-val">"save-btn"</span>&gt;この名前で保存する&lt;/<span class="tag-name">button</span>&gt;
+&lt;/<span class="tag-name">div</span>&gt;</code></pre>
+                    </div>
+                </div>
+                    
+            <div class="alert-box">
+                <strong>💡 本文の途中で名前を入力させる小技</strong><br>
+                Bの方法では『登場人物の「あなたのお名前は？」という質問のあとに入力フォームを設置する』など、ゲームのような構成にすることも可能です🐾
+            </div>
+                    
+            </div>
+                
+                <h3 class="sub-title">3. 入力した名前を小説に反映させる</h3>
+                <p>名前を反映させたい部分に <code>dream-first</code> や <code>dream-last</code> のタグを挿入することで、保存された名前が小説ページに反映されます。</p>
+                    
+                <div class="code-box-wrapper">
+                    <div class="code-box-header">
+                        <span class="code-box-title">📋 本文ページ</span>
+                        <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                    </div>
+                    <div class="code-box-body">
+<pre><code>&lt;<span class="tag-name">p</span>&gt;
+  「おい、&lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"dream-first"</span>&gt;デフォルト名前&lt;/<span class="tag-name">span</span>&gt;。いつまで寝ているんだ」&lt;<span class="tag-name">br</span>&gt;
+  &lt;<span class="tag-name">span</span> <span class="attr-name">class</span>=<span class="attr-val">"dream-last"</span>&gt;デフォルト苗字&lt;/<span class="tag-name">span</span>&gt;は呆れた顔でこちらを見つめていた。
+&lt;/<span class="tag-name">p</span>&gt;</code></pre>
+                    </div>
+                </div>
+        </section>
+
+        <!-- フォームCSS -->
+        <section id="form-css" class="section">
+            <h2 class="section-title">入力フォームを可愛く変身させるCSS</h2>
+            <p>デフォルトの入力枠やボタンは素朴になデザインになっていますが、以下のCSSを組み込むことで、角を丸く柔らかい印象にし、可愛いフォームに変身させることができます。</p>
+            <p>ご自身のサイトのデザインに合わせて丸みや色を調整してみてくださいね🐾</p>
+
+            <!-- 画像掲載エリア ② -->
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 下記のコードをそのまま使用するとこのようなデザインになります</p>
+                <div class="image-frame">
+                    <img src="../images/column19.webp" alt="入力フォームのCSSデザインプレビュー画像">
+                </div>
+            </div>
+
+            <p><code>&lt;head&gt;</code> タグ内（<code>&lt;style&gt;</code> ～ <code>&lt;/style&gt;</code> の間）に書くか、外部CSSファイル（<code>style.css</code> 等）に追記してご使用ください。</p>
+
+            <div class="code-box-wrapper">
+                <div class="code-box-header">
+                    <span class="code-box-title">📋 style.css</span>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>
+                </div>
+                <div class="code-box-body">
+<pre><code><span class="comment">/* --- フォーム全体のデザイン --- */</span>
+.<span class="tag-name">name-form</span> {
+  <span class="attr-name">background-color</span>: <span class="attr-val">#fffaf0</span>; <span class="comment">/* ふんわりとした淡い背景色 */</span>
+  <span class="attr-name">border</span>: <span class="attr-val">2px dashed #f4a7b9</span>; <span class="comment">/* くすみピンクの破線フレーム */</span>
+  <span class="attr-name">border-radius</span>: <span class="attr-val">12px</span>;        <span class="comment">/* 全体の角を丸く */</span>
+  <span class="attr-name">padding</span>: <span class="attr-val">20px</span>;
+  <span class="attr-name">max-width</span>: <span class="attr-val">360px</span>;
+  <span class="attr-name">margin</span>: <span class="attr-val">20px auto</span>;
+  <span class="attr-name">text-align</span>: <span class="attr-val">center</span>;
+  <span class="attr-name">box-shadow</span>: <span class="attr-val">0 4px 6px rgba(0, 0, 0, 0.05)</span>; <span class="comment">/* うっすら影をつける */</span>
+}
+
+<span class="comment">/* --- 入力欄（テキストボックス）のデザイン --- */</span>
+.<span class="tag-name">name-form</span> <span class="tag-name">input</span>[<span class="attr-name">type</span>=<span class="attr-val">"text"</span>] {
+  <span class="attr-name">border</span>: <span class="attr-val">1px solid #dcdcdc</span>;
+  <span class="attr-name">border-radius</span>: <span class="attr-val">20px</span>;       <span class="comment">/* 入力欄の角を大きく丸める */</span>
+  <span class="attr-name">padding</span>: <span class="attr-val">6px 14px</span>;
+  <span class="attr-name">font-size</span>: <span class="attr-val">14px</span>;
+  <span class="attr-name">outline</span>: <span class="attr-val">none</span>;
+  <span class="attr-name">transition</span>: <span class="attr-val">all 0.3s</span>;
+}
+
+<span class="comment">/* 入力欄をクリック（フォーカス）したときの色変化 */</span>
+.<span class="tag-name">name-form</span> <span class="tag-name">input</span>[<span class="attr-name">type</span>=<span class="attr-val">"text"</span>]:<span class="attr-name">focus</span> {
+  <span class="attr-name">border-color</span>: <span class="attr-val">#f4a7b9</span>;
+  <span class="attr-name">box-shadow</span>: <span class="attr-val">0 0 5px rgba(244, 167, 185, 0.5)</span>;
+}
+
+<span class="comment">/* --- 確定（保存）ボタンのデザイン --- */</span>
+.<span class="tag-name">save-btn</span> {
+  <span class="attr-name">background-color</span>: <span class="attr-val">#f4a7b9</span>; <span class="comment">/* メインカラー（くすみピンク） */</span>
+  <span class="attr-name">color</span>: <span class="attr-val">#ffffff</span>;            <span class="comment">/* 文字色 */</span>
+  <span class="attr-name">border</span>: <span class="attr-val">none</span>;
+  <span class="attr-name">border-radius</span>: <span class="attr-val">20px</span>;       <span class="comment">/* ボタンの角を丸く */</span>
+  <span class="attr-name">padding</span>: <span class="attr-val">8px 24px</span>;
+  <span class="attr-name">font-size</span>: <span class="attr-val">14px</span>;
+  <span class="attr-name">font-weight</span>: <span class="attr-val">bold</span>;
+  <span class="attr-name">cursor</span>: <span class="attr-val">pointer</span>;
+  <span class="attr-name">transition</span>: <span class="attr-val">background-color 0.3s</span>;
+  <span class="attr-name">margin-top</span>: <span class="attr-val">10px</span>;
+}
+
+<span class="comment">/* ボタンにマウスを乗せたときの変化 */</span>
+.<span class="tag-name">save-btn</span>:<span class="attr-name">hover</span> {
+  <span class="attr-name">background-color</span>: <span class="attr-val">#e0869b</span>; <span class="comment">/* 少し濃いピンクに変化 */</span>
+}
+
+<span class="comment">/* ラベル周りの余白調整 */</span>
+.<span class="tag-name">form-group</span> {
+  <span class="attr-name">margin-bottom</span>: <span class="attr-val">10px</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <strong>💡 カスタマイズのワンポイント解説</strong><br>
+                ・<strong>角を丸くする (border-radius)</strong>：値（px）を大きくするほど、角が丸くなります。20px前後にするとコロンとした丸ボタンやカプセル型の入力欄になります。<br>
+                ・<strong>カラーの変更</strong>：<code>#f4a7b9</code>（ピンク）の部分を、サイトの世界観に合わせて好きな色コード（和風なら抹茶色、クール系なら水色やグレーなど）に変更するだけで一気に雰囲気が変わります。
+            </div>
+        </section>
+
+        <!-- チェックリスト -->
+        <section id="checklist" class="section">
+            <h2 class="section-title">安心・安全にサイトを運営するためのチェックリスト</h2>
+            <p>サイトを公開する前に、以下の項目が確認できているかチェックしてみましょう。</p>
+
+            <ul class="checklist">
+                <li>必要なページの <code>&lt;head&gt;</code> 内に <code>&lt;meta name="robots" content="noindex,nofollow"&gt;</code> が入っているか</li>
+                <li>サイトの入口に「二次創作や年齢制限つきのコンテンツを含むこと」等の注意書きを記載しているか</li>
+                <li>作品一覧で名前を入力した後、別ページの小説でも正しく名前が変わるか動作確認したか</li>
+                <li>パスワードを入力しなかった場合・間違えた場合に正しく弾かれるか確認したか</li>
+            </ul>
+        </section>
+
+        <!-- おわりに -->
+        <section class="section">
+            <h2 class="section-title">おわりに</h2>
+            <p>夢小説サイト向けのHTMLテンプレートは比較的少ない印象がありますが、名前変換やパスワード機能はコードを編集することで個人サイトにも導入できます。</p>
+            <p style="margin-top: 10px;">「夢小説サイトを作りたいけど、それに適したテンプレートが少ない……」と断念していた方は、ぜひ試してみてくださいね🐾</p>
+        </section>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+    /* コピー機能 */
+    function copyCode(btn) {
+        const wrapper = btn.closest('.code-box-wrapper');
+        const code = wrapper.querySelector('code').innerText;
+        
+        navigator.clipboard.writeText(code).then(() => {
+            btn.textContent = '✨ コピーしました！';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 コードをコピー';
+                btn.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('コピーに失敗しました:', err);
+        });
+    }
+    </script>
+</body>
+</html>
