@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>創作サイト向けWordPress用カスタマイズコード | Stoat Labo</title>
+
+    <!-- ファビコンの設定 -->
+    <link href="../images/line.webp" rel="icon" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta content="創作サイト向けWordPress用カスタマイズコード | Stoat Labo" property="og:title">
+    <meta content="Twenty Twenty-Five用イラスト＆小説サイト構築コード" property="og:description">
+    <meta content="website" property="og:type">
+    <meta content="https://stoatpolice2.github.io/labo/" property="og:url">
+    <meta content="../images/tool06.webp" property="og:image">
+    <meta content="Stoat Labo" property="og:site_name">
+    <meta content="ja_JP" property="og:locale">
+    
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f4f8fa;
+            color: #2c3e50;
+            scroll-behavior: smooth;
+        }
+
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 爽やかなグラデーションバックグラウンド */
+        .hero-bg {
+            background: linear-gradient(135deg, #0073aa 0%, #3a92d4 50%, #7bc6f3 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 115, 170, 0.08);
+        }
+
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e6f2ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7bc6f3;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0073aa;
+        }
+
+        /* コードブロック内のハイライト・書式 */
+        .code-container pre {
+            counter-reset: line;
+        }
+        
+        .tab-btn.active {
+            color: #0073aa;
+            border-bottom: 3px solid #0073aa;
+            background-color: #ffffff;
+            font-weight: 700;
+        }
+
+        .toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* アニメーション補正 */
+        .smooth-transition {
+            transition: all 0.25s ease-in-out;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col">
+
+    <!-- 1. ヘッダー / メインビジュアル -->
+    <header class="hero-bg text-white pt-12 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden shadow-lg">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-5xl mx-auto relative z-10 text-center">
+            <span class="inline-block bg-white/20 backdrop-blur-md text-white text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-white/30 shadow-sm">
+                <i class="fa-brands fa-wordpress mr-1.5"></i> WordPress 6.0+ / Twenty Twenty-Five 対応
+            </span>
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 leading-tight">
+                Twenty Twenty-Five用<br> イラスト＆小説サイト構築コード
+            </h1>
+            <p class="text-blue-100 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-6 leading-relaxed">
+                WordPress創作サイト・ポートフォリオ向けカスタマイズコード<br class="hidden sm:inline"> 解説マニュアル ＆ ソースコード配布
+            </p>
+            <div class="flex flex-wrap justify-center items-center gap-4 text-xs sm:text-sm text-blue-100">
+                <span class="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-md backdrop-blur-sm">
+                    <i class="fa-solid fa-user-pen"></i> 制作者: okojo
+                </span>
+                <a href="https://stoat.fc2.page/" target="_blank" rel="noopener" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-md backdrop-blur-sm transition-colors border border-white/20">
+                    <i class="fa-solid fa-globe"></i> Sample Site <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- クイックアクセス用 ナビゲーションバー -->
+    <div class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blue-100 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <nav class="flex overflow-x-auto py-3 gap-2 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600 no-scrollbar">
+                <a href="#quick-nav" class="whitespace-nowrap hover:text-sky-600 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-list-ol text-sky-500"></i> 目次
+                </a>
+                <a href="#overview" class="whitespace-nowrap hover:text-sky-600 transition-colors">概要・ライセンス</a>
+                <a href="#features" class="whitespace-nowrap hover:text-sky-600 transition-colors">主な機能</a>
+                <a href="#steps" class="whitespace-nowrap hover:text-sky-600 transition-colors">導入手順</a>
+                <a href="#custom" class="whitespace-nowrap hover:text-sky-600 transition-colors">カスタマイズ</a>
+                <a href="#code-section" class="whitespace-nowrap text-sky-600 font-bold hover:text-sky-800 transition-colors flex items-center gap-1 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
+                    <i class="fa-solid fa-code"></i> コードを取得
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-grow w-full space-y-10">
+
+        <!-- 2. 目次（クイックナビゲーション） -->
+        <section id="quick-nav" class="bg-white rounded-2xl p-6 border border-sky-100 card-shadow">
+            <h2 class="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-compass text-sky-500"></i> クイックナビゲーション
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs sm:text-sm">
+                <a href="#overview" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                    <span>1. 概要 & 動作条件</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#features" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                    <span>2. 実装される主な機能</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#steps" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                    <span>3. 導入手順 (STEP 1~4)</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#custom" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                    <span>4. カスタマイズ方法</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#disclaimer" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                    <span>5. 免責事項</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#code-section" class="p-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold transition-colors flex items-center justify-between group">
+                    <span><i class="fa-solid fa-download mr-1"></i> 配布コード一覧へ</span>
+                    <i class="fa-solid fa-arrow-down text-xs group-hover:translate-y-0.5 transition-transform"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. マニュアル本文 -->
+
+        <!-- 3-1. 概要と規約・動作条件 -->
+        <section id="overview" class="bg-white rounded-2xl p-6 sm:p-8 border border-sky-100 card-shadow space-y-6">
+            <div class="border-b border-sky-100 pb-4">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-sky-500 rounded-full inline-block"></span>
+                    概要とライセンス・動作条件
+                </h2>
+            </div>
+
+            <p class="text-sm sm:text-base leading-relaxed text-slate-600">
+                本カスタマイズコードは、WordPress公式ブロックテーマ「<strong>Twenty Twenty-Five</strong>」上で、ポートフォリオ（ギャラリー）機能および小説テキスト投稿機能を実装するためのテンプレートです。
+            </p>
+
+            <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg mt-0.5"></i>
+                    <div class="text-xs sm:text-sm text-amber-800 leading-relaxed">
+                        <strong>注意:</strong> 本コードはWordPress内のGUIツール（ブロックエディターのみの設定）では動作しない処理を含みます。ファイルの配置や軽微なコード編集が行える経験者向けのカスタマイズとなります。
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <!-- ライセンス -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/80">
+                    <h3 class="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-scale-balanced text-sky-600"></i> 規約・ライセンス（License）
+                    </h3>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside">
+                        <li><strong>GPL v2 またはそれ以降 (GPL-2.0-or-later)</strong></li>
+                        <li>個人利用・商用利用を問わず、改変・再配布・サイト導入を自由に行っていただけます。</li>
+                        <li>クレジット表記や利用報告は任意です（ご報告いただけると大変励みになります！）</li>
+                    </ul>
+                </div>
+
+                <!-- 動作条件 -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/80">
+                    <h3 class="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-500"></i> 動作前提条件
+                    </h3>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2">
+                        <li class="flex justify-between border-b border-slate-200 pb-1">
+                            <span>WordPressバージョン:</span>
+                            <span class="font-semibold text-slate-800">6.0 以上推奨 (検証: 7.1.3)</span>
+                        </li>
+                        <li class="flex justify-between border-b border-slate-200 pb-1">
+                            <span>対応テーマ:</span>
+                            <span class="font-semibold text-slate-800">Twenty Twenty-Five (検証: 1.5)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>推奨サーバー環境:</span>
+                            <span class="font-semibold text-slate-800">PHP 7.4 / 8.0 以上 (検証: 8.5.x)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-2. 主な機能 -->
+        <section id="features" class="bg-white rounded-2xl p-6 sm:p-8 border border-sky-100 card-shadow space-y-6">
+            <div class="border-b border-sky-100 pb-4">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-sky-500 rounded-full inline-block"></span>
+                    このカスタマイズコードの主な機能
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Gallery機能 -->
+                <div class="border border-sky-100 rounded-xl p-5 bg-gradient-to-br from-white to-sky-50/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base">1. Gallery（イラストギャラリー）</h3>
+                    </div>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2.5">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <span><strong>サムネイル自動取得:</strong> 記事を「イラスト」カテゴリで投稿すると、アイキャッチまたは記事内画像を自動抽出。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <span><strong>モーダル拡大表示:</strong> 画像タップでふわっと拡大。タイトルと画像は中央、説明文は左寄せで綺麗に表示。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <span><strong>「もっと見る」表示:</strong> 初期15件を表示し、ボタンタップで段階的に追加読み込み。</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Novel機能 -->
+                <div class="border border-sky-100 rounded-xl p-5 bg-gradient-to-br from-white to-sky-50/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base">2. Novel（小説・テキスト投稿）</h3>
+                    </div>
+                    <ul class="text-xs sm:text-sm text-slate-600 space-y-2.5">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <span><strong>冒頭の自動プレビュー:</strong> 「小説」カテゴリ投稿からタイトルと本文冒頭（抜粋）をすっきり一覧表示。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <span><strong>「もっと見る」表示:</strong> 初期5件を表示し、以降はボタンで展開。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-check text-sky-500 mt-1"></i>
+                            <span><strong>フォントを明朝体に（single.html）:</strong> 記事ページに明朝体を適用し、文章を美しく見せます。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-3. 導入手順 -->
+        <section id="steps" class="bg-white rounded-2xl p-6 sm:p-8 border border-sky-100 card-shadow space-y-8">
+            <div class="border-b border-sky-100 pb-4">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-sky-500 rounded-full inline-block"></span>
+                    導入手順（詳しいガイド）
+                </h2>
+            </div>
+
+            <div class="space-y-6">
+                <!-- STEP 1 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">1</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">投稿カテゴリーを作成する</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            WordPress管理画面の <strong>「投稿」＞「カテゴリー」</strong> で以下の2つを作成します。
+                        </p>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs sm:text-sm space-y-1">
+                            <div>• イラスト用 ➔ 名前: <span class="font-semibold">イラスト</span> / スラッグ: <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">illust</code></div>
+                            <div>• 小説用 ➔ 名前: <span class="font-semibold">小説</span> / スラッグ: <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">novel</code></div>
+                        </div>
+                        <p class="text-xs text-slate-500">※スラッグ名を変更する場合はコード側の <code>category_name</code> も書き換えてください。</p>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- STEP 2 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">2</span>
+                    </div>
+                    <div class="flex-grow space-y-3">
+                        <h3 class="font-bold text-slate-800 text-base">ファイルをテーマフォルダ内に配置する</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            サーバーのファイルマネージャーまたはFTPソフト（またはプラグイン「WP File Manager」）を使い、以下の通り配置します。
+                        </p>
+                        <div class="space-y-2">
+                            <div class="bg-slate-900 text-slate-200 p-3 rounded-lg font-mono text-xs">
+                                <div class="text-sky-400 font-bold mb-1">// ① トップページ用ファイルの新規作成配置</div>
+                                /wp-content/themes/twentytwentyfive/<strong class="text-amber-300">front-page.php</strong>
+                            </div>
+                            <div class="bg-slate-900 text-slate-200 p-3 rounded-lg font-mono text-xs">
+                                <div class="text-sky-400 font-bold mb-1">// ② 小説個別ページ用ファイル末尾に追記</div>
+                                /wp-content/themes/twentytwentyfive/templates/<strong class="text-amber-300">single.html</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- STEP 3 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">3</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">固定ページを作成しトップに指定する</h3>
+                        <ol class="text-xs sm:text-sm text-slate-600 space-y-1.5 list-decimal list-inside">
+                            <li>管理画面の <strong>「固定ページ」＞「固定ページを追加」</strong> を選択。</li>
+                            <li>タイトルに「<strong>トップ</strong>」と入力し、本文は空のまま<strong>公開</strong>します。</li>
+                            <li>管理画面の <strong>「設定」＞「表示設定」</strong> へ移動。</li>
+                            <li>「ホームページの表示」で <strong>「固定ページ」</strong> を選択し、「ホームページ:」のドロップダウンで作成した「トップ」を選択して保存します。</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- STEP 4 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">4</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">表示確認とトラブルシューティング</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            サイトトップを開き、表示を確認します。変更が反映されない場合は以下を確認してください。
+                        </p>
+                        <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-slate-700 space-y-1">
+                            <p>💡 <strong>エディターのカスタマイズリセット:</strong> 過去に「外観 ＞ エディター」で「個別投稿」などを保存したことがある場合、DBデータが優先されます。「外観 ＞ エディター ＞ テンプレート ＞ 個別投稿」の右上メニューから「カスタマイズをリセット」を実行してください。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-4. カスタマイズ方法 -->
+        <section id="custom" class="bg-white rounded-2xl p-6 sm:p-8 border border-sky-100 card-shadow space-y-6">
+            <div class="border-b border-sky-100 pb-4">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-sky-500 rounded-full inline-block"></span>
+                    カスタマイズ方法
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50 space-y-2">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-user text-sky-500"></i> プロフィール・SNS設定
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        <code>front-page.php</code> 内の <code>&lt;section id="profile"&gt;</code> 部分にある名前、テキスト、SNSリンク（X, pixiv等）をご自身のものに変更してください。
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50 space-y-2">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-crop-simple text-sky-500"></i> サムネイル縦横比の調整
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        標準は3:4比率です。変更したい場合は <code>aspect-ratio: 3 / 4;</code> の数値を変更します。<br>
+                        ・ポスター感 (A判): <code>1 / 1.414</code><br>
+                        ・スマホ縦長: <code>9 / 16</code>
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50 space-y-2">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-sky-500"></i> 背景色・フォント設定
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        基本デザインは管理画面の「外観 ＞ エディター ＞ スタイル」から調整可能ですが、<code>front-page.php</code> の背景色や <code>single.html</code> のフォント（明朝体）はCSSで固定されているため、コードを直接変更してください。
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50 space-y-2">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes text-sky-500"></i> タイトル・OGP・ファビコン
+                    </h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        <code>&lt;head&gt;</code> 内に直接コードを書くとWPの機能と競合してしまう可能性があります。コードの追加はせず、WPの標準機能やプラグイン（<strong>SEO Simple Pack</strong> 等）に委ねることを推奨します。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-5. 免責事項 -->
+        <section id="disclaimer" class="bg-slate-100 rounded-xl p-5 border border-slate-200 text-xs text-slate-600 space-y-2">
+            <h3 class="font-bold text-slate-700 flex items-center gap-1.5 text-sm">
+                <i class="fa-solid fa-shield-halved text-slate-500"></i> 免責事項 (Disclaimer)
+            </h3>
+            <p class="leading-relaxed">
+                本コードの導入・カスタマイズ・使用によって生じた直接的・間接的な損害（サイトの不具合、データの破損、表示崩れ等）について、制作者は一切の責任を負いかねます。導入の際は必ず事前にバックアップ（ファイルおよびデータベース）を取得した上でご利用ください。
+            </p>
+        </section>
+
+        <!-- 4. カスタマイズコードの配布・コピーボックス -->
+        <section id="code-section" class="bg-white rounded-2xl p-6 sm:p-8 border-2 border-sky-400 card-shadow space-y-6 scroll-mt-20">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-sky-100 pb-4">
+                <div>
+                    <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Source Code</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mt-1">配布カスタマイズコード</h2>
+                </div>
+                <p class="text-xs text-slate-500">下のタブでコードを切替＆ワンクリックでコピーできます</p>
+            </div>
+
+            <!-- コードタブナビゲーション -->
+            <div class="flex border-b border-slate-200 bg-slate-50 rounded-t-xl overflow-hidden text-xs sm:text-sm">
+                <button type="button" onclick="switchTab('front-page')" id="tab-btn-front-page" class="tab-btn active px-5 py-3.5 flex items-center gap-2 transition-all border-r border-slate-200">
+                    <i class="fa-solid fa-file-code text-sky-600"></i>
+                    <span>① front-page.php <span class="text-xs font-normal text-slate-500">(トップページ用)</span></span>
+                </button>
+                <button type="button" onclick="switchTab('single-html')" id="tab-btn-single-html" class="tab-btn px-5 py-3.5 flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-file-code text-amber-600"></i>
+                    <span>② single.html 追記コード <span class="text-xs font-normal text-slate-500">(小説用)</span></span>
+                </button>
+            </div>
+
+            <!-- コードコンテナ ① front-page.php -->
+            <div id="tab-content-front-page" class="tab-content space-y-3">
+                <div class="flex justify-between items-center bg-slate-800 text-slate-300 px-4 py-2.5 rounded-t-lg text-xs font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                        <span class="ml-2 font-bold text-slate-200">front-page.php</span>
+                    </span>
+                    <button type="button" onclick="copyCode('code-front-page', this)" class="bg-sky-600 hover:bg-sky-500 text-white font-sans px-3 py-1.5 rounded-md font-medium text-xs transition-colors flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>コードをコピー</span>
+                    </button>
+                </div>
+                <div class="relative bg-slate-900 rounded-b-lg overflow-hidden border border-slate-800">
+                    <pre class="p-4 text-xs sm:text-sm text-slate-200 overflow-x-auto max-h-[500px] leading-relaxed"><code id="code-front-page">&lt;?php
+/**
+ * Title: Custom Template for Twenty Twenty-Five
+ * Description: イラスト・小説サイト向けカスタマイズコード
+ * Author: okojo
+ * License: GPL-2.0-or-later
+ */
+?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html &lt;?php language_attributes(); ?&gt;&gt;
+&lt;head&gt;
+    &lt;meta charset="&lt;?php bloginfo('charset'); ?&gt;"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;?php wp_head(); ?&gt;
+&lt;/head&gt;
+&lt;body &lt;?php body_class(); ?&gt;&gt;
+
+&lt;!-- デザイン用CSS --&gt;
+&lt;style&gt;
+    /* ページ全体の背景色と基本設定 */
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* 1. ヘッダーエリア（サイト名＆ナビゲーションバー） */
+    .site-header {
+        background: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        padding: 25px 20px 15px;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    /* サイトタイトル */
+    .site-title {
+        margin: 0 0 15px 0;
+        font-size: 1.8em;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+    }
+    .site-title a {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    .site-title a:hover {
+        color: #0073aa;
+    }
+
+    /* ナビゲーションバー */
+    .site-nav {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .site-nav li a {
+        color: #555;
+        text-decoration: none;
+        font-size: 0.95em;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        padding: 6px 12px;
+        border-radius: 20px;
+        transition: all 0.2s ease;
+    }
+    .site-nav li a:hover {
+        color: #0073aa;
+        background: #f0f5f9;
+    }
+
+    /* 全体コンテナ */
+    .site-main-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #333;
+        box-sizing: border-box;
+    }
+
+    /* 各セクションのカードデザイン */
+    .fade-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 35px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        scroll-margin-top: 110px;
+        
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    .fade-card.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* 見出し（h2）の装飾 */
+    .fade-card h2 {
+        font-size: 1.5em;
+        margin-top: 0;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+        letter-spacing: 0.05em;
+        color: #2c3e50;
+    }
+
+    /* GALLERY: グリッドレイアウト (PC表示: 5列) */
+    .gallery-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .gallery-item {
+        width: calc(20% - 10px);
+        box-sizing: border-box;
+    }
+    .gallery-item.is-hidden {
+        display: none !important;
+    }
+    .gallery-hover-img {
+        transition: transform 0.4s ease;
+    }
+    .gallery-hover-container {
+        cursor: pointer;
+    }
+    .gallery-hover-container:hover .gallery-hover-img {
+        transform: scale(1.08);
+    }
+
+    /* 「もっと見る」ボタン共通スタイリング */
+    .load-more-container {
+        text-align: center;
+        margin-top: 25px;
+    }
+    .load-more-btn {
+        background-color: #f4f6f8;
+        color: #2c3e50;
+        border: 1px solid #dcdfe6;
+        padding: 10px 28px;
+        font-size: 0.9em;
+        font-weight: 600;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        letter-spacing: 0.05em;
+    }
+    .load-more-btn:hover {
+        background-color: #0073aa;
+        color: #ffffff;
+        border-color: #0073aa;
+        box-shadow: 0 4px 12px rgba(0, 115, 170, 0.2);
+    }
+
+    /* NOVEL: リストスタイル */
+    .novel-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .novel-item {
+        background: #fafafa;
+        border: 1px solid #eaeaea;
+        border-radius: 8px;
+        transition: all 0.25s ease;
+    }
+    .novel-item.is-hidden {
+        display: none !important;
+    }
+    .novel-item:hover {
+        background: #ffffff;
+        border-color: #0073aa;
+        box-shadow: 0 4px 12px rgba(0, 115, 170, 0.08);
+        transform: translateY(-2px);
+    }
+    .novel-link {
+        display: block;
+        padding: 16px 18px;
+        text-decoration: none;
+        color: inherit;
+    }
+    .novel-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+    .novel-date {
+        color: #888;
+        font-size: 0.82em;
+        letter-spacing: 0.03em;
+    }
+
+    .novel-item-title {
+        margin: 0 0 6px 0;
+        font-size: 1.05em;
+        font-weight: 700;
+        color: #2c3e50;
+        line-height: 1.4;
+    }
+    .novel-excerpt {
+        margin: 0;
+        font-size: 0.88em;
+        color: #666;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* モーダル全体のバックドロップ */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+        box-sizing: border-box;
+        
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.is-active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        background: #ffffff;
+        border-radius: 12px;
+        max-width: 650px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 25px;
+        position: relative;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        
+        transform: scale(0.9) translateY(20px);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.is-active .modal-content {
+        transform: scale(1) translateY(0);
+    }
+
+    .modal-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f0f0f0;
+        border: none;
+        font-size: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        transition: background 0.2s ease, color 0.2s ease;
+        z-index: 10;
+    }
+    .modal-close-btn:hover {
+        background: #e0e0e0;
+        color: #000;
+    }
+
+    .modal-img-wrapper {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .modal-img-wrapper img {
+        max-width: 100%;
+        max-height: 55vh;
+        height: auto;
+        border-radius: 8px;
+        object-fit: contain;
+        display: inline-block;
+    }
+    .modal-title {
+        font-size: 1.3em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        text-align: center;
+    }
+    .modal-text {
+        font-size: 0.95em;
+        line-height: 1.8;
+        color: #444;
+        text-align: left;
+        word-break: break-word;
+        white-space: pre-wrap;
+    }
+
+    /* スマートフォン表示最適化（画面幅 600px 以下） */
+    @media (max-width: 600px) {
+        .site-header {
+            padding: 15px 10px 12px;
+        }
+        .site-title {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .site-nav {
+            gap: 4px;
+        }
+        .site-nav li a {
+            font-size: 0.82em;
+            padding: 4px 7px;
+        }
+        .site-main-container {
+            padding: 15px 8px;
+        }
+        .fade-card {
+            padding: 18px 12px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            scroll-margin-top: 95px;
+        }
+        .fade-card h2 {
+            font-size: 1.25em;
+            margin-bottom: 12px;
+        }
+        
+        /* GALLERY: スマホで3列並び */
+        .gallery-grid {
+            gap: 6px;
+        }
+        .gallery-item {
+            width: calc(33.333% - 4px);
+        }
+        .gallery-item p {
+            font-size: 0.75em !important;
+            margin-top: 4px !important;
+        }
+
+        .load-more-container {
+            margin-top: 18px;
+        }
+        .load-more-btn {
+            font-size: 0.82em;
+            padding: 8px 22px;
+        }
+
+        /* NOVEL: スマホ向け調整 */
+        .novel-link {
+            padding: 12px 14px;
+        }
+        .novel-item-title {
+            font-size: 0.98em;
+        }
+        .novel-excerpt {
+            font-size: 0.82em;
+        }
+
+        .profile-container {
+            flex-direction: column !important;
+            text-align: center;
+        }
+        .profile-bio {
+            min-width: 100% !important;
+        }
+        .modal-overlay {
+            padding: 12px;
+        }
+        .modal-content {
+            padding: 20px 15px;
+            max-height: 90vh;
+        }
+        .modal-title {
+            font-size: 1.15em;
+        }
+        .modal-text {
+            font-size: 0.9em;
+        }
+    }
+&lt;/style&gt;
+
+&lt;!-- 1. ヘッダーエリア --&gt;
+&lt;header class="site-header"&gt;
+    &lt;h1 class="site-title"&gt;
+        &lt;a href="&lt;?php echo esc_url(home_url('/')); ?&gt;"&gt;&lt;?php bloginfo('name'); ?&gt;&lt;/a&gt;
+    &lt;/h1&gt;
+    
+    &lt;nav&gt;
+        &lt;ul class="site-nav"&gt;
+            &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#gallery"&gt;Gallery&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#novel"&gt;Novel&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#profile"&gt;Profile&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main class="site-main-container"&gt;
+
+    &lt;!-- 1. About セクション --&gt;
+    &lt;section id="about" class="fade-card"&gt;
+        &lt;h2&gt;About&lt;/h2&gt;
+        &lt;p style="line-height: 1.8; margin: 0;"&gt;当サイトはWordPress用カスタマイズコードのデモサイトです。&lt;/p&gt;
+        &lt;p style="line-height: 1.8; margin: 0;"&gt;ここにサイトの紹介や更新履歴を記入してください。&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 2. Gallery (イラスト) セクション --&gt;
+    &lt;section id="gallery" class="fade-card"&gt;
+        &lt;h2&gt;Gallery&lt;/h2&gt;
+        &lt;p style="margin-bottom: 20px; color: #666; font-size: 0.9em;"&gt;イラスト作品（最新15件まで表示）です。タップすると拡大表示されます。&lt;/p&gt;
+        
+        &lt;div class="gallery-grid"&gt;
+            &lt;?php
+            // 最大45件（15件×3回分）まで読み込む設定
+            $args = array(
+                'post_type'      =&gt; 'post',
+                'category_name'  =&gt; 'illust',
+                'posts_per_page' =&gt; 45,
+            );
+            $illust_query = new WP_Query($args);
+            $item_count = 0;
+
+            if ($illust_query-&gt;have_posts()) :
+                while ($illust_query-&gt;have_posts()) : $illust_query-&gt;the_post();
+                    $item_count++;
+                    
+                    $thumb_url = '';
+
+                    if (has_post_thumbnail()) {
+                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                    } else {
+                        $content = get_the_content();
+                        preg_match_all('/&lt;img.+?src=[\'"]([^\'"]+)[\'"].*?&gt;/i', $content, $matches);
+                        if (!empty($matches[1][0])) {
+                            $thumb_url = $matches[1][0];
+                        }
+                    }
+
+                    $excerpt_text = wp_strip_all_tags(get_the_content());
+                    
+                    // 16件目以降のアイテムを初期非表示にする
+                    $hidden_class = ($item_count &gt; 15) ? 'is-hidden' : '';
+                    ?&gt;
+
+                    &lt;div class="gallery-item js-gallery-item &lt;?php echo $hidden_class; ?&gt;"&gt;
+                        &lt;div class="gallery-hover-container js-modal-open" 
+                             data-img="&lt;?php echo esc_url($thumb_url); ?&gt;" 
+                             data-title="&lt;?php echo esc_attr(get_the_title()); ?&gt;"
+                             data-desc="&lt;?php echo esc_attr($excerpt_text); ?&gt;"&gt;
+                            
+                            &lt;?php if ($thumb_url) : ?&gt;
+                                &lt;div style="width: 100%; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 4px; background: #eee;"&gt;
+                                    &lt;img src="&lt;?php echo esc_url($thumb_url); ?&gt;" alt="&lt;?php the_title_attribute(); ?&gt;" class="gallery-hover-img" style="width: 100%; height: 100%; object-fit: cover; object-position: top;"&gt;
+                                &lt;/div&gt;
+                            &lt;?php else : ?&gt;
+                                &lt;div style="width: 100%; aspect-ratio: 3 / 4; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 0.8em; color: #888; border-radius: 4px;"&gt;No Image&lt;/div&gt;
+                            &lt;?php endif; ?&gt;
+                            &lt;p style="font-size: 0.85em; margin-top: 8px; font-weight: bold; line-height: 1.3; margin-bottom: 0;"&gt;&lt;?php the_title(); ?&gt;&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+
+                &lt;?php endwhile;
+                wp_reset_postdata();
+            else : ?&gt;
+                &lt;p&gt;作品はまだありません。&lt;/p&gt;
+            &lt;?php endif; ?&gt;
+        &lt;/div&gt;
+
+        &lt;!-- 16件以上作品がある場合のみ「もっと見る」ボタンを表示 --&gt;
+        &lt;?php if ($item_count &gt; 15) : ?&gt;
+            &lt;div class="load-more-container"&gt;
+                &lt;button type="button" id="loadMoreBtn" class="load-more-btn"&gt;もっと見る&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 3. Novel (小説) セクション --&gt;
+    &lt;section id="novel" class="fade-card"&gt;
+        &lt;h2&gt;Novel&lt;/h2&gt;
+        &lt;p style="margin-bottom: 20px; color: #666; font-size: 0.9em;"&gt;小説・テキスト作品です（最新5件まで表示）&lt;/p&gt;
+        
+        &lt;ul class="novel-list"&gt;
+            &lt;?php
+            // 最大30件まで読み込み、初期表示は5件に設定
+            $args = array(
+                'post_type'      =&gt; 'post',
+                'category_name'  =&gt; 'novel',
+                'posts_per_page' =&gt; 30,
+            );
+            $novel_query = new WP_Query($args);
+            $novel_count = 0;
+
+            if ($novel_query-&gt;have_posts()) :
+                while ($novel_query-&gt;have_posts()) : $novel_query-&gt;the_post();
+                    $novel_count++;
+                    $excerpt = wp_strip_all_tags(get_the_content());
+                    
+                    // 6件目以降を初期非表示にする
+                    $novel_hidden_class = ($novel_count &gt; 5) ? 'is-hidden' : '';
+                    ?&gt;
+                    &lt;li class="novel-item js-novel-item &lt;?php echo $novel_hidden_class; ?&gt;"&gt;
+                        &lt;a href="&lt;?php the_permalink(); ?&gt;" class="novel-link"&gt;
+                            &lt;div class="novel-meta"&gt;
+                                &lt;span class="novel-date"&gt;&lt;?php echo get_the_date('Y.m.d'); ?&gt;&lt;/span&gt;                               
+                            &lt;/div&gt;
+                            &lt;h3 class="novel-item-title"&gt;&lt;?php the_title(); ?&gt;&lt;/h3&gt;
+                            &lt;?php if ($excerpt) : ?&gt;
+                                &lt;p class="novel-excerpt"&gt;&lt;?php echo esc_html($excerpt); ?&gt;&lt;/p&gt;
+                            &lt;?php endif; ?&gt;
+                        &lt;/a&gt;
+                    &lt;/li&gt;
+                &lt;?php endwhile;
+                wp_reset_postdata();
+            else : ?&gt;
+                &lt;p&gt;作品はまだありません。&lt;/p&gt;
+            &lt;?php endif; ?&gt;
+        &lt;/ul&gt;
+
+        &lt;!-- 6件以上小説がある場合のみ「もっと見る」ボタンを表示 --&gt;
+        &lt;?php if ($novel_count &gt; 5) : ?&gt;
+            &lt;div class="load-more-container"&gt;
+                &lt;button type="button" id="loadMoreNovelBtn" class="load-more-btn"&gt;もっと見る&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;?php endif; ?&gt;
+    &lt;/section&gt;
+
+    &lt;!-- 4. Profile セクション --&gt;
+    &lt;section id="profile" class="fade-card"&gt;
+        &lt;h2&gt;Profile&lt;/h2&gt;
+        &lt;div class="profile-container" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;"&gt;
+            
+            &lt;div class="profile-icon" style="flex-shrink: 0; margin: 0 auto;"&gt;
+                &lt;img src="ここにアイコン画像のURL" alt="プロフィールアイコン" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; background: #eee;"&gt;
+            &lt;/div&gt;
+
+            &lt;div class="profile-bio" style="flex: 1; min-width: 250px;"&gt;
+                &lt;p style="margin-top: 0; margin-bottom: 8px;"&gt;&lt;strong&gt;管理人:&lt;/strong&gt; お名前&lt;/p&gt;
+                &lt;p style="line-height: 1.7; margin-bottom: 12px;"&gt;ここにプロフィールを書いてください。&lt;/p&gt;
+                &lt;p style="margin-bottom: 0; font-size: 0.95em;"&gt;
+                    &lt;strong&gt;SNS:&lt;/strong&gt; 
+                    &lt;a href="https://x.com/" target="_blank" rel="noopener" style="color: #0073aa; text-decoration: none;"&gt;X (旧Twitter)&lt;/a&gt; | 
+                    &lt;a href="https://pixiv.net/" target="_blank" rel="noopener" style="color: #0073aa; text-decoration: none;"&gt;pixiv&lt;/a&gt;
+                &lt;/p&gt;
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;footer&gt;&lt;p&gt;Template by &lt;a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;"&gt;Stoat Labo&lt;/a&gt;&lt;/p&gt;&lt;footer&gt;
+
+&lt;/main&gt;
+
+&lt;!-- モーダルポップアップ用HTML構造 --&gt;
+&lt;div id="imageModal" class="modal-overlay"&gt;
+    &lt;div class="modal-content"&gt;
+        &lt;button type="button" class="modal-close-btn" id="modalCloseBtn"&gt;&amp;times;&lt;/button&gt;
+        &lt;div class="modal-img-wrapper"&gt;
+            &lt;img id="modalImg" src="" alt=""&gt;
+        &lt;/div&gt;
+        &lt;h3 id="modalTitle" class="modal-title"&gt;&lt;/h3&gt;
+        &lt;p id="modalDesc" class="modal-text"&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- JavaScript（スクロールフェードイン＆モーダル＆追加読み込み制御） --&gt;
+&lt;script&gt;
+document.addEventListener('DOMContentLoaded', function() {
+    
+    /* 1. カードのスクロールフェードイン制御 */
+    const cards = document.querySelectorAll('.fade-card');
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -30px 0px',
+        threshold: 0.05
+    };
+
+    const observer = new IntersectionObserver((entries, observer) =&gt; {
+        entries.forEach((entry, index) =&gt; {
+            if (entry.isIntersecting) {
+                setTimeout(() =&gt; {
+                    entry.target.classList.add('is-visible');
+                }, index * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    cards.forEach(card =&gt; {
+        observer.observe(card);
+    });
+
+    /* 2. GALLERYモーダル表示制御 */
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const openBtns = document.querySelectorAll('.js-modal-open');
+
+    openBtns.forEach(btn =&gt; {
+        btn.addEventListener('click', function() {
+            const imgSrc = this.getAttribute('data-img');
+            const title = this.getAttribute('data-title');
+            const desc = this.getAttribute('data-desc');
+
+            modalImg.src = imgSrc;
+            modalTitle.textContent = title;
+            modalDesc.textContent = desc;
+
+            modal.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeModal() {
+        modal.classList.remove('is-active');
+        document.body.style.overflow = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' &amp;&amp; modal.classList.contains('is-active')) {
+            closeModal();
+        }
+    });
+
+    /* 3. GALLERY「もっと見る」ボタン制御（15件単位） */
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            const hiddenItems = document.querySelectorAll('.js-gallery-item.is-hidden');
+            
+            for (let i = 0; i &lt; 15 &amp;&amp; i &lt; hiddenItems.length; i++) {
+                hiddenItems[i].classList.remove('is-hidden');
+            }
+
+            if (document.querySelectorAll('.js-gallery-item.is-hidden').length === 0) {
+                loadMoreBtn.parentElement.style.display = 'none';
+            }
+        });
+    }
+
+    /* 4. NOVEL「もっと見る」ボタン制御（5件単位） */
+    const loadMoreNovelBtn = document.getElementById('loadMoreNovelBtn');
+    if (loadMoreNovelBtn) {
+        loadMoreNovelBtn.addEventListener('click', function() {
+            const hiddenNovelItems = document.querySelectorAll('.js-novel-item.is-hidden');
+            
+            for (let i = 0; i &lt; 5 &amp;&amp; i &lt; hiddenNovelItems.length; i++) {
+                hiddenNovelItems[i].classList.remove('is-hidden');
+            }
+
+            if (document.querySelectorAll('.js-novel-item.is-hidden').length === 0) {
+                loadMoreNovelBtn.parentElement.style.display = 'none';
+            }
+        });
+    }
+
+});
+&lt;/script&gt;
+
+&lt;?php wp_footer(); ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- コードコンテナ ② single.html -->
+            <div id="tab-content-single-html" class="tab-content space-y-3 hidden">
+                <div class="flex justify-between items-center bg-slate-800 text-slate-300 px-4 py-2.5 rounded-t-lg text-xs font-mono">
+                    <span class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                        <span class="ml-2 font-bold text-amber-300">templates/single.html 追記用</span>
+                    </span>
+                    <button type="button" onclick="copyCode('code-single-html', this)" class="bg-sky-600 hover:bg-sky-500 text-white font-sans px-3 py-1.5 rounded-md font-medium text-xs transition-colors flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>コードをコピー</span>
+                    </button>
+                </div>
+                <div class="relative bg-slate-900 rounded-b-lg overflow-hidden border border-slate-800">
+                    <pre class="p-4 text-xs sm:text-sm text-slate-200 overflow-x-auto max-h-[500px] leading-relaxed"><code id="code-single-html">&lt;!-- Title: Custom Template for Twenty Twenty-Five --&gt;
+&lt;!-- Description: 小説ページ向けカスタマイズコード --&gt;
+&lt;!-- Author: okojo --&gt;
+&lt;!-- License: GPL-2.0-or-later --&gt;
+
+&lt;!-- wp:html --&gt;
+&lt;style&gt;
+/* Twenty Twenty-Five 用：本文エリアのカードデザイン化 */
+.wp-block-post-content {
+	background-color: #ffffff !important; /* カードの白背景 */
+	border-radius: 12px !important;       /* 角丸 */
+	padding: 35px 30px !important;        /* 内側の余白 */
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important; /* 柔らかい影 */
+	border: 1px solid rgba(0, 0, 0, 0.04) !important;       /* うっすらとした枠線 */
+	
+	/* 明朝体・文字組み設定 */
+	font-family: "Shippori Mincho", "Yu Mincho", "游明朝", "YuMincho", "Hiragino Mincho ProN", serif !important;
+	font-size: 1.05rem !important;
+	line-height: 2.1 !important;
+	color: #222222 !important;
+	letter-spacing: 0.05em !important;
+	max-width: 800px !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	box-sizing: border-box !important;
+}
+
+/* 「トップページへ戻る」ボタンエリアのスタイル */
+.back-to-top-wrapper {
+	text-align: center;
+	max-width: 800px;
+	margin: 35px auto 20px auto;
+}
+.back-to-top-btn {
+	display: inline-block;
+	background-color: #ffffff;
+	color: #2c3e50;
+	border: 1px solid #dcdfe6;
+	padding: 10px 28px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	border-radius: 25px;
+	text-decoration: none;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+	transition: all 0.25s ease;
+	letter-spacing: 0.05em;
+}
+.back-to-top-btn:hover {
+	background-color: #0073aa;
+	color: #ffffff;
+	border-color: #0073aa;
+	box-shadow: 0 4px 12px rgba(0, 115, 170, 0.2);
+}
+
+/* スマートフォン表示時のカード内余白調整 */
+@media (max-width: 600px) {
+	.wp-block-post-content {
+		padding: 25px 18px !important;
+		border-radius: 10px !important;
+	}
+	.back-to-top-wrapper {
+		margin: 25px auto 15px auto;
+	}
+	.back-to-top-btn {
+		font-size: 0.82rem;
+		padding: 8px 22px;
+	}
+}
+&lt;/style&gt;
+
+&lt;script&gt;
+document.addEventListener('DOMContentLoaded', function() {
+	const content = document.querySelector('.wp-block-post-content');
+	if (content) {
+		// 本文カードの下に「トップページへ戻る」ボタンを自動挿入
+		const backWrapper = document.createElement('div');
+		backWrapper.className = 'back-to-top-wrapper';
+		backWrapper.innerHTML = '&lt;a href="/" class="back-to-top-btn"&gt;&amp;larr; トップページへ戻る&lt;/a&gt;';
+		content.parentNode.insertBefore(backWrapper, content.nextSibling);
+	}
+});
+&lt;/script&gt;
+&lt;!-- /wp:html --&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-slate-900 text-slate-400 text-xs sm:text-sm py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-5xl mx-auto px-4 text-center space-y-3">
+            <p>WordPress Gallery & Novel Template Code</p>
+            <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" rel="noopener" class="text-sky-400 hover:underline"> Stoat Labo</a></p>
+            <p class="text-slate-600">Distributed under GPL-2.0-or-later License.</p>
+        </div>
+    </footer>
+
+    <!-- コピー成功時のトースト通知 -->
+    <div id="toast" class="toast fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 border border-slate-700 text-xs sm:text-sm">
+        <div class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <div class="font-bold">コピーしました！</div>
+            <div class="text-slate-400 text-xs">クリップボードにコードが保存されました。</div>
+        </div>
+    </div>
+
+    <!-- JavaScript ロジック -->
+    <script>
+        // タブ切り替え処理
+        function switchTab(tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.add('hidden'));
+
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById('tab-content-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-btn-' + tabName).classList.add('active');
+        }
+
+        // クリップボードコピー機能 (フォールバック付き)
+        function copyCode(elementId, button) {
+            const codeElement = document.getElementById(elementId);
+            const textToCopy = codeElement.textContent;
+
+            // クリップボード書き込み実行 (旧ブラウザ・iFrame制限用フォールバック対応)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    handleCopySuccess(button);
+                }).catch(err => {
+                    fallbackCopyText(textToCopy, button);
+                });
+            } else {
+                fallbackCopyText(textToCopy, button);
+            }
+        }
+
+        function fallbackCopyText(text, button) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                handleCopySuccess(button);
+            } catch (err) {
+                console.error('コピーに失敗しました', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function handleCopySuccess(button) {
+            // ボタンの見た目変更
+            const originalHTML = button.innerHTML;
+            button.innerHTML = `<i class="fa-solid fa-check text-emerald-300"></i><span>コピー完了!</span>`;
+            button.classList.remove('bg-sky-600', 'hover:bg-sky-500');
+            button.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+
+            // トースト通知の表示
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                button.classList.add('bg-sky-600', 'hover:bg-sky-500');
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
