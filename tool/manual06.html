@@ -126,6 +126,11 @@
           stroke-linecap: round;
           stroke-linejoin: round;
         }
+        
+       /* スムーススクロールを有効化 */
+        html {
+          scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col">
@@ -164,6 +169,7 @@
                 <a href="#overview" class="whitespace-nowrap hover:text-sky-600 transition-colors">概要・ライセンス</a>
                 <a href="#features" class="whitespace-nowrap hover:text-sky-600 transition-colors">主な機能</a>
                 <a href="#steps" class="whitespace-nowrap hover:text-sky-600 transition-colors">導入手順</a>
+                <a href="#upload" class="whitespace-nowrap hover:text-sky-600 transition-colors">アップロード手順</a>
                 <a href="#custom" class="whitespace-nowrap hover:text-sky-600 transition-colors">カスタマイズ</a>
                 <a href="#code-section" class="whitespace-nowrap text-sky-600 font-bold hover:text-sky-800 transition-colors flex items-center gap-1 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
                     <i class="fa-solid fa-code"></i> コードを取得
@@ -193,12 +199,12 @@
                     <span>3. 導入手順</span>
                     <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
                 </a>
-                <a href="#custom" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
-                    <span>4. カスタマイズ方法</span>
+                <a href="#upload" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                <span>4. ファイルのアップロード</span>
                     <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
                 </a>
-                <a href="#disclaimer" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
-                    <span>5. 免責事項</span>
+                <a href="#custom" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
+                    <span>5. カスタマイズ方法</span>
                     <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
                 </a>
                 <a href="#code-section" class="p-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold transition-colors flex items-center justify-between group">
@@ -266,6 +272,16 @@
                     </ul>
                 </div>
             </div>
+        </section>
+        
+        <!-- 3-6. 免責事項 -->
+        <section id="disclaimer" class="bg-slate-100 rounded-xl p-5 border border-slate-200 text-xs text-slate-600 space-y-2">
+            <h3 class="font-bold text-slate-700 flex items-center gap-1.5 text-sm">
+                <i class="fa-solid fa-shield-halved text-slate-500"></i> 免責事項 (Disclaimer)
+            </h3>
+            <p class="leading-relaxed">
+                本コードの導入・カスタマイズ・使用によって生じた直接的・間接的な損害（サイトの不具合、データの破損、表示崩れ等）について、制作者は一切の責任を負いかねます。導入の際は必ず事前にバックアップ（ファイルおよびデータベース）を取得した上でご利用ください。
+            </p>
         </section>
 
         <!-- 3-2. 主な機能 -->
@@ -358,7 +374,7 @@
                     <ul class="text-xs sm:text-sm text-slate-600 space-y-2.5">
                         <li class="flex items-start gap-2">
                             <i class="fa-solid fa-check text-sky-500 mt-1"></i>
-                            <span><strong>冒頭の自動プレビュー:</strong> 本文の冒頭を抜粋して一覧に表示します。注意事項などを冒頭に書くことで、リンクを開く前に伝達できます。</span>
+                            <span><strong>冒頭の自動プレビュー:</strong> タイトルと本文の冒頭を抜粋して一覧に表示します。</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <i class="fa-solid fa-check text-sky-500 mt-1"></i>
@@ -653,16 +669,6 @@
                     </p>
                 </div>
             </div>
-        </section>
-
-        <!-- 3-6. 免責事項 -->
-        <section id="disclaimer" class="bg-slate-100 rounded-xl p-5 border border-slate-200 text-xs text-slate-600 space-y-2">
-            <h3 class="font-bold text-slate-700 flex items-center gap-1.5 text-sm">
-                <i class="fa-solid fa-shield-halved text-slate-500"></i> 免責事項 (Disclaimer)
-            </h3>
-            <p class="leading-relaxed">
-                本コードの導入・カスタマイズ・使用によって生じた直接的・間接的な損害（サイトの不具合、データの破損、表示崩れ等）について、制作者は一切の責任を負いかねます。導入の際は必ず事前にバックアップ（ファイルおよびデータベース）を取得した上でご利用ください。
-            </p>
         </section>
 
         <!-- 4. カスタマイズコードの配布・コピーボックス -->
