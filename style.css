@@ -373,8 +373,31 @@
       font-size: 0.9rem;
     }
 
+    /* リスト全体のスタイル調整 */
+    .note-list {
+      list-style: none; /* デフォルトの黒丸（・）を消す */
+      padding-left: 0;
+      margin-top: 10px;
+    }
+
+    /* 各行の調整 */
+    .note-list li {
+      margin-top: 10px;
+    }
+
+    /* 「※」記号のみ赤色にするスタイル */
+    .note-list .mark {
+      color: #ff0000; /* 赤色を指定 */
+      font-weight: bold; /* 必要に応じて太字 */
+    }
+
     .rule-list li.rule-ng::before {
       content: "❌";
+      font-size: 0.85rem;
+    }
+
+    .rule-list li.rule-attention::before {
+      content: "💡";
       font-size: 0.85rem;
     }
 
