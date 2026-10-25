@@ -85,6 +85,47 @@
         .smooth-transition {
             transition: all 0.25s ease-in-out;
         }
+        
+        /* アクションボタンエリア */
+        .download-container {
+          margin-top: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+
+        .copy-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+          color: #ffffff !important;
+          font-size: 16px;
+          font-weight: bold;
+          padding: 14px 36px;
+          border-radius: 30px;
+          box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+          transition: all 0.25s ease;
+          text-decoration: none !important;
+        }
+
+        .copy-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+          background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+        }
+
+        .copy-btn svg {
+          width: 20px;
+          height: 20px;
+          fill: none;
+          stroke: currentColor;
+          stroke-width: 2.5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col">
@@ -1595,6 +1636,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         </section>
+        
+    <div class="download-container">
+      <a href="../index.html" class="copy-btn">       
+        ← トップページに戻る
+      </a>
+    </div>
 
     </main>
 
