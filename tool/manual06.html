@@ -190,7 +190,7 @@
                     <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
                 </a>
                 <a href="#steps" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
-                    <span>3. 導入手順 (STEP 1~4)</span>
+                    <span>3. 導入手順</span>
                     <i class="fa-solid fa-chevron-right text-xs text-sky-400 group-hover:translate-x-1 transition-transform"></i>
                 </a>
                 <a href="#custom" class="p-2.5 rounded-lg bg-sky-50/60 hover:bg-sky-100/80 text-sky-900 transition-colors flex items-center justify-between group">
@@ -220,14 +220,14 @@
             </div>
 
             <p class="text-sm sm:text-base leading-relaxed text-slate-600">
-                本カスタマイズコードは、WordPress公式ブロックテーマ「<strong>Twenty Twenty-Five</strong>」上で、ポートフォリオ（ギャラリー）機能および小説テキスト投稿機能を実装するためのコードです。
+                本カスタマイズコードは、WordPress公式ブロックテーマ<strong>「Twenty Twenty-Five」</strong>上で、ポートフォリオ（ギャラリー）機能および小説テキスト投稿機能を実装するためのコードです。
             </p>
 
             <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
                 <div class="flex items-start gap-3">
                     <i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg mt-0.5"></i>
                     <div class="text-xs sm:text-sm text-amber-800 leading-relaxed">
-                        <strong>注意:</strong> 本コードの内容を編集すると <strong>WordPressの編集画面にログインできなくなる</strong> といったエラーが発生する危険性があります。コードの知識がない方はコードの内容を編集せず、導入手順通りにコピペするだけにしてください。
+                        <strong>注意:</strong> 本コードの内容を編集すると <strong>WordPressの編集画面にログインできなくなる</strong> といったエラーが発生する危険性があります。コードの知識がない方はコードの内容を編集せず、導入手順通りに配置＆コピペするだけにしてください。
                     </div>
                 </div>
             </div>
@@ -338,7 +338,7 @@
                     <ul class="text-xs sm:text-sm text-slate-600 space-y-2.5">
                         <li class="flex items-start gap-2">
                             <i class="fa-solid fa-check text-sky-500 mt-1"></i>
-                            <span><strong>サムネイル自動取得:</strong> 記事内の画像を自動に取得し、サムネイルにしてトップページに表示します。</span>
+                            <span><strong>サムネイル自動取得:</strong> 記事内の画像を自動的に取得し、サムネイルにしてトップページに表示します。</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <i class="fa-solid fa-check text-sky-500 mt-1"></i>
@@ -388,7 +388,7 @@
                     <div class="flex-grow space-y-2">
                         <h3 class="font-bold text-slate-800 text-base">投稿カテゴリーを作成する</h3>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                            WordPress管理画面の <strong>「投稿」＞「カテゴリー」</strong> で以下の2つを作成します。
+                            WordPress管理画面の<strong>「投稿」＞「カテゴリー」</strong>で以下のようにカテゴリーを作成します。
                         </p>
                         <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs sm:text-sm space-y-1">
                             <div>• イラスト用 ➔ 名前: <span class="font-semibold">イラスト</span> / スラッグ: <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">illust</code></div>
@@ -409,7 +409,7 @@
                     <div class="flex-grow space-y-3 w-full min-w-0">
                         <h3 class="font-bold text-slate-800 text-base">ファイルをテーマフォルダ内に配置する</h3>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                            サーバーのファイルマネージャーまたはFTPソフトを使い、<code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">front-page.php</code> を以下の通り配置します。<strong>② ③</strong> のコードは既存のファイル（<code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">functions.php</code> および <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">single.html</code>）の末尾にコピペしてください。
+                            このページの最下部にある①のコードをコピーして <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">front-page.php</code> という名前で保存し、以下のファイル内に配置します。② ③のコードは既存のファイル（<code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">functions.php</code> および <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">single.html</code>）の末尾にコピペしてください。
                         </p>
                         <div class="space-y-2">
                             <div class="bg-slate-900 text-slate-200 p-3 rounded-lg font-mono text-xs overflow-x-auto whitespace-nowrap">
@@ -440,9 +440,12 @@
                     <div class="flex-grow space-y-2">
                         <h3 class="font-bold text-slate-800 text-base">トップページを編集する</h3>
                         <ol class="text-xs sm:text-sm text-slate-600 space-y-1.5 list-decimal list-inside">
-                            <li>管理画面の <strong>「外観」＞「カスタマイズ」＞「トップページ設定」</strong> を選択。</li>
-                            <li>セクション名、補足テキスト、表示件数などをお好みに編集し、「公開」ボタンで確定します。</li>
+                            <li>管理画面の<strong>「外観」＞「カスタマイズ」＞「トップページ設定」</strong>を選択。</li>
+                            <li>セクション名、補足テキスト、表示件数などをお好みに編集し、<strong>「公開」</strong>ボタンで確定します。</li>
                         </ol>
+                            <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-slate-700 space-y-1">
+                            <p>💡 詳しい編集の仕方は<strong> 「カスタマイズ」</strong> でご確認ください。</p>
+                        </div>
                     </div>
                 </div>
 
@@ -460,14 +463,139 @@
                             サイトトップを開き、表示を確認します。変更が反映されない場合は以下を確認してください。
                         </p>
                         <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-slate-700 space-y-1">
-                            <p>💡 <strong>エディターのカスタマイズリセット:</strong> 過去に「外観」から「個別投稿」のデザインを編集したことがある場合、そちらの設定が優先されるため、<code>single.html</code> のデザインが反映されません。「外観 ＞ エディター ＞ テンプレート ＞ 個別投稿」の右上メニューから「カスタマイズをリセット」を実行し、設定を初期化することで反映されます。</p>
+                            <p>💡 過去に<strong>「外観」</strong>から<strong>「個別投稿」</strong>のデザインを編集したことがある場合、そちらの設定が優先されるため、<code> <strong>single.html</strong> </code> のデザインが反映されません。<strong>「外観 ＞ エディター ＞ テンプレート ＞ 個別投稿」</strong>の右上メニューから<strong>「カスタマイズをリセット」</strong>を実行し、設定を初期化することで反映されます。</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        
+        <!-- 3-4. ファイルのアップロード手順 -->
+        <section id="upload" class="bg-white rounded-2xl p-6 sm:p-8 border border-sky-100 card-shadow space-y-8">
+            <div class="border-b border-sky-100 pb-4">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-sky-500 rounded-full inline-block"></span>
+                    ファイルのアップロード手順
+                </h2>
+            </div>
 
-        <!-- 3-4. カスタマイズ方法 -->
+            <div class="space-y-6">
+            
+            <p class="text-sm sm:text-base leading-relaxed text-slate-600">
+                ここではWordPressのプラグイン <strong>「WP File Manager」</strong> を使った方法をご紹介します。
+            </p>
+            
+                <!-- STEP 1 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">1</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">コードをコピーして保存する</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            このページの最下部にある①のコードを <strong>「コードをコピー」</strong> ボタンでコピーし、エディタ（Windowsの「メモ帳」など）の入力画面に貼り付けて <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">front-page.php</code> という名前で保存します。
+                        </p>
+                        <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-slate-700 space-y-1">
+                            <p>💡「メモ帳」をご利用の場合は、保存するときに<strong>「ファイルの種類」</strong>を<strong>「すべてのファイル」</strong>にしてください。</p>
+                        </div>
+                    </div>
+                </div>
+                    
+                <hr class="border-slate-100">
+                                
+                <!-- STEP 2 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">1</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">プラグインをインストールする</h3>
+                        <ol class="text-xs sm:text-sm text-slate-600 space-y-1.5 list-decimal list-inside">
+                            <li>管理画面の <strong>「プラグイン」＞「プラグインを追加」</strong> を開き、検索窓に <strong>「WP File Manager」</strong> と入力して該当のプラグインを探します。</li>
+                            <li><strong>「WP File Manager」</strong> が見つかったら<strong>「今すぐインストール」</strong>のボタンを押してインストールしたあと、<strong>「有効化」</strong>ボタンを押して有効化します。</li>
+                        </ol>
+                        <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-slate-700 space-y-1">
+                            <p>💡 使用中のテーマが<strong>「Twenty Twenty-Five」</strong>でない場合は、ファイルを配置する前に<strong>「外観」＞「テーマ」</strong>から<strong>「Twenty Twenty-Five」</strong>を有効化しておいてください。</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- STEP 3 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">2</span>
+                    </div>
+                    <div class="flex-grow space-y-3 w-full min-w-0">
+                        <h3 class="font-bold text-slate-800 text-base">ファイルをテーマフォルダ内に配置する</h3>
+                        <ol class="text-xs sm:text-sm text-slate-600 space-y-1.5 list-decimal list-inside">
+                            <li>管理画面の左下に追加された項目から <strong>「WP File Manager」＞「WP File Manager」</strong> と開き、ファイルマネージャーの画面に移動します。</li>
+                            <li>ファイルマネージャーの管理画面の右上に言語を選択するメニューがあるので、必要に応じて <strong>「Japanese」</strong> などに変更します。</li>
+                            <li>左側にあるツリーから<strong>「wp-content」</strong> を探して開き、更に<strong>「themes」＞「twentytwentyfive」</strong> と開きます。</li>
+                            <li>画面の左上にある <strong>「💾ファイルアップロード」</strong> をクリックするとドロップエリアが表示されるので、先ほど作成した <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">front-page.php</code> のフォルダをドラッグ＆ドロップします。</li>
+                        </ol>
+                        <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-slate-700 space-y-1">
+                            <p>💡 最初から<strong>「twentytwentyfive」</strong>のフォルダが開いている場合は、1～3は無視して4の工程に進んでください。</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- STEP 4 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">3</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">コードを指定したファイルにコピペする</h3>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs sm:text-sm space-y-1">
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <strong>②のコード（必須）の場合</strong>
+                        </p>
+                        <ol class="text-xs sm:text-sm text-slate-600 space-y-1.5 list-decimal list-inside">
+                            <li>先ほど開いた<strong>「twentytwentyfive」</strong> 内にある <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">functions.php</code> というファイルを探し、右クリックで表示される<strong>「📝Editor」</strong>をクリックします。</li>
+                            <li>エディターの画面が表示されるので、最下部に②のコードを貼り付けたあと<strong>「保存して閉じる」</strong>を選択して保存します。</li>
+                        </ol>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs sm:text-sm space-y-1">
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <strong>③のコード（任意）の場合</strong>
+                        </p>
+                        <ol class="text-xs sm:text-sm text-slate-600 space-y-1.5 list-decimal list-inside">
+                            <li><strong>「twentytwentyfive」</strong> の下層にある <strong>「templates」</strong> というフォルダの中にある <code class="bg-sky-100 text-sky-800 px-1.5 py-0.5 rounded">single.html</code> というファイルを探し、右クリックで表示される<strong>「📝Editor」</strong>をクリックします。</li>
+                            <li>エディターの画面が表示されるので、最下部に②のコードを貼り付けたあと<strong>「保存して閉じる」</strong>を選択して保存します。</li>
+                        </ol>
+                        </div>                
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- STEP 5 -->
+                <div class="flex flex-col md:flex-row gap-4 items-start">
+                    <div class="flex-shrink-0 bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <span>STEP</span>
+                        <span class="text-xl">4</span>
+                    </div>
+                    <div class="flex-grow space-y-2">
+                        <h3 class="font-bold text-slate-800 text-base">配置完了！</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            これでファイルの配置は完了です。<strong>「導入手順」</strong>の<strong>「STEP 3」</strong>に進み、サイトのデザインを編集してください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>        
+
+        <!-- 3-5. カスタマイズ方法 -->
         <section id="custom" class="bg-white rounded-2xl p-6 sm:p-8 border border-sky-100 card-shadow space-y-6">
             <div class="border-b border-sky-100 pb-4">
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2">
@@ -517,17 +645,17 @@
                         <i class="fa-solid fa-share-nodes text-sky-500"></i> 便利なプラグイン
                     </h3>
                     <p class="text-slate-600 leading-relaxed">
-                        サンプルサイトの作成時に使用させていただいたWordPressのプラグインです。</p>
+                        デモサイトの作成時に使用させていただいたWordPressのプラグインです。</p>
                     <p class="text-slate-600 leading-relaxed">
-                        <strong>WP File Manager</strong> WordPressの編集画面でファイルのアップロードや管理ができます。<br>
-                        <strong>SEO Simple Pack</strong> 簡単な操作でOGP（リンクカード）などの設定ができます。<br>
-                        <strong>Reset Customizer</strong> 「カスタマイズ」で行った編集をリセットできます。<br>
+                        <strong>「WP File Manager」</strong> WordPressの編集画面でファイルのアップロードや管理ができます。<br>
+                        <strong>「SEO Simple Pack」</strong> 簡単な操作でOGP（リンクカード）などの設定ができます。<br>
+                        <strong>「Reset Customizer」</strong> 「カスタマイズ」で行った編集をリセットできます。<br>
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- 3-5. 免責事項 -->
+        <!-- 3-6. 免責事項 -->
         <section id="disclaimer" class="bg-slate-100 rounded-xl p-5 border border-slate-200 text-xs text-slate-600 space-y-2">
             <h3 class="font-bold text-slate-700 flex items-center gap-1.5 text-sm">
                 <i class="fa-solid fa-shield-halved text-slate-500"></i> 免責事項 (Disclaimer)
