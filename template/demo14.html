@@ -98,15 +98,25 @@
       z-index: 100;
       border-bottom: 1px solid var(--border);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      /* 横スクロールの設定 */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ナビゲーションのスクロールバーを非表示 */
+    nav::-webkit-scrollbar {
+      display: none;
     }
 
     nav ul {
       display: flex;
       justify-content: center;
       list-style: none;
-      flex-wrap: wrap;
+      flex-wrap: nowrap; /* 折り返しを無効化 */
       max-width: 800px;
       margin: 0 auto;
+      width: max-content; /* 中身に合わせて幅を確保 */
+      min-width: 100%;    /* 画面幅が広いときは中央揃えを維持 */
     }
 
     nav a {
@@ -115,6 +125,7 @@
       padding: 12px 20px;
       font-size: 0.9rem;
       transition: all 0.2s;
+      white-space: nowrap; /* テキストの途中で改行させない */
     }
 
     nav a:hover {
