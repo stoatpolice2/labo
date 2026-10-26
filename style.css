@@ -1458,6 +1458,7 @@
     /* 4. テーマカラー */
     .tag-color.c-white { background-color: #FFFFFF; color: #4A4A4A; border: 1px solid #E6DAD3; }
     .tag-color.c-black { background-color: #332C2B; color: #FFFFFF; }
+    .tag-color.c-clear { background-color: #FFFFFF; color: #505050; border: 1px solid #C5E1FF; }
     .tag-color.c-red { background-color: #FDE8E8; color: #C94A4A; }
     .tag-color.c-pink  { background-color: #FDE8EF; color: #C94A71; }
     .tag-color.c-blue  { background-color: #E8F3FD; color: #2B6CB0; }
