@@ -195,7 +195,6 @@
     .novel-body.is-vertical p {
       margin-bottom: 0;
       margin-left: 1.8em;
-      text-indent: 1em;
     }
 
     /* 縦書きモード時のスクロールバーデザイン */
@@ -299,15 +298,31 @@
       margin-top: 40px;
     }
 
-    /* ----------------------------------
-       RESPONSIVE
-    ---------------------------------- */
-    @media (max-width: 600px) {
-      .container { padding: 0 12px; margin-top: 20px; }
-      .novel-wrapper { padding: 24px 20px; }
-      .novel-title { font-size: 1.4rem; }
-      .novel-body.is-vertical { height: 420px; }
+  /* ----------------------------------
+     RESPONSIVE
+  ---------------------------------- */
+  @media (max-width: 600px) {
+    .container { 
+      padding: 0 10px; 
+      margin-top: 20px; 
     }
+    .novel-wrapper { 
+      padding: 24px 16px; 
+      overflow: hidden; /* 枠外へのはみ出しを防止 */
+    }
+    .novel-title { 
+      font-size: 1.4rem; 
+    }
+
+    /* スマホでの縦書きモード表示調整 */
+    .novel-body.is-vertical { 
+      height: 380px;         /* スマホ画面に合わせた高さ */
+      max-width: 100%;       /* 枠幅からはみ出させない */
+      padding: 10px 0;
+      margin-left: auto;     /* 右寄せ配置で書き始め（右端）を綺麗に納める */
+      font-size: 0.95rem;     /* 文字サイズをスマホ向けに微調整 */
+    }
+  }
   </style>
 </head>
 <body>
