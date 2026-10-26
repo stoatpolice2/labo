@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>改行・段落タグ挿入ツール | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+
+    <style>
+        /* ----------------------------------
+            STYLES
+        ---------------------------------- */
+        :root {
+          --primary: #E06D53;
+          --primary-hover: #C8563C;
+          --accent: #E8963E;
+          --bg-main: #FAF7F5;
+          --bg-card: #FFFFFF;
+          --text-main: #332C2B;
+          --text-muted: #7A6E6B;
+          --border: #E6DAD3;
+          --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+          --grad-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: var(--text-main);
+            line-height: 1.6;
+            background-color: var(--bg-main);
+            background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        h1 {
+            font-size: 24px;
+            background: var(--grad-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* 説明文エリア */
+        .intro-box {
+            background-color: var(--grad-bg);
+            border-left: 5px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro-box p {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+        }
+
+        .intro-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .features {
+            margin: 10px 0 0 0;
+            list-style: none;
+            padding-left: 0;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .features li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 4px;
+        }
+
+        .features li::before {
+            content: "🐾";
+            position: absolute;
+            left: 0;
+            font-size: 0.85rem;
+        }
+
+        /* 設定カードエリア */
+        .config-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(224, 109, 83, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .option-group-title {
+            font-weight: bold;
+            color: var(--text-main);
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .option-items {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .option-items label {
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .option-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            margin-left: 22px;
+        }
+
+        /* エディタエリア */
+        .editor-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 680px) {
+            .editor-container {
+                flex-direction: column;
+            }
+        }
+
+        .editor-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .label-row label {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        textarea {
+            width: 100%;
+            height: 380px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            padding: 14px;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            resize: vertical;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(224, 109, 83, 0.15);
+        }
+
+        textarea[readonly] {
+            background-color: #FAF8F7;
+        }
+
+        /* コピー・クリアボタン */
+        .copy-btn {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--bg-main);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .copy-btn.success {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>改行・段落タグ挿入ツール</h1>
+
+    <!-- 説明文エリア -->
+    <div class="intro-box">
+        <p>✨ <strong>小説や文章のWeb掲載の下準備に！</strong></p>
+        <p>プレーンテキストに改行タグ（&lt;br&gt;）や段落タグ（&lt;p&gt;）を挿入し、Webページ用に整形するツールです。</p>
+        <ul class="features">
+            <li><strong>自動処理:</strong> テキストを入力・貼り付けるとリアルタイムで変換結果が表示されます。</li>
+            <li><strong>字下げ機能:</strong> 行頭に全角スペースを挿入。各種括弧で始まる段落は自動的に字下げから除外されます。</li>
+            <li><strong>安心安全:</strong> 入力データはサーバーに送信されず、すべてお使いのブラウザ内で処理されます。</li>
+        </ul>
+    </div>
+
+    <!-- 設定エリア -->
+    <div class="config-box">
+        <div>
+            <div class="option-group-title">1. HTMLタグ変換モード</div>
+            <div class="option-items">
+                <label>
+                    <input type="radio" name="mode" value="br" checked>
+                    末尾に &lt;br&gt; を追加
+                </label>
+                <label>
+                    <input type="radio" name="mode" value="p">
+                    段落を &lt;p&gt;&lt;/p&gt; で囲む
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <div class="option-group-title">2. 行頭の整形</div>
+            <div class="option-items">
+                <label>
+                    <input type="checkbox" id="indent-check">
+                    行頭を字下げする（全角スペース挿入）
+                </label>
+            </div>
+            <div class="option-note">
+                ※「」「『」「（」「(」「【」「〈」「《」などの括弧で始まる段落は自動的に除外されます。
+            </div>
+        </div>
+    </div>
+
+    <!-- エディタエリア -->
+    <div class="editor-container">
+        <div class="editor-box">
+            <div class="label-row">
+                <label for="input-text"><strong>元のテキスト（ペースト）:</strong></label>
+                <button id="clear-btn" class="copy-btn">クリア</button>
+            </div>
+            <textarea id="input-text" placeholder="ここにプレーンテキストを貼り付けてください..."></textarea>
+        </div>
+        
+        <div class="editor-box">
+            <div class="label-row">
+                <label for="output-text"><strong>変換後のテキスト:</strong></label>
+                <button id="copy-btn" class="copy-btn" onclick="copyToClipboard()">コピー</button>
+            </div>
+            <textarea id="output-text" readonly placeholder="変換結果がここに表示されます..."></textarea>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // DOM要素の取得
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const modeRadios = document.querySelectorAll('input[name="mode"]');
+        const indentCheck = document.getElementById('indent-check');
+        const clearBtn = document.getElementById('clear-btn');
+
+        // 括弧類（かぎ括弧、丸括弧、角括弧など）の正規表現
+        const bracketsRegex = /^[「『（(【〈《〔［\[｛\{<＜"']/;
+
+        // 全角スペース文字定数
+        const FULL_WIDTH_SPACE = '\u3000';
+
+        // 変換処理を行うメイン関数
+        function convertText() {
+            const text = inputText.value;
+            if (!text) {
+                outputText.value = '';
+                return;
+            }
+
+            const selectedMode = document.querySelector('input[name="mode"]:checked').value;
+            const shouldIndent = indentCheck.checked;
+
+            // 改行コード（\r\n または \r）を \n に統一して行ごとに分割
+            const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+
+            let result = [];
+
+            if (selectedMode === 'br') {
+                // --- <br> モード ---
+                result = lines.map(line => {
+                    let processedLine = line;
+
+                    if (shouldIndent && processedLine.trim() !== '') {
+                        // 先頭の半角スペースのみを取り除く
+                        const trimmedHead = processedLine.replace(/^[ \t]+/, '');
+                        
+                        // 括弧で始まらない場合、かつ先頭にすでに全角スペースがない場合に全角スペースを付与
+                        if (!bracketsRegex.test(trimmedHead)) {
+                            if (!trimmedHead.startsWith(FULL_WIDTH_SPACE)) {
+                                processedLine = FULL_WIDTH_SPACE + trimmedHead;
+                            } else {
+                                processedLine = trimmedHead;
+                            }
+                        }
+                    }
+
+                    // 末尾に <br> を付与
+                    return processedLine + '<br>';
+                });
+
+                outputText.value = result.join('\n');
+
+            } else if (selectedMode === 'p') {
+                // --- <p> モード ---
+                result = lines.map(line => {
+                    if (line.trim() === '') {
+                        return '';
+                    }
+
+                    let processedLine = line.trim();
+
+                    if (shouldIndent) {
+                        // 括弧で始まらない場合、かつ先頭にすでに全角スペースがない場合に全角スペースを付与
+                        if (!bracketsRegex.test(processedLine)) {
+                            if (!processedLine.startsWith(FULL_WIDTH_SPACE)) {
+                                processedLine = FULL_WIDTH_SPACE + processedLine;
+                            }
+                        }
+                    }
+
+                    return `<p>${processedLine}</p>`;
+                });
+
+                outputText.value = result.join('\n');
+            }
+        }
+
+        // イベントリスナー設定（リアルタイム変換用）
+        inputText.addEventListener('input', convertText);
+        indentCheck.addEventListener('change', convertText);
+        modeRadios.forEach(radio => radio.addEventListener('change', convertText));
+
+        // クリアボタン
+        clearBtn.addEventListener('click', () => {
+            inputText.value = '';
+            outputText.value = '';
+            inputText.focus();
+        });
+
+        // クリップボードコピー処理
+        async function copyToClipboard() {
+            const outputVal = outputText.value;
+            const copyBtn = document.getElementById('copy-btn');
+
+            if (!outputVal) return;
+
+            try {
+                await navigator.clipboard.writeText(outputVal);
+                copyBtn.textContent = 'コピーしました！';
+                copyBtn.classList.add('success');
+
+                setTimeout(() => {
+                    copyBtn.textContent = 'コピー';
+                    copyBtn.classList.remove('success');
+                }, 2000);
+            } catch (err) {
+                // 代替処理
+                outputText.select();
+                document.execCommand('copy');
+                copyBtn.textContent = 'コピーしました！';
+                copyBtn.classList.add('success');
+
+                setTimeout(() => {
+                    copyBtn.textContent = 'コピー';
+                    copyBtn.classList.remove('success');
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>

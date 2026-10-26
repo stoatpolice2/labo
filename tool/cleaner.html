@@ -289,6 +289,7 @@
         <div class="editor-box">
             <div class="label-row">
                 <label for="input-code"><strong>2. 整理前のコードを入力:</strong></label>
+                <button id="clear-btn" class="copy-btn">クリア</button>
             </div>
             <textarea id="input-code" placeholder="ここにコードを貼り付けてください..."></textarea>
         </div>
@@ -312,8 +313,20 @@
     </footer>
 
     <script>
+        // DOM要素の取得
+        const inputCode = document.getElementById('input-code');
+        const outputCode = document.getElementById('output-code');
+        const clearBtn = document.getElementById('clear-btn');
+
+        // クリアボタン処理
+        clearBtn.addEventListener('click', () => {
+            inputCode.value = '';
+            outputCode.value = '';
+            inputCode.focus();
+        });
+
         function processCode() {
-            let code = document.getElementById('input-code').value;
+            let code = inputCode.value;
             const lang = document.getElementById('language-select').value;
 
             if (!code.trim()) return;
@@ -342,11 +355,11 @@
                 formatted = js_beautify(code, options);
             }
 
-            document.getElementById('output-code').value = formatted;
+            outputCode.value = formatted;
         }
 
         async function copyToClipboard() {
-            const outputText = document.getElementById('output-code').value;
+            const outputText = outputCode.value;
             const copyBtn = document.getElementById('copy-btn');
 
             if (!outputText) return;
