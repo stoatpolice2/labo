@@ -15,7 +15,7 @@ function applyFilters() {
   cards.forEach(card => {
     // カードの data-tags 属性を取得（例: "novel sub simple c-white"）
     const cardTagsStr = card.getAttribute('data-tags') || '';
-    const cardTags = cardTagsStr.split(' ');
+    const cardTags = cardTagsStr.trim().split(/\s+/);
 
     // 選択された条件が「すべて」カードのタグに含まれているか確認 (AND条件)
     const isMatch = selectedValues.every(val => cardTags.includes(val));
