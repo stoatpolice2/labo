@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Novel | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        :root {
+            --main-color: #e0f2fe;
+            --accent-color: #0284c7;
+            --text-color: #334155;
+            --bg-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
+
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 20px 80px;
+        }
+
+        /* --- 作品ヘッダーエリア --- */
+        .novel-header {
+            text-align: center;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--main-color);
+        }
+
+        .novel-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* --- あらすじ・キャプション --- */
+        .novel-caption {
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent-color);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        /* あらすじ（上）の下余白 */
+        .novel-caption:first-of-type {
+            margin-bottom: 50px;
+        }
+
+        /* あとがき（下）の上余白 */
+        .novel-caption:last-of-type {
+            margin-top: 50px;
+        }
+
+        /* --- 本文エリア --- */
+        .novel-body {
+            font-size: 1rem;
+            line-height: 2.1;
+            letter-spacing: 0.07em;
+            word-wrap: break-word;
+        }
+
+        .novel-body p {
+            margin-bottom: 1.8em;
+            text-align: justify;
+        }
+
+        /* 本文の最後にある段落の下余白をリセット */
+        .novel-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 場面転換用の区切り線スタイル */
+        .novel-body hr {
+            border: none;
+            text-align: center;
+            margin: 3em 0;
+        }
+
+        .novel-body hr::after {
+            content: "***";
+            color: var(--accent-color);
+            letter-spacing: 0.5em;
+            font-size: 1.1rem;
+        }
+
+        /* --- 前後話ナビゲーション --- */
+        .novel-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--main-color);
+            font-size: 0.9rem;
+        }
+
+        .novel-nav a {
+            display: inline-block;
+            padding: 6px 14px;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid var(--main-color);
+        }
+
+        /* --- フッター --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            border-top: 1px solid var(--main-color);
+        }
+
+        @media (max-width: 768px) {
+            .novel-title {
+                font-size: 1.5rem;
+            }
+
+            .novel-body {
+                font-size: 0.95rem;
+                line-height: 2.0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <article>
+            <!-- 作品ヘッダー -->
+            <header class="novel-header">
+                <h1 class="novel-title">作品タイトル</h1>
+            </header>
+
+            <!-- キャプション・あらすじ -->
+            <div class="novel-caption">
+                <p><strong>【あらすじ】</strong> ここには作品のあらすじや、注意事項などを記述します。</p>
+            </div>
+
+            <!-- 本文エリア -->
+            <div class="novel-body">
+                <p>ここから本文が始まります。</p>
+                <p>本文の文字サイズや行間は、長文でも目が疲れないようゆったりめに設定してあります。</p>
+                <p>非常にシンプルなデザインですので、カラーリングを変更すればほかのテンプレート用の小説ページとしても利用できるかなと思います。</p>
+
+                <hr>
+
+                <p>場面転換の際は、上記のように <code>&lt;hr&gt;</code> タグを挟むことでシンプルな区切り記号が表示されます。</p>
+            </div>
+            
+            <!-- あとがき -->
+            <div class="novel-caption">
+                <p><strong>【あとがき】</strong> ここには作品のあとがきを記述します。</p>
+            </div>
+
+            <!-- 前後話ナビゲーション -->
+            <nav class="novel-nav" aria-label="作品ナビゲーション">
+                <div class="nav-prev">
+                    <a href="#">← 前の話</a>
+                </div>
+                <div class="nav-index">
+                    <a href="domo13.html">目次へ戻る</a>
+                </div>
+                <div class="nav-next">
+                    <a href="#">次の話 →</a>
+                </div>
+            </nav>
+
+        </article>
+    </main>
+
+    <footer>
+        <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+</body>
+</html>
