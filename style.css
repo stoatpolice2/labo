@@ -1464,5 +1464,12 @@
     .tag-color.c-purple{ background-color: #F3E8FC; color: #7B341E; }
     .tag-color.c-green { background-color: #E6F7ED; color: #236939; }
     .tag-color.c-beige { background-color: #F7F0EA; color: #7A5C43; }
+    .tag-color.c-orange  { background-color: #FDE8EF; color: #E8963E; }
     .tag-color.c-yellow{ background-color: #FFF9DB; color: #8C6D00; }
     .tag-color.c-gold  { background-color: #FFF3C4; color: #7A5000; border: 1px solid #E0B400; }
+
+    /* 非表示用クラス */
+    .template-card.is-hidden,
+    .mini-tool-card.is-hidden {
+      display: none !important;
+    }

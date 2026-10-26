@@ -211,6 +211,65 @@ function closeColumns() {
 
 
 // ==========================================
+// 2.5. 創作支援ツール カテゴリ切り替えタブ機能
+// ==========================================
+
+// メインツール用の切り替え関数
+function filterMainTools(category, btnElement) {
+  const container = document.getElementById('main-tool-tabs');
+  if (container && btnElement) {
+    const buttons = container.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+  }
+
+  const cards = document.querySelectorAll('#main-tool-grid .template-card');
+  cards.forEach(card => {
+    const cardCategory = card.getAttribute('data-category') || '';
+    if (category === 'all' || cardCategory === category) {
+      if (card.classList.contains('is-hidden') || !card.classList.contains('fade-in')) {
+        card.classList.remove('is-hidden');
+        card.classList.remove('fade-in');
+        requestAnimationFrame(() => {
+          card.classList.add('fade-in');
+        });
+      }
+    } else {
+      card.classList.add('is-hidden');
+      card.classList.remove('fade-in');
+    }
+  });
+}
+
+// ユーティリティツール用の切り替え関数
+function filterUtilityTools(category, btnElement) {
+  const container = document.getElementById('utility-tool-tabs');
+  if (container && btnElement) {
+    const buttons = container.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+  }
+
+  const cards = document.querySelectorAll('#utility-tool-grid .mini-tool-card');
+  cards.forEach(card => {
+    const cardCategory = card.getAttribute('data-category') || '';
+    if (category === 'all' || cardCategory === category) {
+      if (card.classList.contains('is-hidden') || !card.classList.contains('fade-in')) {
+        card.classList.remove('is-hidden');
+        card.classList.remove('fade-in');
+        requestAnimationFrame(() => {
+          card.classList.add('fade-in');
+        });
+      }
+    } else {
+      card.classList.add('is-hidden');
+      card.classList.remove('fade-in');
+    }
+  });
+}
+
+
+// ==========================================
 // 3. HTMLコードをクリップボードにコピー
 // ==========================================
 async function copyHtmlFromFile(buttonElement) {
@@ -285,6 +344,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultColumnTab = document.querySelector('#column .tab-btn.active');
   if (defaultColumnTab) {
     filterColumns('all', defaultColumnTab);
+  }
+
+  // メインツールの初期化
+  const defaultMainToolTab = document.querySelector('#main-tool-tabs .tab-btn.active');
+  if (defaultMainToolTab) {
+    filterMainTools('all', defaultMainToolTab);
+  }
+
+  // ユーティリティツールの初期化
+  const defaultUtilityToolTab = document.querySelector('#utility-tool-tabs .tab-btn.active');
+  if (defaultUtilityToolTab) {
+    filterUtilityTools('all', defaultUtilityToolTab);
   }
 
   // アコーディオン内リンク補助機能
