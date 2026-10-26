@@ -1,30 +1,30 @@
 // ==========================================
-// 1. テンプレートカテゴリ切り替え & 10件ずつ増分表示制御
+// 1. テンプレート複数条件（AND）検索 & 増分表示制御
 // ==========================================
 let templatesDisplayLimit = 10; // 現在表示を許可する件数上限
 
-function filterTemplates(category, btnElement) {
-  // タブボタンがクリックされた場合、上限を10件にリセット
-  if (btnElement) {
-    const buttons = document.querySelectorAll('#templates .tab-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    btnElement.classList.add('active');
-    templatesDisplayLimit = 10;
-  }
+// チェックボックス選択時の絞り込みメイン処理
+function applyFilters() {
+  // チェックされているボックスの値を取得
+  const checkedBoxes = document.querySelectorAll('.filter-chip input:checked');
+  const selectedValues = Array.from(checkedBoxes).map(cb => cb.value);
 
   const cards = document.querySelectorAll('#templates .template-card');
   let matchCount = 0;
 
   cards.forEach(card => {
-    const cardCategories = card.getAttribute('data-category') || '';
-    const categoryArray = cardCategories.split(' ');
+    // カードの data-tags 属性を取得（例: "novel sub simple c-white"）
+    const cardTagsStr = card.getAttribute('data-tags') || '';
+    const cardTags = cardTagsStr.split(' ');
 
-    if (category === 'all' || categoryArray.includes(category)) {
+    // 選択された条件が「すべて」カードのタグに含まれているか確認 (AND条件)
+    const isMatch = selectedValues.every(val => cardTags.includes(val));
+
+    if (isMatch) {
       matchCount++;
 
-      // 現在の制限件数以内であれば表示
+      // 現在の件数上限以内なら表示
       if (matchCount <= templatesDisplayLimit) {
-        // ★修正ポイント: 非表示(is-hidden)または透明(fade-inがない)状態なら再描画して表示させる
         if (card.classList.contains('is-hidden') || !card.classList.contains('fade-in')) {
           card.classList.remove('is-hidden');
           card.classList.remove('fade-in');
@@ -45,53 +45,66 @@ function filterTemplates(category, btnElement) {
     }
   });
 
+  // 件数バッジの更新
+  const countBadge = document.getElementById('filter-count');
+  if (countBadge) {
+    if (selectedValues.length === 0) {
+      countBadge.textContent = '全件表示中';
+    } else {
+      countBadge.textContent = `該当 ${matchCount} 件`;
+    }
+  }
+
   // ボタンエリアの表示制御
+  updateMoreButtons(matchCount);
+}
+
+// フィルターリセット処理
+function resetFilters() {
+  const checkboxes = document.querySelectorAll('.filter-chip input');
+  checkboxes.forEach(cb => cb.checked = false);
+  templatesDisplayLimit = 10;
+  applyFilters();
+}
+
+// 「もっと見る」・「閉じる」ボタンの表示切替
+function updateMoreButtons(matchCount) {
   const moreContainer = document.getElementById('templates-more-container');
   const moreBtn = document.getElementById('templates-more-btn');
   const closeBtn = document.getElementById('templates-close-btn');
 
-  if (moreContainer) {
-    // 全体で11件以上ある場合のみボタンエリアを表示
-    if (matchCount > 10) {
-      moreContainer.style.display = 'flex';
+  if (!moreContainer) return;
 
-      // まだ下に隠れているコンテンツがあるか確認
-      if (matchCount > templatesDisplayLimit) {
-        moreBtn.style.display = 'inline-flex';
-      } else {
-        moreBtn.style.display = 'none'; // 全件表示しきったら「もっと見る」を隠す
-      }
+  if (matchCount > 10) {
+    moreContainer.style.display = 'flex';
 
-      // 10件より多く表示されている状態なら「閉じる」ボタンを表示
-      if (templatesDisplayLimit > 10) {
-        closeBtn.style.display = 'inline-flex';
-      } else {
-        closeBtn.style.display = 'none';
-      }
+    if (matchCount > templatesDisplayLimit) {
+      moreBtn.style.display = 'inline-flex';
     } else {
-      moreContainer.style.display = 'none';
+      moreBtn.style.display = 'none';
     }
+
+    if (templatesDisplayLimit > 10) {
+      closeBtn.style.display = 'inline-flex';
+    } else {
+      closeBtn.style.display = 'none';
+    }
+  } else {
+    moreContainer.style.display = 'none';
   }
 }
 
-// テンプレート「もっと見る」ボタンの処理（＋10件追加表示）
+// 「もっと見る」ボタンの処理（＋10件表示）
 function showMoreTemplates() {
   templatesDisplayLimit += 10;
-  const activeTab = document.querySelector('#templates .tab-btn.active');
-  const currentCategory = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
-
-  filterTemplates(currentCategory, null);
+  applyFilters();
 }
 
-// テンプレート「閉じる」ボタンの処理（初期10件表示に戻す）
+// 「閉じる」ボタンの処理（10件に戻す）
 function closeTemplates() {
   templatesDisplayLimit = 10;
-  const activeTab = document.querySelector('#templates .tab-btn.active');
-  const currentCategory = activeTab ? activeTab.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+  applyFilters();
 
-  filterTemplates(currentCategory, null);
-
-  // セクションの先頭へスクロール
   const section = document.getElementById('templates');
   if (section) {
     section.scrollIntoView({ behavior: 'smooth' });
@@ -265,11 +278,8 @@ function handleAccordionNav() {
 // 5. ページ読み込み完了時の初期化処理
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-  // テンプレートの初期化（最新10件のみ表示）
-  const defaultTab = document.querySelector('#templates .tab-btn.active');
-  if (defaultTab) {
-    filterTemplates('all', defaultTab);
-  }
+  // テンプレートの初期表示を実行（最新10件のみ表示）
+  applyFilters();
 
   // コラムの初期化（最新10件のみ表示）
   const defaultColumnTab = document.querySelector('#column .tab-btn.active');

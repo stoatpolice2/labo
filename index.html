@@ -168,594 +168,692 @@
       </div>
     </div>
 
-    <!-- ------------------------------------------
-          [SECTION] 2. テンプレート一覧
-    ------------------------------------------- -->
-    <section class="section" id="templates">
-      <h2 class="section-title">テンプレート</h2>
+  <!-- ------------------------------------------
+        [SECTION] 2. テンプレート一覧
+  ------------------------------------------- -->
+  <section class="section" id="templates">
+    <h2 class="section-title">テンプレート</h2>
 
-      <!-- カテゴリ切り替えタブボタン -->
-      <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterTemplates('all', this)">すべて</button>
-        <button class="tab-btn" onclick="filterTemplates('novel', this)">小説向け</button>
-        <button class="tab-btn" onclick="filterTemplates('illust', this)">イラスト向け</button>
-        <button class="tab-btn" onclick="filterTemplates('sub', this)">子ページ</button>
-        <button class="tab-btn" onclick="filterTemplates('page', this)">単ページ</button>
+  <!-- 絞り込みアコーディオンエリア -->
+  <details class="filter-accordion">
+    <summary class="filter-summary">
+      <span class="filter-summary-title">🔍 条件を指定して絞り込む</span>
+      <span class="filter-count-badge" id="filter-count">全件表示中</span>
+    </summary>
+    <div class="filter-panel">
+      <!-- 1. 大カテゴリー -->
+      <div class="filter-group">
+        <span class="filter-label">カテゴリー</span>
+        <div class="filter-options">
+          <label class="filter-chip"><input type="checkbox" value="novel" onchange="applyFilters()"> 小説向け</label>
+          <label class="filter-chip"><input type="checkbox" value="illust" onchange="applyFilters()"> イラスト向け</label>
+          <label class="filter-chip"><input type="checkbox" value="parent" onchange="applyFilters()"> 親ページ</label>
+          <label class="filter-chip"><input type="checkbox" value="sub" onchange="applyFilters()"> 子ページ</label>
+          <label class="filter-chip"><input type="checkbox" value="page" onchange="applyFilters()"> 単ページ</label>
+        </div>
       </div>
 
-      <div class="template-grid">
-        
-        <!-- カード29 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="Blue novel プレビュー画像" src="images/novel13.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Blue Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">シンプル</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「Blue Line」とお揃いのデザインですが、シンプルなデザインなのでほかのテンプレートとも合わせやすいです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel13.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel13.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
+      <!-- 2. デザインテーマ -->
+      <div class="filter-group">
+        <span class="filter-label">テーマ</span>
+        <div class="filter-options">
+          <label class="filter-chip"><input type="checkbox" value="simple" onchange="applyFilters()"> シンプル</label>
+          <label class="filter-chip"><input type="checkbox" value="pop" onchange="applyFilters()"> ポップ</label>
+          <label class="filter-chip"><input type="checkbox" value="cyber" onchange="applyFilters()"> サイバー</label>
+          <label class="filter-chip"><input type="checkbox" value="retro" onchange="applyFilters()"> レトロ</label>
+          <label class="filter-chip"><input type="checkbox" value="cute" onchange="applyFilters()"> キュート</label>
+          <label class="filter-chip"><input type="checkbox" value="chic" onchange="applyFilters()"> シック</label>
+          <label class="filter-chip"><input type="checkbox" value="rich" onchange="applyFilters()"> リッチ</label>
         </div>
-        
-        <!-- カード28 -->
-        <div class="template-card" data-category="novel illust">
-          <div class="template-img">
-            <img alt="Blue Line プレビュー画像" src="images/demo13.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Blue Line</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">シンプル</span>
-            </div>
-            <p class="template-desc">「かんたんWebエディタ」内のサンプルページに機能を追加してテンプレートにしたものです。非常にシンプルで編集もしやすいです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/domo13.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/domo13.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- カード27 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Polaroid Style プレビュー画像" src="images/link09.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Polaroid Style</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">画像多め</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ポラロイド写真を並べたようなデザインです。画像をたくさん配置したい方向け。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link09.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link09.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- カード26 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Pudding POP プレビュー画像" src="images/link08.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Pudding POP</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">ポップ</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。リンクボタンにマウスを乗せるとプリンのように「ぽよん」と弾みます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link08.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link08.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- カード25 -->
-        <div class="template-card" data-category="illust">
-          <div class="template-img">
-            <img alt="INITIAL MODEL プレビュー画像" src="images/demo12.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">INITIAL MODEL</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">メカニカル</span>
-            </div>
-            <p class="template-desc">近未来的でメカニカルなデザインのテンプレートです。横スクロール＋モーダル表示のギャラリーセクションを設置しています。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo12.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo12.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- カード24 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="My novel プレビュー画像" src="images/novel11.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">My Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">カラフル</span>
-              <span class="tag">レトロ</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「My note」とセットで使うことで、トップページに戻った際に自動的に「移動前に開いていたタブ」を開くようにすることができます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel11.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel11.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- カード23 -->
-        <div class="template-card" data-category="novel">
-          <div class="template-img">
-            <img alt="My note プレビュー画像" src="images/demo11.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">My note</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag">カラフル</span>
-              <span class="tag">レトロ</span>
-            </div>
-            <p class="template-desc">「ノートとふせん」をイメージしたテンプレートです。カラフルなふせん風のタブでセクションを移動できます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo11.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo11.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- カード22 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="Signal Novel プレビュー画像" src="images/novel10.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Signal Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">ダークモード</span>
-              <span class="tag">シンプル</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「Signal」とセットで使うことで、トップページに戻った際に自動的に「移動前に開いていたタブ」を開くようにすることができます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel10.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel10.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード21 -->
-        <div class="template-card" data-category="novel">
-          <div class="template-img">
-            <img alt="Signal プレビュー画像" src="images/demo10.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Signal</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag">ダークモード</span>
-              <span class="tag">シンプル</span>
-            </div>
-            <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。ハンバーガーメニューではなくタブでセクションを移動する構成にしています。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo10.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo10.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード20 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Strawberry Choco プレビュー画像" src="images/link07.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Strawberry Choco</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">ポップ</span>
-              <span class="tag">キュート</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。お菓子のアポロをイメージしたポップでキュートなデザインです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link07.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link07.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード19 -->
-        <div class="template-card" data-category="illust">
-          <div class="template-img">
-            <img alt="KICK BACK プレビュー画像" src="images/demo09.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">KICK BACK</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">サイバー</span>
-            </div>
-            <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。衝動的で退廃的、かつ疾走感のある世界観をイメージしました。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo09.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo09.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード18 -->
-        <div class="template-card" data-category="illust">
-          <div class="template-img">
-            <img alt="抜殻 プレビュー画像" src="images/demo08.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">抜殻</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">ホラー</span>
-            </div>
-            <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。爽やかな夏景色の中に潜む歪みや激しさイメージしました。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo08.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo08.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード17 -->
-        <div class="template-card" data-category="illust">
-          <div class="template-img">
-            <img alt="金魚の箱 プレビュー画像" src="images/demo07.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">金魚の箱</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">水の中</span>
-            </div>
-            <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。水槽の底から見上げているような閉塞感をイメージしました。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo07.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo07.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード16 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="SAKURA Novel プレビュー画像" src="images/novel06.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">SAKURA Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">儚げ</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「SAKURA」とお揃いの、桜の花びらが背景を静かに舞い落ちるデザインです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel06.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード15 -->
-        <div class="template-card" data-category="novel illust">
-          <div class="template-img">
-            <img alt="SAKURA プレビュー画像" src="images/demo06.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">SAKURA</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">儚げ</span>
-            </div>
-            <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。春の訪れとともに感じるどこか切なく儚い世界観をイメージしました。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo06.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード14 -->
-        <div class="template-card" data-category="illust">
-          <div class="template-img">
-            <img alt="Chess Board プレビュー画像" src="images/demo05.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Chess Board</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">モノクロ</span>
-            </div>
-            <p class="template-desc">チェスの盤面をイメージしたポートフォリオ用テンプレートです。マスにマウスを乗せると背景の駒アイコンが浮かび上がります。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo05.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo05.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード13 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="Silent Novel プレビュー画像" src="images/novel04.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Silent Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">幻想的</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「Silent Night」とお揃いの、雪が降る幻想的なデザインです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel04.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード12 -->
-        <div class="template-card" data-category="novel illust">
-          <div class="template-img">
-            <img alt="Silent Night プレビュー画像" src="images/demo04.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Silent Night</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">幻想的</span>
-            </div>
-            <p class="template-desc">「雪の降る静かな夜」をイメージしたテンプレートです。はらはらと雪が降る幻想的なアニメーションが楽しめます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo04.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード11 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Number #27 プレビュー画像" src="images/link06.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Number #27</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">リッチ</span>
-            </div>
-            <p class="template-desc">
-              SNSなどをまとめるリンク集用のテンプレートです。<a href="other/susumu.html" style="color:var(--primary); text-decoration:underline;" target="_blank">こちら</a>のページを元に作成した高級感のあるデザインとなっています。
-            </p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link06.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード10 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="Milky Novel プレビュー画像" src="images/novel03.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Milky Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">名前変換機能</span>
-              <span class="tag">パステルカラー</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「Milky Sugar」とお揃いのデザインになっており、名前変換機能で苗字と名前を設定できます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel03.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード9 -->
-        <div class="template-card" data-category="novel illust">
-          <div class="template-img">
-            <img alt="Milky Sugar プレビュー画像" src="images/demo03.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Milky Sugar</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">パステルカラー</span>
-            </div>
-            <p class="template-desc">パステルカラーと丸いフォルムが可愛いテンプレートです。甘いお菓子をイメージした、ふんわりとしたデザインになっています。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo03.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード8 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Stadium Field プレビュー画像" src="images/link05.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Stadium Field</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">野球</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。野球のボールのをイメージしたシーム（縫い目）風のアイコンが特徴です。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link05.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link05.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード7 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Pastel Bubble プレビュー画像" src="images/link04.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Pastel Bubble</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">パステルカラー</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ふわふわと浮かぶしゃぼん玉をイメージした可愛らしいデザインです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link04.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード6 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Editorial Magazinerack プレビュー画像" src="images/link03.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Editorial Magazinerack</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">シック</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。モノトーンとベージュを基調とし、上品なフォントを使用したシックで落ち着いたデザインです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link03.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード5 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Social Orbit プレビュー画像" src="images/link02.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Social Orbit</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">サイバー</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。宇宙をイメージした背景やネオン発光演出でサイバー感のあるデザインにしました。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link02.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link02.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード4 -->
-        <div class="template-card" data-category="page">
-          <div class="template-img">
-            <img alt="Interactive Canvas プレビュー画像" src="images/link01.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Interactive Canvas</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">単ページ</span>
-              <span class="tag">ポップ</span>
-            </div>
-            <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ポスターやノートの1ページにステッカーを貼り付けたような遊び心のあるデザインです。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="pages/link01.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="pages/link01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード3 -->
-        <div class="template-card" data-category="illust">
-          <div class="template-img">
-            <img alt="Gallery &amp; Portfolio プレビュー画像" src="images/demo02.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Gallery &amp; Portfolio</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">イラスト向け</span>
-              <span class="tag">カテゴリ分け可</span>
-            </div>
-            <p class="template-desc">イラストサイト向けのモダンなテンプレート。イラストをカテゴリ分けして展示できます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo02.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo02.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード2 -->
-        <div class="template-card" data-category="sub">
-          <div class="template-img">
-            <img alt="Simple Novel プレビュー画像" src="images/novel01.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Simple Novel</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">子ページ</span>
-              <span class="tag">ダークモード</span>
-              <span class="tag">縦書き対応</span>
-            </div>
-            <p class="template-desc">小説用の子ページです。「Simple Page」とお揃いのデザインです。デフォルトは横書きですが、縦書きにも変更できます。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/novel01.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/novel01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- カード1 -->
-        <div class="template-card" data-category="novel">
-          <div class="template-img">
-            <img alt="Simple Page プレビュー画像" src="images/demo01.webp">
-          </div>
-          <div class="template-body">
-            <h3 class="template-title">Simple Page</h3>
-            <div class="tag-list">
-              <span class="tag tag-accent">小説向け</span>
-              <span class="tag">ダークモード</span>
-            </div>
-            <p class="template-desc">小説サイト向けのシンプルなテンプレート。スマホやPCのダークモード設定に自動で合わせて配色が変化します。</p>
-            <div class="template-links">
-              <a class="btn btn-demo" href="template/demo01.html" target="_blank">Demo</a>
-              <button class="btn btn-code" data-file="template/demo01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
-            </div>
-          </div>
-        </div>
-
       </div>
-      <!-- もっと見る / 閉じるボタンエリア -->
-      <div class="more-btn-container" id="templates-more-container" style="display: none;">
-        <button type="button" class="btn btn-more" id="templates-more-btn" onclick="showMoreTemplates()">もっと見る 🐾</button>
-        <button type="button" class="btn btn-close-more" id="templates-close-btn" onclick="closeTemplates()" style="display: none;">閉じる 🐾</button>
+
+      <!-- 3. テーマカラー -->
+      <div class="filter-group">
+        <span class="filter-label">カラー</span>
+        <div class="filter-options">
+          <label class="filter-chip"><input type="checkbox" value="c-white" onchange="applyFilters()"> ホワイト</label>
+          <label class="filter-chip"><input type="checkbox" value="c-black" onchange="applyFilters()"> ブラック</label>
+          <label class="filter-chip"><input type="checkbox" value="c-pink" onchange="applyFilters()"> ピンク</label>
+          <label class="filter-chip"><input type="checkbox" value="c-blue" onchange="applyFilters()"> ブルー</label>
+          <label class="filter-chip"><input type="checkbox" value="c-purple" onchange="applyFilters()"> パープル</label>
+          <label class="filter-chip"><input type="checkbox" value="c-green" onchange="applyFilters()"> グリーン</label>
+          <label class="filter-chip"><input type="checkbox" value="c-beige" onchange="applyFilters()"> ベージュ</label>
+          <label class="filter-chip"><input type="checkbox" value="c-yellow" onchange="applyFilters()"> イエロー</label>
+          <label class="filter-chip"><input type="checkbox" value="c-gold" onchange="applyFilters()"> ゴールド</label>
+        </div>
       </div>
-    </section>
+
+      <!-- 4. 機能 -->
+      <div class="filter-group">
+        <span class="filter-label">機能</span>
+        <div class="filter-options">
+          <label class="filter-chip"><input type="checkbox" value="f-darkmode" onchange="applyFilters()"> ダークモード</label>
+          <label class="filter-chip"><input type="checkbox" value="f-rename" onchange="applyFilters()"> 名前変換</label>
+        </div>
+      </div>
+
+      <!-- リセットボタン -->
+      <div class="filter-actions">
+        <button type="button" class="btn-reset" onclick="resetFilters()">条件をリセット 🐾</button>
+      </div>
+    </div>
+  </details>
+
+  <!-- カード一覧（data-tagsとタグのクラスを追加） -->
+  <div class="template-grid">
+    
+    <!-- カード29 -->
+    <div class="template-card" data-tags="novel sub simple c-white c-blue">
+      <div class="template-img">
+        <img alt="Blue novel プレビュー画像" src="images/novel13.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Blue Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-color c-white">ホワイト</span>
+          <span class="tag tag-color c-blue">ブルー</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「Blue Line」とお揃いのデザインですが、シンプルなデザインなのでほかのテンプレートとも合わせやすいです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel13.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel13.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード28 -->
+    <div class="template-card" data-tags="novel illust parent simple c-white c-blue">
+      <div class="template-img">
+        <img alt="Blue Line プレビュー画像" src="images/demo13.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Blue Line</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-color c-white">ホワイト</span>
+          <span class="tag tag-color c-blue">ブルー</span>
+        </div>
+        <p class="template-desc">「かんたんWebエディタ」内のサンプルページに機能を追加してテンプレートにしたものです。非常にシンプルで編集もしやすいです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/domo13.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/domo13.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード27 -->
+    <div class="template-card" data-tags="page simple">
+      <div class="template-img">
+        <img alt="Polaroid Style プレビュー画像" src="images/link09.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Polaroid Style</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ポラロイド写真を並べたようなデザインです。画像をたくさん配置したい方向け。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link09.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link09.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード26 -->
+    <div class="template-card" data-tags="page pop c-yellow">
+      <div class="template-img">
+        <img alt="Pudding POP プレビュー画像" src="images/link08.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Pudding POP</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">ポップ</span>
+          <span class="tag tag-color c-yellow">イエロー</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。リンクボタンにマウスを乗せるとプリンのように「ぽよん」と弾みます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link08.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link08.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード25 -->
+    <div class="template-card" data-tags="illust parent cyber c-purple c-green">
+      <div class="template-img">
+        <img alt="INITIAL MODEL プレビュー画像" src="images/demo12.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">INITIAL MODEL</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">サイバー</span>
+          <span class="tag tag-color c-purple">パープル</span>
+          <span class="tag tag-color c-green">グリーン</span>
+        </div>
+        <p class="template-desc">近未来的でメカニカルなデザインのテンプレートです。横スクロール＋モーダル表示のギャラリーセクションを設置しています。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo12.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo12.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード24 -->
+    <div class="template-card" data-tags="novel sub retro c-beige">
+      <div class="template-img">
+        <img alt="My novel プレビュー画像" src="images/novel11.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">My Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-theme">レトロ</span>
+          <span class="tag tag-color c-beige">ベージュ</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「My note」とセットで使うことで、トップページに戻った際に自動的に「移動前に開いていたタブ」を開くようにすることができます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel11.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel11.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード23 -->
+    <div class="template-card" data-tags="novel parent retro c-beige">
+      <div class="template-img">
+        <img alt="My note プレビュー画像" src="images/demo11.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">My note</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">レトロ</span>
+          <span class="tag tag-color c-beige">ベージュ</span>
+        </div>
+        <p class="template-desc">「ノートとふせん」をイメージしたテンプレートです。カラフルなふせん風のタブでセクションを移動できます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo11.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo11.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード22 -->
+    <div class="template-card" data-tags="novel sub simple c-white f-darkmode">
+      <div class="template-img">
+        <img alt="Signal Novel プレビュー画像" src="images/novel10.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Signal Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-color c-white">ホワイト</span>
+          <span class="tag tag-feat">ダークモード</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「Signal」とセットで使うことで、トップページに戻った際に自動的に「移動前に開いていたタブ」を開くようにすることができます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel10.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel10.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード21 -->
+    <div class="template-card" data-tags="novel parent simple c-white f-darkmode">
+      <div class="template-img">
+        <img alt="Signal プレビュー画像" src="images/demo10.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Signal</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-color c-white">ホワイト</span>
+          <span class="tag tag-feat">ダークモード</span>
+        </div>
+        <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。ハンバーガーメニューではなくタブでセクションを移動する構成にしています。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo10.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo10.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード20 -->
+    <div class="template-card" data-tags="page pop cute c-pink">
+      <div class="template-img">
+        <img alt="Strawberry Choco プレビュー画像" src="images/link07.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Strawberry Choco</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">ポップ</span>
+          <span class="tag tag-theme">キュート</span>
+          <span class="tag tag-color c-pink">ピンク</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。お菓子のアポロをイメージしたポップでキュートなデザインです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link07.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link07.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード19 -->
+    <div class="template-card" data-tags="illust parent cyber c-black">
+      <div class="template-img">
+        <img alt="KICK BACK プレビュー画像" src="images/demo09.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">KICK BACK</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">サイバー</span>
+          <span class="tag tag-color c-black">ブラック</span>
+        </div>
+        <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。衝動的で退廃的、かつ疾走感のある世界観をイメージしました。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo09.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo09.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード18 -->
+    <div class="template-card" data-tags="illust parent c-white">
+      <div class="template-img">
+        <img alt="抜殻 プレビュー画像" src="images/demo08.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">抜殻</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-color c-white">ホワイト</span>
+        </div>
+        <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。爽やかな夏景色の中に潜む歪みや激しさイメージしました。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo08.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo08.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード17 -->
+    <div class="template-card" data-tags="illust parent c-black">
+      <div class="template-img">
+        <img alt="金魚の箱 プレビュー画像" src="images/demo07.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">金魚の箱</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-color c-black">ブラック</span>
+        </div>
+        <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。水槽の底から見上げているような閉塞感をイメージしました。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo07.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo07.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード16 -->
+    <div class="template-card" data-tags="novel sub c-pink">
+      <div class="template-img">
+        <img alt="SAKURA Novel プレビュー画像" src="images/novel06.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">SAKURA Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-color c-pink">ピンク</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「SAKURA」とお揃いの、桜の花びらが背景を静かに舞い落ちるデザインです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel06.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード15 -->
+    <div class="template-card" data-tags="novel illust parent c-pink">
+      <div class="template-img">
+        <img alt="SAKURA プレビュー画像" src="images/demo06.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">SAKURA</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-color c-pink">ピンク</span>
+        </div>
+        <p class="template-desc">有名アーティストの楽曲をモチーフにしたテンプレートです。春の訪れとともに感じるどこか切なく儚い世界観をイメージしました。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo06.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード14 -->
+    <div class="template-card" data-tags="illust novel parent c-black">
+      <div class="template-img">
+        <img alt="Chess Board プレビュー画像" src="images/demo05.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Chess Board</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-color c-black">ブラック</span>
+        </div>
+        <p class="template-desc">チェスの盤面をイメージしたポートフォリオ用テンプレートです。マスにマウスを乗せると背景の駒アイコンが浮かび上がります。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo05.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo05.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード13 -->
+    <div class="template-card" data-tags="novel sub c-black">
+      <div class="template-img">
+        <img alt="Silent Novel プレビュー画像" src="images/novel04.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Silent Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-color c-black">ブラック</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「Silent Night」とお揃いの、雪が降る幻想的なデザインです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel04.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード12 -->
+    <div class="template-card" data-tags="novel illust parent c-black">
+      <div class="template-img">
+        <img alt="Silent Night プレビュー画像" src="images/demo04.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Silent Night</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-color c-black">ブラック</span>
+        </div>
+        <p class="template-desc">「雪の降る静かな夜」をイメージしたテンプレートです。はらはらと雪が降る幻想的なアニメーションが楽しめます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo04.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード11 -->
+    <div class="template-card" data-tags="page rich c-black c-gold">
+      <div class="template-img">
+        <img alt="Number #27 プレビュー画像" src="images/link06.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Number #27</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">リッチ</span>
+          <span class="tag tag-color c-black">ブラック</span>
+          <span class="tag tag-color c-gold">ゴールド</span>
+        </div>
+        <p class="template-desc">
+          SNSなどをまとめるリンク集用のテンプレートです。<a href="other/susumu.html" style="color:var(--primary); text-decoration:underline;" target="_blank">こちら</a>のページを元に作成した高級感のあるデザインとなっています。
+        </p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link06.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link06.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード10 -->
+    <div class="template-card" data-tags="novel sub cute c-pink f-rename">
+      <div class="template-img">
+        <img alt="Milky Novel プレビュー画像" src="images/novel03.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Milky Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-theme">キュート</span>
+          <span class="tag tag-color c-pink">ピンク</span>
+          <span class="tag tag-feat">名前変換</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「Milky Sugar」とお揃いのデザインになっており、名前変換機能で苗字と名前を設定できます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel03.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード9 -->
+    <div class="template-card" data-tags="novel illust parent cute c-pink">
+      <div class="template-img">
+        <img alt="Milky Sugar プレビュー画像" src="images/demo03.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Milky Sugar</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">キュート</span>
+          <span class="tag tag-color c-pink">ピンク</span>
+        </div>
+        <p class="template-desc">パステルカラーと丸いフォルムが可愛いテンプレートです。甘いお菓子をイメージした、ふんわりとしたデザインになっています。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo03.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード8 -->
+    <div class="template-card" data-tags="page pop">
+      <div class="template-img">
+        <img alt="Stadium Field プレビュー画像" src="images/link05.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Stadium Field</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">ポップ</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。野球のボールのをイメージしたシーム（縫い目）風のアイコンが特徴です。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link05.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link05.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード7 -->
+    <div class="template-card" data-tags="page cute">
+      <div class="template-img">
+        <img alt="Pastel Bubble プレビュー画像" src="images/link04.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Pastel Bubble</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">キュート</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ふわふわと浮かぶしゃぼん玉をイメージした可愛らしいデザインです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link04.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link04.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード6 -->
+    <div class="template-card" data-tags="page chic c-beige">
+      <div class="template-img">
+        <img alt="Editorial Magazinerack プレビュー画像" src="images/link03.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Editorial Magazinerack</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">シック</span>
+          <span class="tag tag-color c-beige">ベージュ</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。モノトーンとベージュを基調とし、上品なフォントを使用したシックで落ち着いたデザインです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link03.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link03.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード5 -->
+    <div class="template-card" data-tags="page cyber c-black">
+      <div class="template-img">
+        <img alt="Social Orbit プレビュー画像" src="images/link02.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Social Orbit</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">サイバー</span>
+          <span class="tag tag-color c-black">ブラック</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。宇宙をイメージした背景やネオン発光演出でサイバー感のあるデザインにしました。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link02.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link02.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード4 -->
+    <div class="template-card" data-tags="page pop">
+      <div class="template-img">
+        <img alt="Interactive Canvas プレビュー画像" src="images/link01.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Interactive Canvas</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">単ページ</span>
+          <span class="tag tag-theme">ポップ</span>
+        </div>
+        <p class="template-desc">SNSなどをまとめるリンク集用のテンプレートです。ポスターやノートの1ページにステッカーを貼り付けたような遊び心のあるデザインです。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="pages/link01.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="pages/link01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード3 -->
+    <div class="template-card" data-tags="illust parent simple c-white">
+      <div class="template-img">
+        <img alt="Gallery &amp; Portfolio プレビュー画像" src="images/demo02.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Gallery &amp; Portfolio</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">イラスト向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-color c-white">ホワイト</span>
+        </div>
+        <p class="template-desc">イラストサイト向けのモダンなテンプレート。イラストをカテゴリ分けして展示できます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo02.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo02.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード2 -->
+    <div class="template-card" data-tags="novel sub simple f-darkmode">
+      <div class="template-img">
+        <img alt="Simple Novel プレビュー画像" src="images/novel01.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Simple Novel</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">子ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-feat">ダークモード</span>
+        </div>
+        <p class="template-desc">小説用の子ページです。「Simple Page」とお揃いのデザインです。デフォルトは横書きですが、縦書きにも変更できます。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/novel01.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/novel01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード1 -->
+    <div class="template-card" data-tags="novel parent simple f-darkmode">
+      <div class="template-img">
+        <img alt="Simple Page プレビュー画像" src="images/demo01.webp">
+      </div>
+      <div class="template-body">
+        <h3 class="template-title">Simple Page</h3>
+        <div class="tag-list">
+          <span class="tag tag-cat">小説向け</span>
+          <span class="tag tag-cat">親ページ</span>
+          <span class="tag tag-theme">シンプル</span>
+          <span class="tag tag-feat">ダークモード</span>
+        </div>
+        <p class="template-desc">小説サイト向けのシンプルなテンプレート。スマホやPCのダークモード設定に自動で合わせて配色が変化します。</p>
+        <div class="template-links">
+          <a class="btn btn-demo" href="template/demo01.html" target="_blank">Demo</a>
+          <button class="btn btn-code" data-file="template/demo01.html" onclick="copyHtmlFromFile(this)" type="button">HTML取得</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- もっと見る / 閉じるボタンエリア -->
+  <div class="more-btn-container" id="templates-more-container" style="display: none;">
+    <button type="button" class="btn btn-more" id="templates-more-btn" onclick="showMoreTemplates()">もっと見る 🐾</button>
+    <button type="button" class="btn btn-close-more" id="templates-close-btn" onclick="closeTemplates()" style="display: none;">閉じる 🐾</button>
+  </div>
+</section>
 
     <!-- ------------------------------------------
           [SECTION] 3. 創作支援ツール
