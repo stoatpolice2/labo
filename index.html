@@ -1526,23 +1526,41 @@
           </div>
 
           <div class="step-item">
-            <h3><span class="step-number">2</span> ファイルを編集する</h3>
-            <p>「メモ帳」などのテキストエディタにコピーしたコードを貼り付けて保存します。画像や文章をご自由に差し替えてご利用ください。</p>
+            <h3><span class="step-number">2</span> ファイルを保存する</h3>
+            <p>「メモ帳」などのテキストエディタにコピーしたコードを貼り付け、「index.html」などの名前で保存します。</p>
+          </div>
+          
+          <div class="alert-box">
+            <strong>💡 拡張子にご注意ください</strong><br>
+            「メモ帳」をご利用の場合は、保存するときに「ファイルの種類」を「すべてのファイル」にし、ファイル名に拡張子（.html）まで入力して保存してください。<br>
+            ファイルの種類を変更せずに保存すると、「index.html」という名前で保存しても「index.html.txt」というテキストファイルとして保存されてしまいます。
+          </div><br>
+          
+          <div class="step-item">
+            <h3><span class="step-number">3</span> ファイルを編集する</h3>
+            <p><a href="other/column01.html" target="_blank">こちら</a>の記事などを参考にして、先ほど保存したファイルを編集します、テキストや画像を差し替えてご自身のWebページを作成してください。</p>
           </div>
 
           <div class="step-item">
-            <h3><span class="step-number">3</span> サーバーへアップロード</h3>
+            <h3><span class="step-number">4</span> サーバーへアップロード</h3>
             <p>準備したサーバーにファイルをアップロードすればサイトの公開は完了です！</p>
           </div>
 
-          <div class="alert-box">
-            <strong>💡 CSSやJavaScriptについて</strong><br>
+          <h3 class="sub-section-title" id="code">配布コードについての補足</h3>
+          
+          <div class="step-item">
+            <h3><span class="step-number">1</span> CSSやJavaScriptについて</h3>
             「HTML取得」からコピーできるコードは初心者の方でも使いやすいようHTML、CSS 、JavaScriptをまとめてあります。それぞれのコードを別ファイルに分離したい方は<a href="tool/splitter.html" target="_blank">こちら</a>のツールをご利用ください。
+          </div>
+          
+          <div class="step-item">
+            <h3><span class="step-number">2</span> ファビコンやOGP設定について</h3>
+            配布しているテンプレートのコードにはファビコンやOGP（リンクカード）の設定も含まれています。ご自身のサイトで利用する場合は削除するか、ご自身のサイトの設定に差し替えてください。
           </div>
 
           <div class="alert-box">
-            <strong>💡 ファビコンやOGP設定について</strong><br>
-            配布しているテンプレートのコードにはファビコンやOGP（リンクカード）の設定も含まれています。ご自身のサイトで利用される場合は以下の部分を削除するか、ご自身のサイトのものに差し替えてください。
+            <strong>💡 ファビコン・OGPの記述部分</strong><br>
+            コードの最上部付近（ <code>&lt;title&gt;</code> ～<code>&lt;/title&gt;</code> の下）にあるこの部分がファビコン・OGPの記述部分です。
             <code class="code-preview">
 &lt;!-- ファビコンの設定 --&gt;
 &lt;link rel="icon" href="images/icon.webp" type="image/x-icon"&gt;
