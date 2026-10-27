@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUNA | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* -----------------------------------------
+       基本スタイル & 変数設定
+       ----------------------------------------- */
+    :root {
+      --bg-color: #0d0d0d;
+      --card-bg: #1a1a1a;
+      --accent-color: #ffd700; /* 濃い黄色 / ゴールド */
+      --accent-hover: #ffea00;
+      --text-main: #ffffff;
+      --text-sub: #b3b3b3;
+      --border-color: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* -----------------------------------------
+       ヘッダー & ナビゲーション
+       ----------------------------------------- */
+    header {
+      background: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, rgba(13, 13, 13, 1) 100%);
+      border-bottom: 2px solid var(--accent-color);
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      color: var(--text-sub);
+      transition: color 0.3s ease;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--accent-color);
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent-color);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-menu a:hover::after,
+    .nav-menu a.active::after {
+      transform: scaleX(1);
+    }
+
+    /* -----------------------------------------
+       ヒーローセクション（メインビジュアル）
+       ----------------------------------------- */
+    .hero-section {
+      position: relative;
+      height: 70vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(13,13,13,1) 70%), url('../images/picture01.webp') center/cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(13, 13, 13, 0.6);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      letter-spacing: 6px;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+    }
+
+    /* -----------------------------------------
+       メインコンテンツレイアウト
+       ----------------------------------------- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.2em;
+      background-color: var(--accent-color);
+    }
+
+    /* -----------------------------------------
+       NEWS & UPDATES (更新情報)
+       ----------------------------------------- */
+    .news-section {
+      margin-bottom: 60px;
+    }
+
+    .news-list {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      list-style: none;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 20px;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+    }
+
+    .news-date {
+      color: var(--accent-color);
+      font-weight: bold;
+      min-width: 100px;
+    }
+
+    .news-text {
+      color: var(--text-main);
+    }
+
+    /* -----------------------------------------
+       GALLERY (イラストギャラリー)
+       ----------------------------------------- */
+    .gallery-section {
+      margin-bottom: 60px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
+
+    /* -----------------------------------------
+       NAV CARDS (下位ページへの誘導バナー)
+       ----------------------------------------- */
+    .nav-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .nav-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-color);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.15);
+    }
+
+    .nav-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .nav-card-title {
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .nav-card-desc {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .nav-card-link {
+      align-self: flex-start;
+      color: var(--bg-color);
+      background-color: var(--accent-color);
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-card:hover .nav-card-link {
+      background-color: var(--accent-hover);
+      transform: translateX(5px);
+    }
+
+    /* -----------------------------------------
+       フッター
+       ----------------------------------------- */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-sub);
+      font-size: 0.8rem;
+    }
+
+    /* -----------------------------------------
+       トップに戻るボタン
+       ----------------------------------------- */
+    .back-to-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 48px;
+      height: 48px;
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
+      z-index: 1000;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+    }
+
+    /* -----------------------------------------
+       レスポンシブ対応（スマホ）
+       ----------------------------------------- */
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .nav-cards {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .news-item {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー / ナビゲーション -->
+  <header>
+    <div class="header-inner">
+      <div class="site-title">PROJECT LUNA</div>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="active">HOME</a></li>
+          <li><a href="#gallery">GALLERY</a></li>
+          <li><a href="#character">CHARACTERS</a></li>
+          <li><a href="#about">ABOUT</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ヒーローセクション -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">PROJECT LUNA</h1>
+      <p class="hero-subtitle">― 光と影が織りなす、追憶の物語 ―</p>
+    </div>
+  </section>
+
+  <!-- メインコンテンツ -->
+  <main class="container">
+
+    <!-- NEWS セクション -->
+    <section class="news-section">
+      <h2 class="section-title">NEWS &amp; UPDATES</h2>
+      <ul class="news-list">
+        <li class="news-item">
+          <span class="news-date">2026.10.27</span>
+          <span class="news-text">メインページおよびキャラクター紹介ページを開設しました。</span>
+        </li>
+        <li class="news-item">
+          <span class="news-date">2026.10.20</span>
+          <span class="news-text">ギャラリーに新作イメージイラスト「静寂の街」を追加しました。</span>
+        </li>
+        <li class="news-item">
+          <span class="news-date">2026.10.10</span>
+          <span class="news-text">新キャラクター「バレット」の設定およびビジュアルを公開しました。</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- GALLERY セクション -->
+    <section id="gallery" class="gallery-section">
+      <h2 class="section-title">ILLUSTRATION GALLERY</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="../images/picture04.webp" alt="イラスト1">
+          <div class="gallery-caption">「始まりの地」 - 2026</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../images/picture02.webp" alt="イラスト2">
+          <div class="gallery-caption">「静寂の街」 - 2026</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../images/picture09.webp" alt="イラスト3">
+          <div class="gallery-caption">「黄昏の誓い」 - 2026</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 各コンテンツへのネビゲーションカード -->
+    <section  id="character" class="nav-cards">
+      <div class="nav-card">
+        <div>
+          <h3 class="nav-card-title">CHARACTERS</h3>
+          <p class="nav-card-desc">物語を彩る登場人物たちのプロフィール、能力、相関関係、そして「LUNA」の世界観とストーリーを紹介します。</p>
+        </div>
+        <a href="sheet15.html" class="nav-card-link">VIEW MORE →</a>
+      </div>
+
+      <div class="nav-card" id="about">
+        <div>
+          <h3 class="nav-card-title">ABOUT SITE</h3>
+          <p class="nav-card-desc">※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。</div>
+        <a href="#" class="nav-card-link">PRIMARY WORK →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- フッター -->
+    <footer>
+        <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+  <!-- トップに戻るボタン -->
+  <button id="backToTopBtn" class="back-to-top" aria-label="ページの最上部に戻る">▲</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const backToTopBtn = document.getElementById('backToTopBtn');
+
+      // スクロール量に応じて「トップに戻るボタン」を表示/非表示
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+
+      // ボタンクリック時にページ最上部へスムーズスクロール
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
