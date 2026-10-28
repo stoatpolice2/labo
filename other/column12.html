@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小説＆イラストの掲載方法まとめ | Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+    
+    <style>
+        /* ----------------------------------
+            CSS RESET & VARIABLES
+        ---------------------------------- */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        :root {
+            --primary: #E06D53;
+            --primary-hover: #C8563C;
+            --accent: #E8963E;
+            --bg-main: #FAF7F5;
+            --bg-card: #FFFFFF;
+            --text-main: #332C2B;
+            --text-muted: #7A6E6B;
+            --border: #E6DAD3;
+            --radius: 16px;
+            --grad-primary: linear-gradient(135deg, #E06D53 0%, #E8963E 100%);
+            --grad-hero: linear-gradient(180deg, #FFF5F2 0%, #FAF7F5 100%);
+            --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+            --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-main);
+            background-image: radial-gradient(#E8DDD7 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            line-height: 1.8;
+            padding-bottom: 60px;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        /* ----------------------------------
+            HERO AREA
+        ---------------------------------- */
+        .hero {
+            background: var(--grad-hero);
+            border-bottom: 2px dashed #E2D5CE;
+            padding: 55px 20px 45px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+            z-index: 0;
+        }
+
+        .hero::before {
+            width: 160px;
+            height: 160px;
+            top: -40px;
+            left: 5%;
+        }
+
+        .hero::after {
+            width: 110px;
+            height: 110px;
+            bottom: 10px;
+            right: 6%;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 2.1rem;
+            letter-spacing: 0.03em;
+            background: var(--grad-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            line-height: 1.4;
+            display: inline-block;
+            filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 14px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        /* ----------------------------------
+            LAYOUT & NAV
+        ---------------------------------- */
+        nav {
+            background: var(--grad-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #FFF;
+            display: block;
+            padding: 14px 20px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 36px;
+            margin-bottom: 36px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            position: relative;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            padding-left: 14px;
+        }
+
+        .section-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 80%;
+            background: var(--grad-primary);
+            border-radius: 4px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: repeating-linear-gradient(to right, #E8DDD7, #E8DDD7 6px, transparent 6px, transparent 12px);
+        }
+
+        /* ----------------------------------
+            ARTICLE SPECIFIC STYLES
+        ---------------------------------- */
+        h3.sub-title {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin: 24px 0 12px 0;
+            padding-bottom: 4px;
+            border-bottom: 1px dashed var(--border);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 0.82rem;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .badge-illust {
+            background-color: #E06D53;
+        }
+
+        .badge-novel {
+            background-color: #4A7C59;
+        }
+
+        .rule-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .rule-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 10px;
+        }
+
+        .rule-list li::before {
+            content: "🐾";
+            position: absolute;
+            left: 0;
+            font-size: 0.9rem;
+        }
+
+        .rule-list li.rule-ng::before {
+            content: "⚠️";
+            font-size: 0.85rem;
+        }
+
+        .difficulty-box {
+            background-color: #FFF6F3;
+            border: 1px dashed var(--primary);
+            padding: 18px 20px;
+            margin-top: 22px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            color: #5A443E;
+        }
+
+        .difficulty-header {
+            font-weight: bold;
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .difficulty-star {
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        /* ----------------------------------
+            IMAGE STYLES & GRID
+        ---------------------------------- */
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .image-frame {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background-color: #F8F5F3;
+            display: block;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .image-frame img:hover {
+            opacity: 0.88;
+            transform: scale(1.02);
+        }
+
+        .image-frame::after {
+            content: "🔍 拡大表示";
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(51, 44, 43, 0.75);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            pointer-events: none;
+            backdrop-filter: blur(2px);
+            transition: background 0.2s ease;
+        }
+
+        .image-frame:hover::after {
+            background: rgba(224, 109, 83, 0.9);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        /* ----------------------------------
+            RECOMMEND CARDS (SUMMARY SECTION)
+        ---------------------------------- */
+        .recommend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .recommend-card {
+            background: #FFF5F2;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .recommend-card-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #EEDCD5;
+            padding-bottom: 8px;
+        }
+
+        .recommend-list {
+            list-style: none;
+        }
+
+        .recommend-list li {
+            margin-bottom: 15px;
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        .recommend-list strong {
+            color: var(--primary);
+            background: rgba(224, 109, 83, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* ----------------------------------
+            MODAL (LIGHTBOX) STYLES
+        ---------------------------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        /* ----------------------------------
+            BLOCKQUOTE
+        ---------------------------------- */
+        blockquote {
+            background: #FAF5F2;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 16px 0;
+            font-size: 0.93rem;
+        }
+        
+        /* ----------------------------------
+           BACK BUTTON
+        ---------------------------------- */
+        .back-nav {
+          display: flex;
+          justify-content: center;
+          gap: 20px; /* ボタン間の距離 */
+          margin-top: -13px;
+        }
+
+        /* スマホ用 */
+        @media screen and (max-width: 768px) {
+          .back-nav {
+            flex-direction: column;
+            align-items: center; /* 中央揃え */
+            gap: 15px; /* 縦方向の間隔 */
+          }
+        }
+
+        .btn-back {
+          display: inline-block;
+          background: var(--grad-primary);
+          color: #FFF;
+          padding: 12px 32px;
+          border-radius: 30px;
+          font-weight: bold;
+          font-size: 0.95rem;
+          box-shadow: var(--shadow-sm);
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-back:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+          text-decoration: none;
+          color: #FFF;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 650px) {
+            .hero { padding: 40px 15px 30px; }
+            .header-title { font-size: 1.55rem; }
+            .header-subtitle { font-size: 0.88rem; }
+            nav ul { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0 10px; }
+            nav a { padding: 10px 14px; font-size: 0.88rem; }
+            .container { margin-top: 24px; padding: 0 12px; }
+            .section { padding: 22px 18px; margin-bottom: 20px; }
+            .img-grid { grid-template-columns: 1fr; }
+            .recommend-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- メインビジュアル -->
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="header-title">自分の作品、どうやって個人サイトに載せる？</h1>
+            <p class="header-subtitle">小説＆イラストの掲載方法まとめ</p>
+        </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">Stoat Labo TOP</a></li>
+            <li><a href="#modal-method">モーダル</a></li>
+            <li><a href="#webpage-method">Webページ</a></li>
+            <li><a href="#blog-method">ブログ・投稿機能</a></li>
+            <li><a href="#external-method">外部サービス連携</a></li>
+            <li><a href="#summary-method">おすすめ診断</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- 導入部 -->
+        <section id="intro" class="section">
+            <h2 class="section-title">はじめに</h2>
+            <p>いまから個人サイトを作成しようというときに、「作品をどのようにして掲載するか」という点で悩んだことはありませんか？</p>
+            <p style="margin-top: 10px;">個人サイトに自分の小説やイラストを載せるにはいくつかのアプローチがあります。「手軽さ」をとるか「デザインのこだわり」をとるかはもちろん、「小説」と「イラスト」で主流となる掲載方法や向き・不向き、作成の難易度が異なるのも面白いところ。</p>
+            <p style="margin-top: 10px;">今回は、個人サイトでよく使われる代表的な掲載方法を4つピックアップしました。各方法の難易度や必要なWebの知識についても触れていますので、自分の作業スタイルやスキルに合いそうなものを見つけてみてくださいね。</p>
+            <p class="image-caption">※このページに掲載しているサンプル画像は、当サイトで配布しているテンプレート、もしくは管理人の別サイトのスクリーンショットです。</p>
+            
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 実際の表示例もまとめました</p>
+            </div>
+            
+    <div class="back-nav">
+      <a href="sample01.html" class="btn-back" rel="noopener" target="_blank">Web画像レイアウト見本集</a>
+      <a href="sample02.html" class="btn-back" rel="noopener" target="_blank">Web文章レイアウト見本集</a>
+    </div>
+        </section>
+
+        <!-- 1. モーダル（ポップアップ）で表示する -->
+        <section id="modal-method" class="section">
+            <h2 class="section-title">モーダル（ポップアップ）で表示する</h2>
+            <p>一覧のサムネイルやタイトルをクリックすると、ページを移動せずに画面上にふわっとウィンドウが浮かび上がって作品が表示される方法です。</p>
+
+            <!-- 表示例（画像） -->
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 モーダル表示のイメージ例</p>
+                <div class="img-grid">
+                    <div>
+                        <div class="image-frame">
+                            <img src="../images/column20.webp" alt="イラストのモーダル表示例" onclick="openModal(this.src)">
+                        </div>
+                        <p class="image-caption">イラスト：画面切り替えなしで拡大</p>
+                    </div>
+                    <div>
+                        <div class="image-frame">
+                            <img src="../images/column21.webp" alt="テキストのモーダル表示例" onclick="openModal(this.src)">
+                        </div>
+                        <p class="image-caption">小説：.txtファイルを直接読み込み</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <span class="type-badge badge-illust">イラストの場合</span>
+                <p style="font-weight: bold; color: var(--primary); margin-bottom: 6px;">【王道・定番スタイル】</p>
+                <p>画面を切り替えずに大きな画像を見せられるため、イラストが主体のサイトでは超・定番の手法です。サクサク閲覧ができるので、観覧者にとってもストレスがありません。</p>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <span class="type-badge badge-novel">小説の場合</span>
+                <p style="font-weight: bold; color: #4A7C59; margin-bottom: 6px;">【短編向けの変化球】</p>
+                <p>モーダル内にテキストファイル（.txt）を直接読み込ませることで、「ページ移動なし」「文章のフォーマット（HTML化）なし」で読ませる工夫ができます。手軽さとサイトデザインの統一感を両立できます。</p>
+            </div>
+            
+            <blockquote>
+                <strong>💡 設置さえしてしまえば編集はサクサク</strong><br>
+                <p>管理人が別サイト（画像右側）で取り入れている方法がこちら。テキストファイルをアップロードする → モーダルをコピペで増やしてファイル名を変更する …というように、画像と同じ感覚でテキストを掲載できます。
+            </blockquote>
+
+            <h3 class="sub-title">メリット</h3>
+            <ul class="rule-list">
+                <li><strong>ページ移動がないので快適：</strong> 一覧ページから離れず次々に作品を鑑賞できるため、サイト内を回遊してもらいやすくなります。</li>
+                <li><strong>デザインにもこだわれる：</strong> 「モーダルのデザインをサイトに合わせる」「モーダル内にコメント欄やリンクを設置する・複数の画像を表示する」などデザインの自由度も高め。
+                <li><strong>（イラスト）合わせ技も可能：</strong> 「スライドギャラリーやメイソンリーのサムネイルをクリックするとモーダルで表示」というふうに、組み合わせ次第でいろいろなデザインにできます。</li>
+                <li><strong>（小説）テキストを流し込むだけでOK：</strong> テキストファイルを直接読み込ませる仕組みにしておけば、改行タグなどを打ち込んでHTML化する必要がありません。</li>
+                <li><strong>イラストとテキストの両展示にも最適：</strong> 両方を同じページ＆同じデザインで展示できるため、サイトのデザインに統一感を持たせられます。</li>
+            </ul>
+
+            <h3 class="sub-title" style="color: var(--text-muted);">デメリット</h3>
+            <ul class="rule-list">
+                <li class="rule-ng"><strong>（小説）画面が窮屈に感じることも：</strong> 画面上にウィンドウを浮かせる形式のため、画面サイズによっては長文が読みづらく感じられることがあります。長編よりも短編向きです。</li>
+            </ul>
+
+            <div class="difficulty-box">
+                <div class="difficulty-header">
+                    <span>🛠️ 作成の難易度：</span>
+                    <span class="difficulty-star">★★★★☆</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">（やや難しめ〜上級者向け）</span>
+                </div>
+                <p><strong>イラストの場合：</strong> 既にモーダルが設置されている配布テンプレートを使用する場合でも、HTMLを書き換える箇所が多めです。「どことどこを編集すればいいのか」「どこからどこまでをコピーすれば作品枠を増やせるのか」が判断できる方向けと言えます。</p>
+                <p style="margin-top: 8px;"><strong>小説の場合：</strong> そもそも「小説の表示を目的としたモーダル」が配置されているテンプレートはほとんどありません。自分でHTML/CSS/JavaScriptを編集してモーダルを設置・調整する必要があるため難易度は高くなりますが、そのぶんサイトの個性をグッと引き出せます。</p>
+            </div>
+        </section>
+
+        <!-- 2. Webページ（HTMLファイル）として作成する -->
+        <section id="webpage-method" class="section">
+            <h2 class="section-title">Webページ（HTMLファイル）として作成する</h2>
+            <p>作品ごとに1つのHTMLファイルを作成し、デザインしたWebページ内に直接画像や文章を配置していく方法です。</p>
+
+            <!-- 表示例（画像） -->
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 Webページ表示のイメージ例</p>
+                <div class="img-grid">
+                    <div>
+                        <div class="image-frame">
+                            <img src="../images/column15.webp" alt="イラストWebページ表示例" onclick="openModal(this.src)">
+                        </div>
+                        <p class="image-caption">イラスト：スライドギャラリーで動きのあるページに</p>
+                    </div>
+                    <div>
+                        <div class="image-frame">
+                            <img src="../images/column22.webp" alt="小説Webページ表示例" onclick="openModal(this.src)">
+                        </div>
+                        <p class="image-caption">小説：背景にアニメーションを設定することも</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <span class="type-badge badge-illust">イラストの場合</span>
+                <p style="font-weight: bold; color: var(--primary); margin-bottom: 6px;">【作品の世界観を魅せる展示】</p>
+                <p>1枚のイラストをドカンと大きく見せたり、スライドのように次々と見せたり、ページ内に敷き詰めたりと、さまざまな演出を取り入れた個展のようなページが作れます。</p>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <span class="type-badge badge-novel">小説の場合</span>
+                <p style="font-weight: bold; color: #4A7C59; margin-bottom: 6px;">【こだわり派の標準スタイル】</p>
+                <p>作品ごとに背景色やフォントを変えたり、挿絵を差し込んだりと、世界観の演出を自由自在に作り込めます。こだわり派さんにぴったり。</p>
+            </div>
+
+            <h3 class="sub-title">メリット</h3>
+            <ul class="rule-list">
+                <li><strong>デザインや演出を思いのままに作れる：</strong> ページ全体の雰囲気を作品に合わせてカスタムできます。小説ならCSSやJavaScriptを使って、読者が「背景色」や「文字サイズ」「縦書き/横書き」を切り替えられる仕掛けを設置することも可能です。</li>
+            </ul>
+
+            <h3 class="sub-title" style="color: var(--text-muted);">デメリット</h3>
+            <ul class="rule-list">
+                <li class="rule-ng"><strong>作成と管理に少し手間がかかる：</strong> 小説の場合は、デザインにこだわらない場合でも文章の改行に <code>&lt;br&gt;</code> タグを入れたり段落を整えたりする作業（HTML化）が必要です。また、作品数が増えるほどファイル管理のコツが必要になります。</li>
+            </ul>
+
+            <div class="difficulty-box">
+                <div class="difficulty-header">
+                    <span>🛠️ 作成の難易度：</span>
+                    <span class="difficulty-star">★★★☆☆</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">（初心者〜中級者向け）</span>
+                </div>
+                <p><strong>難易度のポイント：</strong> 「小説に改行タグをつける」「画像のファイル名を差し替える」といった初歩的なHTMLの知識が必要になります。そのため「HTMLを一切触らずにサイトを作りたい」という方には向きませんが、「これからHTMLを勉強してみたい！」という方の入門編として非常におすすめです。</p>
+            </div>
+        </section>
+
+        <!-- 3. ブログ・投稿機能を利用する -->
+        <section id="blog-method" class="section">
+            <h2 class="section-title">ブログ・投稿機能を利用する</h2>
+            <p>ブログのように管理画面から記事を投稿・管理できるサービスやツールを使う方法です。</p>
+            
+            <blockquote>
+                <strong>代表的なツール・サービス例</strong><br>
+                ・<b>汎用ツール：</b> WordPress、Wix など<br>
+                ・<b>創作特化型サービス：</b> フォレストページ＋、ナノ など（サーバーに作品投稿機能が標準装備されています）
+            </blockquote>
+
+            <div style="margin-top: 20px;">
+                <span class="type-badge badge-illust">イラストの場合</span>
+                <p style="font-weight: bold; color: var(--primary); margin-bottom: 6px;">【ログ・漫画・日々の落書きに】</p>
+                <p>ワンドロのまとめ、複数ページの漫画、日常のイラストログなどをサクサク投稿するのに向いています。</p>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <span class="type-badge badge-novel">小説の場合</span>
+                <p style="font-weight: bold; color: #4A7C59; margin-bottom: 6px;">【手軽さ＆管理重視の万能型】</p>
+                <p>スマホからでも簡単に投稿・修正ができるため、更新頻度が高い人や長編小説の連載に最適です。</p>
+            </div>
+
+            <h3 class="sub-title">メリット</h3>
+            <ul class="rule-list">
+                <li><strong>投稿・修正が圧倒的に楽！：</strong> 管理画面から入力するだけで公開でき、外出先からスマホで誤字を修正するのも簡単です。目次やタグ付けも自動処理されるため、作品が増えても整理に困りません。</li>
+            </ul>
+
+            <h3 class="sub-title" style="color: var(--text-muted);">デメリット</h3>
+            <ul class="rule-list">
+                <li class="rule-ng"><strong>デザインの自由度に限界がある：</strong> ページ全体のデザインが統一されていることが多いため、「この話だけ背景色やフォントを変えて雰囲気をガラッと変えたい！」といった細かいこだわりを実現するのは難しめです。</li>
+            </ul>
+
+            <div class="difficulty-box">
+                <div class="difficulty-header">
+                    <span>🛠️ 作成の難易度：</span>
+                    <span class="difficulty-star">★☆☆☆☆〜★★☆☆☆</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">（かんたん）</span>
+                </div>
+                <p><strong>難易度のポイント：</strong> 一般的な投稿サイトやブログと同じ感覚で作品を投稿できるのでとてもお手軽です。サービスによっては全くHTMLに触れることなく運用できます。ただし、利用するツールやサービス独自の管理画面・使い方に慣れるまでに多少の手間がかかる場合があります。</p>
+            </div>
+        </section>
+
+        <!-- 4. 外部サービス連携・ファイル埋め込みを活用する -->
+        <section id="external-method" class="section">
+            <h2 class="section-title">外部サービス連携・URL埋め込みを活用する</h2>
+            <p>「サイトのデザインは作り込みたいけれど、本文や画像の管理は外部に任せたい」という場合、外部の投稿ツールを上手につなぐ方法もあります。</p>
+
+            <!-- 表示例（画像） -->
+            <div class="image-container">
+                <p style="font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">📷 外部連携のイメージ例</p>
+                <div class="image-frame" style="max-width: 500px; margin: 0 auto; height: 280px;">
+                    <img src="../images/column23.webp" alt="外部サービス連携例" onclick="openModal(this.src)">
+                </div>
+              <p class="image-caption">サイトのデザインにこだわりつつ作品の管理は楽に</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <span class="type-badge badge-illust">イラストの場合</span>
+                <p style="font-weight: bold; color: var(--primary); margin-bottom: 6px;">【まとめ・ポートフォリオ化】</p>
+                <p>メインの活動場所（Pixiv、Xfolio等）に画像をアップしつつ、自分のサイトは「代表作をまとめた看板（ポータル）」として機能させます。</p>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <span class="type-badge badge-novel">小説の場合</span>
+                <p style="font-weight: bold; color: #4A7C59; margin-bottom: 6px;">【連載小説のまとめなどに】</p>
+                <p>投稿サイトでは投稿日時順に並べられる場合が多い作品を、リストにして作中の時系列順に並べたりすることができます。</p>
+            </div>
+
+            <h3 class="sub-title">メリット</h3>
+            <ul class="rule-list">
+                <li><strong>サイト作成の手間を大幅に削減できる：</strong> サイト自体は作品一覧や目次だけに特化させられるため、更新の負担が激減します。</li>
+            </ul>
+
+            <h3 class="sub-title" style="color: var(--text-muted);">デメリット</h3>
+            <ul class="rule-list">
+                <li class="rule-ng"><strong>サイトからの離脱・一体感：</strong> 外部リンクの場合、読者が一度サイトから離れてしまう感覚になることがあります。</li>
+            </ul>
+
+            <div class="difficulty-box">
+                <div class="difficulty-header">
+                    <span>🛠️ 作成の難易度：</span>
+                    <span class="difficulty-star">★☆☆☆☆</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">（かんたん）</span>
+                </div>
+                <p><strong>難易度のポイント：</strong> 基本的にはページ内にリンクを貼るだけなので設置や更新がとても簡単です。外部サービス側にも「シェア用のURLをコピーする機能」が備わっていることが多いため、特定の作品や投稿にピンポイントでリンクを貼りたい場合も手軽に行えます。</p>
+            </div>
+        </section>
+
+        <!-- まとめ・診断 -->
+        <section id="summary-method" class="section">
+            <h2 class="section-title">💡 あなたにぴったりの掲載方法はどれ？</h2>
+            <p>作品の種類やご自身の好みに合わせて選んでみてくださいね🐾</p>
+
+            <div class="recommend-grid">
+                <!-- イラスト -->
+                <div class="recommend-card">
+                    <div class="recommend-card-title">
+                        <span>🎨 イラストを描く人</span>
+                    </div>
+                    <ul class="recommend-list">
+                        <li>・イラストをおしゃれにサクサク見せたい<br>👉 <strong>1. モーダル表示</strong></li>
+                        <li>・デザインに個性を出したい / これからHTMLを学びたい<br>👉 <strong>2. Webページ（HTML）</strong></li>
+                        <li>・落書きログや漫画をたくさん載せたい<br>👉 <strong>3. ブログ・投稿機能</strong></li>
+                        <li>・Pixivなどをメインにしつつ手軽にサイトにまとめたい<br>👉 <strong>4. 外部サービス連携</strong></li>
+                    </ul>
+                </div>
+
+                <!-- 小説 -->
+                <div class="recommend-card">
+                    <div class="recommend-card-title">
+                        <span>📚 小説を書く人</span>
+                    </div>
+                    <ul class="recommend-list">
+                        <li>・世界観にこだわりたい / これからHTMLを学びたい<br>👉 <strong>2. Webページ（HTML）</strong></li>
+                        <li>・スマホから手軽に更新したい<br>👉 <strong>3. ブログ・投稿機能</strong></li>
+                        <li>・ページ移動なしで作品を見せたい / コード編集に挑戦したい<br>👉 <strong>1. モーダル表示</strong></li>
+                        <li>・手軽に済ませたい / 連載を整理したい<br>👉 <strong>4. 外部サービス連携</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; Stoat Labo All Rights Reserved.</p>
+    </footer>
+
+    <!-- モーダル表示用エリア -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+        }
+
+        // ESCキーでもモーダルを閉じられるように設定
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web文章レイアウト見本集 | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Google Noto Serif JP & Google Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;600;700&family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Shippori Mincho"', '"Noto Serif JP"', 'serif'],
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+          },
+          colors: {
+            paper: {
+              50: '#fdfbf7',
+              100: '#f7f4eb',
+              200: '#ede6d5',
+              800: '#2b261f',
+              900: '#1a1815',
+            },
+            accent: {
+              DEFAULT: '#8c2d19',
+              dark: '#e05a3f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ドロップキャップ表現 (CSS ::first-letter) */
+    .drop-cap::first-letter {
+      font-size: 3.6em;
+      float: left;
+      line-height: 0.85;
+      margin-right: 0.15em;
+      margin-top: 0.05em;
+      font-weight: 700;
+      color: #8c2d19;
+      font-family: 'Shippori Mincho', serif;
+    }
+    .dark .drop-cap::first-letter {
+      color: #e05a3f;
+    }
+
+    /* 縦書きレイアウト (vertical-rl) */
+    .writing-vertical {
+      writing-mode: vertical-rl;
+      -webkit-writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* 縦中横 (縦書き内の2桁数字横並び) */
+    .tcy {
+      text-combine-upright: all;
+      -webkit-text-combine: horizontal;
+    }
+
+    /* カスタムスクロールバー (縦書きエリア用) */
+    .vertical-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+    .vertical-scroll::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.05);
+      border-radius: 4px;
+    }
+    .vertical-scroll::-webkit-scrollbar-thumb {
+      background: rgba(140, 45, 25, 0.3);
+      border-radius: 4px;
+    }
+    .dark .vertical-scroll::-webkit-scrollbar-thumb {
+      background: rgba(224, 90, 63, 0.4);
+    }
+
+    /* コードコピー時のフィードバック用 */
+    .copied-toast {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-paper-50 dark:bg-paper-900 text-paper-800 dark:text-paper-100 transition-colors duration-200 font-serif antialiased min-h-screen flex flex-col">
+
+  <!-- 1. 読書進捗度プログレスバー (Scroll Progress Bar) -->
+  <div id="scroll-progress-container" class="fixed top-0 left-0 w-full h-1 z-50 bg-paper-200/50 dark:bg-paper-800/50">
+    <div id="scroll-progress-bar" class="h-full bg-accent dark:bg-accent-dark w-0 transition-all duration-75"></div>
+  </div>
+
+  <!-- トップコントロールバー (Reader Control Bar) -->
+  <header class="sticky top-0 z-40 bg-paper-100/90 dark:bg-paper-800/90 backdrop-blur border-b border-paper-200 dark:border-paper-800 py-3 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <div class="flex items-center space-x-3">
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg bg-paper-200 dark:bg-paper-800 text-paper-800 dark:text-paper-100 focus:outline-none">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-accent/10 dark:bg-accent-dark/20 text-accent dark:text-accent-dark font-sans font-medium tracking-wide">HTML / CSS Pattern Guide</span>
+        <h1 class="text-lg font-bold font-sans tracking-tight hidden sm:block">Web文章レイアウト見本集</h1>
+      </div>
+
+      <!-- パラメータコントロール (フォントサイズ / 行間 / ダークモード) -->
+      <div class="flex items-center flex-wrap gap-3 font-sans text-xs">
+        
+        <!-- 書体切替 (Serif / Sans) -->
+        <div class="flex items-center bg-paper-200/70 dark:bg-paper-900/60 rounded-lg p-1 border border-paper-200 dark:border-paper-800">
+          <button id="font-serif-btn" class="px-2.5 py-1 rounded-md font-serif font-bold bg-white dark:bg-paper-800 shadow-sm transition">明朝</button>
+          <button id="font-sans-btn" class="px-2.5 py-1 rounded-md font-sans text-paper-800 dark:text-paper-100 opacity-70 hover:opacity-100 transition">ゴシック</button>
+        </div>
+
+        <!-- フォントサイズ切替 -->
+        <div class="flex items-center bg-paper-200/70 dark:bg-paper-900/60 rounded-lg p-1 border border-paper-200 dark:border-paper-800">
+          <span class="px-2 text-xs text-paper-800/60 dark:text-paper-100/60">文字:</span>
+          <button id="size-sm-btn" class="px-2 py-1 rounded hover:bg-white/50 dark:hover:bg-paper-800/50 transition">小</button>
+          <button id="size-md-btn" class="px-2 py-1 rounded font-bold bg-white dark:bg-paper-800 shadow-sm transition">中</button>
+          <button id="size-lg-btn" class="px-2 py-1 rounded hover:bg-white/50 dark:hover:bg-paper-800/50 transition">大</button>
+        </div>
+
+        <!-- ダークモード切り替え -->
+        <button id="theme-toggle" class="p-2 rounded-lg bg-paper-200/70 dark:bg-paper-900/60 border border-paper-200 dark:border-paper-800 hover:opacity-80 transition" title="ダークモード切替">
+          <!-- Sun Icon -->
+          <svg id="theme-icon-light" class="w-4 h-4 hidden dark:block text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 006.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+          <!-- Moon Icon -->
+          <svg id="theme-icon-dark" class="w-4 h-4 block dark:hidden text-paper-800" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1 max-w-7xl w-full mx-auto flex flex-col lg:flex-row">
+    
+    <!-- サイドバーナビゲーション (Desktop & Mobile Drawer) -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-paper-100 dark:bg-paper-800 border-r border-paper-200 dark:border-paper-800 transform -translate-x-full lg:translate-x-0 lg:static lg:w-72 transition-transform duration-200 ease-in-out p-6 overflow-y-auto font-sans flex flex-col justify-between">
+      <div>
+        <div class="mb-8">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-paper-800/60 dark:text-paper-100/60 mb-1">Navigation</h2>
+          <p class="text-xs text-paper-800/80 dark:text-paper-100/80">レイアウトパターン一覧</p>
+        </div>
+
+        <nav class="space-y-1.5 text-sm">
+          <a href="#pattern-standard" class="nav-link flex items-center justify-between px-3 py-2.5 rounded-lg bg-accent/10 dark:bg-accent-dark/20 text-accent dark:text-accent-dark font-medium transition">
+            <span>1. シングルカラム・スリム</span>
+            <span class="text-xs">基本</span>
+          </a>
+          <a href="#pattern-hero" class="nav-link flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-paper-200/60 dark:hover:bg-paper-900/40 transition">
+            <span>2. ヒーロー＋ドロップキャップ</span>
+            <span class="text-xs">冒頭</span>
+          </a>
+          <a href="#pattern-vertical" class="nav-link flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-paper-200/60 dark:hover:bg-paper-900/40 transition">
+            <span>3. 日本語縦書き (vertical-rl)</span>
+            <span class="text-xs">和風/小説</span>
+          </a>
+          <a href="#pattern-quotes" class="nav-link flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-paper-200/60 dark:hover:bg-paper-900/40 transition">
+            <span>4. プルクオート / 強調フレーズ</span>
+            <span class="text-xs">引用・台詞</span>
+          </a>
+          <a href="#pattern-twocol" class="nav-link flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-paper-200/60 dark:hover:bg-paper-900/40 transition">
+            <span>5. 2カラム ＋ 固定目次</span>
+            <span class="text-xs">長文/解説</span>
+          </a>
+          <a href="#pattern-accordion" class="nav-link flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-paper-200/60 dark:hover:bg-paper-900/40 transition">
+            <span>6. 脚注 ＆ アコーディオン</span>
+            <span class="text-xs">補足解説</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-paper-200 dark:border-paper-800 text-xs text-paper-800/60 dark:text-paper-100/60">
+        <p>&copy; Stoat Labo All Rights Reserved.</p>
+      </div>
+    </aside>
+
+    <!-- モバイルオーバーレイ -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-20 hidden lg:hidden"></div>
+
+    <!-- メインコンテンツエリア -->
+    <main class="flex-1 p-4 sm:p-8 lg:p-12 space-y-20 min-w-0" id="main-content-area">
+
+      <!-- ==========================================
+           Pattern 1: シングルカラム・スリム
+           ========================================== -->
+      <section id="pattern-standard" class="scroll-mt-24 space-y-6">
+        <div class="border-b border-paper-200 dark:border-paper-800 pb-3 flex justify-between items-end">
+          <div>
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-accent dark:text-accent-dark">Pattern 01</span>
+            <h2 class="text-2xl font-bold font-sans">シングルカラム・スリム（最適文字数・読み幅制限）</h2>
+          </div>
+          <button onclick="toggleCode('code-standard')" class="text-xs font-sans px-3 py-1.5 rounded bg-paper-200 dark:bg-paper-800 hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition">
+            コードを表示
+          </button>
+        </div>
+
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+          日本語のWEB読書において最も疲れにくいとされる「1行35〜40文字前後 (`max-width: 38em` 前後)」の幅に制限した標準レイアウトです。Mediumやnote、電子書籍リーダーでも標準的に採用されています。</p>
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        各パターンの「コードを表示」ボタンで、実装に必要なHTML/CSSコードを取得できます。</p>
+
+        <!-- インタラクティブ行間切替プレビューコントロール -->
+        <div class="bg-paper-100 dark:bg-paper-800/60 p-4 rounded-xl border border-paper-200 dark:border-paper-800 flex flex-wrap items-center gap-4 font-sans text-xs">
+          <span class="font-bold">行間調整プレビュー:</span>
+          <button onclick="setLineHeight('tight')" class="px-3 py-1 rounded bg-white dark:bg-paper-900 border border-paper-200 dark:border-paper-700 hover:border-accent">詰める (1.6)</button>
+          <button onclick="setLineHeight('normal')" class="px-3 py-1 rounded bg-accent text-white font-bold">標準 (1.85)</button>
+          <button onclick="setLineHeight('relaxed')" class="px-3 py-1 rounded bg-white dark:bg-paper-900 border border-paper-200 dark:border-paper-700 hover:border-accent">ゆったり (2.1)</button>
+        </div>
+
+        <!-- 実際に表示される文章サンプル -->
+        <div class="bg-white dark:bg-paper-800/30 p-6 sm:p-10 rounded-2xl border border-paper-200 dark:border-paper-800 shadow-sm">
+          <article id="sample-text-area" class="max-w-[38em] mx-auto space-y-6 leading-[1.85] text-base transition-all">
+            <h3 class="text-xl font-bold border-b pb-2 border-paper-200 dark:border-paper-700">見本章タイトル：レイアウトの確認</h3>
+            <p>
+              これはデザインやレイアウトを確認するためのダミー文章です。実際の本文が入った際の文字の並びや、行間の開き具合、全体の読みやすさをテストするために配置されています。
+            </p>
+            <p>
+              文章の長さや改行の位置を変えることで、余白のバランスや画面上での見映えをシミュレーションできます。フォントの変更やサイズ調整の際も、この見本テキストを参考に確認してください。
+            </p>
+            <p>
+              「ここに会話文や強調したいセリフが入る場合の表示見本です。」
+            </p>
+            <p>
+              このように、段落ごとに適度な行間を確保することで、長文であっても読者が視線をスムーズに移動させやすくなります。目的のコンテンツに合わせて自由に差し替えてご活用ください。
+            </p>
+          </article>
+        </div>
+
+        <!-- コード表示エリア -->
+        <div id="code-standard" class="hidden font-sans text-xs bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto relative">
+          <pre><code>&lt;!-- HTML --&gt;
+&lt;article class="max-w-[38em] mx-auto text-base leading-[1.85] space-y-6"&gt;
+  &lt;h3 class="text-xl font-bold border-b pb-2"&gt;見本章タイトル：レイアウトの確認&lt;/h3&gt;
+  &lt;p&gt;これはデザインやレイアウトを確認するためのダミー文章です...&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;!-- CSSのポイント --&gt;
+/* max-width: 35em〜40em（日本語で約35〜40文字/行）に設定 */
+/* line-height: 1.8 〜 1.9 が長文読了に最も適しています */</code></pre>
+          <button onclick="copyCode(this)" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Copy</button>
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           Pattern 2: ヒーロー ＋ ドロップキャップ
+           ========================================== -->
+      <section id="pattern-hero" class="scroll-mt-24 space-y-6">
+        <div class="border-b border-paper-200 dark:border-paper-800 pb-3 flex justify-between items-end">
+          <div>
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-accent dark:text-accent-dark">Pattern 02</span>
+            <h2 class="text-2xl font-bold font-sans">ヒーローセクション ＋ ドロップキャップ</h2>
+          </div>
+          <button onclick="toggleCode('code-hero')" class="text-xs font-sans px-3 py-1.5 rounded bg-paper-200 dark:bg-paper-800 hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition">
+            コードを表示
+          </button>
+        </div>
+
+        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+          作品の扉ページや短編小説・コラムの冒頭に最適。大きなタイトル・サブタイトルと、物語の先頭一文字を巨大化させるドロップキャップ（`::first-letter`）で雑誌のような上質な世界観を作り出します。
+        </p>
+
+        <!-- プレビュー -->
+        <div class="bg-white dark:bg-paper-800/30 p-8 sm:p-14 rounded-2xl border border-paper-200 dark:border-paper-800 shadow-sm space-y-10 max-w-[42em] mx-auto">
+          
+          <!-- ヒーローヘッダー -->
+          <header class="text-center space-y-4 border-b border-paper-200 dark:border-paper-700 pb-10">
+            <p class="text-xs tracking-widest font-sans uppercase text-accent dark:text-accent-dark font-semibold">Sample Article Layout</p>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">見本用の記事大タイトル</h1>
+            <p class="text-sm text-paper-800/70 dark:text-paper-100/70 font-sans italic">― サブタイトルの表示位置とデザイン確認用のダミーテキストです ―</p>
+            <div class="pt-2 text-xs font-sans text-paper-800/60 dark:text-paper-100/60 flex justify-center items-center gap-4">
+              <span>執筆者: サンプル太郎</span>
+              <span>•</span>
+              <span>読了目安: 約3分</span>
+            </div>
+          </header>
+
+          <!-- ドロップキャップ付き本文 -->
+          <div class="space-y-6 text-base leading-relaxed">
+            <p class="drop-cap">
+              文頭の文字を大きく強調表示するドロップキャップの表示見本です。ここには見本用の文章が入ります。先頭の一文字が印象的に大きくデザインされるため、雑誌の冒頭や物語の始まりのような上質な雰囲気を演出できます。
+            </p>
+            <p>
+              「２行目以降の段落も、全体のスタイルに合わせて綺麗に流れるか確認します」
+            </p>
+            <p>
+              文字のサイズや行間、フォントの種類を変更した際にも、頭文字のデザインが崩れずに保たれるかテストするためのダミー文章です。
+            </p>
+          </div>
+
+        </div>
+
+        <!-- コード -->
+        <div id="code-hero" class="hidden font-sans text-xs bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto relative">
+          <pre><code>&lt;!-- ドロップキャップ用CSS --&gt;
+&lt;style&gt;
+.drop-cap::first-letter {
+  font-size: 3.5em;
+  float: left;
+  line-height: 0.85;
+  margin-right: 0.15em;
+  font-weight: bold;
+  color: #8c2d19; /* アクセントカラー */
+}
+&lt;/style&gt;
+
+&lt;!-- HTML構造 --&gt;
+&lt;p class="drop-cap"&gt;文頭の文字を大きく強調表示する...&lt;/p&gt;</code></pre>
+          <button onclick="copyCode(this)" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Copy</button>
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           Pattern 3: 日本語縦書き (writing-mode: vertical-rl)
+           ========================================== -->
+      <section id="pattern-vertical" class="scroll-mt-24 space-y-6">
+        <div class="border-b border-paper-200 dark:border-paper-800 pb-3 flex justify-between items-end">
+          <div>
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-accent dark:text-accent-dark">Pattern 03</span>
+            <h2 class="text-2xl font-bold font-sans">日本語縦書きレイアウト（縦中横対応）</h2>
+          </div>
+          <button onclick="toggleCode('code-vertical')" class="text-xs font-sans px-3 py-1.5 rounded bg-paper-200 dark:bg-paper-800 hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition">
+            コードを表示
+          </button>
+        </div>
+
+        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+          CSSの `writing-mode: vertical-rl;` を使用した本格的な縦書き組版です。2桁の数字などを正しく直立させる「縦中横（`text-combine-upright`）」も組み込んでいます。右から左へと横スクロールして読み進めます。
+        </p>
+
+        <!-- 縦書きコンテナ -->
+        <div class="bg-paper-100/80 dark:bg-paper-800/40 border border-paper-200 dark:border-paper-800 rounded-2xl p-6 sm:p-10">
+          <div class="writing-vertical vertical-scroll overflow-x-auto h-[420px] max-w-full font-serif text-base leading-loose tracking-wide space-x-reverse space-x-8 pr-2">
+            
+            <h2 class="text-2xl font-bold ml-6 border-l-2 border-accent dark:border-accent-dark pl-3 py-2">
+              縦書きの見本 第<span class="tcy">01</span>章
+            </h2>
+
+            <p class="mt-4">
+              　これは日本語の縦書き表示を確認するためのダミー文章です。右から左へと読み進める組版の確認に使用します。
+            </p>
+
+            <p>
+              　縦書き表示のなかで、半角数字の<span class="tcy">12</span>月<span class="tcy">25</span>日のように二桁の数字を横並びで綺麗に表示させる技術を「縦中横」と呼びます。
+            </p>
+
+            <p>
+              「このように会話文が入った場合のカッコの向きや、行間の開き具合も綺麗に整います」
+            </p>
+
+            <p>
+              　画面を右から左へスクロールしながら、和風Webサイトや小説コンテンツの表示イメージを確認してください。
+            </p>
+            
+            <p>
+              　歴史もの、時代ものなどの和風の小説に雰囲気を持たせたり、背景色をクリーム色にすることで古書のようなデザインにするといった用途で使えます。
+            </p>
+            
+            <p>
+              　右から左へスクロールできるようにしてありますが、パソコンからの観覧だと画面の横幅が広いので、設定によってはスクロールバーが出ていないかもしれません。
+            </p>
+            
+            <p>
+              　この文章の下にスクロールバーが表示されない場合は、ウインドウを少し小さくしてみてください。
+            </p>
+
+          </div>
+          <p class="text-right text-xs font-sans text-paper-800/50 dark:text-paper-100/50 mt-4">← 右から左へスクロールして読めます</p>
+        </div>
+
+        <!-- コード -->
+        <div id="code-vertical" class="hidden font-sans text-xs bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto relative">
+          <pre><code>&lt;!-- 縦書き用CSS --&gt;
+&lt;style&gt;
+.writing-vertical {
+  writing-mode: vertical-rl;
+  -webkit-writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+/* 縦中横（2桁の数字などを縦書きの中で横並びにする） */
+.tcy {
+  text-combine-upright: all;
+  -webkit-text-combine: horizontal;
+}
+&lt;/style&gt;
+
+&lt;!-- HTML --&gt;
+&lt;div class="writing-vertical h-[400px] overflow-x-auto"&gt;
+  &lt;h2&gt;第&lt;span class="tcy"&gt;01&lt;/span&gt;章&lt;/h2&gt;
+  &lt;p&gt;これは日本語の縦書き表示を確認するための...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          <button onclick="copyCode(this)" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Copy</button>
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           Pattern 4: プルクオート ＆ 印象的台詞のハイライト
+           ========================================== -->
+      <section id="pattern-quotes" class="scroll-mt-24 space-y-6">
+        <div class="border-b border-paper-200 dark:border-paper-800 pb-3 flex justify-between items-end">
+          <div>
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-accent dark:text-accent-dark">Pattern 04</span>
+            <h2 class="text-2xl font-bold font-sans">プルクオート ＆ 印象的フレーズの強調</h2>
+          </div>
+          <button onclick="toggleCode('code-quotes')" class="text-xs font-sans px-3 py-1.5 rounded bg-paper-200 dark:bg-paper-800 hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition">
+            コードを表示
+          </button>
+        </div>
+
+        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+          長文の中で重要なセリフや名言、記事の結論などを視覚的に目立たせる演出です。読者が流し読みをしていても目を留めやすくなり、読書リズムにアクセントを与えます。
+        </p>
+
+        <!-- プレビュー -->
+        <div class="bg-white dark:bg-paper-800/30 p-6 sm:p-10 rounded-2xl border border-paper-200 dark:border-paper-800 shadow-sm space-y-8 max-w-[38em] mx-auto leading-relaxed">
+          
+          <p>
+            文章の途中で重要なメッセージや引用文を強調したい場合のレイアウト見本です。前後の文脈から際立たせることで読者の目を惹きつけます。
+          </p>
+
+          <!-- プルクオート（Pull Quote）スタイル 1: クラシック引用枠 -->
+          <blockquote class="my-8 my-6 p-6 bg-paper-100 dark:bg-paper-800 border-l-4 border-accent dark:border-accent-dark rounded-r-xl relative">
+            <span class="absolute top-2 left-3 text-4xl text-accent/20 dark:text-accent-dark/20 font-serif leading-none">“</span>
+            <p class="text-lg font-bold text-accent dark:text-accent-dark relative z-10 pl-4 my-1">
+              これはプルクオート（引用・強調枠）の見た目を確認するための見本テキストです。
+            </p>
+            <cite class="block text-right text-xs font-sans text-paper-800/60 dark:text-paper-100/60 mt-2">— 引用元の出典や補足情報</cite>
+          </blockquote>
+
+          <p>
+            引用ブロックの前後にはこのように通常の本文が続きます。枠線や背景色のバランスを確認できます。
+          </p>
+
+          <!-- スタイル 2: 中央揃えのエレガントフレーズ -->
+          <div class="my-8 py-6 border-y border-paper-200 dark:border-paper-700 text-center space-y-2">
+            <p class="text-xl font-semibold tracking-wider text-paper-900 dark:text-paper-50">
+              「上下に境界線を配置した中央揃え強調フレーズの見本です」
+            </p>
+          </div>
+
+          <p>
+            スタイルの異なる2種類の強調デザインを用意することで、記事の雰囲気やコンテンツの意図に応じて使い分けることができます。
+          </p>
+
+        </div>
+
+        <!-- コード -->
+        <div id="code-quotes" class="hidden font-sans text-xs bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto relative">
+          <pre><code>&lt;!-- プルクオート（左枠線付き） --&gt;
+&lt;blockquote class="my-6 p-6 bg-paper-100 border-l-4 border-accent rounded-r-xl"&gt;
+  &lt;p class="text-lg font-bold text-accent"&gt;これはプルクオート（引用・強調枠）の...&lt;/p&gt;
+  &lt;cite class="block text-right text-xs text-gray-500 mt-2"&gt;— 出典名など&lt;/cite&gt;
+&lt;/blockquote&gt;
+
+&lt;!-- 中央強調フレーズ（上下線付き） --&gt;
+&lt;div class="my-8 py-6 border-y border-paper-200 text-center"&gt;
+  &lt;p class="text-xl font-semibold"&gt;「上下に境界線を配置した...」&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          <button onclick="copyCode(this)" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Copy</button>
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           Pattern 5: 2カラム ＋ スティッキー目次
+           ========================================== -->
+      <section id="pattern-twocol" class="scroll-mt-24 space-y-6">
+        <div class="border-b border-paper-200 dark:border-paper-800 pb-3 flex justify-between items-end">
+          <div>
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-accent dark:text-accent-dark">Pattern 05</span>
+            <h2 class="text-2xl font-bold font-sans">2カラム ＋ スティッキー目次（Sticky ToC）</h2>
+          </div>
+          <button onclick="toggleCode('code-twocol')" class="text-xs font-sans px-3 py-1.5 rounded bg-paper-200 dark:bg-paper-800 hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition">
+            コードを表示
+          </button>
+        </div>
+
+        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+          長編小説の章一覧や、Webコラム・解説記事に最適なレイアウトです。画面左側の目次がスクロール追従（`position: sticky`）し、読者がいつでも現在位置を把握できます。
+        </p>
+
+        <!-- プレビュー (2カラムエリア) -->
+        <div class="bg-white dark:bg-paper-800/30 p-6 sm:p-8 rounded-2xl border border-paper-200 dark:border-paper-800 shadow-sm">
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            
+            <!-- スティッキー目次 (Sticky TOC) -->
+            <nav class="md:w-56 w-full md:sticky md:top-24 font-sans text-xs bg-paper-100 dark:bg-paper-800/80 p-4 rounded-xl border border-paper-200 dark:border-paper-700 shrink-0">
+              <h4 class="font-bold border-b pb-2 mb-3 border-paper-200 dark:border-paper-700 uppercase tracking-wider text-accent dark:text-accent-dark">Contents</h4>
+              <ul class="space-y-2">
+                <li><a href="#section-1" class="hover:text-accent dark:hover:text-accent-dark transition block">1. 項目見出しその１</a></li>
+                <li><a href="#section-2" class="hover:text-accent dark:hover:text-accent-dark transition block">2. 項目見出しその２</a></li>
+                <li><a href="#section-3" class="hover:text-accent dark:hover:text-accent-dark transition block">3. 項目見出しその３</a></li>
+              </ul>
+            </nav>
+
+            <!-- メイン記事エリア -->
+            <div class="flex-1 space-y-8 text-base leading-relaxed border-t md:border-t-0 md:border-l md:pl-8 border-paper-200 dark:border-paper-700 pt-6 md:pt-0">
+              
+              <section id="section-1" class="space-y-3">
+                <h3 class="text-lg font-bold font-sans border-l-4 border-accent pl-3">1. 項目見出しその１</h3>
+                <p>
+                  ここはサイドバー固定目次と連動する本文エリアの見本テキストです。スクロールした際にも左側の目次エリアが画面に追従して固定表示されます。
+                </p>
+              </section>
+
+              <section id="section-2" class="space-y-3">
+                <h3 class="text-lg font-bold font-sans border-l-4 border-accent pl-3">2. 項目見出しその２</h3>
+                <p>
+                  解説記事やドキュメント、長編記事などの構成で使いやすいレイアウトです。見出しデザインと本文の余白感を確認してください。
+                </p>
+              </section>
+
+              <section id="section-3" class="space-y-3">
+                <h3 class="text-lg font-bold font-sans border-l-4 border-accent pl-3">3. 項目見出しその３</h3>
+                <p>
+                  各セクションへのスムーズスクロール動作や、モバイル表示時のレスポンシブなカラム落ち（1カラム化）の挙動もテストしていただけます。
+                </p>
+              </section>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- コード -->
+        <div id="code-twocol" class="hidden font-sans text-xs bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto relative">
+          <pre><code>&lt;!-- 親要素に flex / items-start を指定 --&gt;
+&lt;div class="flex flex-col md:flex-row gap-8 items-start"&gt;
+  &lt;!-- スティッキー目次 (md:sticky md:top-24) --&gt;
+  &lt;nav class="w-full md:w-56 md:sticky md:top-24 p-4 bg-paper-100"&gt;
+    &lt;h4&gt;目次&lt;/h4&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#sec1"&gt;1. 項目見出し&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+
+  &lt;!-- メイン本文 --&gt;
+  &lt;div class="flex-1 space-y-8"&gt;
+    &lt;section id="sec1"&gt;...&lt;/section&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          <button onclick="copyCode(this)" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Copy</button>
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           Pattern 6: 脚注 ＆ アコーディオン解説
+           ========================================== -->
+      <section id="pattern-accordion" class="scroll-mt-24 space-y-6 pb-12">
+        <div class="border-b border-paper-200 dark:border-paper-800 pb-3 flex justify-between items-end">
+          <div>
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-accent dark:text-accent-dark">Pattern 06</span>
+            <h2 class="text-2xl font-bold font-sans">アコーディオン ＆ 脚注ポップアップ</h2>
+          </div>
+          <button onclick="toggleCode('code-accordion')" class="text-xs font-sans px-3 py-1.5 rounded bg-paper-200 dark:bg-paper-800 hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition">
+            コードを表示
+          </button>
+        </div>
+
+        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+          作品内の専門用語の解説、作者あとがき、設定資料などを文章の流れを阻害せずに掲載するパターンです。クリック（タップ）で開閉できるアコーディオンや、ツールチップ型の脚注を活用します。
+        </p>
+
+        <!-- プレビュー -->
+        <div class="bg-white dark:bg-paper-800/30 p-6 sm:p-10 rounded-2xl border border-paper-200 dark:border-paper-800 shadow-sm space-y-8 max-w-[38em] mx-auto leading-relaxed">
+          
+          <p>
+            注釈付きテキストの表示見本です。本文中の気になる用語
+            <span class="inline-block relative group cursor-pointer text-accent dark:text-accent-dark underline underline-offset-4 font-semibold">
+              ［※1: 見本用用語］
+              <!-- 脚注ポップアップ (Hover/Touch) -->
+              <span class="opacity-0 group-hover:opacity-100 transition duration-200 pointer-events-none group-hover:pointer-events-auto absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-900 text-slate-100 text-xs rounded-lg shadow-lg font-sans z-20 font-normal">
+                ホバー時に表示されるツールチップ形式の注釈見本テキストです。
+              </span>
+            </span>
+            の上にマウスを載せる（またはタップする）ことで、補足説明をポップアップ表示できます。
+          </p>
+
+          <!-- 折りたたみアコーディオン (HTML5 details / summary) -->
+          <details class="group bg-paper-100 dark:bg-paper-800/60 rounded-xl border border-paper-200 dark:border-paper-700 font-sans transition">
+            <summary class="p-4 font-bold text-sm cursor-pointer flex justify-between items-center select-none list-none">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-accent dark:text-accent-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                【補足エリア】クリックで開閉する見本枠です
+              </span>
+              <span class="text-xs transition-transform duration-200 group-open:rotate-180">▼</span>
+            </summary>
+            <div class="p-4 pt-0 text-xs text-paper-800/80 dark:text-paper-100/80 leading-relaxed border-t border-paper-200/60 dark:border-paper-700/60 mt-2">
+              <p class="pt-2">
+                アコーディオンの中身に入る解説や補足文章の見本です。長文の注釈や「あとがき」「設定資料」などを、読者の操作で展開できるように収納しておけます。
+              </p>
+            </div>
+          </details>
+
+        </div>
+
+        <!-- コード -->
+        <div id="code-accordion" class="hidden font-sans text-xs bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto relative">
+          <pre><code>&lt;!-- ピュアHTML5 アコーディオン (&lt;details&gt; / &lt;summary&gt;) --&gt;
+&lt;details class="bg-paper-100 p-4 rounded-xl"&gt;
+  &lt;summary class="font-bold cursor-pointer"&gt;【補足エリア】クリックで開閉...&lt;/summary&gt;
+  &lt;p class="mt-2 text-xs"&gt;アコーディオンの中身に入る解説のダミー文章...&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+          <button onclick="copyCode(this)" class="absolute top-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Copy</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- トースト通知 (コードコピー時) -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white font-sans text-xs px-4 py-2.5 rounded-lg shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2">
+    <span>📋</span>
+    <span>コードをクリップボードにコピーしました</span>
+  </div>
+
+  <!-- JavaScript ロジック -->
+  <script>
+    // 1. スクロールプログレスバー計算
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scroll-progress-bar').style.width = scrolled + '%';
+    });
+
+    // 2. モバイルナビゲーション開閉
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+
+    function toggleMobileMenu() {
+      sidebar.classList.toggle('-translate-x-full');
+      mobileOverlay.classList.toggle('hidden');
+    }
+
+    mobileMenuBtn?.addEventListener('click', toggleMobileMenu);
+    mobileOverlay?.addEventListener('click', toggleMobileMenu);
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) toggleMobileMenu();
+      });
+    });
+
+    // 3. ダークモード切り替え
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // 4. フォント切り替え (Serif / Sans)
+    const fontSerifBtn = document.getElementById('font-serif-btn');
+    const fontSansBtn = document.getElementById('font-sans-btn');
+    const mainContent = document.getElementById('main-content-area');
+
+    fontSerifBtn.addEventListener('click', () => {
+      mainContent.classList.remove('font-sans');
+      mainContent.classList.add('font-serif');
+      fontSerifBtn.classList.add('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      fontSansBtn.classList.remove('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      fontSansBtn.classList.add('opacity-70');
+    });
+
+    fontSansBtn.addEventListener('click', () => {
+      mainContent.classList.remove('font-serif');
+      mainContent.classList.add('font-sans');
+      fontSansBtn.classList.add('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      fontSerifBtn.classList.remove('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      fontSerifBtn.classList.add('opacity-70');
+    });
+
+    // 5. フォントサイズコントロール
+    const sizeSmBtn = document.getElementById('size-sm-btn');
+    const sizeMdBtn = document.getElementById('size-md-btn');
+    const sizeLgBtn = document.getElementById('size-lg-btn');
+
+    function resetSizeBtns() {
+      [sizeSmBtn, sizeMdBtn, sizeLgBtn].forEach(b => {
+        b.classList.remove('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      });
+    }
+
+    sizeSmBtn.addEventListener('click', () => {
+      resetSizeBtns();
+      sizeSmBtn.classList.add('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      document.querySelectorAll('article, p').forEach(el => {
+        el.style.fontSize = '0.9rem';
+      });
+    });
+
+    sizeMdBtn.addEventListener('click', () => {
+      resetSizeBtns();
+      sizeMdBtn.classList.add('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      document.querySelectorAll('article, p').forEach(el => {
+        el.style.fontSize = '1rem';
+      });
+    });
+
+    sizeLgBtn.addEventListener('click', () => {
+      resetSizeBtns();
+      sizeLgBtn.classList.add('bg-white', 'dark:bg-paper-800', 'shadow-sm', 'font-bold');
+      document.querySelectorAll('article, p').forEach(el => {
+        el.style.fontSize = '1.125rem';
+      });
+    });
+
+    // 6. 行間リアルタイム切替 (Pattern 01プレビュー用)
+    function setLineHeight(type) {
+      const sampleText = document.getElementById('sample-text-area');
+      if (type === 'tight') sampleText.style.lineHeight = '1.6';
+      if (type === 'normal') sampleText.style.lineHeight = '1.85';
+      if (type === 'relaxed') sampleText.style.lineHeight = '2.1';
+    }
+
+    // 7. コードアコーディオン表示切り替え
+    function toggleCode(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    // 8. コードコピー機能 (Clipboard API & Toast)
+    function copyCode(button) {
+      const pre = button.previousElementSibling;
+      const text = pre.textContent;
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+
+      // トースト通知を表示
+      const toast = document.getElementById('toast');
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
