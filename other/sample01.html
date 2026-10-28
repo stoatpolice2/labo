@@ -633,9 +633,16 @@
       gap: 0.5rem;
     }
 
-    #toast.show {
-      opacity: 1;
-      pointer-events: auto;
+    /* スマホ（1024px未満）の時は非表示 */
+    .hidden-mobile {
+      display: none;
+    }
+
+    /* PC（1024px以上）の時に再表示 */
+    @media (min-width: 1024px) {
+      .hidden-mobile {
+        display: block;
+      }
     }
   </style>
 </head>
@@ -654,7 +661,7 @@
           <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
         <span class="badge">Gallery Pattern Guide</span>
-        <h1 class="header-title">Web画像レイアウト見本集</h1>
+        <h1 class="header-title hidden-mobile">Web画像レイアウト見本集</h1>
       </div>
     </div>
   </header>
@@ -729,7 +736,7 @@
     <main class="main-content">
 
       <div class="gallery-header">
-        <h1>Web画像レイアウト見本集</h1>
+        <h2>Web画像レイアウト見本集</h2>
         <p class="lead">個人サイトで使える各種配置パターンのサンプルページです。</p>
         <p class="lead">各パターンの「コードを表示」ボタンで、実装に必要なHTML/CSSコードを取得できます。</p><br>
         <p class="lead">※ページ内に表示している画像はフリー素材をお借りしたものです。</p>
