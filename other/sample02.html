@@ -53,6 +53,14 @@
   </script>
 
   <style>
+    
+     /* ヘッダー */
+    
+    .novel-header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--bg-border);
+    }
+    
     /* ドロップキャップ表現 (CSS ::first-letter) */
     .drop-cap::first-letter {
       font-size: 3.6em;
@@ -200,6 +208,15 @@
     <!-- メインコンテンツエリア -->
     <main class="flex-1 p-4 sm:p-8 lg:p-12 space-y-20 min-w-0" id="main-content-area">
 
+      <div class="novel-header">
+        <h2 class="text-2xl font-bold font-sans">Web小説レイアウト見本集</h2>
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        個人サイトで使える各種配置パターンのサンプルページです。<br>
+        各パターンの「コードを表示」ボタンで、実装に必要なHTML/CSSコードを取得できます。<br><br>
+        ※ページ内に表示している画像はフリー素材をお借りしたものです。
+        </p>
+      </div>
+
       <!-- ==========================================
            Pattern 1: シングルカラム・スリム
            ========================================== -->
@@ -216,8 +233,6 @@
 
         <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
           日本語のWEB読書において最も疲れにくいとされる「1行35〜40文字前後 (`max-width: 38em` 前後)」の幅に制限した標準レイアウトです。Mediumやnote、電子書籍リーダーでも標準的に採用されています。</p>
-        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
-        各パターンの「コードを表示」ボタンで、実装に必要なHTML/CSSコードを取得できます。</p>
 
         <!-- インタラクティブ行間切替プレビューコントロール -->
         <div class="bg-paper-100 dark:bg-paper-800/60 p-4 rounded-xl border border-paper-200 dark:border-paper-800 flex flex-wrap items-center gap-4 font-sans text-xs">
@@ -276,7 +291,7 @@
           </button>
         </div>
 
-        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
           作品の扉ページや短編小説・コラムの冒頭に最適。大きなタイトル・サブタイトルと、物語の先頭一文字を巨大化させるドロップキャップ（`::first-letter`）で雑誌のような上質な世界観を作り出します。
         </p>
 
@@ -345,7 +360,7 @@
           </button>
         </div>
 
-        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
           CSSの `writing-mode: vertical-rl;` を使用した本格的な縦書き組版です。2桁の数字などを正しく直立させる「縦中横（`text-combine-upright`）」も組み込んでいます。右から左へと横スクロールして読み進めます。
         </p>
 
@@ -429,7 +444,7 @@
           </button>
         </div>
 
-        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
           長文の中で重要なセリフや名言、記事の結論などを視覚的に目立たせる演出です。読者が流し読みをしていても目を留めやすくなり、読書リズムにアクセントを与えます。
         </p>
 
@@ -497,7 +512,7 @@
           </button>
         </div>
 
-        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
           長編小説の章一覧や、Webコラム・解説記事に最適なレイアウトです。画面左側の目次がスクロール追従（`position: sticky`）し、読者がいつでも現在位置を把握できます。
         </p>
 
@@ -580,7 +595,7 @@
           </button>
         </div>
 
-        <p class="font-sans text-xs text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
+        <p class="font-sans text-s text-paper-800/70 dark:text-paper-100/70 leading-relaxed">
           作品内の専門用語の解説、作者あとがき、設定資料などを文章の流れを阻害せずに掲載するパターンです。クリック（タップ）で開閉できるアコーディオンや、ツールチップ型の脚注を活用します。
         </p>
 
