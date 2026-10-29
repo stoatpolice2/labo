@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUNA Sheet| Stoat Labo</title>
+    
+    <!-- ファビコンの設定 -->
+    <link rel="icon" href="../../images/icon.webp" type="image/x-icon">
+
+    <!-- Open Graph Protocol (OGP) の設定 -->
+    <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+    <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+    <meta property="og:image" content="../../images/ogp.webp">
+    <meta property="og:site_name" content="Stoat Labo">
+    <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* -----------------------------------------
+       基本スタイル & 変数設定
+       ----------------------------------------- */
+    :root {
+      --bg-color: #0d0d0d;
+      --card-bg: #1a1a1a;
+      --accent-color: #ffd700; /* 濃い黄色 / ゴールド */
+      --accent-hover: #ffea00;
+      --text-main: #ffffff;
+      --text-sub: #b3b3b3;
+      --border-color: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* -----------------------------------------
+       ヘッダー
+       ----------------------------------------- */
+    header {
+      text-align: center;
+      padding: 50px 20px 30px;
+      border-bottom: 2px solid var(--accent-color);
+      background: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, rgba(13, 13, 13, 1) 100%);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      letter-spacing: 4px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    header p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    /* -----------------------------------------
+       メインコンテンツ / レイアウト
+       ----------------------------------------- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.2em;
+      background-color: var(--accent-color);
+    }
+
+    .character-grid {
+      display: grid;
+      /* PC閲覧時：縦4列 */
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px 20px;
+      margin-bottom: 60px;
+    }
+
+    /* スマホ閲覧時（768px以下）：縦2列 */
+    @media (max-width: 768px) {
+      .character-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 12px;
+        margin-bottom: 40px;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* -----------------------------------------
+       キャラクターカード
+       ----------------------------------------- */
+    .character-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px 15px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    /* ホバー時のカード浮き上がり効果 */
+    .character-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-color);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.15);
+    }
+
+    /* カード背景の装飾ライン */
+    .character-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-color);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .character-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* -----------------------------------------
+       多角形サムネイル（六角形）
+       ----------------------------------------- */
+    .thumbnail-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 15px;
+      cursor: pointer;
+    }
+
+    /* 多角形外枠（ゴールドのアクセント） */
+    .polygon-border {
+      width: 100%;
+      height: 100%;
+      background-color: var(--accent-color);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease, filter 0.3s ease;
+    }
+
+    /* 多角形内枠（画像エリア） */
+    .polygon-inner {
+      width: calc(100% - 6px);
+      height: calc(100% - 6px);
+      background-color: var(--bg-color);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      overflow: hidden;
+    }
+
+    .polygon-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.3s ease;
+    }
+
+    /* サムネイルのホバーアニメーション */
+    .character-card:hover .polygon-border {
+      transform: rotate(15deg) scale(1.05);
+      filter: drop-shadow(0 0 8px var(--accent-color));
+    }
+
+    .character-card:hover .polygon-inner img {
+      transform: rotate(-15deg) scale(1.15); /* 外枠の回転を相殺しつつ画像を拡大 */
+    }
+
+    /* -----------------------------------------
+       情報エリア（名前・コメント）
+       ----------------------------------------- */
+    .character-name {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .comments-list {
+      list-style: none;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    .comments-list li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .comments-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* コメント横のアイコン風ドット */
+    .comments-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.6rem;
+      color: var(--accent-color);
+      transition: transform 0.2s ease;
+    }
+
+    .character-card:hover .comments-list li::before {
+      transform: scale(1.3);
+    }
+
+    /* -----------------------------------------
+       フリーテキストエリア
+       ----------------------------------------- */
+    .world-section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .world-content {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .world-content p {
+      margin-bottom: 15px;
+    }
+
+    .world-content p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* -----------------------------------------
+       フッター
+       ----------------------------------------- */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-sub);
+      font-size: 0.8rem;
+    }
+
+    /* -----------------------------------------
+       トップに戻るボタン
+       ----------------------------------------- */
+    .back-to-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 48px;
+      height: 48px;
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
+      z-index: 1000;
+    }
+
+    /* スクロール時に表示するクラス */
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+    }
+
+    .back-to-top:active {
+      transform: translateY(0) scale(0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header>
+    <nav style="margin-bottom: 20px;">
+      <a href="../demo15.html" style="color: #ffd700; text-decoration: none; font-weight: bold;">← HOMEに戻る</a>
+    </nav>
+    <h1>Character Archive</h1>
+    <p>登場キャラクター一覧</p>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="container">
+
+    <!-- キャラクター一覧セクション -->
+    <section>
+      <h2 class="section-title">CHARACTERS</h2>
+      <div class="character-grid">
+
+        <!-- キャラクター 1 -->
+        <article class="character-card">
+          <div class="thumbnail-wrapper">
+            <div class="polygon-border">
+              <div class="polygon-inner">
+                <img src="../../images/icon.webp" alt="キャラクター1">
+              </div>
+            </div>
+          </div>
+          <h3 class="character-name">ライトニング</h3>
+          <ul class="comments-list">
+            <li>光を操る凄腕の魔法使い。</li>
+            <li>常に冷静沈着で判断が早い。</li>
+            <li>甘いものには目がない一面も。</li>
+          </ul>
+        </article>
+
+        <!-- キャラクター 2 -->
+        <article class="character-card">
+          <div class="thumbnail-wrapper">
+            <div class="polygon-border">
+              <div class="polygon-inner">
+                <img src="../../images/icon.webp" alt="キャラクター2">
+              </div>
+            </div>
+          </div>
+          <h3 class="character-name">シャドウ</h3>
+          <ul class="comments-list">
+            <li>影の中に身を隠す暗殺者。</li>
+            <li>素早い動きで敵を翻弄する。</li>
+            <li>実は仲間思いで義理堅い。</li>
+          </ul>
+        </article>
+
+        <!-- キャラクター 3 -->
+        <article class="character-card">
+          <div class="thumbnail-wrapper">
+            <div class="polygon-border">
+              <div class="polygon-inner">
+                <img src="../../images/icon.webp" alt="キャラクター3">
+              </div>
+            </div>
+          </div>
+          <h3 class="character-name">ブレイズ</h3>
+          <ul class="comments-list">
+            <li>熱血漢あふれる前衛の戦士。</li>
+            <li>巨大な大剣を軽々と振るう。</li>
+            <li>細かい計算や計画は苦手。</li>
+          </ul>
+        </article>
+
+        <!-- キャラクター 4 -->
+        <article class="character-card">
+          <div class="thumbnail-wrapper">
+            <div class="polygon-border">
+              <div class="polygon-inner">
+                <img src="../../images/icon.webp" alt="キャラクター4">
+              </div>
+            </div>
+          </div>
+          <h3 class="character-name">バレット</h3>
+          <ul class="comments-list">
+            <li>遠距離支援が得意なメカニック。</li>
+            <li>自作のガジェットで戦う。</li>
+            <li>夜更かしして研究に没頭しがち。</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 世界観・あらすじ セクション -->
+    <section class="world-section">
+      <h2 class="section-title">STORY &amp; WORLD</h2>
+      <div class="world-content">
+        <p>
+          【ここに物語のあらすじや概要を記入します】<br>
+          かつて光と影の均衡が保たれていた世界「ルナ」。しかし、突如として現れた未知の歪みにより、世界各地で異変が発生し始める。<br>
+          それぞれの目的を抱えた仲間たちは、己の能力を駆使して世界の謎に迫っていく。彼らが辿り着く真実とは——。
+        </p>
+      </div>
+    </section>
+
+  </main>
+  
+    <!-- フッター -->
+    <footer>
+        <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+
+  <!-- トップに戻るボタン -->
+  <button id="backToTopBtn" class="back-to-top" aria-label="ページの最上部に戻る">▲</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const backToTopBtn = document.getElementById('backToTopBtn');
+
+      // スクロール量に応じて「トップに戻るボタン」を表示/非表示
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+
+      // ボタンクリック時にページ最上部へスムーズスクロール
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
