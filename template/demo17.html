@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POP CANVAS | Stoat Labo</title>
+
+  <!-- ファビコン & OGP -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=MURECHO:wght@800&family=Noto+Sans+JP:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome (SNS/UI Icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* --------------------------------------------------
+       1. 全体・変数・背景設定
+    -------------------------------------------------- */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #a8edd8 0%, #fed6e3 50%, #d4fc79 100%);
+      --text-main: #222222;
+      --card-bg: rgba(255, 255, 255, 0.35);
+      --card-border: rgba(255, 255, 255, 0.65);
+      --font-jp: 'Noto Sans JP', sans-serif;
+      --font-hand: 'Caveat', cursive;
+      --font-pop: 'MURECHO', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-jp);
+      color: var(--text-main);
+      background-color: #fdf6e4;
+      background-image: radial-gradient(#ffd54f 15%, transparent 16%), radial-gradient(#81d4fa 15%, transparent 16%);
+      background-size: 60px 60px;
+      background-position: 0 0, 30px 30px;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+      overflow-x: hidden;
+    }
+
+    /* --------------------------------------------------
+       2. メインコンテナ（グラスモフィズム）
+    -------------------------------------------------- */
+    .canvas-container {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 3px solid var(--card-border);
+      border-radius: 28px;
+      padding: 40px 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12), inset 0 0 15px rgba(255,255,255,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+    }
+
+    /* --------------------------------------------------
+       3. ヘッダー & タイトル
+    -------------------------------------------------- */
+    header {
+      text-align: center;
+      width: 100%;
+    }
+
+    .site-title {
+      font-family: var(--font-pop);
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #ff477e;
+      text-shadow: 3px 3px 0 #fff, 6px 6px 0 #222;
+      letter-spacing: 2px;
+      transform: rotate(-1.5deg);
+      margin-bottom: 8px;
+    }
+
+    .site-subtitle {
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: #222;
+      color: #fff;
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 20px;
+      transform: rotate(1deg);
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    }
+
+    /* --------------------------------------------------
+       4. ステッカー風ナビゲーション
+    -------------------------------------------------- */
+    .sticker-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px 16px;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .sticker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #222;
+      border-radius: 14px;
+      box-shadow: 3px 4px 0px #222;
+      border: 2px solid #222;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sticker:hover {
+      transform: scale(1.1) rotate(0deg) !important;
+      box-shadow: 6px 8px 15px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    .sticker:active {
+      transform: scale(0.98) !important;
+      box-shadow: 1px 2px 0px #222;
+    }
+
+    /* ナビゲーション用ステッカーカラー */
+    .nav-about   { background: #fff59d; transform: rotate(-2deg); }
+    .nav-new     { background: #ffcdd2; transform: rotate(2deg); }
+    .nav-illust  { background: #e1f5fe; transform: rotate(-3deg); }
+    .nav-comic   { background: #d1c4e9; transform: rotate(3deg); }
+    .nav-profile { background: #ffe0b2; transform: rotate(2deg); }
+
+    /* --------------------------------------------------
+       ハンバーガーメニュー（スマホ用）
+    -------------------------------------------------- */
+    .hamburger-btn {
+      display: none;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 48px;
+      height: 48px;
+      background: #ff477e;
+      border: 2px solid #222;
+      border-radius: 14px;
+      box-shadow: 3px 3px 0px #222;
+      z-index: 90;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.4rem;
+      transition: transform 0.2s;
+    }
+
+    .hamburger-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* --------------------------------------------------
+       5. 共通セクションスタイル
+    -------------------------------------------------- */
+    section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-title {
+      font-family: var(--font-hand);
+      font-size: 2.8rem;
+      color: #222;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+      text-shadow: 2px 2px 0 #fff;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 105, 180, 0.4);
+      z-index: -1;
+      border-radius: 4px;
+    }
+
+    /* --------------------------------------------------
+       6. 「About」セクション
+    -------------------------------------------------- */
+    .about-card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid #222;
+      border-radius: 18px;
+      padding: 24px;
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 4px 6px 0 #222;
+      line-height: 1.8;
+      font-size: 0.98rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .about-card strong {
+      color: #ff477e;
+    }
+
+    /* --------------------------------------------------
+       7. 「New」更新履歴セクション
+    -------------------------------------------------- */
+    .update-box {
+      background: #ffffff;
+      border: 2px solid #222;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 4px 6px 0 #222;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .update-box::-webkit-scrollbar {
+      width: 8px;
+    }
+    .update-box::-webkit-scrollbar-thumb {
+      background: #ff80ab;
+      border-radius: 4px;
+    }
+
+    .update-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .update-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      border-bottom: 1px dashed #e0e0e0;
+      padding-bottom: 8px;
+    }
+
+    .update-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .update-date {
+      font-weight: 800;
+      color: #666;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .update-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid #222;
+      white-space: nowrap;
+    }
+
+    .tag-illust { background: #b3e5fc; }
+    .tag-comic   { background: #fff59d; }
+    .tag-info    { background: #f8bbd0; }
+
+    .update-text {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    /* --------------------------------------------------
+       8. 「Gallery」ポラロイド風イラスト展示
+    -------------------------------------------------- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 28px;
+      width: 100%;
+      justify-items: center;
+      padding: 10px 0;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 12px 12px 20px 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 2px 5px rgba(0,0,0,0.1);
+      border: 1px solid #eaeaea;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-align: center;
+      width: 100%;
+      max-width: 220px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .pol-1 { transform: rotate(-3deg); }
+    .pol-2 { transform: rotate(2deg); }
+    .pol-3 { transform: rotate(-2deg); }
+    .pol-4 { transform: rotate(4deg); }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.08);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      z-index: 5;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 2px;
+      background: #eee;
+      display: block;
+    }
+
+    .polaroid .caption {
+      font-family: var(--font-hand);
+      font-size: 1.1rem;
+      color: #333;
+      margin-top: 10px;
+      line-height: 1;
+    }
+
+    /* --------------------------------------------------
+       9. 「Profile」マスキングテープメモ＆SNSリンク
+    -------------------------------------------------- */
+    .bio-memo {
+      position: relative;
+      background: #fffef0;
+      color: #444;
+      padding: 28px 24px 22px;
+      border-radius: 4px;
+      box-shadow: 3px 8px 20px rgba(0,0,0,0.12);
+      max-width: 580px;
+      width: 100%;
+      transform: rotate(-0.5deg);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      text-align: center;
+      border: 1px solid #f0efe0;
+    }
+
+    .bio-memo::before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 140px;
+      height: 28px;
+      background: rgba(255, 220, 100, 0.75);
+      border-left: 2px dashed rgba(255,255,255,0.6);
+      border-right: 2px dashed rgba(255,255,255,0.6);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #222;
+      margin-bottom: 12px;
+    }
+
+    .profile-name {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #222;
+      margin-bottom: 6px;
+    }
+
+    .sns-sticker-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 15px;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .sns-sticker {
+      font-size: 0.85rem;
+      padding: 6px 14px;
+    }
+
+    .stk-x        { background: #fff59d; transform: rotate(2deg); }
+    .stk-pixiv    { background: #e1f5fe; transform: rotate(-2deg); }
+    .stk-mail     { background: #ffcdd2; transform: rotate(2deg); }
+
+    /* --------------------------------------------------
+       10. ページのトップに戻るボタン
+    -------------------------------------------------- */
+    .page-top-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      background: #ff477e;
+      color: #fff;
+      border: 2px solid #222;
+      border-radius: 50%;
+      box-shadow: 3px 4px 0px #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      text-decoration: none;
+      z-index: 80;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .page-top-btn.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .page-top-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 3px 8px 12px rgba(0,0,0,0.2);
+    }
+
+    /* --------------------------------------------------
+       11. モーダル (Gallery 拡大表示)
+    -------------------------------------------------- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 16px 16px 28px 16px;
+      border-radius: 12px;
+      max-width: 750px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+      text-align: center;
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #f5f5f5;
+    }
+
+    .modal-caption {
+      font-family: var(--font-hand);
+      font-size: 2.2rem;
+      color: #222;
+      margin-top: 12px;
+    }
+
+    .modal-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 36px;
+      height: 36px;
+      background: #ff477e;
+      color: #fff;
+      border: 2px solid #222;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px 0 #222;
+      transition: transform 0.2s;
+    }
+
+    .close-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* --------------------------------------------------
+       12. フッター
+    -------------------------------------------------- */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #444;
+      margin-top: 20px;
+      z-index: 1;
+    }
+
+    footer a {
+      color: #222;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* --------------------------------------------------
+       13. レスポンシブ対応 (スマホ用ナビ切り替え)
+    -------------------------------------------------- */
+    @media (max-width: 768px) {
+      .hamburger-btn {
+        display: flex;
+      }
+
+      .sticker-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(253, 246, 228, 0.96);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        z-index: 85;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        margin-top: 0;
+      }
+
+      .sticker-nav.open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .sticker {
+        font-size: 1.1rem;
+        padding: 12px 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .canvas-container {
+        padding: 30px 16px;
+        gap: 40px;
+      }
+
+      .site-title {
+        font-size: 2.5rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .polaroid {
+        padding: 8px 8px 16px 8px;
+      }
+
+      .polaroid img {
+        height: 130px;
+      }
+
+      .polaroid .caption {
+        font-size: 1.3rem;
+      }
+
+      .bio-memo {
+        padding: 24px 16px 18px;
+        font-size: 0.88rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーボタン（スマホ用） -->
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="メニューを開く">
+    <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+  </button>
+
+  <!-- メインキャンバスコンテナ -->
+  <div class="canvas-container">
+    
+    <!-- ヘッダーエリア -->
+    <header>
+      <h1 class="site-title">POP CANVAS</h1>
+      <div class="site-subtitle">Illust & Comic</div>
+      
+      <!-- ステッカー風ナビゲーション -->
+      <nav class="sticker-nav" id="stickerNav">
+        <a href="#about" class="sticker nav-about">❓ About</a>
+        <a href="#new" class="sticker nav-new">✨ New</a>
+        <a href="#illust" class="sticker nav-illust">🎨 Illust</a>
+        <a href="#comic" class="sticker nav-comic">🖼️ Comic</a>
+        <a href="#profile" class="sticker nav-profile">👤 Profile</a>
+      </nav>
+    </header>
+
+    <!-- About セクション -->
+    <section id="about">
+      <h2 class="section-title">About</h2>
+      <div class="about-card">
+        <p>
+          このサイトは管理人が趣味で制作したイラストや漫画を展示しています。<br><br>
+          ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+        </p>
+      </div>
+    </section>
+
+    <!-- New セクション (更新履歴) -->
+    <section id="new">
+      <h2 class="section-title">New Updates</h2>
+      <div class="update-box">
+        <ul class="update-list">
+          <li class="update-item">
+            <span class="update-date">2026.11.01</span>
+            <span class="update-tag tag-comic">COMIC</span>
+            <span class="update-text">Comicに「雪原に刻む足跡」を追加しました</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026.10.15</span>
+            <span class="update-tag tag-info">INFO</span>
+            <span class="update-text">秋の合同誌イベント参加情報を更新しました</span>
+          </li>
+          <li class="update-item">
+            <span class="update-date">2026.09.30</span>
+            <span class="update-tag tag-illust">ILLUST</span>
+            <span class="update-text">Galleryに「賑やかな町」を追加しました</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Illust セクション -->
+    <section id="illust">
+      <h2 class="section-title">Illust</h2>
+      <div class="gallery-grid">
+
+        <!-- ポラロイド 1 -->
+        <div class="polaroid pol-1" onclick="openModal('../images/picture01.webp', 'Colorful World', '賑やかな町')">
+          <img src="../images/picture01.webp" alt="Colorful World">
+          <div class="caption">賑やかな町</div>
+        </div>
+
+        <!-- ポラロイド 2 -->
+        <div class="polaroid pol-2" onclick="openModal('../images/picture02.webp', 'Neon Dream', '美しい湖畔')">
+          <img src="../images/picture02.webp" alt="Neon Dream">
+          <div class="caption">美しい湖畔</div>
+        </div>
+
+        <!-- ポラロイド 3 -->
+        <div class="polaroid pol-3" onclick="openModal('../images/picture03.webp', 'Abstract Paint', '荘厳な場内')">
+          <img src="../images/picture03.webp" alt="Abstract Paint">
+          <div class="caption">荘厳な場内</div>
+        </div>
+
+      </div>
+    </section>
+    
+    <!-- Comicセクション -->
+    <section id="comic">
+      <h2 class="section-title">Comic</h2>
+      <div class="gallery-grid">
+
+        <!-- ポラロイド 1 -->
+        <div class="polaroid pol-1" onclick="openModal('../images/picture17.webp', 'Colorful World', '見渡す限りの自然')">
+          <img src="../images/picture17.webp" alt="Colorful World">
+          <div class="caption">見渡す限りの自然</div>
+        </div>
+
+        <!-- ポラロイド 2 -->
+        <div class="polaroid pol-2" onclick="openModal('../images/picture18.webp', 'Neon Dream', '色とりどりの肉野菜')">
+          <img src="../images/picture18.webp" alt="Neon Dream">
+          <div class="caption">色とりどりの肉野菜</div>
+        </div>
+
+        <!-- ポラロイド 3 -->
+        <div class="polaroid pol-3" onclick="openModal('../images/picture19.webp', 'Abstract Paint', '雪原に刻む足跡')">
+          <img src="../images/picture19.webp" alt="Abstract Paint">
+          <div class="caption">雪原に刻む足跡</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Profile セクション (マスキングテープ風) -->
+    <section id="profile">
+      <h2 class="section-title">Profile</h2>
+      <div class="bio-memo">
+        <img src="../images/icon.webp" alt="プロフィール画像" class="profile-avatar">
+        <div class="profile-name">管理人</div>
+        <p>
+          主にイラストや漫画を描いています。<br>
+          感想をいただけるとすごく励みになります。<br>
+        </p>
+
+        <!-- SNSリンク（ミニステッカー風） -->
+        <div class="sns-sticker-grid">
+          <a href="#" class="sticker sns-sticker stk-x"><i class="fa-brands fa-x-twitter"></i> X (Twitter)</a>
+          <a href="#" class="sticker sns-sticker stk-pixiv"><i class="fa-solid fa-palette"></i> pixiv</a>
+          <a href="#" class="sticker sns-sticker stk-mail"><i class="fa-regular fa-envelope"></i> Contact</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ページのトップに戻るボタン -->
+  <a href="#" class="page-top-btn" id="pageTopBtn" aria-label="ページの先頭へ戻る">
+    <i class="fa-solid fa-arrow-up"></i>
+  </a>
+
+  <!-- 画像拡大モーダル -->
+  <div id="imageModal" class="modal" onclick="closeModalOnOuterClick(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <img id="modalImg" class="modal-img" src="" alt="拡大画像">
+      <div id="modalCaption" class="modal-caption"></div>
+      <div id="modalDesc" class="modal-desc"></div>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer>
+    <div class="copyright">
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    /* --------------------------------------------------
+       1. モーダル処理
+    -------------------------------------------------- */
+    function openModal(imgSrc, caption, desc) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalCaption = document.getElementById('modalCaption');
+      const modalDesc = document.getElementById('modalDesc');
+
+      modalImg.src = imgSrc;
+      modalCaption.textContent = caption;
+      modalDesc.textContent = desc || '';
+
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOnOuterClick(event) {
+      if (event.target.classList.contains('modal')) {
+        closeModal();
+      }
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    /* --------------------------------------------------
+       2. ページのトップに戻るボタンの表示・非表示コントロール
+    -------------------------------------------------- */
+    const pageTopBtn = document.getElementById('pageTopBtn');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        pageTopBtn.classList.add('show');
+      } else {
+        pageTopBtn.classList.remove('show');
+      }
+    });
+
+    /* --------------------------------------------------
+       3. スマホ用ハンバーガーメニューコントロール
+    -------------------------------------------------- */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const stickerNav = document.getElementById('stickerNav');
+    const navLinks = stickerNav.querySelectorAll('a');
+
+    function toggleMenu() {
+      const isOpen = stickerNav.classList.toggle('open');
+      if (isOpen) {
+        hamburgerIcon.classList.remove('fa-bars');
+        hamburgerIcon.classList.add('fa-xmark');
+        document.body.style.overflow = 'hidden';
+      } else {
+        hamburgerIcon.classList.remove('fa-xmark');
+        hamburgerIcon.classList.add('fa-bars');
+        document.body.style.overflow = '';
+      }
+    }
+
+    hamburgerBtn.addEventListener('click', toggleMenu);
+
+    // メニューリンククリック時にメニューを閉じる
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (stickerNav.classList.contains('open')) {
+          toggleMenu();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
