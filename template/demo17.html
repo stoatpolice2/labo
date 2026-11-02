@@ -124,7 +124,7 @@
       justify-content: center;
       gap: 14px 16px;
       width: 100%;
-      margin-top: 15px;
+      margin-top: 25px;
     }
 
     .sticker {
@@ -176,7 +176,7 @@
       border: 2px solid #222;
       border-radius: 14px;
       box-shadow: 3px 3px 0px #222;
-      z-index: 90;
+      z-index: 100;
       cursor: pointer;
       align-items: center;
       justify-content: center;
@@ -480,7 +480,7 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(5px);
-      z-index: 100;
+      z-index: 110;
       justify-content: center;
       align-items: center;
       padding: 20px;
@@ -588,7 +588,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
+        width: 100vw;
         height: 100vh;
         background: rgba(253, 246, 228, 0.96);
         backdrop-filter: blur(8px);
@@ -597,7 +597,7 @@
         justify-content: center;
         align-items: center;
         gap: 20px;
-        z-index: 85;
+        z-index: 90;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
@@ -639,7 +639,7 @@
       }
 
       .polaroid .caption {
-        font-size: 1.3rem;
+        font-size: 0.88rem;
       }
 
       .bio-memo {
@@ -662,6 +662,15 @@
     <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
   </button>
 
+  <!-- ステッカー風ナビゲーション (画面固定用) -->
+  <nav class="sticker-nav" id="stickerNav">
+    <a href="#about" class="sticker nav-about">❓ About</a>
+    <a href="#new" class="sticker nav-new">✨ New</a>
+    <a href="#illust" class="sticker nav-illust">🎨 Illust</a>
+    <a href="#comic" class="sticker nav-comic">🖼️ Comic</a>
+    <a href="#profile" class="sticker nav-profile">👤 Profile</a>
+  </nav>
+
   <!-- メインキャンバスコンテナ -->
   <div class="canvas-container">
     
@@ -669,15 +678,6 @@
     <header>
       <h1 class="site-title">POP CANVAS</h1>
       <div class="site-subtitle">Illust & Comic</div>
-      
-      <!-- ステッカー風ナビゲーション -->
-      <nav class="sticker-nav" id="stickerNav">
-        <a href="#about" class="sticker nav-about">❓ About</a>
-        <a href="#new" class="sticker nav-new">✨ New</a>
-        <a href="#illust" class="sticker nav-illust">🎨 Illust</a>
-        <a href="#comic" class="sticker nav-comic">🖼️ Comic</a>
-        <a href="#profile" class="sticker nav-profile">👤 Profile</a>
-      </nav>
     </header>
 
     <!-- About セクション -->
