@@ -124,7 +124,7 @@
       justify-content: center;
       gap: 14px 16px;
       width: 100%;
-      margin-top: 25px;
+      margin-top: -35px;
     }
 
     .sticker {
@@ -161,33 +161,6 @@
     .nav-illust  { background: #e1f5fe; transform: rotate(-3deg); }
     .nav-comic   { background: #d1c4e9; transform: rotate(3deg); }
     .nav-profile { background: #ffe0b2; transform: rotate(2deg); }
-
-    /* --------------------------------------------------
-       ハンバーガーメニュー（スマホ用）
-    -------------------------------------------------- */
-    .hamburger-btn {
-      display: none;
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      width: 48px;
-      height: 48px;
-      background: #ff477e;
-      border: 2px solid #222;
-      border-radius: 14px;
-      box-shadow: 3px 3px 0px #222;
-      z-index: 100;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.4rem;
-      transition: transform 0.2s;
-    }
-
-    .hamburger-btn:active {
-      transform: scale(0.95);
-    }
 
     /* --------------------------------------------------
        5. 共通セクションスタイル
@@ -577,44 +550,8 @@
     }
 
     /* --------------------------------------------------
-       13. レスポンシブ対応 (スマホ用ナビ切り替え)
+       13. レスポンシブ対応
     -------------------------------------------------- */
-    @media (max-width: 768px) {
-      .hamburger-btn {
-        display: flex;
-      }
-
-      .sticker-nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(253, 246, 228, 0.96);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        z-index: 90;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        margin-top: 0;
-      }
-
-      .sticker-nav.open {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .sticker {
-        font-size: 1.1rem;
-        padding: 12px 30px;
-      }
-    }
-
     @media (max-width: 600px) {
       .canvas-container {
         padding: 30px 16px;
@@ -623,6 +560,16 @@
 
       .site-title {
         font-size: 2.5rem;
+      }
+
+      .sticker-nav {
+        margin-top: -25px;
+        gap: 10px 12px;
+      }
+
+      .sticker {
+        font-size: 0.9rem;
+        padding: 8px 16px;
       }
 
       .gallery-grid {
@@ -657,20 +604,6 @@
 </head>
 <body>
 
-  <!-- ハンバーガーボタン（スマホ用） -->
-  <button class="hamburger-btn" id="hamburgerBtn" aria-label="メニューを開く">
-    <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
-  </button>
-
-  <!-- ステッカー風ナビゲーション (画面固定用) -->
-  <nav class="sticker-nav" id="stickerNav">
-    <a href="#about" class="sticker nav-about">❓ About</a>
-    <a href="#new" class="sticker nav-new">✨ New</a>
-    <a href="#illust" class="sticker nav-illust">🎨 Illust</a>
-    <a href="#comic" class="sticker nav-comic">🖼️ Comic</a>
-    <a href="#profile" class="sticker nav-profile">👤 Profile</a>
-  </nav>
-
   <!-- メインキャンバスコンテナ -->
   <div class="canvas-container">
     
@@ -679,6 +612,15 @@
       <h1 class="site-title">POP CANVAS</h1>
       <div class="site-subtitle">Illust & Comic</div>
     </header>
+    
+    <!-- ステッカー風ナビゲーション -->
+    <nav class="sticker-nav" id="stickerNav">
+      <a href="#about" class="sticker nav-about">❓ About</a>
+      <a href="#new" class="sticker nav-new">✨ New</a>
+      <a href="#illust" class="sticker nav-illust">🎨 Illust</a>
+      <a href="#comic" class="sticker nav-comic">🖼️ Comic</a>
+      <a href="#profile" class="sticker nav-profile">👤 Profile</a>
+    </nav>
 
     <!-- About セクション -->
     <section id="about">
@@ -858,38 +800,6 @@
       } else {
         pageTopBtn.classList.remove('show');
       }
-    });
-
-    /* --------------------------------------------------
-       3. スマホ用ハンバーガーメニューコントロール
-    -------------------------------------------------- */
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const hamburgerIcon = document.getElementById('hamburgerIcon');
-    const stickerNav = document.getElementById('stickerNav');
-    const navLinks = stickerNav.querySelectorAll('a');
-
-    function toggleMenu() {
-      const isOpen = stickerNav.classList.toggle('open');
-      if (isOpen) {
-        hamburgerIcon.classList.remove('fa-bars');
-        hamburgerIcon.classList.add('fa-xmark');
-        document.body.style.overflow = 'hidden';
-      } else {
-        hamburgerIcon.classList.remove('fa-xmark');
-        hamburgerIcon.classList.add('fa-bars');
-        document.body.style.overflow = '';
-      }
-    }
-
-    hamburgerBtn.addEventListener('click', toggleMenu);
-
-    // メニューリンククリック時にメニューを閉じる
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (stickerNav.classList.contains('open')) {
-          toggleMenu();
-        }
-      });
     });
   </script>
 </body>
