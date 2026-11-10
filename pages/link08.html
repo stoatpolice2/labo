@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pudding POP | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <!-- Google Fonts: かわいい丸ゴシック体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --------------------------------------------------
+       1. 全体・プリンカラー背景設定
+    -------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      /* ふわふわプリンイエローのグラデーション背景 */
+      background: linear-gradient(135deg, #fffbeb 0%, #ffea85 50%, #ffd000 100%);
+      color: #593b2b; /* カラメルブラウン */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 50px 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* うっすら浮かぶカラメル水玉模様 */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(rgba(89, 59, 43, 0.06) 4px, transparent 4px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    /* --------------------------------------------------
+       2. メインコンテナ（ぷっくりカード）
+    -------------------------------------------------- */
+    .pudding-container {
+      max-width: 500px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 4px solid #593b2b;
+      border-radius: 40px;
+      padding: 40px 24px 32px;
+      box-shadow: 0 16px 32px rgba(89, 59, 43, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin-top: auto;
+      margin-bottom: auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* --------------------------------------------------
+       3. プロフィールセクション
+    -------------------------------------------------- */
+    .profile-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* まあるいプロフィール写真フレーム */
+    .avatar-frame {
+      width: 115px;
+      height: 115px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, #fff7d6, #ffe066);
+      border: 3.5px solid #593b2b;
+      box-shadow: 0 6px 14px rgba(89, 59, 43, 0.15);
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+    }
+
+    .profile-name {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #593b2b;
+      letter-spacing: 1px;
+    }
+
+    .profile-bio {
+      font-size: 0.88rem;
+      color: #73513e;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    /* --------------------------------------------------
+       4. 「ぽよん」と弾むSNSリンクボタン
+    -------------------------------------------------- */
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .pudding-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: #593b2b;
+      
+      /* プリンイエローのグラデーション */
+      background: linear-gradient(180deg, #fffcf0 0%, #ffea85 100%);
+      border: 3px solid #593b2b;
+      border-radius: 30px;
+      
+      box-shadow: 0 5px 0px #593b2b; /* 立体感のあるベタ影 */
+      
+      /* 「ぽよん」と弾むキーアニメーション設定 */
+      transition: transform 0.4s cubic-bezier(0.5, 1.8, 0.5, 0.8), box-shadow 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .link-icon {
+      font-size: 1.2rem;
+    }
+
+    .link-arrow {
+      font-size: 1rem;
+      color: #fff8d6;
+      background: #593b2b;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.5, 1.8, 0.5, 0.8);
+    }
+
+    /* ★「ぽよん」と跳ねる弾力ホバーアニメーション */
+    .pudding-link:hover {
+      /* 一瞬縦横にぷにっと変形しながら跳ね上がる */
+      transform: translateY(-6px) scaleX(1.03) scaleY(0.95);
+      box-shadow: 0 10px 0px #593b2b;
+      background: linear-gradient(180deg, #ffffff 0%, #ffe052 100%);
+    }
+
+    .pudding-link:hover .link-arrow {
+      transform: scale(1.2) rotate(15deg);
+    }
+
+    /* クリック時の押し込み感 */
+    .pudding-link:active {
+      transform: translateY(2px) scaleX(0.98) scaleY(1.02);
+      box-shadow: 0 2px 0px #593b2b;
+    }
+
+    /* --------------------------------------------------
+       5. フッター
+    -------------------------------------------------- */
+    .pudding-footer {
+      font-size: 0.75rem;
+      color: #8c6851;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* レスポンシブ調整 */
+    @media (max-width: 480px) {
+      .pudding-container {
+        padding: 34px 18px 24px;
+        border-radius: 32px;
+      }
+      .pudding-link {
+        padding: 12px 18px;
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pudding-container">
+
+    <!-- プロフィールエリア -->
+    <header class="profile-box">
+      <div class="avatar-frame">
+        <img src="../images/icon.webp" alt="プロフィール画像">
+      </div>
+      <h1 class="profile-name">YourName</h1>
+      <p class="profile-bio">
+        ここに自己紹介などを入力してください🍮<br><br>
+        ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。
+      </p>
+    </header>
+
+    <!-- ぽよんと跳ねるリンクボタン -->
+    <nav class="link-list">
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">🌐</span><span>Web Site</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">𝕏</span><span>X (Twitter)</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">📷</span><span>Instagram</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">🎨</span><span>pixiv</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">🦋</span><span>BlueSky</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">🚀</span><span>Misskey</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">🐘</span><span>Mastodon</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="pudding-link">
+        <div class="link-left"><span class="link-icon">✉️</span><span>Mail Form</span></div>
+        <span class="link-arrow">→</span>
+      </a>
+    </nav>
+
+    <!-- フッター -->
+    <footer class="pudding-footer">
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a>
+    </footer>
+
+  </div>
+
+</body>
+</html>

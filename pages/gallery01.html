@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Gallery | Stoat Labo</title>
+    
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* --- 基本設定（白・黒メインのシンプルデザイン） --- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+      margin: 0;
+      padding: 0 20px 80px;
+      background-color: #ffffff; /* 背景色 */
+      color: #111111; /* 文字色 */
+      line-height: 1.6;
+    }
+
+    /* モーダル表示時に背面（ページ全体）のスクロールを固定するクラス */
+    body.is-modal-open {
+      overflow: hidden;
+    }
+
+    /* --- トップページへ戻るリンク（ページの左上） --- */
+    .back-to-home {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    .back-to-home a {
+      color: #111111; /* 「←TOP」の文字色 */
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .back-to-home a:hover {
+      opacity: 0.5;
+    }
+
+    /* --- ページヘッダー --- */
+    .site-header {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    /* --- セクション共通 --- */
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin: 0 0 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #111111; /* ラインの色 */
+      text-transform: uppercase;
+    }
+
+    .section-comment {
+      font-size: 0.9rem;
+      color: #666666;
+      margin: 0 0 24px;
+    }
+
+    /* --- グリッド配置（サムネイル一覧） --- */
+    /* デフォルト（PC観覧時）：5列 */
+    .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    /* スマホ観覧時（768px以下）：3列 */
+    @media (max-width: 768px) {
+      .thumbnail-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      
+      .site-header {
+        padding: 60px 0 20px;
+      }
+
+      .site-title {
+        font-size: 2rem;
+      }
+
+      .back-to-home {
+        top: 16px;
+        left: 16px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* サムネイル項目（比率 3:4） */
+    .thumbnail-item {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    .thumbnail-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .thumbnail-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.9);
+    }
+
+    /* --- ページ最上部へ戻るボタン（右下固定） --- */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      background-color: #111111; /* ボタンの色 */
+      color: #ffffff; /* 矢印の色 */
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      pointer-events: none; /* 非表示時はクリック判定を無効化 */
+      z-index: 100;
+    }
+
+    .scroll-to-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .scroll-to-top:hover {
+      opacity: 0.8;
+      transform: translateY(-2px);
+    }
+
+    /* --- モーダルオーバーレイ --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* --- 拡大画像表示用の枠 --- */
+    .modal-wrapper {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 2px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 閉じるボタン */
+    .close-btn {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      font-size: 32px;
+      cursor: pointer;
+      color: #ffffff;
+      line-height: 1;
+      padding: 0;
+      transition: opacity 0.2s;
+    }
+
+    .close-btn:hover {
+      opacity: 0.7;
+    }
+
+    /* --- 前へ・次へナビゲーションボタン --- */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: #ffffff;
+      font-size: 28px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.2s, opacity 0.2s;
+      z-index: 1010;
+    }
+
+    .nav-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .prev-btn {
+      left: 10px;
+    }
+
+    .next-btn {
+      right: 10px;
+    }
+    
+    /* --- フッター --- */
+    .gallery-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #718096;
+    font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- トップページへ戻るリンク -->
+  <div class="back-to-home">
+    <a href="#">&larr; TOP</a>
+  </div>
+
+  <!-- ページヘッダー -->
+  <header class="site-header">
+    <h1 class="site-title">GALLERY</h1>
+  </header>
+
+  <div class="gallery-container">
+    
+    <!-- ILLUST セクション -->
+    <section class="gallery-section">
+      <h2 class="section-title">ILLUST</h2>
+      <p class="section-comment">シンプルなギャラリー用テンプレートです。サムネイルをクリックすると画像が拡大表示されます。</p>
+      
+      <div class="thumbnail-grid">
+        <div class="thumbnail-item">
+          <img src="../images/picture01.webp" alt="イラスト1">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture17.webp" alt="イラスト2">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture15.webp" alt="イラスト3">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture16.webp" alt="イラスト4">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture19.webp" alt="イラスト5">
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- COMIC セクション -->
+    <section class="gallery-section">
+      <h2 class="section-title">COMIC</h2>
+      <p class="section-comment">モーダル内に配置されている前後画像への移動ボタンは、そのセクションに配置されている画像の間のみで移動します。</p>
+      
+      <div class="thumbnail-grid">
+        <div class="thumbnail-item">
+          <img src="../images/picture06.webp" alt="イラスト1">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture07.webp" alt="イラスト2">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture08.webp" alt="イラスト3">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture09.webp" alt="イラスト4">
+        </div>
+        
+        <div class="thumbnail-item">
+          <img src="../images/picture10.webp" alt="イラスト5">
+        </div>
+        
+      </div>
+    </section>
+    
+    <!-- COMMENT セクション -->
+      <section class="gallery-section">
+      <h2 class="section-title">COMMENT</h2>
+      <p class="section-comment">
+        このCOMMENTセクションをコピペして「ABOUT（サイトの説明）」や「PROFILE（自己紹介）」などに使用すれば、シンプルなトップページとしても使用できます。<br>
+        その場合（子ページではなく親ページとして使用する場合）は、ページの左上にある「←TOP」のリンクは削除してご利用ください。<br><br>
+        白黒のシンプルなデザインにしてありますが、ラインやボタンの色を変更すればいろんなデザインのサイトに合わせられるかと思います。<br>
+        「ILLUST」「COMIC」セクションは、必要に応じてジャンル名やカップリング名など、任意の名称に変更してください。<br><br>
+        ※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。</p>
+    </section>
+    
+    <footer>
+        <div class="gallery-footer">
+            <p>Template by <a href="https://stoatpolice2.github.io/labo/" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a>
+        </div>
+    </footer>
+
+  </div>
+
+  <!-- ページ最上部へ戻るボタン -->
+  <button class="scroll-to-top" id="scrollToTopBtn" aria-label="ページの最上部へ戻る">&uarr;</button>
+  
+
+  <!-- ==================== 共通単一モーダルエリア ==================== -->
+  <div class="modal-overlay" id="imageModal">
+    <button class="nav-btn prev-btn" id="modalPrevBtn" aria-label="前の画像へ">&lsaquo;</button>
+    <div class="modal-wrapper">
+      <button class="close-btn" id="modalCloseBtn" aria-label="閉じる">&times;</button>
+      <img src="" alt="" class="modal-image" id="modalImage">
+    </div>
+    <button class="nav-btn next-btn" id="modalNextBtn" aria-label="次の画像へ">&rsaquo;</button>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const prevBtn = document.getElementById('modalPrevBtn');
+    const nextBtn = document.getElementById('modalNextBtn');
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+    let currentGroupImages = [];
+    let currentIndex = 0;
+
+    // 画像を表示する関数
+    function showImage(index) {
+      if (currentGroupImages.length === 0) return;
+      // ループ移動処理
+      if (index < 0) {
+        currentIndex = currentGroupImages.length - 1;
+      } else if (index >= currentGroupImages.length) {
+        currentIndex = 0;
+      } else {
+        currentIndex = index;
+      }
+      const targetImg = currentGroupImages[currentIndex];
+      modalImage.src = targetImg.src;
+      modalImage.alt = targetImg.alt;
+    }
+
+    // セクションごとにクリックイベントを設定
+    const sections = document.querySelectorAll('.gallery-section');
+    sections.forEach(section => {
+      const groupImages = Array.from(section.querySelectorAll('.thumbnail-item img'));
+      if (groupImages.length === 0) return;
+
+      groupImages.forEach((img, index) => {
+        img.parentElement.addEventListener('click', () => {
+          currentGroupImages = groupImages;
+          showImage(index);
+          modal.classList.add('is-open');
+          document.body.classList.add('is-modal-open');
+        });
+      });
+    });
+
+    // 前・次ボタンの操作
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex - 1);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex + 1);
+    });
+
+    // キーボード操作（左右矢印キーでの移動、Escでの消去）
+    window.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('is-open')) return;
+      if (e.key === 'ArrowLeft') {
+        showImage(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        showImage(currentIndex + 1);
+      } else if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // モーダルを閉じる処理
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.body.classList.remove('is-modal-open');
+      modalImage.src = '';
+    }
+
+    // 閉じるボタンクリック時
+    closeBtn.addEventListener('click', closeModal);
+
+    // 背景（オーバーレイ）クリック時
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // --- トップへ戻るボタンの表示・非表示およびスクロール処理 ---
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 200) {
+        scrollToTopBtn.classList.add('is-visible');
+      } else {
+        scrollToTopBtn.classList.remove('is-visible');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+</body>
+</html>

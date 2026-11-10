@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FC2ホームページだけでつくる個人サイト | Stoat Labo</title>
+
+        <!-- ファビコンの設定 -->
+        <link href="images/icon.webp" rel="icon" type="image/x-icon" />
+
+        <!-- Open Graph Protocol (OGP) の設定 -->
+        <meta content="Stoat Labo | Web創作支援サイト" property="og:title" />
+        <meta content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト" property="og:description" />
+        <meta content="website" property="og:type" />
+        <meta content="https://stoatpolice2.github.io/labo/" property="og:url" />
+        <meta content="https://stoatpolice2.github.io/labo/images/ogp.webp" property="og:image" />
+        <meta content="Stoat Labo" property="og:site_name" />
+        <meta content="ja_JP" property="og:locale" />
+
+        <style>
+    /* ----------------------------------
+        CSS RESET & VARIABLES
+    ---------------------------------- */
+            :root {
+                --primary: #e06d53;
+                --primary-hover: #c8563c;
+                --accent: #e8963e;
+                --bg-main: #faf7f5;
+                --bg-card: #ffffff;
+                --text-main: #332c2b;
+                --text-muted: #7a6e6b;
+                --border: #e6dad3;
+                --radius: 16px;
+                --grad-primary: linear-gradient(135deg, #e06d53 0%, #e8963e 100%);
+                --grad-hero: linear-gradient(180deg, #fff5f2 0%, #faf7f5 100%);
+                --shadow-sm: 0 6px 18px rgba(224, 109, 83, 0.12);
+                --shadow-lg: 0 14px 32px rgba(224, 109, 83, 0.2);
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+                background-color: var(--bg-main);
+                background-image: radial-gradient(#e8ddd7 1.5px, transparent 1.5px);
+                background-size: 24px 24px;
+                color: var(--text-main);
+                line-height: 1.8;
+                padding-bottom: 60px;
+            }
+
+            a {
+                color: var(--primary);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+            a:hover {
+                color: var(--primary-hover);
+                text-decoration: underline;
+            }
+
+    /* ----------------------------------
+        HERO AREA
+    ---------------------------------- */
+            .hero {
+                background: var(--grad-hero);
+                border-bottom: 2px dashed #e2d5ce;
+                padding: 55px 20px 45px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .hero::before,
+            .hero::after {
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                background: linear-gradient(135deg, rgba(224, 109, 83, 0.12), rgba(232, 150, 62, 0.12));
+                z-index: 0;
+            }
+
+            .hero::before {
+                width: 160px;
+                height: 160px;
+                top: -40px;
+                left: 5%;
+            }
+
+            .hero::after {
+                width: 110px;
+                height: 110px;
+                bottom: 10px;
+                right: 6%;
+            }
+
+            .hero-container {
+                position: relative;
+                z-index: 1;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .header-title {
+                font-size: 2.2rem;
+                letter-spacing: 0.04em;
+                background: var(--grad-primary);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 900;
+                line-height: 1.3;
+                display: inline-block;
+                filter: drop-shadow(0 4px 12px rgba(224, 109, 83, 0.2));
+            }
+
+            .header-subtitle {
+                font-size: 1rem;
+                color: var(--text-muted);
+                margin-top: 12px;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+            }
+
+    /* ----------------------------------
+        LAYOUT & NAV
+    ---------------------------------- */
+            nav {
+                background: var(--grad-primary);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 4px 15px rgba(224, 109, 83, 0.2);
+            }
+
+            nav ul {
+                display: flex;
+                justify-content: center;
+                list-style: none;
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                color: #fff;
+                display: block;
+                padding: 14px 22px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                letter-spacing: 0.03em;
+                transition: all 0.2s;
+                white-space: nowrap;
+            }
+
+            nav a:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                text-decoration: none;
+            }
+
+            .container {
+                max-width: 900px;
+                margin: 40px auto 0;
+                padding: 0 20px;
+            }
+
+            .section {
+                background: var(--bg-card);
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                padding: 36px;
+                margin-bottom: 36px;
+                box-shadow: var(--shadow-sm);
+                transition:
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+            }
+
+            .section:hover {
+                box-shadow: 0 8px 24px rgba(224, 109, 83, 0.15);
+            }
+
+            .section-title {
+                font-size: 1.35rem;
+                color: var(--text-main);
+                position: relative;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                font-weight: 700;
+                padding-left: 14px;
+            }
+
+            .section-title::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 6px;
+                height: 80%;
+                background: var(--grad-primary);
+                border-radius: 4px;
+            }
+
+            .section-title::after {
+                content: "";
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: repeating-linear-gradient(
+                    to right,
+                    #e8ddd7,
+                    #e8ddd7 6px,
+                    transparent 6px,
+                    transparent 12px
+                );
+            }
+
+    /* ----------------------------------
+        ARTICLE SPECIFIC STYLES
+    ---------------------------------- */
+            h3.sub-title {
+                font-size: 1.1rem;
+                color: var(--primary);
+                margin: 20px 0 10px 0;
+                padding-bottom: 4px;
+                border-bottom: 1px dashed var(--border);
+                font-weight: bold;
+            }
+
+            .rule-list {
+                list-style: none;
+                margin-bottom: 15px;
+            }
+
+            .rule-list li {
+                position: relative;
+                padding-left: 28px;
+                margin-bottom: 10px;
+            }
+
+            .rule-list li::before {
+                content: "🐾";
+                position: absolute;
+                left: 0;
+                font-size: 0.9rem;
+            }
+
+            .rule-list li.rule-ng::before {
+                content: "⚠️️";
+                font-size: 0.85rem;
+            }
+
+            .alert-box {
+                background-color: #fff6f3;
+                border: 1px dashed var(--primary);
+                padding: 18px;
+                margin-top: 18px;
+                border-radius: 12px;
+                font-size: 0.9rem;
+                color: #5a443e;
+            }
+
+            /* 目次ボックス */
+            .toc-box {
+                background: #faf5f2;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 20px 24px;
+                margin-bottom: 30px;
+            }
+
+            .toc-title {
+                font-weight: bold;
+                color: var(--primary);
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .toc-list {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            .toc-list li {
+                margin-bottom: 6px;
+                padding-left: 18px;
+                position: relative;
+            }
+
+            .toc-list li::before {
+                content: "・";
+                position: absolute;
+                left: 0;
+                color: var(--primary);
+            }
+
+            .step-item {
+                margin-bottom: 22px;
+                background: #faf5f2;
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid var(--border);
+            }
+
+            .step-item h3 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+                color: var(--text-main);
+            }
+
+            .step-number {
+                display: inline-block;
+                background: var(--grad-primary);
+                color: #fff;
+                font-weight: bold;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 28px;
+                font-size: 0.85rem;
+                margin-right: 8px;
+            }
+
+    /* ----------------------------------
+        IMAGE STYLES
+    ---------------------------------- */
+            .image-container {
+                margin: 20px 0;
+                text-align: center;
+            }
+
+            .image-frame {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid var(--border);
+                background-color: #F8F5F3;
+                display: block;
+            }
+
+            .image-frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                cursor: pointer;
+                transition: transform 0.2s ease, opacity 0.2s ease;
+            }
+
+            .image-frame img:hover {
+                opacity: 0.88;
+                transform: scale(1.02);
+            }
+
+            /* 右下の拡大バッジ */
+            .image-frame::after {
+                content: "🔍 拡大表示";
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background: rgba(51, 44, 43, 0.75);
+                color: #ffffff;
+                font-size: 0.75rem;
+                font-weight: bold;
+                padding: 4px 10px;
+                border-radius: 20px;
+                pointer-events: none;
+                backdrop-filter: blur(2px);
+                transition: background 0.2s ease;
+            }
+
+            .image-frame:hover::after {
+                background: rgba(224, 109, 83, 0.9);
+            }
+
+    /* ----------------------------------
+        MODAL STYLES
+    ---------------------------------- */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.85);
+                backdrop-filter: blur(4px);
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal-content {
+                max-width: 90%;
+                max-height: 90vh;
+                object-fit: contain;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                color: #fff;
+                font-size: 35px;
+                font-weight: bold;
+                cursor: pointer;
+                line-height: 1;
+                transition: color 0.2s ease;
+            }
+
+            .modal-close:hover {
+                color: var(--accent);
+            }
+
+    /* ----------------------------------
+        CODE BLOCK & INLINE CODE STYLES
+    ---------------------------------- */
+            pre {
+                background: #2d2726;
+                color: #f8f5f3;
+                padding: 16px;
+                border-radius: 10px;
+                overflow-x: auto;
+                font-family: Consolas, Monaco, "Courier New", monospace;
+                font-size: 0.88rem;
+                line-height: 1.5;
+                margin: 12px 0;
+            }
+
+            code {
+                background: #ffe8e2;
+                color: #c84022;
+                border: 1px solid #f2c7bd;
+                padding: 2px 7px;
+                margin: 0 2px;
+                border-radius: 5px;
+                font-family: Consolas, Monaco, "Courier New", monospace;
+                font-size: 0.88rem;
+                font-weight: 700;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            }
+
+            pre code {
+                background: none;
+                color: inherit;
+                border: none;
+                padding: 0;
+                margin: 0;
+                font-weight: normal;
+                box-shadow: none;
+            }
+
+            .comment {
+                color: #8c7b75;
+            }
+            .tag-name {
+                color: #e06d53;
+            }
+            .attr-name {
+                color: #f4c463;
+            }
+            .attr-val {
+                color: #98c379;
+            }
+
+            footer {
+                text-align: center;
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                margin-top: 60px;
+            }
+
+            @media (max-width: 600px) {
+                .hero {
+                    padding: 40px 15px 30px;
+                }
+                .header-title {
+                    font-size: 1.6rem;
+                }
+                .header-subtitle {
+                    font-size: 0.88rem;
+                }
+                nav ul {
+                    flex-wrap: nowrap;
+                    justify-content: flex-start;
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    padding: 0 10px;
+                }
+                nav a {
+                    padding: 10px 14px;
+                    font-size: 0.88rem;
+                }
+                .container {
+                    margin-top: 24px;
+                    padding: 0 12px;
+                }
+                .section {
+                    padding: 22px 18px;
+                    margin-bottom: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- メインビジュアル -->
+        <header id="top" class="hero">
+            <div class="hero-container">
+                <h1 class="header-title">FC2ホームページだけでつくる個人サイト</h1>
+                <p class="header-subtitle">エディタもFTPも不要！ブラウザひとつで自分のホームページを作ってみよう</p>
+            </div>
+        </header>
+
+        <!-- ナビゲーション -->
+        <nav>
+            <ul>
+                <li><a href="../index.html">Stoat Labo TOP</a></li>
+                <li><a href="#intro">はじめに</a></li>
+                <li><a href="#setup">1. ファイルを作成しよう</a></li>
+                <li><a href="#image">2. 画像を差し替えてみよう</a></li>
+                <li><a href="#publish">3. サイトを公開しよう！</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <!-- 簡易目次ボックス -->
+            <div class="toc-box">
+                <div class="toc-title">📌 目次</div>
+                <ul class="toc-list">
+                    <li><a href="#intro">はじめに：ソフトなしでサイトを作ろう！</a></li>
+                    <li><a href="#setup">1. ファイルを作成しよう</a></li>
+                    <li><a href="#image">2. 画像をアップロードして差し替えてみよう</a></li>
+                    <li><a href="#publish">3. プレビューで確認してサイトを公開しよう！</a></li>
+                </ul>
+            </div>
+
+            <!-- 導入 -->
+            <section id="intro" class="section">
+                <h2 class="section-title">はじめに：特別なソフトがなくてもサイトは作れます！</h2>
+                <p>
+                    Webサイト制作と聞くと「特別なソフト（エディタ）を入れたり、FTPソフトでファイルを転送したり…」と難しく感じてしまうかもしれません。
+                </p>
+                <p style="margin-top: 10px">
+                    ですが、<strong>FC2ホームページ</strong>の標準機能を使えば、ブラウザひとつで簡単に個人サイトを作成・公開できます！
+                </p>
+                <p style="margin-top: 10px">
+                    このページでは、スクリーンショットで図解しながらWebサイトを作る手順を具体的に解説していきます🐾
+                </p>
+            </section>
+
+            <!-- 1. 下準備 -->
+            <section id="setup" class="section">
+                <h2 class="section-title">1. ファイルを作成しよう</h2>
+
+                <div class="step-item" style="margin-top: 18px">
+                    <h3><span class="step-number">1</span>FC2 IDの作成とログイン</h3>
+                    <p>
+                        FC2の公式サイトを開き、「新規登録」ボタンからFC2
+                        IDを作成します。登録完了後、FC2ホームページの管理画面にログインします。
+                    </p>
+
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="../images/column/FC2_01.webp" alt="FC2ホームページのログイン画面" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">2</span>ファイルマネージャーを開く</h3>
+                    <p>管理画面の左メニューにある「ファイルマネージャー」をクリックします。</p>
+
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="../images/column/FC2_02.webp" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">3</span>HTMLファイルの新規作成</h3>
+                    <p>
+                        ファイルマネージャーの画面上で右クリックをし、<strong>「ファイルを作成」</strong>を選択します。ファイル形式の選択画面が出たら<strong>「HTML」</strong>を選びます。
+                    </p>
+
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="../images/column/FC2_03.webp" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">4</span>仮のファイル名で決定</h3>
+                    <p>デフォルトで「newfile.html」と入力されているので、そのまま決定します。</p>
+                    <div class="alert-box">
+                        <strong>💡 なぜ「newfile.html」にするの？</strong><br>
+                        本来、ホームページのトップページは
+                        <code>index.html</code>
+                        というファイル名にする必要があります（それによってサーバーが自動的にトップページだと認識してくれます）<br>ただし、今回はサーバー上で編集をするという都合上、作成途中の状態が人目に触れてしまうのを防ぐために最初は「newfile.html」という仮の名前で作業を進めます🐾
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">5</span>編集画面（エディタ）を開く</h3>
+                    <p>
+                        作成された「newfile.html」を右クリックし、<strong>「ソース表示で編集」</strong>を選択します。別ウィンドウで編集画面が開きます。
+                    </p>
+
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="../images/column/FC2_04.webp" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <strong>💡 「メモ帳」よりも編集しやすい！</strong><br>
+                    FC2さんのWebエディタには「コードを色分けして表示」「<code>&lt;&gt;</code>の閉じ忘れがあると赤色で表示」「リアルタイムでプレビューできる機能」など、編集に便利な機能が付いています🐾
+                </div>
+                <br>
+
+                <div class="step-item">
+                    <h3><span class="step-number">6</span>コードを貼り付ける</h3>
+                    <p>
+                        編集画面は最初は真っ白なので、使用したいテンプレートをコピーして貼り付けます。その後、左上の「上書き保存」を押していったん保存しておきましょう。
+                    </p>
+
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="../images/column/FC2_05.webp" alt="FC2ホームページのエディタ画面" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <strong>💡 FC2さんのテンプレートをダウンロードするのもおすすめ！</strong><br>
+                    管理画面の左側にあるメニューから選択できる「デザインテンプレート」という項目から、FC2さんが提供しているテンプレートの一覧ページに移動することができます🐾<br>
+                    「ダウンロード」ボタンをクリックしてテンプレートをダウンロードすると、そのままファイルマネージャーに保存されるのですぐに編集することができます。
+                </div>
+            </section>
+
+            <!-- 画像アップロード -->
+            <section id="image" class="section">
+                <h2 class="section-title">2. 画像をアップロードして差し替えてみよう</h2>
+                <p>サイトに自分の好きな画像を掲載してみましょう。</p>
+
+                <h3 class="sub-title">ステップ①：画像ファイルのアップロード</h3>
+                <div class="step-item">
+                    <h3><span class="step-number">1</span>アップロードボタンを押す</h3>
+                    <p>
+                        ファイルマネージャー画面の左上にある
+                        <strong>💾（フロッピーディスク）のアイコン</strong>
+                        をクリックします（マウスを重ねると「アップロードするファイルを選択」と表示されます）
+                    </p>
+
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <img src="../images/column/FC2_06.webp" alt="FC2ホームページの管理画面" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">2</span>ドラッグ＆ドロップで追加</h3>
+                    <p>
+                        ドロップエリアが表示されるので、パソコン内にある画像ファイル（例：<code>profile.jpg</code>）をドラッグ＆ドロップします。一覧に画像ファイルが追加されればアップロード完了です！
+                    </p>
+                </div>
+
+                <h3 class="sub-title">ステップ②：コード上の画像を差し替える</h3>
+                <p>HTML編集画面に戻り、画像を表示しているコードを探します。</p>
+
+                <pre><code>&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"sample.png"</span> <span class="attr-name">alt</span>=<span class="attr-val">"プロフィール画像"</span> <span class="attr-name">class</span>=<span class="attr-val">"profile-img"</span>&gt;</code></pre>
+
+                <ul class="rule-list" style="margin-top: 12px">
+                    <li>
+                        <strong><code>src="..."</code> ：</strong>
+                        表示したい画像ファイルの名前を指定します。先ほどアップロードした画像ファイル名（例:
+                        <code>profile.jpg</code>）に変更します。
+                    </li>
+                </ul>
+
+                <pre style="margin-top: 14px"><code><span class="comment">&lt;!-- 書き換え例 --&gt;</span>
+&lt;<span class="tag-name">img</span> <span class="attr-name">src</span>=<span class="attr-val">"profile.jpg"</span> <span class="attr-name">alt</span>=<span class="attr-val">"プロフィール画像"</span> <span class="attr-name">class</span>=<span class="attr-val">"profile-img"</span>&gt;</code></pre>
+                
+                <div class="alert-box">
+                    <strong>💡 こちらの記事もチェック！</strong><br>
+                    テンプレートの編集については「<a href="column01.html">超！初心者向けHTML編集講座</a>」の記事も参考にしてくださいね🐾
+                </div>    
+                
+            </section>
+
+            <!-- サイトの公開 -->
+            <section id="publish" class="section">
+                <h2 class="section-title">3. プレビューで確認してサイトを公開しよう！</h2>
+
+                <h3 class="sub-title">途中経過をプレビューで確認する</h3>
+                <p>
+                    編集画面の上側にある<strong>「プレビュー」</strong>をクリックすると、現在の見映えを確認できます。全画面で確認したい場合はいったん「上書き保存」をし、該当ファイルをダブルクリックで開きましょう。
+                </p>
+                
+                <div class="image-container">
+                    <div class="image-frame">
+                        <img src="../images/column/FC2_07.webp" alt="FC2ホームページのエディタ画面" onclick="openModal(this.src)">
+                    </div>
+                </div>
+
+                <h3 class="sub-title">いよいよサイトを公開！</h3>
+                <p>デザインや文章が完成したら、いよいよ世界中に公開しましょう！</p>
+
+                <div class="step-item" style="margin-top: 14px">
+                    <h3><span class="step-number">1</span>上書き保存をする</h3>
+                    <p>編集画面の左上にある <strong>「上書き保存」</strong> をクリックします。</p>
+                </div>
+
+                <div class="step-item">
+                    <h3><span class="step-number">2</span>名前を変更する</h3>
+                    <p>
+                        ファイルマネージャーに戻り、「newfile.html」を右クリックして
+                        <strong>「名前を変更」</strong> を選択し、<strong><code>index.html</code></strong> に変更します。
+                    </p>
+                    <!-- 拡張子について -->
+                    <div class="alert-box" style="margin-top: 12px;">
+                        <strong>⚠️️ 注意：ファイルの拡張子（.html）に注意しよう</strong><br>
+                        FC2のファイルマネージャーで編集する場合は拡張子が表示される仕様になっていますが、「メモ帳」などで編集する場合は注意が必要です。<br>
+                        PCの設定で「拡張子を表示しない」になっていると、<code>index.html</code> と入力した結果 <code>index.html.txt</code> などの名前になってしまい、トップページとして正しく読み込まれないことがあります🐾
+                    </div>
+                </div>
+
+                <p style="margin-top: 16px">
+                    これで、あなたの個人サイトが公開されました！<br>
+                    保存したファイルをダブルクリックすると実際のページ開くので、正しく表示されるか確認してみましょう。
+                </p>
+
+                <!-- キャッシュ・強制更新について -->
+                <div class="alert-box" style="margin-top: 20px">
+                    <strong>💡 ページや画像が反映されない・更新されないときは？</strong><br>
+                    アップロード直後は反映に数十秒〜数分かかることがあります。<br>
+                    また、ブラウザに古いデータが残っている（キャッシュ）場合があるため、以下の方法を試してみてください🐾
+                    <ul style="margin: 8px 0 0 18px;">
+                        <li><strong>強力な更新（スーパーリロード）：</strong> Windowsは <code>Ctrl</code> + <code>F5</code>（Macは <code>Cmd</code> + <code>Shift</code> + <code>R</code>）</li>
+                        <li><strong>シークレットモード：</strong> シークレットウインドウでURLを開いて確認する</li>
+                    </ul>
+                </div>
+
+                <h3 class="sub-title">エディタソフトを使って作成する場合</h3>
+                <p>今回はFC2のブラウザ機能のみで完結させましたが、自分のパソコンのエディタソフトで作成した場合も、出来上がったHTMLファイルを「画像ファイルのアップロード」と同じやり方でドラッグ＆ドロップすればWebページとして公開できます🐾</p>
+            </section>
+
+            <!-- まとめ -->
+            <section class="section">
+                <h2 class="section-title">おわりに</h2>
+                <p>ホスティングサービスの機能によっては、特別なツールを使わなくてもブラウザの管理画面だけでWebサイトを作ることができます。</p>
+                <p>ぜひ自分だけの素敵なWebサイトを作ってみてくださいね🐾</p>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; Stoat Labo / okojo All Rights Reserved.</p>
+        </footer>
+
+        <!-- モーダル表示用のHTML構造 -->
+        <div id="imageModal" class="modal" onclick="closeModal()">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-content" src="" alt="拡大表示画像">
+        </div>
+
+        <!-- 各種JavaScript -->
+        <script>
+            /* モーダル表示処理 */
+            function openModal(imageSrc) {
+                const modal = document.getElementById("imageModal");
+                const modalImg = document.getElementById("modalImage");
+                modalImg.src = imageSrc;
+                modal.style.display = "flex";
+            }
+
+            /* モーダル非表示処理 */
+            function closeModal() {
+                const modal = document.getElementById("imageModal");
+                modal.style.display = "none";
+            }
+        </script>
+    </body>
+</html>

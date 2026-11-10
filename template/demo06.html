@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAKURA | Stoat Labo</title>
+  
+  <!-- ファビコンの設定 -->
+  <link rel="icon" href="../images/icon.webp" type="image/x-icon">
+
+  <!-- Open Graph Protocol (OGP) の設定 -->
+  <meta property="og:title" content="Stoat Labo | Web創作支援サイト">
+  <meta property="og:description" content="同人作家向けWebサイト用テンプレート配布＆Webツール公開サイト">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoatpolice2.github.io/labo/">
+  <meta property="og:image" content="../images/ogp.webp">
+  <meta property="og:site_name" content="Stoat Labo">
+  <meta property="og:locale" content="ja_JP">
+  
+  <style>
+    /* -----------------------------------------
+       1. 基本設定・カラーパレット
+    ----------------------------------------- */
+    :root {
+      --bg-color: #fcf8f9;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --text-main: #4a3e3e;
+      --text-sub: #7d6b6d;
+      --pink-primary: #e8a7b8;
+      --pink-soft: #f4d0d8;
+      --pink-accent: #c97389;
+      --border-color: #f0dce1;
+      --font-serif: "Yu Mincho", "游明朝", "YuMincho", "Hiragino Mincho ProN", serif;
+      --header-height: 70px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-height) + 20px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      line-height: 1.8;
+      overflow-x: hidden;
+      position: relative;
+      padding-top: var(--header-height);
+    }
+
+    /* 背景に散る桜の花びら用キャンバス */
+    #sakura-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* -----------------------------------------
+       2. 固定ヘッダー & ナビゲーションメニュー
+    ----------------------------------------- */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(252, 248, 249, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+
+    .header-logo {
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--pink-accent);
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .header-logo:hover {
+      opacity: 0.8;
+    }
+
+    /* デスクトップ用ナビゲーション */
+    .desktop-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .desktop-nav a {
+      text-decoration: none;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: var(--pink-accent);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .desktop-nav a:hover {
+      color: var(--pink-accent);
+    }
+
+    .desktop-nav a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    /* ハンバーガーボタン */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 30px;
+      height: 24px;
+      position: relative;
+      z-index: 102;
+    }
+
+    .hamburger-btn span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: var(--pink-accent);
+      border-radius: 2px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+    }
+
+    .hamburger-btn span:nth-child(1) { top: 0px; }
+    .hamburger-btn span:nth-child(2) { top: 10px; }
+    .hamburger-btn span:nth-child(3) { top: 20px; }
+
+    /* ハンバーガーボタン アクティブ時 (X印) */
+    .hamburger-btn.active span:nth-child(1) {
+      top: 10px;
+      transform: rotate(135deg);
+    }
+
+    .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+      left: -20px;
+    }
+
+    .hamburger-btn.active span:nth-child(3) {
+      top: 10px;
+      transform: rotate(-135deg);
+    }
+
+    /* モバイル用オーバーレイメニュー */
+    .mobile-nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(252, 248, 249, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .mobile-nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-overlay ul {
+      list-style: none;
+      text-align: center;
+    }
+
+    .mobile-nav-overlay li {
+      margin: 25px 0;
+    }
+
+    .mobile-nav-overlay a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-nav-overlay a:hover {
+      color: var(--pink-accent);
+    }
+
+    /* -----------------------------------------
+       3. レイアウト & コンテナ
+    ----------------------------------------- */
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 70px 20px 50px;
+    }
+
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--pink-accent);
+      margin-bottom: 12px;
+    }
+
+    .site-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      letter-spacing: 0.1em;
+    }
+
+    /* セクション共通スタイル */
+    section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 40px;
+      margin-bottom: 50px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 15px rgba(232, 167, 184, 0.08);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--pink-accent);
+      border-bottom: 1px solid var(--pink-soft);
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      display: inline-block;
+    }
+
+    /* -----------------------------------------
+       4. 各セクション詳細
+    ----------------------------------------- */
+    /* Illust セクション */
+    .illust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .illust-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      aspect-ratio: 1 / 1;
+      background: #faf3f5;
+    }
+
+    .illust-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    .illust-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.92);
+    }
+
+    .illust-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(74, 62, 62, 0.25);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+
+    .illust-overlay span {
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      padding-bottom: 2px;
+    }
+
+    .illust-item:hover .illust-overlay {
+      opacity: 1;
+    }
+
+    /* Novel セクション */
+    .novel-list {
+      list-style: none;
+    }
+
+    .novel-item {
+      padding: 15px 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .novel-item:last-child {
+      border-bottom: none;
+    }
+
+    .novel-title {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .novel-title:hover {
+      color: var(--pink-accent);
+    }
+
+    .novel-desc {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 5px;
+    }
+
+    /* Contact セクション */
+    .contact-group {
+      margin-bottom: 25px;
+    }
+
+    .contact-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-group h3 {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .social-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      color: var(--pink-accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px dotted var(--pink-accent);
+      transition: opacity 0.3s ease;
+    }
+
+    .social-links a:hover {
+      opacity: 0.7;
+    }
+
+    /* -----------------------------------------
+       5. 桜モーダル（儚い雰囲気に合わせたデザイン）
+    ----------------------------------------- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(74, 62, 62, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.5s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      background: rgba(252, 248, 249, 0.95);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-shadow: 0 15px 35px rgba(201, 115, 137, 0.15);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.96) translateY(10px);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-image-wrapper {
+      max-width: 100%;
+      max-height: calc(85vh - 70px);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-image-wrapper img {
+      max-width: 100%;
+      max-height: calc(85vh - 70px);
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal-caption {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      font-family: var(--font-serif);
+      font-weight: 300;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      line-height: 1;
+      padding: 5px;
+    }
+
+    .modal-close-btn:hover {
+      opacity: 0.7;
+      transform: rotate(90deg);
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 40px;
+    }
+
+    /* -----------------------------------------
+       6. レスポンシブ対応
+    ----------------------------------------- */
+    @media (max-width: 650px) {
+      .site-header {
+        padding: 0 20px;
+      }
+      .desktop-nav {
+        display: none;
+      }
+      .hamburger-btn {
+        display: block;
+      }
+      .hero-section {
+        padding: 40px 10px 30px;
+      }
+      .site-title {
+        font-size: 1.9rem;
+      }
+      section {
+        padding: 25px 20px;
+      }
+      .illust-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+      }
+      .modal-overlay {
+        padding: 15px;
+      }
+      .modal-close-btn {
+        top: -40px;
+        right: -5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="sakura-canvas"></canvas>
+
+  <header class="site-header">
+    <a href="#" class="header-logo">SAKURA</a>
+
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#illust">Illust</a></li>
+        <li><a href="#novel">Novel</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="メニューを開く">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <nav class="mobile-nav-overlay" id="mobile-nav">
+    <ul>
+      <li><a href="#about" class="mobile-nav-link">About</a></li>
+      <li><a href="#illust" class="mobile-nav-link">Illust</a></li>
+      <li><a href="#novel" class="mobile-nav-link">Novel</a></li>
+      <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="wrapper">
+    <div class="hero-section">
+      <h1 class="site-title">SAKURA</h1>
+      <p class="site-subtitle">- 春の調べ -</p>
+    </div>
+
+    <main>
+      <section id="about">
+        <h2 class="section-title">About</h2>
+        <p>巡る季節のなかで、ふと思い出す景色や言葉たち。</p>
+        <p>春の明かりと、どこか去りゆく季節の切なさを込めた物語を綴っています。</p><br>
+        <p>※小説用の子ページのコードはこのテンプレートには含まれていません。「子ページ」カテゴリにあるテンプレートをなどを使用してください。</p><br>
+        <p>※こちらのデモページに掲載している画像はフリー素材をお借りしたものです。テンプレートを使用する際はご自身で用意した画像に差し替えてください。</p>
+      </section>
+
+      <section id="illust">
+        <h2 class="section-title">Illust</h2>
+        <div class="illust-grid">
+          <div class="illust-item" data-full="../images/picture11.webp" data-alt="薄紅の記憶">
+            <img src="../images/picture11.webp" alt="薄紅の記憶" loading="lazy">
+            <div class="illust-overlay"><span>View</span></div>
+          </div>
+          <div class="illust-item" data-full="../images/picture12.webp" data-alt="春霞">
+            <img src="../images/picture12.webp" alt="春霞" loading="lazy">
+            <div class="illust-overlay"><span>View</span></div>
+          </div>
+          <div class="illust-item" data-full="../images/picture13.webp" data-alt="桜雨の日に">
+            <img src="../images/picture13.webp" alt="桜雨の日に" loading="lazy">
+            <div class="illust-overlay"><span>View</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="novel">
+        <h2 class="section-title">Novel</h2>
+        <ul class="novel-list">
+          <li class="novel-item">
+            <a href="sub/novel06.html" class="novel-title">舞い落ちる文字のすき間で</a>
+            <p class="novel-desc">駅前の歩道橋、薄紅色の風が吹き抜ける午後の短編。</p>
+          </li>
+          <li class="novel-item">
+            <a href="sub/novel06.html" class="novel-title">君と見た遠い春の約束</a>
+            <p class="novel-desc">いつか離れてしまうとしても、変わらない記憶についての物語。</p>
+          </li>
+          <li class="novel-item">
+            <a href="sub/novel06.html" class="novel-title">木漏れ日の余韻</a>
+            <p class="novel-desc">静かな部屋で過去の手紙を読み返す、小さく切ないエッセイ風小説。</p>
+          </li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-group">
+          <h3>SNS</h3>
+          <ul class="social-links">
+            <li><a href="#" target="_blank" rel="noopener">X (Twitter)</a></li>
+            <li><a href="#" target="_blank" rel="noopener">Bluesky</a></li>
+          </ul>
+        </div>
+        <div class="contact-group">
+          <h3>Link</h3>
+          <p style="font-size: 0.9rem; color: var(--text-sub);">
+            当サイトは同人・二次創作サイトに限りリンクフリーです。<br>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Template by <a href="https://stoatpolice2.github.io/labo/" rel="noopener" target="_blank" style="color: inherit; text-decoration: none;">Stoat Labo</a></p>
+    </footer>
+  </div>
+
+  <div class="modal-overlay" id="illust-modal" aria-hidden="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" id="modal-close" aria-label="閉じる">✕</button>
+      <div class="modal-image-wrapper">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-caption" id="modal-caption"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ハンバーガーメニュー制御 */
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // モバイルメニューのリンクタップ時にメニューを閉じる
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* モーダル表示機能 */
+    const modal = document.getElementById('illust-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalClose = document.getElementById('modal-close');
+    const illustItems = document.querySelectorAll('.illust-item');
+
+    illustItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const fullSrc = item.getAttribute('data-full');
+        const altText = item.getAttribute('data-alt');
+
+        modalImg.src = fullSrc;
+        modalImg.alt = altText;
+        modalCaption.textContent = altText;
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    modalClose.addEventListener('click', closeModal);
+    
+    // 背景（オーバーレイ）クリックで閉じる
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // ESCキーで閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    /* 桜の花びら Canvas アニメーション */
+    const canvas = document.getElementById('sakura-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const petals = [];
+    const petalCount = 30;
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -height;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 0.8 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.3;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 1 - 0.5;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.01) + this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.beginPath();
+        
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 3, 0, this.size);
+        ctx.bezierCurveTo(this.size, this.size / 3, this.size / 2, -this.size / 2, 0, 0);
+        
+        ctx.fillStyle = `rgba(232, 167, 184, ${this.opacity})`;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < petalCount; i++) {
+      petals.push(new Petal());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach(petal => {
+        petal.update();
+        petal.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
